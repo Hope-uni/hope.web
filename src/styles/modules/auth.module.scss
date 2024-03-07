@@ -1,0 +1,151 @@
+@media only screen and (max-width: $breakpointDesktopExtraLarge){
+    .auth_wrapper_layout > .auth_wrapper_layout_inner{
+        max-width: 100%;
+    }
+}
+
+@media only screen and (min-width: $breakpointDesktopExtraLarge){
+    .auth_wrapper_layout > .auth_wrapper_layout_inner{
+        max-width: $breakpointDesktopExtraLarge;
+        width: $breakpointDesktopExtraLarge;
+        margin: 0 auto;
+
+        .auth_layout_img img{
+            width: 70%            
+        }            
+    }
+}
+
+.auth_wrapper_layout{
+    @extend .col-center;
+    background: radial-gradient(223.32% 142.47% at 0% 0%, #16559C 0%, rgba(23, 85, 156, 0.92) 35.94%, #1D6FCA 100%);
+    min-height: 100vh;
+}
+
+.auth_wrapper_layout_inner{
+    @extend .row-between;
+    align-self: stretch;
+
+    .auth_layout_img{
+        @extend .col-center;
+        width: 50%;
+
+        img{
+            width: 480px
+        }
+    }
+
+    .form_auth_wrapper{
+        @extend .col-center;
+        width: 50%;
+        align-self: stretch;
+    }
+}
+
+.form_auth_card{
+    @extend .col-center;
+    background-color: $white;
+    padding: 40px 50px 20px 50px;
+    border-radius: 40px;
+    gap: 30px;
+
+    .auth_form {
+        @extend .col-start-center;
+        width: 360px;
+        height: 430px;
+        gap: 20px;
+
+        .auth_form_title{
+            @extend .text_primary-black;
+            font-size: 28px;
+            font-weight: 600;
+            margin: 40px 0 20px 0;
+        }
+        .auth_form_forgot{
+            @extend .text_primary-blue;
+            @extend .text_sz-7;
+            font-weight: 500;
+            float: right;
+            margin-top: 8px;
+        }
+        .auth_form_submit{
+            width: 100%;
+        }
+    }
+
+    .form_auth_copy small{
+       @extend .text_primary-black;
+       @extend .text_sz-8;
+    }
+}
+
+@media only screen and (max-width: $breakpointTablet){
+    .auth_wrapper_layout{
+        justify-content: flex-start;
+    }
+
+    .auth_wrapper_layout_inner{
+        flex-direction: column;
+        justify-content: flex-start;
+        padding: 30px 50px 30px 50px;
+        gap: 15px;
+        flex-grow: 1;
+    
+        .auth_layout_img{
+    
+            img{
+                width: 300px;
+                height: auto;
+            }
+        }
+    
+        .form_auth_wrapper{
+            width: 100%;
+            flex-grow: 1;
+        }
+    }
+
+    .form_auth_card{
+        padding: 20px 30px 20px 30px;
+        border-radius: 30px;
+        gap: 20px;
+        align-self: stretch;
+        flex-grow: 1;
+
+        .form_auth_logo{
+            width: 80px;
+        }
+    
+        .auth_form {
+            width: 100%;
+            height: auto;
+            gap: 20px;
+    
+            .auth_form_title{
+                font-size: 18px;
+                font-weight: 600;
+                margin: 0 0 20px 0;
+            }
+            .auth_form_forgot{
+                font-weight: 500;
+                float: right;
+                margin-top: 8px;
+            }
+            .auth_form_submit{
+                width: 100%;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: $breakpointMobile){
+
+    .auth_wrapper_layout_inner{
+        padding: 30px 20px 30px 20px;
+
+        .auth_layout_img img{
+            width: 200px;
+        }
+
+    }
+}
