@@ -20,8 +20,8 @@ const __dirname = path.dirname(__filename);
 const nextConfig = {
   reactStrictMode: true,
   sassOptions: {
-    includePaths: [path.join(__dirname, 'styles')],
-    prependData: `@import "app.scss";`
+    includePaths: [path.join(__dirname, 'src/styles')],
+    prependData: `@import "@/styles/app.scss";`
   },
   images: {
     remotePatterns: remotePatternsArray,
