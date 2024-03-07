@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
-import { poppins } from "@/styles/fonts";
+import { theme } from "@/theme/index";
+import { AntdRegistry } from "@ant-design/nextjs-registry";
+import "@/styles/main.scss";
+import { ConfigProvider } from "antd";
 
 export const metadata: Metadata = {
   title: "HOPE-Admin",
@@ -13,7 +16,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={poppins.className}>{children}</body>
+      <body>
+        <ConfigProvider theme={theme}>
+          <AntdRegistry>
+            {children}
+          </AntdRegistry>
+        </ConfigProvider>
+      </body>
     </html>
   );
 }
