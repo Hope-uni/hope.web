@@ -1,0 +1,25 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Para desactivar el hook temporalmente, use --no-verify (git commit --no-verify -m 'Commit Message')
+STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep "\.jsx\|\.js$")
+if [[ "$STAGED_FILES" = "" ]]; then
+  exit 0
+fi
+PASS=true
+for FILE in $STAGED_FILES
+do
+  if grep -q "console.log" "$FILE"; then
+    echo "El archivo $FILE tiene un console.log!"
+    PASS=false
+  fi
+done
+if ! $PASS; then
+  echo "Corrige los console.log antes de continuar."
+  exit 1
+fi
+exit 0
+
+
+
+
