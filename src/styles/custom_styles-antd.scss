@@ -1,0 +1,17 @@
+/*
+** FORM AUTH */
+#auth_form_antd{
+    .ant-form-item{
+        width: 100%;
+    }
+    .ant-form-item-control-input-content .ant-input{
+        border-radius: 0;
+        border: none;
+        border-bottom: 1px solid $black;
+
+        &::placeholder{
+            @extend .text_sz-6;
+            color: $grey-4;
+        }
+    }
+}
