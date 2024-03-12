@@ -44,33 +44,51 @@
 
 .form_auth_card{
     @extend .col-center;
+    justify-content: space-between;
     background-color: $white;
     padding: 40px 50px 20px 50px;
     border-radius: 40px;
     gap: 30px;
+    min-height: 650px;
 
     .auth_form {
         @extend .col-start-center;
-        width: 360px;
+        width: 400px;
         height: 430px;
         gap: 20px;
-
-        .auth_form_title{
-            @extend .text_primary-black;
-            font-size: 28px;
-            font-weight: 600;
-            margin: 40px 0 20px 0;
-        }
-        .auth_form_forgot{
+        
+        .auth_form_link{
             @extend .text_primary-blue;
             @extend .text_sz-7;
             font-weight: 500;
             float: right;
-            margin-top: 8px;
+        }
+        .auth_form_link_forgot{
+            @extend .auth_form_link;
+        }
+        .auth_form_link_back{
+            @extend .auth_form_link;
+            text-decoration: underline;
         }
         .auth_form_submit{
             width: 100%;
         }
+
+        .auth_form_link_back_row{
+            @extend .row-center;
+            margin-top: 15px;
+
+            .auth_form_already_have_account{
+                @extend .text_primary-black;
+                @extend .text_sz-7;
+                margin: 0 6px 0 0;
+            }
+        }
+    }
+
+    .auth_form_token_empty{
+        @extend .text_primary-error;
+        @extend .text_sz-7;
     }
 
     .form_auth_copy small{
@@ -78,6 +96,26 @@
        @extend .text_sz-8;
     }
 }
+
+
+.auth_form_header{
+    @extend .col-center;
+
+    .auth_form_title{
+        @extend .text_primary-black;
+        font-size: 28px;
+        font-weight: 600;
+    }
+    .auth_form_caption{
+        @extend .text_primary-black;
+        @extend .text_sz-7;
+        font-weight: 400;
+        text-align: center;
+        width: 95%;
+        margin-bottom: 30px
+    }
+}
+
 
 @media only screen and (max-width: $breakpointTablet){
     .auth_wrapper_layout{
@@ -94,7 +132,7 @@
         .auth_layout_img{
     
             img{
-                width: 300px;
+                width: 350px;
                 height: auto;
             }
         }

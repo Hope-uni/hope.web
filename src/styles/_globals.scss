@@ -286,6 +286,16 @@
     font-weight: 700;
     color: $secondary-color;
 }
+.text_primary-error{
+    font-family: $text-primary;
+    color: $error;
+}
+.text_primary-error-bold{
+    font-family: $text-primary-700;
+    font-weight: 700;
+    color: $error;
+}
+
 
 
 //forms
