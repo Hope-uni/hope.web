@@ -1,8 +1,7 @@
 'use client'
 
 import styles from '@/styles/modules/auth.module.scss';
-import { Button, Col, Form, Input, Row } from 'antd';
-import FormItem from "antd/lib/form/FormItem";
+import { Button, Form, Input } from 'antd';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { HeaderForm } from '@/components/auth/HeaderForm';
@@ -26,23 +25,19 @@ export const ForgotPasswordForm = () => {
         >
             <HeaderForm
                 title='Restablecer contraseña'
-                caption='Ingrese la dirección de correo electrónico asociada con su cuenta y le enviaremos un enlace para restablecer su contraseña'
+                caption='Ingrese el nombre de usuario o la dirección de correo electrónico asociada con su cuenta y le enviaremos un enlace para restablecer su contraseña'
             />
 
             <Form.Item
-                name="email"
+                name="emailOrUsername"
                 rules={[
                     {
-                        type: 'email',
-                        message: 'Correo electrónico debe ser válido',
-                    },
-                    {
                         required: true,
-                        message: 'Correo electrónico es requerido',
+                        message: 'Usuario o correo electrónico es requerido',
                     },
                 ]}
             >
-                <Input placeholder='Correo electronico' />
+                <Input placeholder='usuario o correo electrónico' />
             </Form.Item>
 
 
