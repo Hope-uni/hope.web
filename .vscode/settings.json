@@ -1,0 +1,8 @@
+{
+    "cSpell.words": [
+        "antd"
+    ],
+    "editor.formatOnSave": true,
+    "prettier.useEditorConfig": false,
+    "prettier.configPath": ""    
+}
