@@ -1,16 +1,10 @@
-'use client'
-import { useSearchParams } from "next/navigation";
-import styles from '@/styles/modules/auth.module.scss';
-import { ResetPasswordForm } from "@/components/auth/ResetPasswordForm";
-import { Button } from "antd";
-import Link from "next/link";
+'use client';
+import { ResetPasswordForm } from '@/components/auth/ResetPasswordForm';
+import { useSearchParams } from 'next/navigation';
 
 export default function ResetPasswordPage() {
+  const searchParams = useSearchParams();
+  const token = searchParams.get('token');
 
-    const searchParams = useSearchParams();
-    const token = searchParams.get('token');
-
-    return (
-        <ResetPasswordForm token={token} />
-    );
+  return <ResetPasswordForm token={token} />;
 }

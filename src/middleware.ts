@@ -1,15 +1,17 @@
 import createMiddleware from 'next-intl/middleware';
-import { HopeLocales } from '@/constants/index';
+import { locales, defaultLocale, localePrefix } from './navigation';
 
 export default createMiddleware({
     // A list of all locales that are supported
-    locales: HopeLocales.languages,
+    locales: locales,
 
     // Used when no locale matches
-    defaultLocale: HopeLocales.default
+    defaultLocale: defaultLocale,
+
+    localePrefix
 });
 
 export const config = {
     // Match only internationalized pathnames
-    matcher: ['/', '/(es|en)/:path*']
+    matcher: ['/(es|en)/:path*']
 };
