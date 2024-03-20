@@ -1,7 +1,4 @@
 export const messages = {
-  Index: {
-    title: 'Hello world!',
-  },
   Auth: {
     form: {
       login: {
