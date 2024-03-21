@@ -10,7 +10,7 @@ import { useTranslations } from 'next-intl';
 
 export const LoginForm = () => {
   const router = useRouter();
-  const t = useTranslations('Auth');
+  const t = useTranslations('_.Auth');
 
   const handleOnFinish = () => {
     router.push('/admin');

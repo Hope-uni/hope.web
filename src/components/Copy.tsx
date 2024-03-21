@@ -7,7 +7,7 @@ export default function Copy() {
   return (
     <footer>
       <small className="text_primary-black text_sz-8">
-        {t('Copy', {
+        {t('_.Copy', {
           year: new Date().getFullYear(),
         })}
       </small>

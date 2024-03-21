@@ -1,4 +1,4 @@
-export const messages = {
+export const _ = {
   Auth: {
     form: {
       login: {

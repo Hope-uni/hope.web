@@ -5,13 +5,13 @@ export const Rules = {
         email: [
             {
                 required: true,
-                message: t('Auth.fields.email.rules.required')
+                message: t('_.Auth.fields.email.rules.required')
             }
         ],
         password: [
             {
                 required: true,
-                message: t('Auth.fields.password.rules.required'),
+                message: t('_.Auth.fields.password.rules.required'),
             },
         ]
     },
@@ -19,7 +19,7 @@ export const Rules = {
         emailOrUsername: [
             {
                 required: true,
-                message: t('Auth.fields.email_or_username.rules.required'),
+                message: t('_.Auth.fields.email_or_username.rules.required'),
             },
         ]
     },
@@ -27,13 +27,13 @@ export const Rules = {
         password: [
             {
                 required: true,
-                message: t('Auth.fields.password.rules.required')
+                message: t('_.Auth.fields.password.rules.required')
             }
         ],
         confirmPassword: [
             {
                 required: true,
-                message: t('Auth.fields.confirm_password.rules.required')
+                message: t('_.Auth.fields.confirm_password.rules.required')
             }
         ]
     }

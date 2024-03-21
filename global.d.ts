@@ -1,6 +1,2 @@
-import { messages } from './messages/es';
-
-const messagesJson = JSON.stringify(messages);
-
-type Messages = typeof messagesJson;
+type Messages = typeof import('./messages/es.ts');
 declare interface IntlMessages extends Messages { }

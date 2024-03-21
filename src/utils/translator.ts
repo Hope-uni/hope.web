@@ -1,4 +1,6 @@
 import { createTranslator } from 'next-intl';
-import { messages } from '../../messages/es';
+import { _ } from '../../messages/es';
 
-export const t = createTranslator({ locale: 'es', messages: messages });
+const translator = createTranslator({ locale: 'es', messages: { _ } });
+
+export const t = translator;

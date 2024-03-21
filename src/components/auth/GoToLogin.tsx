@@ -5,7 +5,7 @@ import styles from '@/styles/modules/auth.module.scss';
 import { useTranslations } from 'next-intl';
 
 export const GoToLogin = () => {
-  const t = useTranslations('Auth');
+  const t = useTranslations('_.Auth');
 
   return (
     <div className={styles.auth_form_link_back_row}>
