@@ -160,8 +160,8 @@
     flex-direction: column;
 }
 .col-stretch{
-    @extend .row-stretch;
-    flex-direction: column;
+    @extend .col-center;
+    align-items: stretch;
 }
 
 .flex-1{

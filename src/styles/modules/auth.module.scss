@@ -52,7 +52,7 @@
     min-height: 650px;
 
     .auth_form {
-        @extend .col-start-center;
+        @extend .col-stretch;
         width: 400px;
         height: 430px;
         gap: 20px;
@@ -89,11 +89,6 @@
     .auth_form_token_empty{
         @extend .text_primary-error;
         @extend .text_sz-7;
-    }
-
-    .form_auth_copy small{
-       @extend .text_primary-black;
-       @extend .text_sz-8;
     }
 }
 
