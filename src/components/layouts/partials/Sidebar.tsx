@@ -6,10 +6,30 @@ import { Link } from '@/intl-navigation';
 import styles from '@/styles/modules/layouts.module.scss';
 import { Divider, Flex, Layout, Menu } from 'antd';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
+import { useCallback, useMemo } from 'react';
+import SidebarItem from '@/components/layouts/partials/SidebarItem';
 
 const { Sider } = Layout;
 
-export default function AuthLayout() {
+export default function Sidebar() {
+  const pathname = usePathname();
+
+  console.log(pathname);
+
+  const menuItemsFormatted = useCallback(
+    (key: string) => {
+      return SidebarMenuItems[key]?.map((item) => {
+        return {
+          key: item.path,
+          type: 'group',
+          label: <SidebarItem item={item} />,
+        };
+      });
+    },
+    [SidebarMenuItems],
+  );
+
   return (
     <Sider
       className={styles.wrapper_sidebar}
@@ -25,42 +45,14 @@ export default function AuthLayout() {
           id="hope_sidebar_menu"
           mode="inline"
           selectedKeys={['patients']}
-          items={SidebarMenuItems.top?.map((item) => ({
-            key: item.key,
-            type: 'group',
-            label: (
-              <>
-                <Link
-                  href={`/${item.key}`}
-                  className={`${item.label === 'Pacientes' ? 'active' : ''}`}
-                >
-                  <item.icon size="20px" />
-                  {item.label}
-                </Link>
-              </>
-            ),
-          }))}
+          items={menuItemsFormatted('top')}
         />
         <Flex vertical>
           <Divider style={{ marginTop: 0, marginBottom: '20px' }} />
           <Menu
             id="hope_sidebar_menu"
             mode="inline"
-            items={SidebarMenuItems.bottom?.map((item) => ({
-              key: item.key,
-              type: 'group',
-              label: (
-                <>
-                  <Link
-                    href={`/${item.key}`}
-                    className={`${item.label === 'Pacientes' ? 'active' : ''}`}
-                  >
-                    <item.icon size="20px" />
-                    {item.label}
-                  </Link>
-                </>
-              ),
-            }))}
+            items={menuItemsFormatted('bottom')}
           />
         </Flex>
       </Flex>
