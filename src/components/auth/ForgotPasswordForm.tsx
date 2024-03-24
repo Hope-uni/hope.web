@@ -35,7 +35,7 @@ export const ForgotPasswordForm = () => {
         name="emailOrUsername"
         rules={Rules.forgotPassword.emailOrUsername}
       >
-        <Input placeholder={t('fields.email_or_username.Placeholder')} />
+        <Input placeholder={t('fields.email_or_username.placeholder')} />
       </Form.Item>
 
       <Form.Item className={styles.rowCenter}>
