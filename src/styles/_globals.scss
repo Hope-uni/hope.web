@@ -268,6 +268,16 @@
     font-weight: 700;
     color: $primary-color-text;
 }
+//theme
+.text_primary-grey{
+    font-family: $text-primary;
+    color: $grey-dark;
+}
+.text_primary-grey-bold{
+    font-family: $text-primary-700;
+    font-weight: 700;
+    color: $grey-dark;
+}
 .text_primary-blue{
     font-family: $text-primary;
     color: $primary-color;

@@ -57,7 +57,7 @@ export const ResetPasswordForm = ({ token }: Props) => {
         className={styles.auth_form_input}
         rules={Rules.resetPassword.password}
       >
-        <Input type="password" placeholder={t('fields.password.Placeholder')} />
+        <Input type="password" placeholder={t('fields.password.placeholder')} />
       </FormItem>
 
       <FormItem
@@ -67,7 +67,7 @@ export const ResetPasswordForm = ({ token }: Props) => {
       >
         <Input
           type="password"
-          placeholder={t('fields.confirm_password.Placeholder')}
+          placeholder={t('fields.confirm_password.placeholder')}
         />
       </FormItem>
 

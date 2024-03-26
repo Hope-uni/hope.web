@@ -1,0 +1,72 @@
+.wrapper_steps_create_user {
+    padding: 10px;
+    margin-top: 20px;
+
+    .steps_divider{
+        height: auto;
+        border-color: $grey-6;
+        margin-inline: 20px;
+    }
+
+    .steps_content{
+        flex: 1;
+        padding: 10px 30px 10px 0;
+
+        .steps_current_step{
+            @extend .text_primary-blue-bold;
+            font-size: 28px;
+            letter-spacing: 1.4px;
+
+            .total_steps{
+                font-size: 22px;
+                letter-spacing: 1.1px;
+                font-weight: 500;
+
+            }
+        }
+        .steps_current_title{
+            @extend .text_primary-black;
+            font-size: 22px;
+            font-weight: 400;
+        }
+    }
+
+    .steps_button_actions{
+        padding: 20px 0 10px;
+        .button{
+            width: 130px;
+            font-size: 14px;
+        }
+    }
+    
+}
+
+@media only screen and (max-width: $breakpointMobile) {
+    .wrapper_steps_create_user {
+        padding: 10px;
+        margin-top: 20px;
+    
+        .steps_content{
+            padding: 0;
+
+            .steps_content_title{
+                gap: 5px !important;
+
+                .steps_current_step{
+                    font-size: 18px;
+                    text-wrap: nowrap;
+        
+                    .total_steps{
+                        font-size: 18px;
+        
+                    }
+                }
+                .steps_current_title{
+                    font-size: 18px;
+                    font-weight: 400;
+                }
+            }
+        }
+        
+    }
+}

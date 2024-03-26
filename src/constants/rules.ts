@@ -36,5 +36,39 @@ export const Rules = {
                 message: t('_.Auth.fields.confirm_password.rules.required')
             }
         ]
+    },
+    user: {
+        create: {
+            user_role: [
+                {
+                    required: true,
+                    message: t('_.User.fields.user_role.rules.required')
+                }
+            ],
+            first_name: [
+                {
+                    required: true,
+                    message: t('_.User.fields.first_name.rules.required')
+                }
+            ],
+            second_name: [
+                {
+                    required: true,
+                    message: t('_.User.fields.second_name.rules.required')
+                }
+            ],
+            first_surname: [
+                {
+                    required: true,
+                    message: t('_.User.fields.first_surname.rules.required')
+                }
+            ],
+            second_surname: [
+                {
+                    required: true,
+                    message: t('_.User.fields.second_surname.rules.required')
+                }
+            ]
+        }
     }
 };
