@@ -27,9 +27,7 @@ export default function RootLayout({
       <body>
         <ConfigProvider theme={theme}>
           <NextIntlClientProvider locale={locale} messages={messages}>
-            <AntdRegistry>
-              <MainLayout>{children}</MainLayout>
-            </AntdRegistry>
+            <AntdRegistry>{children}</AntdRegistry>
           </NextIntlClientProvider>
         </ConfigProvider>
       </body>

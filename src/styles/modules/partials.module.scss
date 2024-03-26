@@ -1,0 +1,40 @@
+
+.wrapper_go_to_back{
+    .go_to_back {
+        @extend .row-center;
+        padding: 0;
+        gap: 0 6px;
+        color: $primary-color;
+        font-size: 16px;
+        font-weight: 400;
+    }
+}
+
+.wrapper_header_content{
+    padding: 0 10px;
+    .title{
+        @extend .text_primary-black;
+        font-size: 22px;
+        font-weight: 500;
+        line-height: 33px;
+        margin: 0;
+    }
+    .caption{
+        @extend .text_primary-grey;
+        @extend .text_sz-6;
+        font-weight: 400;
+        line-height: 21px;
+        margin: 0
+    }
+}
+
+@media only screen and (max-width: $breakpointMobile) {
+    .wrapper_header_content{
+        .title{
+            font-size: 20px;
+        }
+        .caption{
+            font-size: 14px;
+        }
+    }
+}

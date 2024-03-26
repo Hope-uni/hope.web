@@ -13,11 +13,18 @@
 
 .wrapper_main_layout_content{
     background-color: #F6F6F6 !important;
+    overflow: auto;
 
     .wrapper_main_layout_content_inner{
         background-color: $white;
         margin: 10px 20px 20px 20px;
         border-radius: 20px;
+        flex: 1;
+        min-height: unset;
+
+        .wrapper_main_layout{
+            padding: 20px;
+        }
     }
 }
 
@@ -94,6 +101,17 @@
             .role{
                 font-size: 14px;
                 line-height: 18px;
+            }
+        }
+    }
+
+    
+    .wrapper_main_layout_content{
+
+        .wrapper_main_layout_content_inner{
+
+            .wrapper_main_layout{
+                padding: 20px 10px;
             }
         }
     }
