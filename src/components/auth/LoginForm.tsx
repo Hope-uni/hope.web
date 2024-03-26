@@ -31,7 +31,7 @@ export const LoginForm = () => {
         className={styles.auth_form_input}
         rules={Rules.login.email}
       >
-        <Input placeholder={t('fields.email.Placeholder')} />
+        <Input placeholder={t('fields.email.placeholder')} />
       </FormItem>
 
       <div className="w-100">
@@ -42,7 +42,7 @@ export const LoginForm = () => {
         >
           <Input
             type="password"
-            placeholder={t('fields.password.Placeholder')}
+            placeholder={t('fields.password.placeholder')}
           />
         </FormItem>
         <FormItem>
