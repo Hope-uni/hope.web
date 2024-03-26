@@ -56,7 +56,7 @@ export const _ = {
   User: {
     index: {
       title: 'Usuarios',
-      caption: 'Lista de todos los usaurios (Pacientes, Tutores, Terapeuta).',
+      caption: 'Lista de todos los usuarios (Pacientes, Tutores, Terapeuta).',
     },
     form: {
       create: {
@@ -69,15 +69,15 @@ export const _ = {
     },
     fields: {
       user_role: {
-        label: 'Rol del usaurio',
-        placeholder: 'Rol del usaurio',
+        label: 'Rol del usuario',
+        placeholder: 'Rol del usuario',
         rules: {
           required: 'Rol es requerido',
         },
       },
       first_name: {
         label: 'Primer nombre',
-        placeholder: 'Ingrese su rimer nombre',
+        placeholder: 'Ingrese su primer nombre',
         rules: {
           required: 'Primer nombre es requerido',
         },
@@ -107,7 +107,7 @@ export const _ = {
         label: 'Fecha nacimiento',
         placeholder: 'Fecha de nacimiento del paciente',
         rules: {
-          required: 'Fecha de nacimiento es requerido',
+          required: 'Fecha de nacimiento es requerida',
         },
       },
       grade_of_tea: {
@@ -121,7 +121,7 @@ export const _ = {
         label: 'Fase',
         placeholder: 'Fase de la metodología',
         rules: {
-          required: 'Fase de la metodología es requerido',
+          required: 'Fase de la metodología es requerida',
         },
       },
       tutor_in_charge: {
@@ -133,14 +133,14 @@ export const _ = {
       },
       observations: {
         label: 'Observaciones',
-        placeholder: 'Obervaciones del paciente ej. cosas que le disgutan, cosas que le gustan...',
+        placeholder: 'Observaciones del paciente ej. cosas que le disgustan, cosas que le gustan...',
         rules: {
           required: 'Observaciones es requerido',
         },
       },
       identification: {
         label: 'Número de identificación',
-        placeholder: 'Cedula de indentidad',
+        placeholder: 'Cedula de identidad',
         rules: {
           required: 'Número de identificación es requerido',
         },
@@ -163,7 +163,7 @@ export const _ = {
         label: 'Foto de perfil',
         placeholder: 'Foto de perfil',
         rules: {
-          required: 'Foto de perfil es requerido',
+          required: 'Foto de perfil es requerida',
         },
       },
       username: {
@@ -184,12 +184,12 @@ export const _ = {
         label: 'Contraseña',
         placeholder: 'Ingrese su contraseña',
         rules: {
-          required: 'Contraseña es requerido',
+          required: 'Contraseña es requerida',
         },
       },
       confirma_password: {
         label: 'Confirma contraseña',
-        placeholder: 'Confirmae contraseña',
+        placeholder: 'Confirmar contraseña',
       }
     }
   },
