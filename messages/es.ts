@@ -65,6 +65,14 @@ export const _ = {
         next_button: 'Siguiente',
         prev_button: 'Atrás',
         submit_button: 'Crear usuario'
+      },
+      edit: {
+        title: 'Editar usuario',
+        title_data_user: 'Información del usuario',
+        title_data_general: 'Datos generales',
+        title_data_specific: 'Datos del {personType}',
+        cancel_button: 'Cancelar',
+        edit_button: 'Editar',
       }
     },
     fields: {

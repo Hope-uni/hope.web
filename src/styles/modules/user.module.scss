@@ -41,6 +41,27 @@
     
 }
 
+.wrapper_edit_user{
+    width: 900px;
+    .edit_user_content{
+        padding: 0 20px 20px 10px;
+
+        .section_divider{
+            height: auto;
+            border-color: $grey-6;
+            margin-inline: 5px;
+            margin: 10px 0
+        }
+
+        .edit_user_title_sections{
+            @extend .text_primary-blue;
+            font-weight: 500;
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+    }
+}
+
 @media only screen and (max-width: $breakpointMobile) {
     .wrapper_steps_create_user {
         padding: 10px;
@@ -51,6 +72,8 @@
 
             .steps_content_title{
                 gap: 5px !important;
+                flex-direction: column;
+                margin-bottom: 15px;
 
                 .steps_current_step{
                     font-size: 18px;
@@ -68,5 +91,18 @@
             }
         }
         
+    }
+
+    .wrapper_edit_user{
+        width: 100%;
+
+        .edit_user_content{
+            padding: 0 10px;
+
+            .edit_user_title_sections{
+                font-size: 18px;
+                margin-bottom: 10px;
+            }
+        }
     }
 }

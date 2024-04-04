@@ -1,5 +1,6 @@
 'use client';
 
+import { Show } from '@/components/Show';
 import PersonDataGeneralForm from '@/components/user/form/PersonDataGeneralForm';
 import PersonDataSpecificForm from '@/components/user/form/PersonDataSpecificForm';
 import UserDataForm from '@/components/user/form/UserDataForm';
@@ -17,6 +18,7 @@ interface StepFormInterface {
   description: string;
 }
 
+// este objeto va a cambiar
 const stepsData: StepFormInterface[] = [
   {
     step: '1',
@@ -38,9 +40,9 @@ const stepsData: StepFormInterface[] = [
   },
 ];
 
-const initialStep = 2;
+const initialStep = 0;
 
-export default function CreatePatientForm() {
+export default function CreateUserForm() {
   const t = useTranslations('_.User');
   const [currentIndex, setCurrentIndex] = useState(initialStep);
   const [current, setCurrent] = useState<StepFormInterface>(
@@ -105,33 +107,35 @@ export default function CreatePatientForm() {
           className={styles.steps_button_actions}
           gap={10}
         >
-          {currentIndex > 0 && (
-            <Button
-              type="default"
-              className={styles.button}
-              onClick={handlePrev}
-            >
-              {t('form.create.prev_button')}
-            </Button>
-          )}
-          {currentIndex < stepsData.length - 1 && (
-            <Button
-              type="primary"
-              className={styles.button}
-              onClick={handleNext}
-            >
-              {t('form.create.next_button')}
-            </Button>
-          )}
-          {currentIndex === stepsData.length - 1 && (
-            <Button
-              type="primary"
-              className={styles.button}
-              onClick={handleSubmit}
-            >
-              {t('form.create.submit_button')}
-            </Button>
-          )}
+          <Show>
+            <Show.When isTrue={currentIndex > 0}>
+              <Button
+                type="default"
+                className={styles.button}
+                onClick={handlePrev}
+              >
+                {t('form.create.prev_button')}
+              </Button>
+            </Show.When>
+            <Show.When isTrue={currentIndex < stepsData.length - 1}>
+              <Button
+                type="primary"
+                className={styles.button}
+                onClick={handleNext}
+              >
+                {t('form.create.next_button')}
+              </Button>
+            </Show.When>
+            <Show.When isTrue={currentIndex === stepsData.length - 1}>
+              <Button
+                type="primary"
+                className={styles.button}
+                onClick={handleSubmit}
+              >
+                {t('form.create.submit_button')}
+              </Button>
+            </Show.When>
+          </Show>
         </Flex>
       </Flex>
     </Flex>

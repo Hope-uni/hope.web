@@ -10,11 +10,8 @@ export default function CreatePatientPage() {
     <>
       <Space direction="vertical" size={10}>
         <GoToBack />
-        <HeaderContent
-          title={t('form.create.title')}
-          caption={t('form.create.caption')}
-        />
-        <UserForm />
+        <HeaderContent title={t('form.edit.title')} />
+        <UserForm isEdit />
       </Space>
     </>
   );
