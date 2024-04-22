@@ -1,8 +1,8 @@
 import styles from '@/styles/modules/user.module.scss';
 import { UserOutlined } from '@ant-design/icons';
-import { BsCloudDownloadFill } from 'react-icons/bs';
-import { Avatar, Flex, Form, Input, Upload } from 'antd';
+import { Avatar, Col, Flex, Form, Input, Row, Upload } from 'antd';
 import { useTranslations } from 'next-intl';
+import { BsCloudDownloadFill } from 'react-icons/bs';
 
 const { Dragger } = Upload;
 
@@ -14,7 +14,17 @@ const normFile = (e: any) => {
   return e?.fileList;
 };
 
-export default function UserDataForm() {
+interface Props {
+  isEdit?: boolean;
+  gutterRow?: number | [number, number];
+  spanCol?: number;
+}
+
+export default function UserDataForm({
+  isEdit = false,
+  gutterRow = 0,
+  spanCol = 24,
+}: Props) {
   const t = useTranslations('_.User.fields');
   const t_components = useTranslations('_.components');
 
@@ -52,21 +62,18 @@ export default function UserDataForm() {
         </Flex>
       </Form.Item>
 
-      <Form.Item name="username" label={t('username.label')}>
-        <Input placeholder={t('username.placeholder')} />
-      </Form.Item>
-
-      <Form.Item name="email" label={t('email.label')}>
-        <Input placeholder={t('email.placeholder')} />
-      </Form.Item>
-
-      <Form.Item name="password" label={t('password.label')}>
-        <Input placeholder={t('password.placeholder')} />
-      </Form.Item>
-
-      <Form.Item name="confirm_password" label={t('confirma_password.label')}>
-        <Input placeholder={t('confirma_password.placeholder')} />
-      </Form.Item>
+      <Row gutter={gutterRow}>
+        <Col sm={{ span: spanCol }} xs={{ span: 24 }}>
+          <Form.Item name="username" label={t('username.label')}>
+            <Input placeholder={t('username.placeholder')} />
+          </Form.Item>
+        </Col>
+        <Col sm={{ span: spanCol }} xs={{ span: 24 }}>
+          <Form.Item name="email" label={t('email.label')}>
+            <Input placeholder={t('email.placeholder')} />
+          </Form.Item>
+        </Col>
+      </Row>
     </Form>
   );
 }

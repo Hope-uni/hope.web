@@ -198,7 +198,7 @@ label.ant-form-item-required {
     top: 0px;
 }
 .ant-form{
-    .ant-input{
+    .ant-input:not(textarea){
         height: 35px;
     }
 }
@@ -262,6 +262,21 @@ label.ant-form-item-required {
     .steps_create_user{
         .ant-steps.ant-steps-vertical, .ant-divider{
             display: none;
+        }
+    }
+
+    /*
+    ** FORM CREATE USER */
+    #create_user_form_antd{
+
+        .ant-radio-group{
+            flex-wrap: wrap;
+            gap: 15px 20px;
+
+            .ant-radio-button-wrapper.ant-radio-button-wrapper-in-form-item{
+                width: 45%;
+                font-size: 12px;
+            }
         }
     }
 
