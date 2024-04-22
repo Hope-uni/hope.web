@@ -1,10 +1,11 @@
 import { ThemeConfig } from "antd";
+import COLORS from "@/styles/modules/variablesExport.module.scss";
 
 export const theme: ThemeConfig = {
     token: {
         // Seed Token
-        colorPrimary: '#15539C',
-        colorError: '#DC143C',
+        colorPrimary: COLORS.primaryColor,
+        colorError: COLORS.error,
         fontFamily: 'poppins-regular',
         borderRadius: 10,
     },
@@ -18,24 +19,24 @@ export const theme: ThemeConfig = {
         Steps: {
             iconSize: 50,
             iconFontSize: 24,
-            navArrowColor: '#C7C6C6'
+            navArrowColor: COLORS.grey5
         },
         Typography: {
             titleMarginBottom: 0,
             titleMarginTop: 0,
         },
         Button: {
-            colorPrimary: '#15539C',
-            colorTextBase: '#000',
+            colorPrimary: COLORS.primaryColor,
+            colorTextBase: COLORS.black,
             fontSize: 16,
             controlHeight: 35,
             algorithm: true, // Enable algorithm,
 
-            defaultBg: '#fff',
-            defaultBorderColor: '#A0A0A0',
-            defaultColor: '#000',
-            defaultHoverBorderColor: '#15539C',
-            defaultHoverColor: '#15539C',
+            defaultBg: COLORS.white,
+            defaultBorderColor: COLORS.grey3,
+            defaultColor: COLORS.black,
+            defaultHoverBorderColor: COLORS.primaryColor,
+            defaultHoverColor: COLORS.primaryColor,
         },
         Form: {
             labelColor: '#1C1816',
@@ -43,8 +44,26 @@ export const theme: ThemeConfig = {
             labelHeight: 40,
         },
         Input: {
-            colorPrimary: '#DC143C',
+            colorPrimary: COLORS.error,
             algorithm: true, // Enable algorithm
         },
+        Switch: {
+            handleBg: COLORS.mainGrey,
+            colorPrimary: COLORS.success,
+            colorPrimaryHover: COLORS.success,
+        },
+        Table: {
+            borderColor: COLORS.grey,
+            headerBg: COLORS.white,
+            headerBorderRadius: 0,
+            headerColor: COLORS.primaryColorText,
+            fixedHeaderSortActiveBg: COLORS.error,
+        },
+        Descriptions: {
+            contentColor: COLORS.greyDark,
+            itemPaddingBottom: 20,
+            colorTextTertiary: COLORS.primaryColorText,
+            fontSize: 16
+        }
     },
 };
