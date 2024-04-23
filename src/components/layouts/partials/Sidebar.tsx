@@ -15,8 +15,6 @@ const { Sider } = Layout;
 export default function Sidebar() {
   const pathname = usePathname();
 
-  console.log(pathname);
-
   const menuItemsFormatted = useCallback(
     (key: string) => {
       return SidebarMenuItems[key]?.map((item) => {
