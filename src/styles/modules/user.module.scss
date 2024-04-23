@@ -4,7 +4,7 @@
 
     .steps_divider{
         height: auto;
-        border-color: $grey-6;
+        border-color: $grey;
         margin-inline: 20px;
     }
 
@@ -48,7 +48,7 @@
 
         .section_divider{
             height: auto;
-            border-color: $grey-6;
+            border-color: $grey;
             margin-inline: 5px;
             margin: 10px 0
         }
@@ -58,6 +58,43 @@
             font-weight: 500;
             font-size: 18px;
             margin-bottom: 20px;
+        }
+    }
+}
+
+.card_profile{
+    .title_card{
+       @extend .text_primary-blue;
+       font-weight: 600;
+       font-size: 16px;
+    }
+    .full_name{
+        color: $primary-color-text;
+        font-weight: 500;
+        margin: 0;
+    }
+    .caption{
+        color: $grey-dark;
+        font-weight: 400;
+        margin: 0;
+    }
+
+    .profile_detail{
+        cursor: pointer;
+
+        .profile_detail_text{
+            color: $secondary-color;
+            font-size: 12px;
+            font-weight: 500;
+            margin: 0;
+        }
+
+        svg {
+            color: $secondary-color;
+        }
+
+        &:hover{
+            color: $primary-color;
         }
     }
 }
