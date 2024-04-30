@@ -57,6 +57,12 @@ export const _ = {
     index: {
       title: 'Usuarios',
       caption: 'Lista de todos los usuarios (Pacientes, Tutores, Terapeuta).',
+      createButton: 'Crear usuario',
+      columns: {
+        email: 'Correo electrónico',
+        user: 'Usuario',
+        role: 'Rol'
+      }
     },
     form: {
       create: {
@@ -203,20 +209,43 @@ export const _ = {
   },
   Patient: {
     index: {
-      title: 'Usuarios',
-      caption: 'Listado de todos los usuarios (Pacientes, Tutores, Terapeuta).',
+      title: 'Pacientes',
+      caption: 'Listado de todos los pacientes.',
+      createButton: 'Crear paciente',
+      columns: {
+        name: 'Correo electrónico',
+        age: 'Edad',
+        grade: 'Grado',
+        phase: 'Fase',
+        achievements: 'Logros'
+      }
     },
   },
   Tutor: {
     index: {
       title: 'Tutores',
       caption: 'Listado de todos los tutores.',
+      createButton: 'Crear tutor',
+      columns: {
+        name: 'Nombre',
+        email: 'Correo electrónico',
+        phone: 'Edad',
+        telephone: 'Grado',
+        patientsInCharge: 'Fase',
+      }
     },
   },
   Therapist: {
     index: {
       title: 'Terapeutas',
       caption: 'Listado de todos los terapeutas.',
+      createButton: 'Crear terapeuta',
+      columns: {
+        name: 'Nombre',
+        email: 'Correo electrónico',
+        phone: 'Edad',
+        patientsInCharge: 'Fase',
+      }
     },
   },
   Pictogram: {
@@ -277,6 +306,9 @@ export const _ = {
       title_bold: 'Haz clic para subir',
       title_regular: 'o arrastra y suelta',
       caption: 'SVG, PNG or JPG (máx. 800x400px)'
+    },
+    table: {
+      page: 'página'
     }
   },
   Copy: '© {year} Hope. Todos los derechos reservados',

@@ -1,4 +1,6 @@
 
+/*
+** GO TO BACK */
 .wrapper_go_to_back{
     .go_to_back {
         @extend .row-center;
@@ -10,6 +12,8 @@
     }
 }
 
+/*
+** HEADER CONTENT */
 .wrapper_header_content{
     padding: 0 10px;
     .title{

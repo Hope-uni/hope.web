@@ -4,7 +4,7 @@ import { AntdRegistry } from '@ant-design/nextjs-registry';
 import '@/styles/main.scss';
 import { ConfigProvider } from 'antd';
 import { NextIntlClientProvider, useMessages } from 'next-intl';
-import MainLayout from '@/components/layouts/MainLayout';
+import { TableProvider } from '@/context/Table/TableProvider';
 
 interface RootLayoutProps {
   children: React.ReactNode;
@@ -27,7 +27,9 @@ export default function RootLayout({
       <body>
         <ConfigProvider theme={theme}>
           <NextIntlClientProvider locale={locale} messages={messages}>
-            <AntdRegistry>{children}</AntdRegistry>
+            <AntdRegistry>
+              <TableProvider>{children}</TableProvider>
+            </AntdRegistry>
           </NextIntlClientProvider>
         </ConfigProvider>
       </body>
