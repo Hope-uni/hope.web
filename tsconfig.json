@@ -1,6 +1,10 @@
 {
   "compilerOptions": {
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -19,20 +23,57 @@
     ],
     "baseUrl": "./src",
     "paths": {
-      "@/*": ["./src/*"],
-			"@/assets/*": ["assets/*"],
-			"@/components/*": ["components/*"],
-			"@/schema/*": ["schema/*"],
-			"@/styles/*": ["styles/*"],
-			"@/hooks/*": ["hooks/*"],
-			"@/services/*": ["services/*"],
-			"@/context/*": ["context/*"],
-			"@/utils/*": ["utils/*"],
-			"@/constants/*": ["constants/*"],
-			"@/theme/*": ["theme/*"],
-      "@/intl-navigation": ["navigation.ts"],
+      "@/*": [
+        "./src/*"
+      ],
+      "@/assets/*": [
+        "assets/*"
+      ],
+      "@/components/*": [
+        "components/*"
+      ],
+      "@/models/*": [
+        "models/*"
+      ],
+      "@/types/*": [
+        "models/types/*"
+      ],
+      "@/styles/*": [
+        "styles/*"
+      ],
+      "@/hooks/*": [
+        "hooks/*"
+      ],
+      "@/services/*": [
+        "services/*"
+      ],
+      "@/context/*": [
+        "context/*"
+      ],
+      "@/utils/*": [
+        "utils/*"
+      ],
+      "@/constants/*": [
+        "constants/*"
+      ],
+      "@/theme/*": [
+        "theme/*"
+      ],
+      "@/intl-navigation": [
+        "navigation.ts"
+      ],
+      "@/mocks": [
+        "./src/__mocks__/*"
+      ]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }
