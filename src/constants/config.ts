@@ -23,28 +23,28 @@ export const HopeTable: I_HopeTableConfig = {
     ], []),
     actionTableOptions: [
         {
-            label: 'Ver detalle',
+            label: t('_.components.popupActions.show.label'),
             icon: FaEye,
             key: '1',
             actionType: 'show',
             colorClassName: 'text-color-link',
         },
         {
-            label: 'Editar',
+            label: t('_.components.popupActions.edit.label'),
             icon: BsPencilFill,
             key: '2',
             actionType: 'edit',
             colorClassName: 'text-color-link',
         },
         {
-            label: 'Editar asignaciones',
+            label: t('_.components.popupActions.ediAssigments.label'),
             icon: BsFillPersonCheckFill,
             key: '3',
             actionType: 'assign',
             colorClassName: 'text-color-link',
         },
         {
-            label: 'Deshabilitar',
+            label: t('_.components.popupActions.delete.label'),
             icon: BsTrash2Fill,
             key: '4',
             actionType: 'delete',

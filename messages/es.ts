@@ -309,6 +309,20 @@ export const _ = {
     },
     table: {
       page: 'página'
+    },
+    popupActions: {
+      show: {
+        label: "Ver detalle"
+      },
+      edit: {
+        label: "Editar"
+      },
+      ediAssigments: {
+        label: "Editar asignaciones"
+      },
+      delete: {
+        label: "Deshabilitar"
+      },
     }
   },
   Copy: '© {year} Hope. Todos los derechos reservados',
