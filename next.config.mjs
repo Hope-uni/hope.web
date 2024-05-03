@@ -3,7 +3,8 @@ import createNextIntlPlugin from 'next-intl/plugin';
 
 const withNextIntl = createNextIntlPlugin();
 
-const bucketURL = process.env.NEXT_PUBLIC_HOSTNAME_AZURE_BUCKET;
+// const bucketURL = process.env.NEXT_PUBLIC_HOSTNAME_AZURE_BUCKET;
+const bucketURL = 'api.dicebear.com,static.arasaac.org';
 
 const remotePatternsArray = bucketURL?.split(',').map((url) => {
   return {
@@ -11,6 +12,8 @@ const remotePatternsArray = bucketURL?.split(',').map((url) => {
     hostname: url + '/**',
   };
 });
+
+console.log(remotePatternsArray);
 
 const __filename = new URL(import.meta.url).pathname;
 const __dirname = path.dirname(__filename);

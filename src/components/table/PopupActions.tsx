@@ -105,7 +105,7 @@ export default function PopupActions({
         trigger={['click']}
         dropdownRender={renderItem}
       >
-        <BsThreeDotsVertical size={'24px'} />
+        <BsThreeDotsVertical size={'12px'} />
       </Dropdown>
     </Flex>
   );

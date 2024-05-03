@@ -45,6 +45,7 @@ export const usePatientColumns = () => {
       dataIndex: 'id',
       align: 'center',
       width: '60px',
+      className: 'td-actions',
       render: (_, { id }) => {
         return (
           <PopupActions

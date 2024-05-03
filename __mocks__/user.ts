@@ -681,3 +681,158 @@ export const getObservationList: any = [
         user: 'mia_johnson'
     }
 ]
+
+export const getActivitiesList: any = [
+    {
+        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+        phase: 2,
+        name: 'Actividad numero 2'
+    },
+    {
+        description: 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.',
+        phase: 2,
+        name: 'Actividad numero 2'
+    },
+    {
+        description: 'Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.',
+        phase: 2,
+        name: 'Actividad numero 2'
+    },
+    {
+        description: 'Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.',
+        phase: 2,
+        name: 'Actividad numero 2'
+    },
+    {
+        description: 'Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?',
+        phase: 2,
+        name: 'Actividad numero 2'
+    },
+    {
+        description: 'Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?',
+        phase: 2,
+        name: 'Actividad numero 2'
+    },
+    {
+        description: 'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident.',
+        phase: 2,
+        name: 'Actividad numero 2'
+    },
+    {
+        description: 'Similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.',
+        phase: 2,
+        name: 'Actividad numero 2'
+    },
+    {
+        description: 'Et harum quidem rerum facilis est et expedita distinctio.',
+        phase: 2,
+        name: 'Actividad numero 2'
+    },
+    {
+        description: 'Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus.',
+        phase: 2,
+        name: 'Actividad numero 2'
+    },
+    {
+        description: 'Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae.',
+        phase: 2,
+        name: 'Actividad numero 2'
+    },
+    {
+        description: 'Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.',
+        phase: 2,
+        name: 'Actividad numero 2'
+    },
+    {
+        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+        phase: 2,
+        name: 'Actividad numero 2'
+    },
+    {
+        description: 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.',
+        phase: 2,
+        name: 'Actividad numero 2'
+    },
+    {
+        description: 'Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.',
+        phase: 2,
+        name: 'Actividad numero 2'
+    }
+]
+
+export const getPictogramsList: any = [
+    {
+        name: "Cebolla",
+        image: "https://static.arasaac.org/pictograms/2323/2323_300.png"
+    },
+    {
+        name: "Zanahoria",
+        image: "https://static.arasaac.org/pictograms/2619/2619_300.png"
+    },
+    {
+        name: "Kiwi",
+        image: "https://static.arasaac.org/pictograms/2955/2955_300.png"
+    },
+    {
+        name: "Coco",
+        image: "https://static.arasaac.org/pictograms/10224/10224_300.png"
+    },
+    {
+        name: "Frambuesa",
+        image: "https://static.arasaac.org/pictograms/13084/13084_300.png"
+    },
+    {
+        name: "Bicicleta",
+        image: "https://static.arasaac.org/pictograms/2277/2277_300.png"
+    },
+    {
+        name: "Moto",
+        image: "https://static.arasaac.org/pictograms/2480/2480_300.png"
+    },
+    {
+        name: "Coche",
+        image: "https://static.arasaac.org/pictograms/6981/6981_300.png"
+    },
+    {
+        name: "Alimentar",
+        image: "https://static.arasaac.org/pictograms/11176/11176_300.png"
+    }
+];
+
+export const getAchievementList: any = [
+    {
+        id: 1,
+        image: 'https://static.arasaac.org/pictograms/3162/3162_300.png',
+        name: 'Test'
+    },
+    {
+        id: 2,
+        image: 'https://static.arasaac.org/pictograms/3162/3162_300.png',
+        name: 'Test'
+    },
+    {
+        id: 3,
+        image: 'https://static.arasaac.org/pictograms/3162/3162_300.png',
+        name: 'Test'
+    },
+    {
+        id: 4,
+        image: 'https://static.arasaac.org/pictograms/3162/3162_300.png',
+        name: 'Test'
+    },
+    {
+        id: 5,
+        image: 'https://static.arasaac.org/pictograms/3162/3162_300.png',
+        name: 'Test'
+    },
+    {
+        id: 6,
+        image: 'https://static.arasaac.org/pictograms/3162/3162_300.png',
+        name: 'Test'
+    },
+    {
+        id: 7,
+        image: 'https://static.arasaac.org/pictograms/3162/3162_300.png',
+        name: 'Test'
+    }
+]
