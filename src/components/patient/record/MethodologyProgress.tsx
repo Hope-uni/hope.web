@@ -3,6 +3,7 @@
 import styles from '@/styles/modules/patient.module.scss';
 import { Flex, Progress, Typography } from 'antd';
 import COLORS from '@/styles/modules/variablesExport.module.scss';
+import { useTranslations } from 'next-intl';
 
 interface Props {
   percent: number;
@@ -11,6 +12,7 @@ interface Props {
 }
 
 export default function MethodologyProgress({ percent, phase, grade }: Props) {
+  const t = useTranslations('_.Patient.detail');
   return (
     <Flex vertical justify="center" align="center" gap={5}>
       <Flex>
@@ -27,7 +29,7 @@ export default function MethodologyProgress({ percent, phase, grade }: Props) {
       </Flex>
       <Flex gap={8}>
         <Typography.Text className={styles.progress_text}>
-          Grado {grade} | Fase {phase}
+          {t('grade', { grade })} | {t('phase', { phase })}
         </Typography.Text>
       </Flex>
     </Flex>

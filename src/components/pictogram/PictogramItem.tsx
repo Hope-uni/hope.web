@@ -12,8 +12,6 @@ interface Props {
 }
 
 export default function PictogramItem({ pictogram }: Props) {
-  console.log(pictogram);
-
   return (
     <Flex
       vertical

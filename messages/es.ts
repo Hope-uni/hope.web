@@ -234,7 +234,9 @@ export const _ = {
       title_achieved_achievements: "Logros conseguidos",
       title_info_tutor: "Información del tutor",
       title_info_therapist: "Terapeuta a cargo",
-      progress: 'Progreso'
+      progress: 'Progreso',
+      grade: 'Grado {grade}',
+      phase: 'Fase {phase}'
     }
   },
   Tutor: {
