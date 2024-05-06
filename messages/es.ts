@@ -352,4 +352,9 @@ export const _ = {
     }
   },
   Copy: '© {year} Hope. Todos los derechos reservados',
+  Status: {
+    result: {
+      code_404: 'Lo sentimos, pero la página que intentaste visitar no está disponible en este momento. Por favor, verifica la dirección e inténtalo de nuevo más tarde.'
+    }
+  }
 };
