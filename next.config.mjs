@@ -13,8 +13,6 @@ const remotePatternsArray = bucketURL?.split(',').map((url) => {
   };
 });
 
-console.log(remotePatternsArray);
-
 const __filename = new URL(import.meta.url).pathname;
 const __dirname = path.dirname(__filename);
 
