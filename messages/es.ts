@@ -234,7 +234,9 @@ export const _ = {
       title_achieved_achievements: "Logros conseguidos",
       title_info_tutor: "Información del tutor",
       title_info_therapist: "Terapeuta a cargo",
-      progress: 'Progreso'
+      progress: 'Progreso',
+      grade: 'Grado {grade}',
+      phase: 'Fase {phase}'
     }
   },
   Tutor: {
@@ -352,4 +354,9 @@ export const _ = {
     }
   },
   Copy: '© {year} Hope. Todos los derechos reservados',
+  Status: {
+    result: {
+      code_404: 'Lo sentimos, pero la página que intentaste visitar no está disponible en este momento. Por favor, verifica la dirección e inténtalo de nuevo más tarde.'
+    }
+  }
 };

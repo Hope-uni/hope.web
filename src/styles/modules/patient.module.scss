@@ -22,26 +22,17 @@
             margin: 0;
         }
     }
-}
 
-.progress_chart{
-    width: 60px;
-    height: 60px;
-    color: $primary-color-text;
-    font-size: 18px;
-    font-weight: 500;
-    line-height: 35px;
-    border: 6px solid $secondary-color;
-    border-radius: 40px;
-
-    .progress_text{
-        color: $grey-dark;
+    .title_content_tab{
+        color: $primary-color;
         font-size: 18px;
-        font-weight: 400;
-        line-height: 18px;
+        font-weight: 600;
+        line-height: normal;
         margin: 0;
     }
 }
+
+
 
 .observation_list{
     .observation_list_title{
@@ -53,6 +44,10 @@
     }
 
     .observation_list_wrapper{
+        height: 300px;
+        overflow-y: auto;
+        scrollbar-width: thin;
+
         .observation_list_item{
             .observation_list_content{
                 color: $grey-dark;
@@ -68,5 +63,65 @@
                 line-height: normal;
             }
         }
+    }
+}
+
+
+
+.activity_progress{
+    .activity_progress_text{
+        color: $grey-dark;
+        font-weight: 400;
+        line-height: normal;
+    }
+
+    .completed_activities{
+        color: $primary-color-text;
+        font-weight: 400;
+        line-height: normal;
+    }
+}
+
+.activity_list{
+    .activity_list_wrapper{
+        height: 300px;
+        overflow-y: auto;
+        scrollbar-width: thin;
+    }
+}
+
+.activity_list_item{
+    padding: 10px 0;
+    border-bottom: 1px solid $grey;
+
+    &:nth-last-child(1){
+        border-bottom: none;
+    }
+
+    .activity_list_content{
+        color: $grey-dark;
+        font-size: 15px;
+        font-weight: 400;
+        line-height: normal;
+    }
+
+    .activity_list_name{
+        @extend .row-start-center;
+        color: $primary-color-text;
+        font-size: 16px;
+        font-weight: 500;
+        line-height: normal;
+        gap: 5px;
+
+        svg{
+            color: $success;
+        }
+    }
+
+    .activity_list_phase{
+        color: $grey-dark;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: normal;
     }
 }
