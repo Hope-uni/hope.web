@@ -4,13 +4,11 @@ import { useRouter } from '@/intl-navigation';
 import { Button, Flex } from 'antd';
 import { BsChevronLeft } from 'react-icons/bs';
 import styles from '@/styles/modules/partials.module.scss';
+import { useTranslations } from 'next-intl';
 
-interface Props {
-  textLink: string;
-}
-
-export default function GoToBack({ textLink }: Props) {
+export default function GoToBack() {
   const router = useRouter();
+  const t = useTranslations('_.partials');
 
   const handleGoToBack = () => {
     router.back();
@@ -24,7 +22,7 @@ export default function GoToBack({ textLink }: Props) {
         onClick={handleGoToBack}
       >
         <BsChevronLeft size="16px" />
-        {textLink}
+        {t('go_back_to_list')}
       </Button>
     </Flex>
   );

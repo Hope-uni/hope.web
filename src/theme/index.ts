@@ -64,6 +64,13 @@ export const theme: ThemeConfig = {
             itemPaddingBottom: 20,
             colorTextTertiary: COLORS.primaryColorText,
             fontSize: 16
+        },
+        Tabs: {
+            fontSize: 16,
+            itemColor: COLORS.greyDark,
+            itemHoverColor: COLORS.primaryColor,
+            itemSelectedColor: COLORS.primaryColorText,
+            lineWidth: 2
         }
     },
 };

@@ -415,10 +415,13 @@ label.ant-form-item-required {
         }
 
         .ant-table-tbody{
-            .ant-table-cell{
+            .ant-table-cell:not(.td-actions){
                 color: $grey-dark;
                 padding-top: 12px;
                 padding-bottom: 12px;
+            }
+            .ant-table-cell.td-actions{
+                padding: 5px;
             }
         }
     }
@@ -426,6 +429,19 @@ label.ant-form-item-required {
     .popup-actions{
         color: $primary-color;
         cursor: pointer;
+        padding: 5px;
+        width: 28px;
+        height: 28px;
+        border-radius: 20px;
+        transform: rotate(90deg);
+
+        &:hover {
+            background-color: rgba($color: $primary-color, $alpha: 0.2);
+        }
+
+        &.ant-dropdown-open{
+            background-color: rgba($color: $primary-color, $alpha: 0.2);
+        }
     }
 
     .ant-table-pagination.ant-pagination{
@@ -514,7 +530,7 @@ label.ant-form-item-required {
 
 /*
 ** DESCRIPTION */
-.ant-descriptions{
+.ant-descriptions.ant-descriptions_vertical{
 
    .ant-descriptions-row:nth-child(odd) .ant-descriptions-item {
         padding-bottom: 2px;
@@ -535,6 +551,48 @@ label.ant-form-item-required {
                 line-height: 12px;
             }
         }
+    }
+}
+.ant-descriptions{
+
+    .ant-descriptions-row .ant-descriptions-item {
+         padding-bottom: 2px;
+ 
+         .ant-descriptions-item-label{
+             font-weight: bold;
+         }
+    }
+ 
+    &.card_profile_descriptions{
+         .ant-descriptions-row .ant-descriptions-item{
+             padding-bottom: 10px;
+         }
+ 
+         .ant-descriptions-row .ant-descriptions-item {
+             .ant-descriptions-item-label, .ant-descriptions-item-content{
+                 font-size: 12px;
+                 line-height: 12px;
+             }
+         }
+     }
+ }
+
+/*
+** TABS */
+.ant-tabs.record-tab{
+    .ant-tabs-tab{
+        .ant-tabs-tab-btn{
+            padding: 0 5px;
+            font-weight: 500;
+
+            .ant-tabs-tab-icon{
+                display: none;
+            }
+        }
+    }
+
+    .ant-tabs-content-holder{
+        padding: 10px;
     }
 }
 

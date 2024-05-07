@@ -220,6 +220,24 @@ export const _ = {
         achievements: 'Logros'
       }
     },
+    detail: {
+      tabs: {
+        record_tab: "Expediente",
+        actividades_tab: "Actividades",
+        pictogramas_tab: "Pictogramas",
+        logros_tab: "Logros"
+      },
+      title_observation: "Observaciones",
+      title_current_activity: "Actividad asignada",
+      title_completed_activities: "Actividades completdas",
+      title_custom_pictograms: "Pictogramas personalizados",
+      title_achieved_achievements: "Logros conseguidos",
+      title_info_tutor: "Información del tutor",
+      title_info_therapist: "Terapeuta a cargo",
+      progress: 'Progreso',
+      grade: 'Grado {grade}',
+      phase: 'Fase {phase}'
+    }
   },
   Tutor: {
     index: {
@@ -298,6 +316,13 @@ export const _ = {
       logout: 'Cerrar sesión'
     }
   },
+  Actions: {
+    edit: "Editar",
+    delete: "Deshabilitar",
+    modebn: "Modo B/N",
+    Upload_phase: "Avanzar de fase",
+    view_detail: "Ver detalle"
+  },
   partials: {
     go_back_to_list: 'Volver a la lista'
   },
@@ -323,7 +348,15 @@ export const _ = {
       delete: {
         label: "Deshabilitar"
       },
+    },
+    CardProfile: {
+      years_old: "años"
     }
   },
   Copy: '© {year} Hope. Todos los derechos reservados',
+  Status: {
+    result: {
+      code_404: 'Lo sentimos, pero la página que intentaste visitar no está disponible en este momento. Por favor, verifica la dirección e inténtalo de nuevo más tarde.'
+    }
+  }
 };

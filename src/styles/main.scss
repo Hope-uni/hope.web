@@ -39,6 +39,7 @@ body {
 
 *, *::after, *::before {
   box-sizing: border-box;
+  scrollbar-width: thin;
 }
 
 @media (prefers-color-scheme: dark) {
