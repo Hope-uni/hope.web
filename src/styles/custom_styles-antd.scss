@@ -17,10 +17,10 @@
         background: transparent;
         border: none;
         
-        .ant-menu-item-group{
+        .ant-menu-item-group, .ant-menu-item-only-child{
             margin-bottom: 15px;
 
-            .ant-menu-item-group-title{
+            .ant-menu-item-group-title, .ant-menu-title-content{
                 padding: 0;
 
                 & a{
@@ -594,6 +594,29 @@ label.ant-form-item-required {
     .ant-tabs-content-holder{
         padding: 10px;
     }
+}
+
+/*
+** TAGS */
+.ant-tag{ 
+
+    &.tag-role{
+        border-radius: 20px;
+        background-color: #FFEDE5;
+        border: 1px solid  $secondary-color;
+        font-weight: 500;
+
+        &.tag-role-admin{
+            border-radius: 20px;
+            background-color: #FFFFCC;
+            border: 1px solid $warning;
+
+            svg{
+                fill: $warning;
+            }
+        }
+    }
+    
 }
 
 @media only screen and (max-width: $breakpointMobile){
