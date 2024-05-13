@@ -13,7 +13,7 @@ export const useTutorColumns = () => {
 
   const handleEdit = useCallback(
     (id: number) => {
-      router.push(`/tutors/edit/${id}`);
+      router.push(`/admin/users/edit/${id}`);
     },
     [router],
   );
