@@ -3,7 +3,7 @@
 import WrapperTable from '@/components/table/Wrappertable';
 import { Space, message } from 'antd';
 import { getUserList } from '../../../../__mocks__/user';
-import { useUserColumns } from './UserColumn';
+import { useUserColumns } from '@/components/user/list/UserColumn';
 import { useTable } from '@/context/Table/TableContext';
 import { E_ActionKeyTable } from '@/models/types/Table.d';
 import { useTranslations } from 'next-intl';
