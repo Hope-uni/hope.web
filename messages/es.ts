@@ -58,6 +58,7 @@ export const _ = {
       title: 'Usuarios',
       caption: 'Lista de todos los usuarios (Pacientes, Tutores, Terapeuta).',
       createButton: 'Crear usuario',
+      searchPlaceholder: 'Buscar usuarios...',
       columns: {
         email: 'Correo electrónico',
         user: 'Usuario',
@@ -244,12 +245,13 @@ export const _ = {
       title: 'Tutores',
       caption: 'Listado de todos los tutores.',
       createButton: 'Crear tutor',
+      searchPlaceholder: 'Buscar tutores...',
       columns: {
         name: 'Nombre',
         email: 'Correo electrónico',
-        phone: 'Edad',
-        telephone: 'Grado',
-        patientsInCharge: 'Fase',
+        phone: 'Celular',
+        telephone: 'Teléfono',
+        patientsInCharge: 'Niños a cargo',
       }
     },
   },
@@ -258,11 +260,12 @@ export const _ = {
       title: 'Terapeutas',
       caption: 'Listado de todos los terapeutas.',
       createButton: 'Crear terapeuta',
+      searchPlaceholder: 'Buscar terapeutas...',
       columns: {
         name: 'Nombre',
         email: 'Correo electrónico',
-        phone: 'Edad',
-        patientsInCharge: 'Fase',
+        phone: 'Celular',
+        patientsInCharge: 'Niños a cargo',
       }
     },
   },
