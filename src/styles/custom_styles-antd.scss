@@ -358,7 +358,12 @@ label.ant-form-item-required {
     }
 }
 .ant-table-wrapper{
+
     .ant-table{
+
+        .ant-table-title{
+            padding: 16px 0;
+        }
 
         .ant-table-thead{
             .ant-table-cell{

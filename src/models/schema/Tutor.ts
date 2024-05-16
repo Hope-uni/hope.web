@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { UserSchema } from '@/models/schema';
 
 export const TutorSchema = z.object({
     id: z.number(),
@@ -7,6 +8,7 @@ export const TutorSchema = z.object({
     phoneNumber: z.string(),
     telephone: z.string(),
     patientsInCharge: z.number(),
+    user: UserSchema
 });
 
 export type Tutor = z.infer<typeof TutorSchema>

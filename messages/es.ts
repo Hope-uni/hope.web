@@ -254,6 +254,19 @@ export const _ = {
         patientsInCharge: 'Niños a cargo',
       }
     },
+    detail: {
+      tabs: {
+        generl_info: "Información general",
+        children_in_charge: "Niños a cargo",
+      },
+      description_labels: {
+        email: 'Correo electrónico',
+        phone: 'Celular',
+        telephone: 'Teléfono de casa',
+        address: 'Dirección'
+      },
+      title_children_in_charge: "Niños a cargo",
+    }
   },
   Therapist: {
     index: {
