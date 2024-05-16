@@ -390,6 +390,7 @@ export const getTutorList: any = {
             fullName: "John Doe",
             email: "john@example.com",
             phoneNumber: "+1234567890",
+            telephone: "2240-2334",
             patientsInCharge: 5,
         },
         {
@@ -397,6 +398,7 @@ export const getTutorList: any = {
             fullName: "Jane Smith",
             email: "jane@example.com",
             phoneNumber: "+1987654321",
+            telephone: "2240-2334",
             patientsInCharge: 8,
         },
         {
@@ -404,6 +406,7 @@ export const getTutorList: any = {
             fullName: "Michael Johnson",
             email: "michael@example.com",
             phoneNumber: "+1122334455",
+            telephone: "2240-2334",
             patientsInCharge: 3,
         },
         {
@@ -411,6 +414,7 @@ export const getTutorList: any = {
             fullName: "Emily Brown",
             email: "emily@example.com",
             phoneNumber: "+1555666777",
+            telephone: "2240-2334",
             patientsInCharge: 6,
         },
         {
@@ -418,6 +422,7 @@ export const getTutorList: any = {
             fullName: "William Wilson",
             email: "william@example.com",
             phoneNumber: "+1443322111",
+            telephone: "2240-2334",
             patientsInCharge: 7,
         },
         {
@@ -425,6 +430,7 @@ export const getTutorList: any = {
             fullName: "Sophia Lee",
             email: "sophia@example.com",
             phoneNumber: "+1777222333",
+            telephone: "2240-2334",
             patientsInCharge: 4,
         },
         {
@@ -432,6 +438,7 @@ export const getTutorList: any = {
             fullName: "James Taylor",
             email: "james@example.com",
             phoneNumber: "+1666777888",
+            telephone: "2240-2334",
             patientsInCharge: 9,
         },
         {
@@ -439,6 +446,7 @@ export const getTutorList: any = {
             fullName: "Olivia Clark",
             email: "olivia@example.com",
             phoneNumber: "+1893456789",
+            telephone: "2240-2334",
             patientsInCharge: 2,
         },
         {
@@ -446,6 +454,7 @@ export const getTutorList: any = {
             fullName: "David Martinez",
             email: "david@example.com",
             phoneNumber: "+1765432890",
+            telephone: "2240-2334",
             patientsInCharge: 6,
         },
         {
@@ -453,6 +462,7 @@ export const getTutorList: any = {
             fullName: "Emma Anderson",
             email: "emma@example.com",
             phoneNumber: "+1345678901",
+            telephone: "2240-2334",
             patientsInCharge: 3,
         },
         {
@@ -460,6 +470,7 @@ export const getTutorList: any = {
             fullName: "Liam Rodriguez",
             email: "liam@example.com",
             phoneNumber: "+1987654321",
+            telephone: "2240-2334",
             patientsInCharge: 5,
         },
         {
@@ -467,6 +478,7 @@ export const getTutorList: any = {
             fullName: "Ava Garcia",
             email: "ava@example.com",
             phoneNumber: "+1876543210",
+            telephone: "2240-2334",
             patientsInCharge: 8,
         },
         {
@@ -474,6 +486,7 @@ export const getTutorList: any = {
             fullName: "Noah Hernandez",
             email: "noah@example.com",
             phoneNumber: "+1999888777",
+            telephone: "2240-2334",
             patientsInCharge: 4,
         },
         {
@@ -481,6 +494,7 @@ export const getTutorList: any = {
             fullName: "Isabella Smith",
             email: "isabella@example.com",
             phoneNumber: "+1555222333",
+            telephone: "2240-2334",
             patientsInCharge: 7,
         },
         {
@@ -488,6 +502,7 @@ export const getTutorList: any = {
             fullName: "Mia Brown",
             email: "mia@example.com",
             phoneNumber: "+1888777666",
+            telephone: "2240-2334",
             patientsInCharge: 5,
         },
     ]
