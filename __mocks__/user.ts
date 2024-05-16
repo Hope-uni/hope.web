@@ -697,83 +697,130 @@ export const getObservationList: any = [
     }
 ]
 
-export const getActivitiesList: any = [
-    {
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-        phase: 2,
-        name: 'Actividad numero 2'
-    },
-    {
-        description: 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.',
-        phase: 2,
-        name: 'Actividad numero 2'
-    },
-    {
-        description: 'Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.',
-        phase: 2,
-        name: 'Actividad numero 2'
-    },
-    {
-        description: 'Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.',
-        phase: 2,
-        name: 'Actividad numero 2'
-    },
-    {
-        description: 'Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?',
-        phase: 2,
-        name: 'Actividad numero 2'
-    },
-    {
-        description: 'Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?',
-        phase: 2,
-        name: 'Actividad numero 2'
-    },
-    {
-        description: 'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident.',
-        phase: 2,
-        name: 'Actividad numero 2'
-    },
-    {
-        description: 'Similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.',
-        phase: 2,
-        name: 'Actividad numero 2'
-    },
-    {
-        description: 'Et harum quidem rerum facilis est et expedita distinctio.',
-        phase: 2,
-        name: 'Actividad numero 2'
-    },
-    {
-        description: 'Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus.',
-        phase: 2,
-        name: 'Actividad numero 2'
-    },
-    {
-        description: 'Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae.',
-        phase: 2,
-        name: 'Actividad numero 2'
-    },
-    {
-        description: 'Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.',
-        phase: 2,
-        name: 'Actividad numero 2'
-    },
-    {
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-        phase: 2,
-        name: 'Actividad numero 2'
-    },
-    {
-        description: 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.',
-        phase: 2,
-        name: 'Actividad numero 2'
-    },
-    {
-        description: 'Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.',
-        phase: 2,
-        name: 'Actividad numero 2'
-    }
-]
+export const getActivitiesList: any = {
+    data: [
+        {
+            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+            phase: 2,
+            name: 'Actividad numero 2',
+            assignments: 3,
+            points: 2,
+            teaPhase: 3
+        },
+        {
+            description: 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.',
+            phase: 2,
+            name: 'Actividad numero 2',
+            assignments: 3,
+            points: 2,
+            teaPhase: 3
+        },
+        {
+            description: 'Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.',
+            phase: 2,
+            name: 'Actividad numero 2',
+            assignments: 3,
+            points: 2,
+            teaPhase: 3
+        },
+        {
+            description: 'Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.',
+            phase: 2,
+            name: 'Actividad numero 2',
+            assignments: 3,
+            points: 2,
+            teaPhase: 3
+        },
+        {
+            description: 'Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?',
+            phase: 2,
+            name: 'Actividad numero 2',
+            assignments: 3,
+            points: 2,
+            teaPhase: 3
+        },
+        {
+            description: 'Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?',
+            phase: 2,
+            name: 'Actividad numero 2',
+            assignments: 3,
+            points: 2,
+            teaPhase: 3
+        },
+        {
+            description: 'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident.',
+            phase: 2,
+            name: 'Actividad numero 2',
+            assignments: 3,
+            points: 2,
+            teaPhase: 3
+        },
+        {
+            description: 'Similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.',
+            phase: 2,
+            name: 'Actividad numero 2',
+            assignments: 3,
+            points: 2,
+            teaPhase: 3
+        },
+        {
+            description: 'Et harum quidem rerum facilis est et expedita distinctio.',
+            phase: 2,
+            name: 'Actividad numero 2',
+            assignments: 3,
+            points: 2,
+            teaPhase: 3
+        },
+        {
+            description: 'Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus.',
+            phase: 2,
+            name: 'Actividad numero 2',
+            assignments: 3,
+            points: 2,
+            teaPhase: 3
+        },
+        {
+            description: 'Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae.',
+            phase: 2,
+            name: 'Actividad numero 2',
+            assignments: 3,
+            points: 2,
+            teaPhase: 3
+        },
+        {
+            description: 'Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.',
+            phase: 2,
+            name: 'Actividad numero 2',
+            assignments: 3,
+            points: 2,
+            teaPhase: 3
+        },
+        {
+            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+            phase: 2,
+            name: 'Actividad numero 2',
+            assignments: 3,
+            points: 2,
+            teaPhase: 3
+        },
+        {
+            description: 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.',
+            phase: 2,
+            name: 'Actividad numero 2',
+            assignments: 3,
+            points: 2,
+            teaPhase: 3
+        },
+        {
+            description: 'Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.',
+            phase: 2,
+            name: 'Actividad numero 2',
+            assignments: 3,
+            points: 2,
+            teaPhase: 3
+        }
+    ]
+}
 
 export const getPictogramsList: any = [
     {

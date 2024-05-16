@@ -5,6 +5,8 @@ export const ActivitySchema = z.object({
     id: z.number(),
     name: z.string(),
     description: z.string(),
+    assignments: z.number(),
+    points: z.number(),
     teaPhase: TEAPhaseSchema,
 });
 
