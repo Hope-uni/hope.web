@@ -281,6 +281,21 @@ export const _ = {
         patientsInCharge: 'Niños a cargo',
       }
     },
+    detail: {
+      tabs: {
+        generl_info: "Información general",
+        children_in_charge: "pacientes",
+        activities_created: "Actividades",
+      },
+      description_labels: {
+        email: 'Correo electrónico',
+        identification: 'Número identificación',
+        phone: 'Celular',
+        address: 'Dirección'
+      },
+      title_children_in_charge: "Pacientes a cargo",
+      title_activities_created: "Actividades creadas",
+    }
   },
   Pictogram: {
     index: {
@@ -298,6 +313,15 @@ export const _ = {
     index: {
       title: 'Actividades',
       caption: 'Listado de todos las actividades.',
+      createButton: 'Crear tutor',
+      searchPlaceholder: 'Buscar actividades...',
+      columns: {
+        name: 'Nombre',
+        description: 'Descripción',
+        assignments: 'Asignaciones',
+        points: 'Puntos',
+        phase: 'Fase',
+      }
     },
   },
   Achievement: {
@@ -337,7 +361,8 @@ export const _ = {
     delete: "Deshabilitar",
     modebn: "Modo B/N",
     Upload_phase: "Avanzar de fase",
-    view_detail: "Ver detalle"
+    view_detail: "Ver detalle",
+    assign_patient: "Asignar paciente"
   },
   partials: {
     go_back_to_list: 'Volver a la lista'

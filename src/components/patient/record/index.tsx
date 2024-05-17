@@ -138,7 +138,7 @@ export default function PatientDetail({ patient }: Props) {
         key: '2',
         label: t('detail.tabs.actividades_tab'),
         icon: <BsCardChecklist size={20} />,
-        children: <ActivityTab activities={getActivitiesList} />,
+        children: <ActivityTab activities={getActivitiesList.data} />,
       },
       {
         key: '3',

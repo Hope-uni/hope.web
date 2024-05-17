@@ -1,11 +1,12 @@
 'use client';
 
 import GoToBack from '@/components/GoToBack';
+import { useActivityColumns } from '@/components/activity/list/ActivityColumn';
 import { usePatientColumns } from '@/components/patient/list/PatientColumn';
 import WrapperTable from '@/components/table/Wrappertable';
 import CardProfile from '@/components/user/detail/CardProfile';
-import { Tutor } from '@/models/schema';
-import styles from '@/styles/modules/tutor.module.scss';
+import { Therapist } from '@/models/schema';
+import styles from '@/styles/modules/therapist.module.scss';
 import {
   Button,
   Col,
@@ -21,12 +22,12 @@ import { useTranslations } from 'next-intl';
 import { useMemo } from 'react';
 import { BsPersonBadge } from 'react-icons/bs';
 import { FaChildren } from 'react-icons/fa6';
-import { getPatientList } from '../../../../__mocks__/user';
+import { getActivitiesList, getPatientList } from '../../../../__mocks__/user';
 
 const { Title } = Typography;
 
 interface Props {
-  tutor: Tutor;
+  therapist: Therapist;
 }
 
 interface GeneralInfoProps {
@@ -36,11 +37,11 @@ interface GeneralInfoProps {
 const GeneralInfo = ({ items }: GeneralInfoProps) => {
   return (
     <Row gutter={[30, 30]}>
-      <Col span={18}>
+      <Col span={19}>
         <Descriptions
           layout="vertical"
           items={items}
-          column={2}
+          column={3}
           className="ant-descriptions_vertical"
         />
       </Col>
@@ -48,33 +49,33 @@ const GeneralInfo = ({ items }: GeneralInfoProps) => {
   );
 };
 
-export default function TutorDetail({ tutor }: Props) {
-  const t = useTranslations('_.Tutor');
+export default function TherapistDetail({ therapist }: Props) {
+  const t = useTranslations('_.Therapist');
   const t_actions = useTranslations('_.Actions');
-  const [columns] = usePatientColumns();
+  const [patientColumns] = usePatientColumns();
+  const [activityColumns] = useActivityColumns();
 
   // TODO data quemada por mientras
   const items: DescriptionsProps['items'] = [
     {
       key: '1',
+      label: t('detail.description_labels.email'),
+      children: 'marioramos@gamil.com',
+    },
+    {
+      key: '2',
+      label: t('detail.description_labels.identification'),
+      children: '001-124599-4258D',
+    },
+    {
+      key: '3',
       label: t('detail.description_labels.phone'),
       children: '8888 8888',
     },
     {
-      key: '2',
-      label: t('detail.description_labels.telephone'),
-      children: '2225 1234',
-    },
-    {
-      key: '3',
-      label: t('detail.description_labels.email'),
-      span: 2,
-      children: 'marioramos@gamil.com',
-    },
-    {
       key: '4',
       label: t('detail.description_labels.address'),
-      span: 2,
+      span: 3,
       children:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ',
     },
@@ -97,7 +98,23 @@ export default function TutorDetail({ tutor }: Props) {
             <Title className={styles.title_content_tab}>
               {t('detail.title_children_in_charge')}
             </Title>
-            <WrapperTable cols={columns} data={getPatientList.data} />
+            <WrapperTable cols={patientColumns} data={getPatientList.data} />
+          </Flex>
+        ),
+      },
+      {
+        key: '3',
+        label: t('detail.tabs.children_in_charge'),
+        icon: <FaChildren size={20} />,
+        children: (
+          <Flex vertical className={styles.pictogram_list} gap={30}>
+            <Title className={styles.title_content_tab}>
+              {t('detail.title_children_in_charge')}
+            </Title>
+            <WrapperTable
+              cols={activityColumns}
+              data={getActivitiesList.data}
+            />
           </Flex>
         ),
       },
@@ -117,13 +134,14 @@ export default function TutorDetail({ tutor }: Props) {
           <GoToBack />
           <Flex gap={10} align="center">
             <Button type="default">{t_actions('edit')}</Button>
+            <Button type="default">{t_actions('assign_patient')}</Button>
             <Button className="default-error-color" type="default">
               {t_actions('delete')}
             </Button>
           </Flex>
         </Flex>
 
-        <CardProfile user={{ ...tutor, ...tutor.user }} showUser />
+        <CardProfile user={{ ...therapist, ...therapist.user }} showUser />
 
         <Tabs className="record-tab" defaultActiveKey="1" items={itemsTab} />
       </Flex>
