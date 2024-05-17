@@ -57,19 +57,19 @@ export default function TutorDetail({ tutor }: Props) {
   const items: DescriptionsProps['items'] = [
     {
       key: '1',
-      label: t('detail.description_labels.email'),
-      span: 2,
-      children: 'marioramos@gamil.com',
-    },
-    {
-      key: '2',
       label: t('detail.description_labels.phone'),
       children: '8888 8888',
     },
     {
-      key: '3',
+      key: '2',
       label: t('detail.description_labels.telephone'),
       children: '2225 1234',
+    },
+    {
+      key: '3',
+      label: t('detail.description_labels.email'),
+      span: 2,
+      children: 'marioramos@gamil.com',
     },
     {
       key: '4',
