@@ -54,7 +54,7 @@ function WrapperTable({
     return (
       <Flex
         className="wrapper-header-table"
-        justify="space-between"
+        justify={searchable && searchProps ? 'space-between' : 'flex-end'}
         align="flex-end"
       >
         {searchable && searchProps && <SearchTable {...searchProps} />}

@@ -4,10 +4,10 @@
 import { colorList } from '@/constants/Avatar';
 import styles from '@/styles/modules/user.module.scss';
 import { Avatar, Descriptions, Divider, Flex, Typography } from 'antd';
-import { BsChevronRight } from 'react-icons/bs';
 import { DescriptionsProps } from 'antd/lib';
-import { memo, useMemo } from 'react';
 import { useTranslations } from 'next-intl';
+import { memo } from 'react';
+import { BsChevronRight } from 'react-icons/bs';
 
 const { Title, Text } = Typography;
 
@@ -16,6 +16,7 @@ interface Props {
   layout?: 'vertical' | 'horizontal';
   title?: string;
   infoDescription?: DescriptionsProps['items'];
+  showUser?: boolean;
 }
 
 interface AvatarProfileProps {
@@ -46,6 +47,7 @@ export default function CardProfile({
   layout = 'horizontal',
   title,
   infoDescription,
+  showUser = false,
 }: Props) {
   const t_actions = useTranslations('_.Actions');
   const t_components = useTranslations('_.components');
@@ -127,6 +129,7 @@ export default function CardProfile({
           </Text>
           |<Text className={styles.caption}>{user.gender}</Text>
         </Flex>
+        {showUser && <Text className={styles.username}>@{user.username}</Text>}
       </Flex>
     </Flex>
   );
