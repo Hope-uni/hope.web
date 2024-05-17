@@ -125,15 +125,7 @@ export default function TutorDetail({ tutor }: Props) {
 
         <CardProfile user={{ ...tutor, ...tutor.user }} showUser />
 
-        <Row gutter={[30, 30]}>
-          <Col span={21}>
-            <Tabs
-              className="record-tab"
-              defaultActiveKey="1"
-              items={itemsTab}
-            />
-          </Col>
-        </Row>
+        <Tabs className="record-tab" defaultActiveKey="1" items={itemsTab} />
       </Flex>
     </>
   );
