@@ -1,6 +1,6 @@
 import { HeaderContent } from '@/components/layouts/partials/HeaderContent';
 import PatientIndex from '@/components/patient/list';
-import { RoutesName } from '@/constants/Menu';
+import { RoutesName } from '@/constants/index';
 import { Space } from 'antd';
 import { useTranslations } from 'next-intl';
 
