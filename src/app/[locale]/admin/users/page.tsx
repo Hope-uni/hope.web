@@ -2,7 +2,7 @@
 
 import { HeaderContent } from '@/components/layouts/partials/HeaderContent';
 import UserIndex from '@/components/user/list';
-import { RoutesName } from '@/constants/Menu';
+import { RoutesName } from '@/constants/index';
 import { Space } from 'antd';
 import { useTranslations } from 'next-intl';
 
