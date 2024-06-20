@@ -1,5 +1,4 @@
 import MainLayout from '@/components/layouts/MainLayout';
-import { NavigationEvents } from '@/components/navigation-events';
 import { Suspense } from 'react';
 import Loading from './loading';
 

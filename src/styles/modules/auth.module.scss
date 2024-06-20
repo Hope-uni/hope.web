@@ -65,6 +65,7 @@
         }
         .auth_form_link_forgot{
             @extend .auth_form_link;
+            margin-bottom: 20px
         }
         .auth_form_link_back{
             @extend .auth_form_link;

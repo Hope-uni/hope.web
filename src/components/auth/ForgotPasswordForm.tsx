@@ -31,10 +31,7 @@ export const ForgotPasswordForm = () => {
         caption={t('form.forgot_password.caption')}
       />
 
-      <Form.Item
-        name="emailOrUsername"
-        rules={Rules.forgotPassword.emailOrUsername}
-      >
+      <Form.Item name="emailOrUsername" rules={Rules.auth.emailOrUsername}>
         <Input placeholder={t('fields.email_or_username.placeholder')} />
       </Form.Item>
 

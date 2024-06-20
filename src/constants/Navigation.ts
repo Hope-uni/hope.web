@@ -49,3 +49,16 @@ export const RoutesName = {
         create: '/admin/roles/create'
     },
 }
+
+export const ProtectedRoutes = [
+    '/admin/*',
+]
+
+export const AuthRoutes = [
+    RoutesName.login.index,
+    RoutesName.forgotPassword.index,
+    RoutesName.resetPassword.index
+]
+
+export const DEFAULT_REDIRECT_LOGIN_URL = '/login'
+export const DEFAULT_REDIRECT_HOME_URL = '/dashboard'

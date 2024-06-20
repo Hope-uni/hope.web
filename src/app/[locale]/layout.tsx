@@ -5,6 +5,10 @@ import '@/styles/main.scss';
 import { ConfigProvider } from 'antd';
 import { NextIntlClientProvider, useMessages } from 'next-intl';
 import { TableProvider } from '@/context/Table/TableProvider';
+import { getServerSession } from 'next-auth';
+import SessionProviderClient from '@/context/Auth/SessionProviderClient';
+import AuthorizationProvider from '@/context/Auth/AuthorizationProvider';
+import { getMessages, getTranslations } from 'next-intl/server';
 
 interface RootLayoutProps {
   children: React.ReactNode;
@@ -16,22 +20,27 @@ export const metadata: Metadata = {
   description: 'Web module for hope app',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
   params: { locale },
 }: Readonly<RootLayoutProps>) {
-  const messages = useMessages();
+  const session = await getServerSession();
+  const messages = await getMessages();
 
   return (
     <html lang={locale}>
       <body>
-        <ConfigProvider theme={theme}>
-          <NextIntlClientProvider locale={locale} messages={messages}>
-            <AntdRegistry>
-              <TableProvider>{children}</TableProvider>
-            </AntdRegistry>
-          </NextIntlClientProvider>
-        </ConfigProvider>
+        <SessionProviderClient session={session}>
+          <AuthorizationProvider>
+            <ConfigProvider theme={theme}>
+              <NextIntlClientProvider locale={locale} messages={messages}>
+                <AntdRegistry>
+                  <TableProvider>{children}</TableProvider>
+                </AntdRegistry>
+              </NextIntlClientProvider>
+            </ConfigProvider>
+          </AuthorizationProvider>
+        </SessionProviderClient>
       </body>
     </html>
   );

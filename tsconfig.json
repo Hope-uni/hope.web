@@ -21,49 +21,59 @@
         "name": "next"
       }
     ],
-    "baseUrl": "./src",
+    "baseUrl": "./",
     "paths": {
       "@/*": [
-        "./src/*"
+        "src/*"
       ],
       "@/assets/*": [
-        "assets/*"
+        "src/assets/*"
       ],
       "@/components/*": [
-        "components/*"
+        "src/components/*"
       ],
-      "@/models/*": [
-        "models/*"
+      "@/schema/*": [
+        "src/models/schema/index",
+        "src/models/schema/*"
       ],
       "@/types/*": [
-        "models/types/*"
+        "src/models/types/index",
+        "src/models/types/*"
       ],
       "@/styles/*": [
-        "styles/*"
+        "src/styles/*"
       ],
       "@/hooks/*": [
-        "hooks/*"
+        "src/hooks/*"
       ],
       "@/services/*": [
-        "services/*"
+        "src/services/*"
       ],
       "@/context/*": [
-        "context/*"
+        "src/context/*"
       ],
       "@/utils/*": [
-        "utils/*"
+        "src/utils/*"
       ],
       "@/constants/*": [
-        "constants/*"
+        "src/constants/*"
       ],
       "@/theme/*": [
-        "theme/*"
+        "src/theme/*"
       ],
       "@/intl-navigation": [
-        "navigation.ts"
+        "src/navigation.ts"
       ],
       "@/mocks": [
         "./src/__mocks__/*"
+      ],
+      "@/config/*": [
+        "src/config/index",
+        "src/config/*"
+      ],
+      "@/middleware/*": [
+        "src/middleware/index",
+        "src/middleware/*"
       ]
     }
   },

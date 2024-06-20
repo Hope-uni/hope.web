@@ -1,4 +1,4 @@
-import { I_ActionTable, E_ActionKeyTable, I_TableState } from "@/types/Table.d";
+import { I_ActionTable, E_ActionKeyTable, I_TableState } from "@/types/index";
 
 
 export const initialState: I_TableState = {

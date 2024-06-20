@@ -23,18 +23,20 @@ export const _ = {
       send: 'Enviar',
     },
     fields: {
-      email: {
-        label: 'Correo',
-        placeholder: 'Correo',
+      email_or_username: {
+        label: 'Usuario o correo electrónico',
+        placeholder: 'Usuario o correo electrónico',
         rules: {
-          required: 'Por favor ingrese su correo electrónico',
+          required: 'Usuario o correo electrónico es requerido',
+          validator: 'Ingrese un correo electrónico o usuario válido'
         },
       },
       password: {
         label: 'Contraseña',
         placeholder: 'Contraseña',
         rules: {
-          required: 'Por favor ingrese su Contraseña',
+          required: 'Contraseñá es requerida',
+          min: 'La contraseña debe tener al menos 8 caracteres',
         },
       },
       confirm_password: {
@@ -42,13 +44,6 @@ export const _ = {
         placeholder: 'Confirmar contraseña',
         rules: {
           required: 'Por favor ingrese su Contraseña',
-        },
-      },
-      email_or_username: {
-        label: 'Usuario o correo electrónico',
-        placeholder: 'Usuario o correo electrónico',
-        rules: {
-          required: 'Usuario o correo electrónico es requerido',
         },
       },
     },
