@@ -344,14 +344,18 @@ export const _ = {
   },
   menu: {
     routes: {
+      users: 'Usuarios',
+      all: 'Todos',
       patients: 'Pacientes',
       tutors: 'Tutores',
       therapists: 'Tepeutas',
+      methodology: 'Metodología',
       pictograms: 'Pictogramas',
-      categories: 'Categorias',
       activities: 'Actividades',
+      phases: 'Fases',
+      setting: 'Configuración',
       achievements: 'Logros',
-      users: 'Usuarios',
+      categories: 'Categorias',
       roles: 'Roles',
       logout: 'Cerrar sesión'
     }
