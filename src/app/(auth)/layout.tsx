@@ -1,3 +1,5 @@
+'use client';
+
 import styles from '@/styles/modules/auth.module.scss';
 import Image from 'next/image';
 import login_img from '@/assets/img/auth_layout_img.svg';

@@ -1,15 +1,15 @@
 'use client';
 
-import React, { useCallback } from 'react';
-import { TableProps, Tag } from 'antd';
-import { Tutor } from '@/models/schema/index';
 import PopupActions from '@/components/table/PopupActions';
-import { useRouter } from '@/intl-navigation';
-import { useTranslations } from 'next-intl';
+import { Tutor } from '@/models/schema/index';
+import { TableProps } from 'antd';
+import { useRouter } from 'next/navigation';
+import { useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export const useTutorColumns = () => {
   const router = useRouter();
-  const t = useTranslations('_.Tutor.index');
+  const { t } = useTranslation();
 
   const handleEdit = useCallback(
     (id: number) => {
@@ -20,29 +20,29 @@ export const useTutorColumns = () => {
 
   const columns: TableProps<Tutor>['columns'] = [
     {
-      title: t('columns.name'),
+      title: t('Tutor.index.columns.name'),
       dataIndex: 'fullName',
       align: 'left',
     },
     {
-      title: t('columns.email'),
+      title: t('Tutor.index.columns.email'),
       dataIndex: 'email',
       align: 'left',
     },
     {
-      title: t('columns.phone'),
+      title: t('Tutor.index.columns.phone'),
       dataIndex: 'phoneNumber',
       align: 'center',
       width: '200px',
     },
     {
-      title: t('columns.telephone'),
+      title: t('Tutor.index.columns.telephone'),
       dataIndex: 'telephone',
       align: 'center',
       width: '200px',
     },
     {
-      title: t('columns.patientsInCharge'),
+      title: t('Tutor.index.columns.patientsInCharge'),
       dataIndex: 'patientsInCharge',
       align: 'center',
       width: '150px',

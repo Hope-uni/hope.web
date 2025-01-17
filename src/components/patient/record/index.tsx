@@ -2,7 +2,9 @@
 
 import GoToBack from '@/components/GoToBack';
 import Progress from '@/components/patient/record/MethodologyProgress';
+import AchievementTab from '@/components/patient/record/tabs/AchievementTab';
 import ActivityTab from '@/components/patient/record/tabs/ActivitiesTab';
+import PictogramTab from '@/components/patient/record/tabs/PictogramTab';
 import RecordTab from '@/components/patient/record/tabs/RecordTab';
 import CardProfile from '@/components/user/detail/CardProfile';
 import { Patient } from '@/models/schema';
@@ -19,7 +21,8 @@ import {
   Typography,
 } from 'antd';
 import { DescriptionsProps } from 'antd/lib';
-import { useTranslations } from 'next-intl';
+import { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   BsAward,
   BsCardChecklist,
@@ -30,22 +33,18 @@ import {
 } from 'react-icons/bs';
 import { HiCog6Tooth } from 'react-icons/hi2';
 import {
+  getAchievementList,
   getActivitiesList,
   getObservationList,
   getPictogramsList,
-  getAchievementList,
 } from '../../../../__mocks__/user';
-import PictogramTab from '@/components/patient/record/tabs/PictogramTab';
-import AchievementTab from '@/components/patient/record/tabs/AchievementTab';
-import { useMemo } from 'react';
 
 interface Props {
   patient: Patient;
 }
 
 export default function PatientDetail({ patient }: Props) {
-  const t = useTranslations('_.Patient');
-  const t_actions = useTranslations('_.Actions');
+  const { t } = useTranslation();
 
   const handleSwitchChange = (checked: boolean) => {
     console.log(checked);
@@ -65,7 +64,7 @@ export default function PatientDetail({ patient }: Props) {
           key={'b/n-switch'}
         >
           <span className="ant-dropdown-menu-title-content">
-            {t_actions('modebn')}
+            {t('Actions.modebn')}
           </span>
           <Switch onChange={handleSwitchChange} size="small" />
         </Flex>
@@ -74,25 +73,28 @@ export default function PatientDetail({ patient }: Props) {
   };
 
   // TODO data quemada por mientras
-  const items: DescriptionsProps['items'] = [
-    {
-      key: '1',
-      label: 'Fecha denacimiento',
-      children: '11 de mayo 1999',
-    },
-    {
-      key: '2',
-      label: 'Teléfono de casa',
-      children: '2225 1234',
-    },
-    {
-      key: '3',
-      label: 'Dirección',
-      span: 2,
-      children:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ',
-    },
-  ];
+  const items: DescriptionsProps['items'] = useMemo(
+    () => [
+      {
+        key: '1',
+        label: 'Fecha denacimiento',
+        children: '11 de mayo 1999',
+      },
+      {
+        key: '2',
+        label: 'Teléfono de casa',
+        children: '2225 1234',
+      },
+      {
+        key: '3',
+        label: 'Dirección',
+        span: 2,
+        children:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ',
+      },
+    ],
+    [],
+  );
 
   // TODO data quemada por mientras
   const itemInfoTutor: DescriptionsProps['items'] = useMemo(() => {
@@ -130,30 +132,30 @@ export default function PatientDetail({ patient }: Props) {
     () => [
       {
         key: '1',
-        label: t('detail.tabs.record_tab'),
+        label: t('Patient.detail.tabs.record_tab'),
         icon: <BsPersonBadge size={20} />,
         children: <RecordTab items={items} observations={getObservationList} />,
       },
       {
         key: '2',
-        label: t('detail.tabs.actividades_tab'),
+        label: t('Patient.detail.tabs.actividades_tab'),
         icon: <BsCardChecklist size={20} />,
         children: <ActivityTab activities={getActivitiesList.data} />,
       },
       {
         key: '3',
-        label: t('detail.tabs.pictogramas_tab'),
+        label: t('Patient.detail.tabs.pictogramas_tab'),
         icon: <BsImages size={20} />,
         children: <PictogramTab pictograms={getPictogramsList} />,
       },
       {
         key: '4',
-        label: t('detail.tabs.logros_tab'),
+        label: t('Patient.detail.tabs.logros_tab'),
         icon: <BsAward size={20} />,
         children: <AchievementTab achievements={getAchievementList} />,
       },
     ],
-    [patient],
+    [items, t],
   );
 
   return (
@@ -175,9 +177,9 @@ export default function PatientDetail({ patient }: Props) {
             <Flex justify="space-between" align="flex-start">
               <GoToBack />
               <Flex gap={10} align="center">
-                <Button type="default">{t_actions('edit')}</Button>
+                <Button type="default">{t('Actions.edit')}</Button>
                 <Button className="default-error-color" type="default">
-                  {t_actions('delete')}
+                  {t('Actions.delete')}
                 </Button>
                 <Dropdown trigger={['click']} dropdownRender={renderItem}>
                   <Flex gap={2} align="center">
@@ -199,7 +201,7 @@ export default function PatientDetail({ patient }: Props) {
                       underline
                       className={styles.upgrade_phase_text}
                     >
-                      {t_actions('Upload_phase')}
+                      {t('Actions.Upload_phase')}
                     </Typography.Text>
                   </Flex>
                 </Flex>
@@ -219,7 +221,7 @@ export default function PatientDetail({ patient }: Props) {
               <CardProfile
                 user={{ ...patient, ...patient.user }}
                 layout="vertical"
-                title={t('detail.title_info_tutor')}
+                title={t('Patient.detail.title_info_tutor')}
                 infoDescription={itemInfoTutor}
               />
             </Flex>
@@ -227,7 +229,7 @@ export default function PatientDetail({ patient }: Props) {
               <CardProfile
                 user={{ ...patient, ...patient.user }}
                 layout="vertical"
-                title={t('detail.title_info_therapist')}
+                title={t('Patient.detail.title_info_therapist')}
                 infoDescription={itemInfoTherapist}
               />
             </Flex>

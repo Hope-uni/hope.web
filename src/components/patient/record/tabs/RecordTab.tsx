@@ -1,13 +1,6 @@
 'use client';
 
-import {
-  Descriptions,
-  DescriptionsProps,
-  Divider,
-  Tabs,
-  TabsProps,
-} from 'antd';
-import { useTranslations } from 'next-intl';
+import { Descriptions, DescriptionsProps, Divider } from 'antd';
 import ObservationList from '../ObservationList';
 
 interface Observation {
@@ -22,8 +15,6 @@ interface Props {
 }
 
 export default function RecordTab({ items, observations }: Props) {
-  const t = useTranslations('_.User');
-
   return (
     <>
       <Descriptions

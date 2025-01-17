@@ -1,14 +1,16 @@
 'use client';
 
 import { HeaderForm } from '@/components/auth/HeaderForm';
+import { DEFAULT_REDIRECT_HOME_URL } from '@/constants';
 import { Rules } from '@/constants/rules';
-import { Link } from '@/intl-navigation';
 import styles from '@/styles/modules/auth.module.scss';
 import { Alert, Button, Form, Input, message } from 'antd';
 import FormItem from 'antd/lib/form/FormItem';
 import { signIn } from 'next-auth/react';
-import { useTranslations } from 'next-intl';
+import Link from 'next/link';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface LoginFormValues {
   email_username: string;
@@ -16,7 +18,9 @@ interface LoginFormValues {
 }
 
 export const LoginForm = () => {
-  const t = useTranslations('_.Auth');
+  const { t } = useTranslation();
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -32,9 +36,16 @@ export const LoginForm = () => {
 
       if (res?.error) {
         setError(res?.error);
+        return;
       }
 
-      console.log(res, 'res');
+      const callbackUrl = searchParams.get('callbackUrl');
+
+      if (callbackUrl && callbackUrl.trim() !== '') {
+        router.push(callbackUrl);
+      } else {
+        router.push(DEFAULT_REDIRECT_HOME_URL);
+      }
     } catch (error) {
       message.error('Something wrong');
     } finally {
@@ -50,14 +61,14 @@ export const LoginForm = () => {
       initialValues={{ email_username: 'sam', password: '1234678' }}
       onFinish={handleOnFinish}
     >
-      <HeaderForm title={t('form.login.title')} />
+      <HeaderForm title={t('Auth.form.login.title')} />
       {error && <Alert message={error} type="error" showIcon />}
       <FormItem
         name="email_username"
         className={styles.auth_form_input}
         rules={Rules.auth.emailOrUsername}
       >
-        <Input placeholder={t('fields.email_or_username.placeholder')} />
+        <Input placeholder={t('Auth.fields.email_or_username.placeholder')} />
       </FormItem>
       <div className="w-100">
         <FormItem
@@ -67,11 +78,11 @@ export const LoginForm = () => {
         >
           <Input
             type="password"
-            placeholder={t('fields.password.placeholder')}
+            placeholder={t('Auth.fields.password.placeholder')}
           />
         </FormItem>
         <Link href="/forgot-password" className={styles.auth_form_link_forgot}>
-          {t('form.forgot_password_link')}
+          {t('Auth.form.forgot_password_link')}
         </Link>
       </div>
       <Button
@@ -80,7 +91,7 @@ export const LoginForm = () => {
         className={styles.auth_form_submit}
         loading={loading}
       >
-        {t('form.submit')}
+        {t('Auth.form.submit')}
       </Button>
     </Form>
   );

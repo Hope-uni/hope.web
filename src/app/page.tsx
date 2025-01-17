@@ -1,8 +1,10 @@
-import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
-
-export default function RootLayout() {
-  const cookieStore = cookies();
-  const locale = cookieStore.get('NEXT_LOCALE');
-  redirect(`/${locale?.value}`);
+export default function Home() {
+  return (
+    <main>
+      <h1>Under construction</h1>
+      <footer>
+        <p>&copy; hope 2024</p>
+      </footer>
+    </main>
+  );
 }

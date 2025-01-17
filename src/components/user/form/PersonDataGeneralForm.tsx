@@ -3,8 +3,8 @@ import { Rules } from '@/constants/rules';
 import styles from '@/styles/modules/user.module.scss';
 import { Col, Form, Input, Radio, Row } from 'antd';
 import { RadioChangeEvent } from 'antd/lib';
-import { useTranslations } from 'next-intl';
 import { Dispatch } from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   setCurrentRole: Dispatch<React.SetStateAction<string>>;
@@ -19,24 +19,23 @@ export default function PersonDataGeneralForm({
   gutterRow = 0,
   spanCol = 24,
 }: Props) {
-  const t = useTranslations('_.User.fields');
-  const t_role = useTranslations('_.Role');
+  const { t } = useTranslation();
 
   const Roles = [
     {
-      label: t_role('catalog.patient'),
+      label: t('Role.catalog.patient'),
       value: 'patient',
     },
     {
-      label: t_role('catalog.tutor'),
+      label: t('Role.catalog.tutor'),
       value: 'tutor',
     },
     {
-      label: t_role('catalog.therapist'),
+      label: t('Role.catalog.therapist'),
       value: 'therapist',
     },
     {
-      label: t_role('catalog.admin'),
+      label: t('Role.catalog.admin'),
       value: 'admin',
     },
   ];
@@ -56,8 +55,8 @@ export default function PersonDataGeneralForm({
         <Show.When isTrue={!isEdit}>
           <Form.Item
             name="role"
-            label={t('user_role.label')}
-            rules={Rules.user.create.user_role}
+            label={t('User.fields.user_role.label')}
+            rules={Rules.user.user_role}
           >
             <Radio.Group onChange={handleChangeRole}>
               {Roles.map((item) => (
@@ -74,15 +73,18 @@ export default function PersonDataGeneralForm({
         <Col sm={{ span: spanCol }} xs={{ span: 24 }}>
           <Form.Item
             name="first_name"
-            label={t('first_name.label')}
-            rules={Rules.user.create.first_name}
+            label={t('User.fields.first_name.label')}
+            rules={Rules.user.first_name}
           >
-            <Input placeholder={t('first_name.label')} />
+            <Input placeholder={t('User.fields.first_name.label')} />
           </Form.Item>
         </Col>
         <Col sm={{ span: spanCol }} xs={{ span: 24 }}>
-          <Form.Item name="second_name" label={t('second_name.label')}>
-            <Input placeholder={t('second_name.placeholder')} />
+          <Form.Item
+            name="second_name"
+            label={t('User.fields.second_name.label')}
+          >
+            <Input placeholder={t('User.fields.second_name.placeholder')} />
           </Form.Item>
         </Col>
       </Row>
@@ -91,15 +93,18 @@ export default function PersonDataGeneralForm({
         <Col sm={{ span: spanCol }} xs={{ span: 24 }}>
           <Form.Item
             name="first_surname"
-            label={t('first_surname.label')}
-            rules={Rules.user.create.first_surname}
+            label={t('User.fields.first_surname.label')}
+            rules={Rules.user.first_surname}
           >
-            <Input placeholder={t('first_surname.placeholder')} />
+            <Input placeholder={t('User.fields.first_surname.placeholder')} />
           </Form.Item>
         </Col>
         <Col sm={{ span: spanCol }} xs={{ span: 24 }}>
-          <Form.Item name="second_surname" label={t('second_surname.label')}>
-            <Input placeholder={t('second_surname.placeholder')} />
+          <Form.Item
+            name="second_surname"
+            label={t('User.fields.second_surname.label')}
+          >
+            <Input placeholder={t('User.fields.second_surname.placeholder')} />
           </Form.Item>
         </Col>
       </Row>

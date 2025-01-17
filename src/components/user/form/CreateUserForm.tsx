@@ -6,8 +6,8 @@ import PersonDataSpecificForm from '@/components/user/form/PersonDataSpecificFor
 import UserDataForm from '@/components/user/form/UserDataForm';
 import styles from '@/styles/modules/user.module.scss';
 import { Button, Divider, Flex, Steps, Typography, message } from 'antd';
-import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const { Text, Title } = Typography;
 
@@ -43,7 +43,7 @@ const stepsData: StepFormInterface[] = [
 const initialStep = 0;
 
 export default function CreateUserForm() {
-  const t = useTranslations('_.User');
+  const { t } = useTranslation();
   const [currentIndex, setCurrentIndex] = useState(initialStep);
   const [current, setCurrent] = useState<StepFormInterface>(
     stepsData[initialStep],
@@ -114,7 +114,7 @@ export default function CreateUserForm() {
                 className={styles.button}
                 onClick={handlePrev}
               >
-                {t('form.create.prev_button')}
+                {t('User.form.create.prev_button')}
               </Button>
             </Show.When>
             <Show.When isTrue={currentIndex < stepsData.length - 1}>
@@ -123,7 +123,7 @@ export default function CreateUserForm() {
                 className={styles.button}
                 onClick={handleNext}
               >
-                {t('form.create.next_button')}
+                {t('User.form.create.next_button')}
               </Button>
             </Show.When>
             <Show.When isTrue={currentIndex === stepsData.length - 1}>
@@ -132,7 +132,7 @@ export default function CreateUserForm() {
                 className={styles.button}
                 onClick={handleSubmit}
               >
-                {t('form.create.submit_button')}
+                {t('User.form.create.submit_button')}
               </Button>
             </Show.When>
           </Show>

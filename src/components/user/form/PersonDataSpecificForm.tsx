@@ -2,7 +2,7 @@ import { Show } from '@/components/Show';
 import styles from '@/styles/modules/user.module.scss';
 import { Col, Form, Input, Row, Select } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
-import { useTranslations } from 'next-intl';
+import { useTranslation } from 'react-i18next';
 
 const { Option } = Select;
 
@@ -34,9 +34,7 @@ export default function PersonDataSpecificForm({
   spanCol = spanColFullWidth,
   spanColMedium = spanColFullWidth,
 }: Props) {
-  const t = useTranslations('_.User.fields');
-
-  console.log(selectedRole);
+  const { t } = useTranslation();
 
   return (
     <Form
@@ -51,8 +49,8 @@ export default function PersonDataSpecificForm({
             <Show.When
               isTrue={inputVisibleByRole.birthday.includes(selectedRole)}
             >
-              <Form.Item name="bithday" label={t('birthday.label')}>
-                <Input placeholder={t('birthday.placeholder')} />
+              <Form.Item name="bithday" label={t('User.fields.birthday.label')}>
+                <Input placeholder={t('User.fields.birthday.placeholder')} />
               </Form.Item>
             </Show.When>
           </Show>
@@ -62,8 +60,11 @@ export default function PersonDataSpecificForm({
             <Show.When
               isTrue={inputVisibleByRole.gradeOfTea.includes(selectedRole)}
             >
-              <Form.Item name="gradeOfTea" label={t('grade_of_tea.label')}>
-                <Select placeholder={t('grade_of_tea.placeholder')}>
+              <Form.Item
+                name="gradeOfTea"
+                label={t('User.fields.grade_of_tea.label')}
+              >
+                <Select placeholder={t('User.fields.grade_of_tea.placeholder')}>
                   <Option value="demo">demo</Option>
                 </Select>
               </Form.Item>
@@ -76,8 +77,8 @@ export default function PersonDataSpecificForm({
         <Col sm={{ span: spanCol }} xs={{ span: spanColFullWidth }}>
           <Show>
             <Show.When isTrue={inputVisibleByRole.phase.includes(selectedRole)}>
-              <Form.Item name="bithday" label={t('phase.label')}>
-                <Select placeholder={t('phase.placeholder')}>
+              <Form.Item name="bithday" label={t('User.fields.phase.label')}>
+                <Select placeholder={t('User.fields.phase.placeholder')}>
                   <Option value="demo">Fase 1</Option>
                 </Select>
               </Form.Item>
@@ -91,9 +92,11 @@ export default function PersonDataSpecificForm({
             >
               <Form.Item
                 name="tutorInCharge"
-                label={t('tutor_in_charge.label')}
+                label={t('User.fields.tutor_in_charge.label')}
               >
-                <Select placeholder={t('tutor_in_charge.placeholder')}>
+                <Select
+                  placeholder={t('User.fields.tutor_in_charge.placeholder')}
+                >
                   <Option value="demo">Demo</Option>
                 </Select>
               </Form.Item>
@@ -106,8 +109,14 @@ export default function PersonDataSpecificForm({
         <Show.When
           isTrue={inputVisibleByRole.observations.includes(selectedRole)}
         >
-          <Form.Item name="observations" label={t('observations.label')}>
-            <TextArea rows={4} placeholder={t('observations.placeholder')} />
+          <Form.Item
+            name="observations"
+            label={t('User.fields.observations.label')}
+          >
+            <TextArea
+              rows={4}
+              placeholder={t('User.fields.observations.placeholder')}
+            />
           </Form.Item>
         </Show.When>
       </Show>
@@ -120,9 +129,11 @@ export default function PersonDataSpecificForm({
             >
               <Form.Item
                 name="identification"
-                label={t('identification.label')}
+                label={t('User.fields.identification.label')}
               >
-                <Input placeholder={t('identification.placeholder')} />
+                <Input
+                  placeholder={t('User.fields.identification.placeholder')}
+                />
               </Form.Item>
             </Show.When>
           </Show>
@@ -132,8 +143,13 @@ export default function PersonDataSpecificForm({
             <Show.When
               isTrue={inputVisibleByRole.phoneNumber.includes(selectedRole)}
             >
-              <Form.Item name="phoneNumber" label={t('phone_number.label')}>
-                <Input placeholder={t('phone_number.placeholder')} />
+              <Form.Item
+                name="phoneNumber"
+                label={t('User.fields.phone_number.label')}
+              >
+                <Input
+                  placeholder={t('User.fields.phone_number.placeholder')}
+                />
               </Form.Item>
             </Show.When>
           </Show>
@@ -143,8 +159,11 @@ export default function PersonDataSpecificForm({
             <Show.When
               isTrue={inputVisibleByRole.telephone.includes(selectedRole)}
             >
-              <Form.Item name="telephone" label={t('telephone.label')}>
-                <Input placeholder={t('telephone.placeholder')} />
+              <Form.Item
+                name="telephone"
+                label={t('User.fields.telephone.label')}
+              >
+                <Input placeholder={t('User.fields.telephone.placeholder')} />
               </Form.Item>
             </Show.When>
           </Show>

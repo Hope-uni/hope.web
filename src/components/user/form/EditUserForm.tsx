@@ -5,13 +5,13 @@ import PersonDataSpecificForm from '@/components/user/form/PersonDataSpecificFor
 import UserDataForm from '@/components/user/form/UserDataForm';
 import styles from '@/styles/modules/user.module.scss';
 import { Button, Divider, Flex, Typography, message } from 'antd';
-import { useTranslations } from 'next-intl';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const { Title } = Typography;
 
 export default function EditUserForm() {
-  const t = useTranslations('_.User');
+  const { t } = useTranslation();
   const [currentRole, setCurrentRole] = useState<string>('therapist');
 
   const handleSubmit = () => {
@@ -22,12 +22,12 @@ export default function EditUserForm() {
     <Flex vertical className={`${styles.wrapper_edit_user}`} gap={10}>
       <Flex vertical gap={10} className={styles.edit_user_content}>
         <Title level={3} className={styles.edit_user_title_sections}>
-          {t('form.edit.title_data_user')}
+          {t('User.form.edit.title_data_user')}
         </Title>
         <UserDataForm isEdit gutterRow={[20, 0]} spanCol={12} />
         <Divider type="horizontal" className={styles.section_divider} />
         <Title level={3} className={styles.edit_user_title_sections}>
-          {t('form.edit.title_data_general')}
+          {t('User.form.edit.title_data_general')}
         </Title>
         <PersonDataGeneralForm
           setCurrentRole={setCurrentRole}
@@ -37,7 +37,7 @@ export default function EditUserForm() {
         />
         <Divider type="horizontal" className={styles.section_divider} />
         <Title level={3} className={styles.edit_user_title_sections}>
-          {t('form.edit.title_data_specific', { personType: currentRole })}
+          {t('User.form.edit.title_data_specific', { personType: currentRole })}
         </Title>
         <PersonDataSpecificForm
           selectedRole={currentRole}
@@ -49,10 +49,10 @@ export default function EditUserForm() {
       </Flex>
       <Flex justify="flex-end" className={styles.steps_button_actions} gap={10}>
         <Button type="default" className={styles.button} onClick={handleSubmit}>
-          {t('form.edit.cancel_button')}
+          {t('User.form.edit.cancel_button')}
         </Button>
         <Button type="primary" className={styles.button} onClick={handleSubmit}>
-          {t('form.edit.edit_button')}
+          {t('User.form.edit.edit_button')}
         </Button>
       </Flex>
     </Flex>

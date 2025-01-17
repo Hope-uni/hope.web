@@ -1,15 +1,15 @@
 'use client';
 
 import WrapperTable from '@/components/table/Wrappertable';
-import { Space, message } from 'antd';
-import { getUserList } from '../../../../__mocks__/user';
 import { useUserColumns } from '@/components/user/list/UserColumn';
 import { useTable } from '@/context/Table/TableContext';
 import { E_ActionKeyTable } from '@/models/types/Table.d';
-import { useTranslations } from 'next-intl';
+import { Space, message } from 'antd';
+import { useTranslation } from 'react-i18next';
+import { getUserList } from '../../../../__mocks__/user';
 
 export default function UserIndex() {
-  const t = useTranslations('_.User');
+  const { t } = useTranslation();
   const [columns] = useUserColumns();
   const {
     state: { searching },
@@ -31,7 +31,7 @@ export default function UserIndex() {
           searchProps={{
             onSearch: handleSearch,
             searching: searching,
-            placeholder: t('index.searchPlaceholder'),
+            placeholder: t('User.index.searchPlaceholder'),
           }}
         />
       </Space>

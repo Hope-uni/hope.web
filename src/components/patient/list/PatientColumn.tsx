@@ -1,13 +1,13 @@
-import React, { useCallback } from 'react';
-import { TableProps, Tag } from 'antd';
-import { Patient } from '@/models/schema';
 import PopupActions from '@/components/table/PopupActions';
-import { useRouter } from '@/intl-navigation';
-import { useTranslations } from 'next-intl';
+import { Patient } from '@/models/schema';
+import { TableProps } from 'antd';
+import { useRouter } from 'next/navigation';
+import { useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export const usePatientColumns = () => {
   const router = useRouter();
-  const t = useTranslations('_.Patient.index');
+  const { t } = useTranslation();
 
   const handleEdit = useCallback(
     (id: number) => {
@@ -18,24 +18,24 @@ export const usePatientColumns = () => {
 
   const columns: TableProps<Patient>['columns'] = [
     {
-      title: t('columns.name'),
+      title: t('Patient.index.columns.name'),
       dataIndex: 'fullName',
       align: 'left',
     },
     {
-      title: t('columns.age'),
+      title: t('Patient.index.columns.age'),
       dataIndex: 'age',
       align: 'center',
       width: '200px',
     },
     {
-      title: t('columns.grade'),
+      title: t('Patient.index.columns.grade'),
       dataIndex: 'teaGrade',
       align: 'center',
       width: '200px',
     },
     {
-      title: t('columns.phase'),
+      title: t('Patient.index.columns.phase'),
       dataIndex: 'teaPhase',
       align: 'center',
       width: '200px',

@@ -1,15 +1,15 @@
-import React, { useCallback } from 'react';
-import { TableProps, Tag } from 'antd';
-import { User } from '@/models/schema';
-import { StarFilled } from '@ant-design/icons';
 import PopupActions from '@/components/table/PopupActions';
-import { useTranslations } from 'next-intl';
-import { useRouter } from '@/intl-navigation';
+import { User } from '@/models/schema';
 import { ActionType } from '@/models/types/Table';
+import { StarFilled } from '@ant-design/icons';
+import { TableProps, Tag } from 'antd';
+import { useRouter } from 'next/navigation';
+import { useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export const useUserColumns = () => {
   const router = useRouter();
-  const t = useTranslations('_.User.index');
+  const { t } = useTranslation();
 
   const handleShowDetail = useCallback(
     (id: number, pathModule: string) => {
@@ -22,19 +22,19 @@ export const useUserColumns = () => {
 
   const columns: TableProps<User>['columns'] = [
     {
-      title: t('columns.email'),
+      title: t('User.index.columns.email'),
       dataIndex: 'email',
       align: 'left',
     },
     {
-      title: t('columns.user'),
+      title: t('User.index.columns.user'),
       dataIndex: 'username',
       align: 'center',
       width: '280px',
       render: (_, { username }) => <span>@{username}</span>,
     },
     {
-      title: t('columns.role'),
+      title: t('User.index.columns.role'),
       dataIndex: 'role',
       align: 'center',
       width: '280px',

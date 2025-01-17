@@ -1,15 +1,15 @@
 'use client';
 
+import { useActivityColumns } from '@/components/activity/list/ActivityColumn';
 import WrapperTable from '@/components/table/Wrappertable';
 import { useTable } from '@/context/Table/TableContext';
 import { E_ActionKeyTable } from '@/models/types/Table.d';
 import { Space } from 'antd';
-import { useTranslations } from 'next-intl';
+import { useTranslation } from 'react-i18next';
 import { getActivitiesList } from '../../../../__mocks__/user';
-import { useActivityColumns } from '@/components/activity/list/ActivityColumn';
 
 export default function PatientIndex() {
-  const t = useTranslations('_.Activity');
+  const { t } = useTranslation();
   const [columns] = useActivityColumns();
   const {
     state: { searching },
@@ -30,7 +30,7 @@ export default function PatientIndex() {
           searchProps={{
             onSearch: handleSearch,
             searching: searching,
-            placeholder: t('index.searchPlaceholder'),
+            placeholder: t('Activity.index.searchPlaceholder'),
           }}
         />
       </Space>

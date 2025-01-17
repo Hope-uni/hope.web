@@ -1,17 +1,37 @@
-import createMiddleware from 'next-intl/middleware';
-import { locales, defaultLocale, localePrefix } from './navigation';
+/* import { NextRequest } from 'next/server';
 
-export default createMiddleware({
-    // A list of all locales that are supported
-    locales: locales,
+export function middleware(request: NextRequest) {} */
 
-    // Used when no locale matches
-    defaultLocale: defaultLocale,
+import {
+  AuthRoutes,
+  DEFAULT_REDIRECT_HOME_URL,
+  DEFAULT_REDIRECT_LOGIN_URL,
+} from '@/constants';
+import { NextResponse } from 'next/server';
+import { getToken } from 'next-auth/jwt';
+import type { NextRequest } from 'next/server';
+import { NextURL } from 'next/dist/server/web/next-url';
 
-    localePrefix
-});
+export { default } from 'next-auth/middleware';
+
+export async function middleware(req: NextRequest) {
+  const { pathname, origin } = req.nextUrl;
+  const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
+
+  if (!token && !AuthRoutes.some((route) => pathname.startsWith(route))) {
+    const loginUrl = new NextURL(DEFAULT_REDIRECT_LOGIN_URL, origin);
+    loginUrl.searchParams.set('callbackUrl', req.url);
+    return NextResponse.redirect(loginUrl);
+  }
+
+  if (token && AuthRoutes.some((route) => pathname.startsWith(route))) {
+    const homeUrl = `${req.nextUrl.origin}${DEFAULT_REDIRECT_HOME_URL}`;
+    return NextResponse.redirect(homeUrl);
+  }
+
+  return NextResponse.next();
+}
 
 export const config = {
-    // Match only internationalized pathnames
-    matcher: ['/(es|en)/:path*']
+  matcher: ['/login', '/admin/:path*'],
 };

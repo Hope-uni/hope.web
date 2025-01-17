@@ -1,13 +1,14 @@
 'use client';
 
+import { GoToLogin } from '@/components/auth/GoToLogin';
 import { HeaderForm } from '@/components/auth/HeaderForm';
 import { Rules } from '@/constants/rules';
-import { Link, useRouter } from '@/intl-navigation';
 import styles from '@/styles/modules/auth.module.scss';
 import { Button, Form, Input } from 'antd';
+import Link from 'antd/es/typography/Link';
 import FormItem from 'antd/lib/form/FormItem';
-import { useTranslations } from 'next-intl';
-import { GoToLogin } from '@/components/auth/GoToLogin';
+import { useRouter } from 'next/navigation';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   token: string | null;
@@ -15,7 +16,7 @@ interface Props {
 
 export const ResetPasswordForm = ({ token }: Props) => {
   const router = useRouter();
-  const t = useTranslations('_.Auth');
+  const { t } = useTranslation();
 
   const handleOnFinish = () => {
     router.push('/login');
@@ -25,12 +26,12 @@ export const ResetPasswordForm = ({ token }: Props) => {
     return (
       <div className={styles.auth_form}>
         <HeaderForm
-          title={t('form.reset_password.title')}
-          caption={t('form.reset_password.caption_no_token')}
+          title={t('Auth.form.reset_password.title')}
+          caption={t('Auth.form.reset_password.caption_no_token')}
           space="30px 0 25px 0"
         />
         <Button type="primary" style={{ marginTop: '2rem' }}>
-          <Link href="/login">{t('form.login_link')}</Link>
+          <Link href="/login">{t('Auth.form.login_link')}</Link>
         </Button>
       </div>
     );
@@ -47,8 +48,8 @@ export const ResetPasswordForm = ({ token }: Props) => {
       onFinish={handleOnFinish}
     >
       <HeaderForm
-        title={t('form.reset_password.title')}
-        caption={t('form.reset_password.caption')}
+        title={t('Auth.form.reset_password.title')}
+        caption={t('Auth.form.reset_password.caption')}
         space="10px 0 5px 0"
       />
 
@@ -57,7 +58,10 @@ export const ResetPasswordForm = ({ token }: Props) => {
         className={styles.auth_form_input}
         rules={Rules.resetPassword.password}
       >
-        <Input type="password" placeholder={t('fields.password.placeholder')} />
+        <Input
+          type="password"
+          placeholder={t('Auth.fields.password.placeholder')}
+        />
       </FormItem>
 
       <FormItem
@@ -67,7 +71,7 @@ export const ResetPasswordForm = ({ token }: Props) => {
       >
         <Input
           type="password"
-          placeholder={t('fields.confirm_password.placeholder')}
+          placeholder={t('Auth.fields.confirm_password.placeholder')}
         />
       </FormItem>
 
@@ -77,7 +81,7 @@ export const ResetPasswordForm = ({ token }: Props) => {
           htmlType="submit"
           className={styles.auth_form_submit}
         >
-          {t('form.send')}
+          {t('Auth.form.send')}
         </Button>
         <GoToLogin />
       </Form.Item>

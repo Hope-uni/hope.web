@@ -61,20 +61,15 @@
       "@/theme/*": [
         "src/theme/*"
       ],
-      "@/intl-navigation": [
-        "src/navigation.ts"
-      ],
       "@/mocks": [
         "./src/__mocks__/*"
       ],
       "@/config/*": [
-        "src/config/index",
         "src/config/*"
       ],
-      "@/middleware/*": [
-        "src/middleware/index",
-        "src/middleware/*"
-      ]
+      "@/i18n": [
+        "i18n.ts"
+      ],
     }
   },
   "include": [

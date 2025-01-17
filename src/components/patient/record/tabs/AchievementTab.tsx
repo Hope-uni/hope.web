@@ -1,10 +1,10 @@
 'use client';
 
+import AchievementItem from '@/components/achievement/AchievementItem';
+import { Achievement } from '@/models/schema/Achievement';
 import styles from '@/styles/modules/patient.module.scss';
 import { Flex, Typography } from 'antd';
-import { useTranslations } from 'next-intl';
-import { Achievement } from '@/models/schema/Achievement';
-import AchievementItem from '@/components/achievement/AchievementItem';
+import { useTranslation } from 'react-i18next';
 
 const { Title } = Typography;
 
@@ -13,12 +13,12 @@ interface Props {
 }
 
 export default function AchievementTab({ achievements }: Props) {
-  const t = useTranslations('_.Patient.detail');
+  const { t } = useTranslation();
 
   return (
     <Flex vertical className={styles.achievement_list} gap={30}>
       <Title className={styles.title_content_tab}>
-        {t('title_achieved_achievements')}
+        {t('Patient.detail.title_achieved_achievements')}
       </Title>
       <Flex
         className={styles.achievement_list_wrapper}

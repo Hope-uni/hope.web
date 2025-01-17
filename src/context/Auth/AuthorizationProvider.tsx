@@ -4,9 +4,8 @@ import {
   DEFAULT_REDIRECT_LOGIN_URL,
 } from '@/constants';
 import { useSession } from 'next-auth/react';
-import { Suspense, useEffect, useState } from 'react';
-import { redirect, usePathname, useRouter } from '@/intl-navigation';
-import Loading from '@/app/[locale]/admin/loading';
+import { useEffect, useState } from 'react';
+import { redirect, usePathname } from 'next/navigation';
 import { getServerSession } from 'next-auth';
 
 type Props = {
@@ -15,18 +14,20 @@ type Props = {
 
 const AuthorizationProvider = async ({ children }: Props) => {
   const session = await getServerSession();
-  console.log(session, 'sdsds');
 
-  if (!session || !session.user) {
+  // console.log(session, '********session***********');
+
+  /* if (!session || !session.user) {
+    console.log('entra here');
     redirect(DEFAULT_REDIRECT_LOGIN_URL);
   }
 
-  /* useEffect(() => {
+  useEffect(() => {
     if (
       status === 'unauthenticated' &&
       AuthRoutes.some((route) => pathname !== route)
     ) {
-      router.replace(DEFAULT_REDIRECT_LOGIN_URL);
+      Router.replace(DEFAULT_REDIRECT_LOGIN_URL);
     }
 
     if (
