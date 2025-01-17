@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useReducer, useMemo } from "react";
+import { createContext, useContext } from "react";
 import { initialState } from '@/context/Table/TableReducer';
 import { I_TableState } from "@/models/types/Table";
 

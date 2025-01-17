@@ -1,13 +1,13 @@
-import { useTranslations } from 'next-intl';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 export default function Copy() {
-  const t = useTranslations();
+  const { t } = useTranslation();
 
   return (
     <footer>
       <small className="text_primary-black text_sz-8">
-        {t('_.Copy', {
+        {t('Copy', {
           year: new Date().getFullYear(),
         })}
       </small>

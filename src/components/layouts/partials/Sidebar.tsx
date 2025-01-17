@@ -2,7 +2,7 @@
 
 import hopeLogo from '@/assets/img/hope_logo.svg';
 import { SidebarMenuItems } from '@/constants/Menu';
-import { usePathname, useRouter } from '@/intl-navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import styles from '@/styles/modules/layouts.module.scss';
 import { Divider, Flex, Layout, Menu, MenuProps } from 'antd';
 import Image from 'next/image';

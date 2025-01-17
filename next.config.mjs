@@ -1,7 +1,4 @@
 import path from 'path';
-import createNextIntlPlugin from 'next-intl/plugin';
-
-const withNextIntl = createNextIntlPlugin();
 
 // const bucketURL = process.env.NEXT_PUBLIC_HOSTNAME_AZURE_BUCKET;
 const bucketURL = 'api.dicebear.com,static.arasaac.org';
@@ -31,4 +28,4 @@ const nextConfig = {
   },
 };
 
-export default withNextIntl(nextConfig);
+export default nextConfig;

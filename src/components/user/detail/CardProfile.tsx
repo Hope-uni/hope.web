@@ -5,8 +5,8 @@ import { colorList } from '@/constants/Avatar';
 import styles from '@/styles/modules/user.module.scss';
 import { Avatar, Descriptions, Divider, Flex, Typography } from 'antd';
 import { DescriptionsProps } from 'antd/lib';
-import { useTranslations } from 'next-intl';
 import { memo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { BsChevronRight } from 'react-icons/bs';
 
 const { Title, Text } = Typography;
@@ -49,8 +49,7 @@ export default function CardProfile({
   infoDescription,
   showUser = false,
 }: Props) {
-  const t_actions = useTranslations('_.Actions');
-  const t_components = useTranslations('_.components');
+  const { t } = useTranslation();
 
   if (layout === 'vertical') {
     return (
@@ -79,7 +78,7 @@ export default function CardProfile({
           <Flex justify="end">
             <Flex align="center" className={styles.profile_detail} gap={4}>
               <Text className={styles.profile_detail_text}>
-                {t_actions('view_detail')}
+                {t('Actions.view_detail')}
               </Text>
               <BsChevronRight size="12px" />
             </Flex>
@@ -125,7 +124,7 @@ export default function CardProfile({
         </Title>
         <Flex gap={8}>
           <Text className={styles.caption}>
-            {user.age} {t_components('CardProfile.years_old')}
+            {user.age} {t('components.CardProfile.years_old')}
           </Text>
           |<Text className={styles.caption}>{user.gender}</Text>
         </Flex>

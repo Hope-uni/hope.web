@@ -1,8 +1,8 @@
 'use client';
 
-import { Link } from '@/intl-navigation';
 import styles from '@/styles/modules/partials.module.scss';
 import { Button, Flex, Typography } from 'antd';
+import Link from 'next/link';
 
 const { Title, Text } = Typography;
 

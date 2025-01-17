@@ -1,9 +1,9 @@
 'use client';
 
-import { Flex, Progress, Typography } from 'antd';
-import { useTranslations } from 'next-intl';
 import styles from '@/styles/modules/patient.module.scss';
 import COLORS from '@/styles/modules/variablesExport.module.scss';
+import { Flex, Progress, Typography } from 'antd';
+import { useTranslation } from 'react-i18next';
 import { BsCheckCircle } from 'react-icons/bs';
 
 const { Text } = Typography;
@@ -19,13 +19,13 @@ export default function ActivityProgress({
   totalActivities,
   completedActivities,
 }: Props) {
-  const t = useTranslations('_.Patient.detail');
+  const { t } = useTranslation();
 
   return (
     <Flex className={styles.activity_progress} vertical gap={5}>
       <Flex justify="space-between">
         <Text className={styles.activity_progress_text}>
-          {t('progress')} {percent}%
+          {t('Patient.detail.progress')} {percent}%
         </Text>
         <Flex align="center" gap={5}>
           <BsCheckCircle size={14} color={COLORS.success} />

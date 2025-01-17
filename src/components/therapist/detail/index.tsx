@@ -18,8 +18,8 @@ import {
   Typography,
 } from 'antd';
 import { DescriptionsProps } from 'antd/lib';
-import { useTranslations } from 'next-intl';
 import { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { BsPersonBadge } from 'react-icons/bs';
 import { FaChildren } from 'react-icons/fa6';
 import { getActivitiesList, getPatientList } from '../../../../__mocks__/user';
@@ -50,53 +50,55 @@ const GeneralInfo = ({ items }: GeneralInfoProps) => {
 };
 
 export default function TherapistDetail({ therapist }: Props) {
-  const t = useTranslations('_.Therapist');
-  const t_actions = useTranslations('_.Actions');
+  const { t } = useTranslation();
   const [patientColumns] = usePatientColumns();
   const [activityColumns] = useActivityColumns();
 
   // TODO data quemada por mientras
-  const items: DescriptionsProps['items'] = [
-    {
-      key: '1',
-      label: t('detail.description_labels.email'),
-      children: 'marioramos@gamil.com',
-    },
-    {
-      key: '2',
-      label: t('detail.description_labels.identification'),
-      children: '001-124599-4258D',
-    },
-    {
-      key: '3',
-      label: t('detail.description_labels.phone'),
-      children: '8888 8888',
-    },
-    {
-      key: '4',
-      label: t('detail.description_labels.address'),
-      span: 3,
-      children:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ',
-    },
-  ];
+  const items: DescriptionsProps['items'] = useMemo(
+    () => [
+      {
+        key: '1',
+        label: t('Therapist.detail.description_labels.email'),
+        children: 'marioramos@gamil.com',
+      },
+      {
+        key: '2',
+        label: t('Therapist.detail.description_labels.identification'),
+        children: '001-124599-4258D',
+      },
+      {
+        key: '3',
+        label: t('Therapist.detail.description_labels.phone'),
+        children: '8888 8888',
+      },
+      {
+        key: '4',
+        label: t('Therapist.detail.description_labels.address'),
+        span: 3,
+        children:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ',
+      },
+    ],
+    [t],
+  );
 
   const itemsTab: TabsProps['items'] = useMemo(
     () => [
       {
         key: '1',
-        label: t('detail.tabs.generl_info'),
+        label: t('Therapist.detail.tabs.generl_info'),
         icon: <BsPersonBadge size={20} />,
         children: <GeneralInfo items={items} />,
       },
       {
         key: '2',
-        label: t('detail.tabs.children_in_charge'),
+        label: t('Therapist.detail.tabs.children_in_charge'),
         icon: <FaChildren size={20} />,
         children: (
           <Flex vertical className={styles.pictogram_list} gap={30}>
             <Title className={styles.title_content_tab}>
-              {t('detail.title_children_in_charge')}
+              {t('Therapist.detail.title_children_in_charge')}
             </Title>
             <WrapperTable cols={patientColumns} data={getPatientList.data} />
           </Flex>
@@ -104,12 +106,12 @@ export default function TherapistDetail({ therapist }: Props) {
       },
       {
         key: '3',
-        label: t('detail.tabs.children_in_charge'),
+        label: t('Therapist.detail.tabs.children_in_charge'),
         icon: <FaChildren size={20} />,
         children: (
           <Flex vertical className={styles.pictogram_list} gap={30}>
             <Title className={styles.title_content_tab}>
-              {t('detail.title_children_in_charge')}
+              {t('Therapist.detail.title_children_in_charge')}
             </Title>
             <WrapperTable
               cols={activityColumns}
@@ -119,7 +121,7 @@ export default function TherapistDetail({ therapist }: Props) {
         ),
       },
     ],
-    [],
+    [activityColumns, items, patientColumns, t],
   );
 
   return (
@@ -133,10 +135,10 @@ export default function TherapistDetail({ therapist }: Props) {
         <Flex justify="space-between" align="flex-start">
           <GoToBack />
           <Flex gap={10} align="center">
-            <Button type="default">{t_actions('edit')}</Button>
-            <Button type="default">{t_actions('assign_patient')}</Button>
+            <Button type="default">{t('Actions.edit')}</Button>
+            <Button type="default">{t('Actions.assign_patient')}</Button>
             <Button className="default-error-color" type="default">
-              {t_actions('delete')}
+              {t('Actions.delete')}
             </Button>
           </Flex>
         </Flex>

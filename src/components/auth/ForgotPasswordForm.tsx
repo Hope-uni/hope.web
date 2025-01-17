@@ -3,14 +3,14 @@
 import { GoToLogin } from '@/components/auth/GoToLogin';
 import { HeaderForm } from '@/components/auth/HeaderForm';
 import { Rules } from '@/constants/rules';
-import { useRouter } from '@/intl-navigation';
 import styles from '@/styles/modules/auth.module.scss';
 import { Button, Form, Input } from 'antd';
-import { useTranslations } from 'next-intl';
+import { useRouter } from 'next/navigation';
+import { useTranslation } from 'react-i18next';
 
 export const ForgotPasswordForm = () => {
   const router = useRouter();
-  const t = useTranslations('_.Auth');
+  const { t } = useTranslation();
 
   const handleOnFinish = () => {
     router.push('/login/reset-password?token=133');
@@ -27,15 +27,12 @@ export const ForgotPasswordForm = () => {
       onFinish={handleOnFinish}
     >
       <HeaderForm
-        title={t('form.forgot_password.title')}
-        caption={t('form.forgot_password.caption')}
+        title={t('Auth.form.forgot_password.title')}
+        caption={t('Auth.form.forgot_password.caption')}
       />
 
-      <Form.Item
-        name="emailOrUsername"
-        rules={Rules.forgotPassword.emailOrUsername}
-      >
-        <Input placeholder={t('fields.email_or_username.placeholder')} />
+      <Form.Item name="emailOrUsername" rules={Rules.auth.emailOrUsername}>
+        <Input placeholder={t('Auth.fields.email_or_username.placeholder')} />
       </Form.Item>
 
       <Form.Item className={styles.rowCenter}>
@@ -45,7 +42,7 @@ export const ForgotPasswordForm = () => {
           htmlType="submit"
           className={styles.auth_form_submit}
         >
-          {t('form.send')}
+          {t('Auth.form.send')}
         </Button>
         <GoToLogin />
       </Form.Item>

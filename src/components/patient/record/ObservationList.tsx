@@ -1,9 +1,8 @@
 'use client';
 
-import React from 'react';
-import { Flex, Typography } from 'antd';
 import styles from '@/styles/modules/patient.module.scss';
-import { useTranslations } from 'next-intl';
+import { Flex, Typography } from 'antd';
+import { useTranslation } from 'react-i18next';
 
 const { Title, Text } = Typography;
 
@@ -18,11 +17,11 @@ interface Props {
 }
 
 export default function ObservationList({ observations }: Props) {
-  const t = useTranslations('_.Patient.detail');
+  const { t } = useTranslation();
   return (
     <Flex vertical gap={15} className={styles.observation_list}>
       <Title className={styles.title_content_tab}>
-        {t('title_observation')}
+        {t('Patient.detail.title_observation')}
       </Title>
       <Flex vertical gap={15} className={styles.observation_list_wrapper}>
         {observations.map((item, index) => {

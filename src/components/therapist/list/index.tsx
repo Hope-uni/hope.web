@@ -1,15 +1,15 @@
 'use client';
 
 import WrapperTable from '@/components/table/Wrappertable';
-import { Space } from 'antd';
-import { getTherapistList } from '../../../../__mocks__/user';
 import { useTherapistColumns } from '@/components/therapist/list/TherapistColumn';
 import { useTable } from '@/context/Table/TableContext';
 import { E_ActionKeyTable } from '@/models/types/Table.d';
-import { useTranslations } from 'next-intl';
+import { Space } from 'antd';
+import { useTranslation } from 'react-i18next';
+import { getTherapistList } from '../../../../__mocks__/user';
 
 export default function TherapistIndex() {
-  const t = useTranslations('_.Therapist');
+  const { t } = useTranslation();
   const [columns] = useTherapistColumns();
   const {
     state: { searching },
@@ -30,7 +30,7 @@ export default function TherapistIndex() {
           searchProps={{
             onSearch: handleSearch,
             searching: searching,
-            placeholder: t('index.searchPlaceholder'),
+            placeholder: t('Therapist.index.searchPlaceholder'),
           }}
         />
       </Space>

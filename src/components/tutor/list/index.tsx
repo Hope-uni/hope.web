@@ -1,15 +1,15 @@
 'use client';
 
 import WrapperTable from '@/components/table/Wrappertable';
-import { Space, message } from 'antd';
-import { getTutorList } from '../../../../__mocks__/user';
 import { useTutorColumns } from '@/components/tutor/list/TutorColumn';
 import { useTable } from '@/context/Table/TableContext';
 import { E_ActionKeyTable } from '@/models/types/Table.d';
-import { useTranslations } from 'next-intl';
+import { Space } from 'antd';
+import { useTranslation } from 'react-i18next';
+import { getTutorList } from '../../../../__mocks__/user';
 
 export default function TutorIndex() {
-  const t = useTranslations('_.Tutor');
+  const { t } = useTranslation();
   const [columns] = useTutorColumns();
   const {
     state: { searching },
@@ -30,7 +30,7 @@ export default function TutorIndex() {
           searchProps={{
             onSearch: handleSearch,
             searching: searching,
-            placeholder: t('index.searchPlaceholder'),
+            placeholder: t('Tutor.index.searchPlaceholder'),
           }}
         />
       </Space>

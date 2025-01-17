@@ -1,7 +1,7 @@
 import { Dropdown, Flex, message } from 'antd';
 import React from 'react';
 import { Show } from '@/components/Show';
-import { useRouter } from '@/intl-navigation';
+import { useRouter } from 'next/navigation';
 import { HopeTable } from '@/constants/config';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import { ActionTableOptionsType, ActionType } from '@/models/types/Table';
