@@ -3,17 +3,41 @@
 import { GoToLogin } from '@/components/auth/GoToLogin';
 import { HeaderForm } from '@/components/auth/HeaderForm';
 import { Rules } from '@/constants/rules';
+import { AlertType } from '@/models/types/antd';
+import { ForgotPasswordService } from '@/services/auth/auth.service';
 import styles from '@/styles/modules/auth.module.scss';
-import { Button, Form, Input } from 'antd';
-import { useRouter } from 'next/navigation';
+import { Alert, Button, Form, Input } from 'antd';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
+interface ForgotPasswordFormValues {
+  emailOrUsername: string;
+}
+
 export const ForgotPasswordForm = () => {
-  const router = useRouter();
+  const [error, setError] = useState<AlertType>();
+  const [message, setMessage] = useState('');
+  const [loading, setLoading] = useState(false);
+
   const { t } = useTranslation();
 
-  const handleOnFinish = () => {
-    router.push('/login/reset-password?token=133');
+  const handleOnFinish = async (values: ForgotPasswordFormValues) => {
+    try {
+      setLoading(true);
+      setError(undefined);
+
+      const res = await ForgotPasswordService({
+        email_username: values.emailOrUsername,
+      });
+
+      setError(res.error ? 'error' : 'success');
+      setMessage(res.message);
+    } catch (error) {
+      setError('error');
+      setMessage(t('Status.unexpected_error'));
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -31,6 +55,8 @@ export const ForgotPasswordForm = () => {
         caption={t('Auth.form.forgot_password.caption')}
       />
 
+      {error && <Alert message={message} type={error} showIcon />}
+
       <Form.Item name="emailOrUsername" rules={Rules.auth.emailOrUsername}>
         <Input placeholder={t('Auth.fields.email_or_username.placeholder')} />
       </Form.Item>
@@ -41,6 +67,7 @@ export const ForgotPasswordForm = () => {
           type="primary"
           htmlType="submit"
           className={styles.auth_form_submit}
+          loading={loading}
         >
           {t('Auth.form.send')}
         </Button>

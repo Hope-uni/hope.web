@@ -12,7 +12,7 @@ export const useUserColumns = () => {
   const { t } = useTranslation();
 
   const handleShowDetail = useCallback(
-    (id: number, pathModule: string) => {
+    (id: string, pathModule: string) => {
       if (pathModule) {
         router.push(`/admin/${pathModule}/${id}`);
       }
@@ -39,18 +39,19 @@ export const useUserColumns = () => {
       align: 'center',
       width: '280px',
       className: 'table-cell-center',
-      render: (_, { role }) => {
-        if (role.name === 'Admin') {
+      render: (_, { roles }) => {
+        const roleData = roles[0];
+        if (roleData.name === 'Admin') {
           return (
             <div>
               <Tag className="tag-role tag-role-admin">
-                <StarFilled width={10} /> {role.name}
+                <StarFilled width={10} /> {roleData.name}
               </Tag>
             </div>
           );
         }
 
-        return <Tag className="tag-role">{role.name}</Tag>;
+        return <Tag className="tag-role">{roleData.name}</Tag>;
       },
     },
     {
@@ -58,9 +59,10 @@ export const useUserColumns = () => {
       dataIndex: 'id',
       align: 'center',
       width: '60px',
-      render: (_, { id, role }) => {
+      render: (_, { id, roles }) => {
+        const roleData = roles[0];
         const actionsUser: ActionType[] =
-          role.name !== 'Admin'
+          roleData.name !== 'Admin'
             ? ['show', 'edit', 'delete']
             : ['edit', 'delete'];
         return (
@@ -68,7 +70,7 @@ export const useUserColumns = () => {
             id={id}
             actions={actionsUser}
             route="users"
-            onShow={() => handleShowDetail(id, role.name)}
+            onShow={() => handleShowDetail(id, roleData.name)}
           />
         );
       },

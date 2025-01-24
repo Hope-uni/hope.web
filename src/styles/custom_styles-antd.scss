@@ -79,6 +79,11 @@
                 }
             }
         } 
+
+        svg{
+            font-size: 23px;
+            fill: $primary-color-text;
+        }
         
         .ant-menu-item-group, .ant-menu-item-only-child{
             margin-bottom: 15px;
@@ -692,6 +697,16 @@ label.ant-form-item-required {
         }
     }
     
+}
+
+/*
+** ALERTS */
+.ant-alert {
+    align-items: flex-start !important;
+
+    .ant-alert-icon{
+        margin-block-start: 4.5px !important;
+    }
 }
 
 @media only screen and (max-width: $breakpointMobile){

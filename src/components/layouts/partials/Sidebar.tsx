@@ -7,6 +7,8 @@ import styles from '@/styles/modules/layouts.module.scss';
 import { Divider, Flex, Layout, Menu, MenuProps } from 'antd';
 import Image from 'next/image';
 import { useCallback, useEffect, useState } from 'react';
+import { signOut } from 'next-auth/react';
+import { useOverlayStore } from '@/lib/store';
 
 const { Sider } = Layout;
 
@@ -17,6 +19,7 @@ export default function Sidebar() {
   const router = useRouter();
   const [selectedKey, setSelectedKey] = useState(pathname);
   const [selectedOpenKeys, setSelectedOpenKeys] = useState<string[]>([]);
+  const { setOverlayBlocking, setMessageOverlay } = useOverlayStore();
 
   useEffect(() => {
     const open = SidebarMenuItems.top
@@ -47,9 +50,11 @@ export default function Sidebar() {
     setSelectedOpenKeys(openKeys);
   };
 
-  const handleLogut: MenuProps['onClick'] = (e) => {
+  const handleLogut: MenuProps['onClick'] = async (e) => {
     if (e.key === 'logout') {
-      router.push('/login');
+      setMessageOverlay('Cerrando sesión...');
+      setOverlayBlocking(true);
+      await signOut();
     }
   };
 
@@ -64,15 +69,27 @@ export default function Sidebar() {
         <Image src={hopeLogo} alt="hope_admin" width={120} height={90} />
       </div>
       <Flex className={styles.flex_menu} vertical justify="space-between">
-        <Menu
-          id="hope_sidebar_menu"
-          mode="inline"
-          onClick={handleNavigateToRoute}
-          onOpenChange={handleOpenChange}
-          selectedKeys={[selectedKey]}
-          openKeys={selectedOpenKeys}
-          items={menuItemsFormatted('top')}
-        />
+        <Flex vertical>
+          <Menu
+            id="hope_sidebar_menu"
+            mode="inline"
+            onClick={handleNavigateToRoute}
+            onOpenChange={handleOpenChange}
+            selectedKeys={[selectedKey]}
+            openKeys={selectedOpenKeys}
+            items={menuItemsFormatted('top')}
+          />
+          <Divider style={{ marginTop: 0, marginBottom: '20px' }} />
+          <Menu
+            id="hope_sidebar_menu"
+            mode="inline"
+            onClick={handleNavigateToRoute}
+            onOpenChange={handleOpenChange}
+            selectedKeys={[selectedKey]}
+            openKeys={selectedOpenKeys}
+            items={menuItemsFormatted('middle')}
+          />
+        </Flex>
         <Flex vertical>
           <Divider style={{ marginTop: 0, marginBottom: '20px' }} />
           <Menu
