@@ -4,7 +4,7 @@ export const getCurrentUser = (session: UserSession) => {
   const defaultUser = {
     image: undefined,
     fullName: session?.username || '',
-    role: session?.roles?.length > 0 ? session.roles[0].name : '',
+    role: session?.role,
   };
 
   if (!session?.superAdmin && !session?.admin) {

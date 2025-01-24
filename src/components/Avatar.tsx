@@ -63,7 +63,7 @@ export default function AvatarProfile() {
           {currentUser.fullName}
         </Typography.Title>
         <Typography.Text className={styles.role}>
-          {currentUser.role}
+          {currentUser.role.name}
         </Typography.Text>
       </Flex>
     </Flex>
