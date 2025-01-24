@@ -75,6 +75,7 @@ export const AuthConfig = {
         session.user = {
           ...session.user,
           ...resMe.data,
+          role: resMe.data.roles[0],
         };
       }
 
