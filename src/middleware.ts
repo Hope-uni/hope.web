@@ -1,7 +1,3 @@
-/* import { NextRequest } from 'next/server';
-
-export function middleware(request: NextRequest) {} */
-
 import {
   AuthRoutes,
   DEFAULT_REDIRECT_HOME_URL,
@@ -18,6 +14,12 @@ export async function middleware(req: NextRequest) {
   const { pathname, origin } = req.nextUrl;
   const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
 
+  const homeUrl = `${req.nextUrl.origin}${DEFAULT_REDIRECT_HOME_URL}`;
+
+  if (pathname === '/') {
+    return NextResponse.redirect(homeUrl);
+  }
+
   if (!token && !AuthRoutes.some((route) => pathname.startsWith(route))) {
     const loginUrl = new NextURL(DEFAULT_REDIRECT_LOGIN_URL, origin);
     loginUrl.searchParams.set('callbackUrl', req.url);
@@ -25,7 +27,6 @@ export async function middleware(req: NextRequest) {
   }
 
   if (token && AuthRoutes.some((route) => pathname.startsWith(route))) {
-    const homeUrl = `${req.nextUrl.origin}${DEFAULT_REDIRECT_HOME_URL}`;
     return NextResponse.redirect(homeUrl);
   }
 
@@ -33,5 +34,5 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/login', '/admin/:path*'],
+  matcher: ['/', '/login', '/admin/:path*'],
 };
