@@ -3,23 +3,56 @@
 import { GoToLogin } from '@/components/auth/GoToLogin';
 import { HeaderForm } from '@/components/auth/HeaderForm';
 import { Rules } from '@/constants/rules';
+import { ResetPasswordService } from '@/services/auth/auth.service';
 import styles from '@/styles/modules/auth.module.scss';
 import { Button, Form, Input } from 'antd';
 import Link from 'antd/es/typography/Link';
 import FormItem from 'antd/lib/form/FormItem';
-import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+
+interface ResetPasswordFormValues {
+  password: string;
+  confirmPassword: string;
+}
 
 interface Props {
   token: string | null;
 }
 
 export const ResetPasswordForm = ({ token }: Props) => {
-  const router = useRouter();
+  const [error, setError] = useState<
+    'info' | 'error' | 'success' | 'warning' | undefined
+  >();
+  const [message, setMessage] = useState('');
+  const [loading, setLoading] = useState(false);
   const { t } = useTranslation();
 
-  const handleOnFinish = () => {
-    router.push('/login');
+  const handleOnFinish = async (values: ResetPasswordFormValues) => {
+    try {
+      setLoading(true);
+      setError(undefined);
+
+      const res = await ResetPasswordService({
+        password: values.password,
+        confirmPassword: values.confirmPassword,
+      });
+
+      if (res?.error) {
+        setError('error');
+        setMessage(res?.message);
+        setLoading(false);
+        return;
+      }
+
+      setError('success');
+      setMessage(res?.message);
+    } catch (error) {
+      setError('error');
+      setMessage(t('Status.unexpected_error'));
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (!token) {
@@ -56,7 +89,7 @@ export const ResetPasswordForm = ({ token }: Props) => {
       <FormItem
         name="password"
         className={styles.auth_form_input}
-        rules={Rules.resetPassword.password}
+        rules={Rules.auth.password}
       >
         <Input
           type="password"
@@ -67,7 +100,7 @@ export const ResetPasswordForm = ({ token }: Props) => {
       <FormItem
         name="password"
         className={styles.auth_form_input}
-        rules={Rules.resetPassword.confirmPassword}
+        rules={Rules.auth.confirmPassword}
       >
         <Input
           type="password"

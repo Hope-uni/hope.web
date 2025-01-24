@@ -8,6 +8,9 @@ export const RoutesName = {
   resetPassword: {
     index: '/reset-password',
   },
+  dashboard: {
+    index: '/admin',
+  },
   patient: {
     index: '/admin/patients',
     create: '/admin/patients/create',
@@ -59,4 +62,4 @@ export const AuthRoutes = [
 ];
 
 export const DEFAULT_REDIRECT_LOGIN_URL = RoutesName.login.index;
-export const DEFAULT_REDIRECT_HOME_URL = '/admin/dashboard';
+export const DEFAULT_REDIRECT_HOME_URL = '/admin';

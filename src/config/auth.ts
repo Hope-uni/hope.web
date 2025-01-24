@@ -1,6 +1,8 @@
 import type { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { LoginPayloadSchema } from '@/models/schema';
+import { LoginService, serviceMe } from '@/services/auth/auth.service';
+import { UserSession } from '@/models/types/auth';
 
 export const AuthConfig = {
   pages: {
@@ -14,75 +16,75 @@ export const AuthConfig = {
         try {
           const validateCredentials = LoginPayloadSchema.parse(credentials);
 
-          /* const response = await LoginService(validateCredentials);
-    
-              console.log(validateCredentials, 'validateCredentials'); */
+          const response = await LoginService(validateCredentials);
 
-          const { email_username, password } = validateCredentials;
+          if (!response?.data || response?.error) {
+            throw new Error(response?.message);
+          }
 
-          // Simulación: Verificar credenciales estáticas
-          if (email_username === 'admin' && password === 'password') {
+          const { accessToken, refreshToken } = response.data;
+
+          const resMe = await serviceMe({ accessToken });
+
+          if (!resMe?.data || resMe?.error) {
+            throw new Error(resMe?.message);
+          }
+
+          const userData = {
+            id: resMe?.data.id,
+            email: resMe?.data.email,
+          };
+
+          if (!resMe.data.superAdmin && !resMe.data.admin) {
             return {
-              id: '1',
-              name: 'Admin User test',
-              email: 'admin@example.com',
+              ...userData,
+              error: 'unauthorized',
             };
           }
 
-          // Si las credenciales son inválidas, devuelve null
-          return null;
-
-          /* const res = await serviceLogin(credentials);
-        
-                        if (res.error) {
-                            throw new Error(res.message);
-                        }
-        
-                        const resMe = await serviceMe(res.token);
-        
-                        if (resMe.error) {
-                            throw new Error(resMe.error);
-                        }
-        
-                        return {
-                            ...resMe.data,
-                            tokenUser: res.token,
-                        }; */
+          return {
+            ...userData,
+            accessToken,
+            refreshToken,
+          };
         } catch (error) {
-          console.log(error);
           return null;
         }
       },
     }),
   ],
   callbacks: {
-    /* async session({ session, token }) {
-                session.user = token.user;
-    
-                if (token?.user?.id) {
-                    const resMe = await serviceMe(session.user.tokenUser);
-    
-                    if (resMe.error) {
-                        throw new Error(resMe.error);
-                    }
-    
-                    const resNotification = await serviceNotification(session.user.tokenUser);
-    
-                    session.user = {
-                        ...resMe.data,
-                        tokenUser: session.user.tokenUser,
-                        notifications: !resNotification.error ? resNotification.data : []
-                    };
-                }
-    
-                return session;
-            },
-            async jwt({ token, user }) {
-    
-                if (user) {
-                    token.user = user;
-                }
-                return token;
-            }, */
+    async signIn({ user }) {
+      if (user?.error === 'unauthorized') {
+        throw new Error('unauthorized');
+      }
+      return true;
+    },
+    async session({ session, token }) {
+      session.user = token.user as UserSession;
+
+      if (token?.user) {
+        const resMe = await serviceMe({
+          accessToken: session.user.accessToken,
+        });
+
+        if (!resMe?.data || resMe?.error) {
+          throw new Error(resMe?.message);
+        }
+
+        session.user = {
+          ...session.user,
+          ...resMe.data,
+        };
+      }
+
+      return session;
+    },
+    async jwt({ token, user }) {
+      if (user) {
+        token.user = user as UserSession;
+      }
+      return token;
+    },
   },
 } satisfies NextAuthOptions;

@@ -6,7 +6,6 @@ import { ConfigProvider } from 'antd';
 import { TableProvider } from '@/context/Table/TableProvider';
 import { getServerSession } from 'next-auth';
 import SessionProviderClient from '@/context/Auth/SessionProviderClient';
-import AuthorizationProvider from '@/context/Auth/AuthorizationProvider';
 import { AppProviderClient } from '@/context/AppProviderClient';
 
 interface RootLayoutProps {
@@ -28,17 +27,15 @@ export default async function RootLayout({
   return (
     <html lang={locale}>
       <body>
-        <AppProviderClient>
-          <SessionProviderClient session={session}>
-            <AuthorizationProvider>
-              <ConfigProvider theme={theme}>
-                <AntdRegistry>
-                  <TableProvider>{children}</TableProvider>
-                </AntdRegistry>
-              </ConfigProvider>
-            </AuthorizationProvider>
-          </SessionProviderClient>
-        </AppProviderClient>
+        <SessionProviderClient session={session}>
+          <AppProviderClient>
+            <ConfigProvider theme={theme}>
+              <AntdRegistry>
+                <TableProvider>{children}</TableProvider>
+              </AntdRegistry>
+            </ConfigProvider>
+          </AppProviderClient>
+        </SessionProviderClient>
       </body>
     </html>
   );
