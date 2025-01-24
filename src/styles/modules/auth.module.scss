@@ -54,7 +54,7 @@
     .auth_form {
         @extend .col-stretch;
         width: 400px;
-        height: 430px;
+        min-height: 430px;
         gap: 20px;
         
         .auth_form_link{

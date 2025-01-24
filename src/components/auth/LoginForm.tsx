@@ -3,6 +3,7 @@
 import { HeaderForm } from '@/components/auth/HeaderForm';
 import { DEFAULT_REDIRECT_HOME_URL } from '@/constants';
 import { Rules } from '@/constants/rules';
+import { AlertType } from '@/models/types/antd';
 import styles from '@/styles/modules/auth.module.scss';
 import { Alert, Button, Form, Input, message } from 'antd';
 import FormItem from 'antd/lib/form/FormItem';
@@ -21,21 +22,31 @@ export const LoginForm = () => {
   const { t } = useTranslation();
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [error, setError] = useState('');
+  const [error, setError] = useState<AlertType>();
+  const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
 
   const handleOnFinish = async (values: LoginFormValues) => {
     try {
       setLoading(true);
-      setError('');
+      setMessage('');
+      setError(undefined);
 
       const res = await signIn('credentials', {
         ...values,
         redirect: false,
       });
+      console.log(res, 'res');
 
       if (res?.error) {
-        setError(res?.error);
+        if (res.error === 'unauthorized') {
+          setError('info');
+          setMessage(t('Auth.errors.unauthorized'));
+        } else {
+          setError('error');
+        }
+
+        setLoading(false);
         return;
       }
 
@@ -47,8 +58,8 @@ export const LoginForm = () => {
         router.push(DEFAULT_REDIRECT_HOME_URL);
       }
     } catch (error) {
-      message.error('Something wrong');
-    } finally {
+      setMessage('Something wrong');
+      setError('error');
       setLoading(false);
     }
   };
@@ -58,11 +69,10 @@ export const LoginForm = () => {
       name="auth_login"
       id="auth_form_antd"
       className={styles.auth_form}
-      initialValues={{ email_username: 'sam', password: '1234678' }}
       onFinish={handleOnFinish}
     >
       <HeaderForm title={t('Auth.form.login.title')} />
-      {error && <Alert message={error} type="error" showIcon />}
+      {error && <Alert message={message} type={error} showIcon />}
       <FormItem
         name="email_username"
         className={styles.auth_form_input}

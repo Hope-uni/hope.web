@@ -47,6 +47,10 @@ const es = {
         },
       },
     },
+    errors: {
+      unauthorized:
+        'Parece que tu cuenta no tiene los permisos requeridos para ingresar. Si necesitas acceso, por favor contacta al administrador.',
+    },
   },
   User: {
     index: {
@@ -341,6 +345,7 @@ const es = {
   },
   menu: {
     routes: {
+      dashboard: 'Dashboard',
       users: 'Usuarios',
       all: 'Todos',
       patients: 'Pacientes',
@@ -401,6 +406,7 @@ const es = {
       code_404:
         'Lo sentimos, pero la página que intentaste visitar no está disponible en este momento. Por favor, verifica la dirección e inténtalo de nuevo más tarde.',
     },
+    unexpected_error: 'An unexpected error occurred. Please try again later.',
   },
 } as const;
 

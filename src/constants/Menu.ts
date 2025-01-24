@@ -5,6 +5,7 @@ import {
   BsPersonBadge,
   BsDoorOpenFill,
 } from 'react-icons/bs';
+import { BiSolidDashboard } from 'react-icons/bi';
 import i18next from '@/i18n';
 import { RoutesName } from '@/constants/index';
 
@@ -35,6 +36,13 @@ const getItem = (
 
 export const SidebarMenuItems: I_SidebarMenuItems = {
   top: [
+    getItem(
+      i18next.t('menu.routes.dashboard'),
+      RoutesName.dashboard.index,
+      BiSolidDashboard,
+    ),
+  ],
+  middle: [
     getItem(i18next.t('menu.routes.users'), 'users', BsPeopleFill, [
       getItem(i18next.t('menu.routes.all'), RoutesName.user.index),
       getItem(i18next.t('menu.routes.patients'), RoutesName.patient.index),

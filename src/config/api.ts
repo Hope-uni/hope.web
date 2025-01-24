@@ -22,11 +22,11 @@ API_HOPE_PROTECTED.interceptors.request.use(
   async (config) => {
     const session = await getSession();
 
-    /* if (session && session?.accessToken) {
-        if (config.headers) {
-            config.headers['Authorization'] = `Bearer ${session.accessToken}`;
-        }
-    } */
+    if (session && session?.user?.accessToken) {
+      if (config.headers) {
+        config.headers['Authorization'] = `Bearer ${session.user?.accessToken}`;
+      }
+    }
     return config;
   },
   (error) => {

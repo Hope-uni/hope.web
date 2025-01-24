@@ -43,6 +43,16 @@ export const Rules: I_Rules = {
         message: i18next.t('Auth.fields.password.rules.min'),
       },
     ],
+    confirmPassword: [
+      {
+        required: true,
+        message: i18next.t('Auth.fields.password.rules.required'),
+      },
+      {
+        min: 3,
+        message: i18next.t('Auth.fields.password.rules.min'),
+      },
+    ],
   },
   user: {
     user_role: [

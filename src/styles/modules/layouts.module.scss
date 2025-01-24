@@ -1,3 +1,20 @@
+.wrapper_overlay_blocking{
+    background-color: white;
+    width: 100vw;
+    height: 100vh;
+
+    .inner_overlay_blocking{
+        background-color: rgb(0, 0, 0, .2);
+        width: 100vw;
+        height: 100vh;
+    }
+
+    .title_overlay_blocking {
+        font-size: 14px;
+        margin-top: 10px;
+    }
+}
+
 .wrapper_sidebar{
     padding: 30px;
     z-index: 999;
