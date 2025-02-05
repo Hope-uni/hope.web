@@ -1,13 +1,23 @@
 import { z } from 'zod';
 
-export const TEAGradeSchema = z.enum(["1", "2", "3"]);
-export const TEAPhaseSchema = z.enum(["Fase 1", "Fase 2", "Fase 3"]);
+export const TEAGradeSchema = z.object({
+  id: z.number(),
+  name: z.string(),
+  description: z.string(),
+});
+
+export const TEAPhaseSchema = z.object({
+  id: z.number(),
+  name: z.string(),
+  description: z.string(),
+  scoreActivities: z.number(),
+});
 
 export const PECSSchema = z.object({
-    grades: TEAGradeSchema,
-    phases: TEAPhaseSchema
+  grades: TEAGradeSchema,
+  phases: TEAPhaseSchema,
 });
 
 export type PECS = z.infer<typeof PECSSchema>;
-export type TEAGrade = z.infer<typeof TEAGradeSchema>
-export type TEAPhase = z.infer<typeof TEAPhaseSchema>
+export type TEAGrade = z.infer<typeof TEAGradeSchema>;
+export type TEAPhase = z.infer<typeof TEAPhaseSchema>;

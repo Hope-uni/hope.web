@@ -1,13 +1,16 @@
 import { Show } from '@/components/Show';
+import { UserRules } from '@/constants/rules';
+import { useFormCreateUserStore } from '@/lib/store/formCreateUser';
 import styles from '@/styles/modules/user.module.scss';
-import { Col, Form, Input, Row, Select } from 'antd';
+import { Col, DatePicker, Form, FormInstance, Input, Row, Select } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import { useTranslation } from 'react-i18next';
+import dayjs from 'dayjs';
 
 const { Option } = Select;
 
 interface Props {
-  selectedRole: string;
+  form?: FormInstance;
   isEdit?: boolean;
   gutterRow?: number | [number, number];
   spanCol?: number;
@@ -15,26 +18,38 @@ interface Props {
 }
 
 const inputVisibleByRole = {
-  birthday: ['patient'],
-  gradeOfTea: ['patient'],
-  phase: ['patient'],
-  tutorInCharge: ['patient'],
-  observations: ['patient'],
-  identification: ['therapist', 'tutor'],
-  phoneNumber: ['therapist', 'tutor'],
-  telephone: ['tutor'],
+  birthday: ['Paciente', 'Terapeuta', 'Tutor'],
+  teaGrade: ['Paciente'],
+  teaPhase: ['Paciente'],
+  tutorInCharge: ['Paciente'],
+  observations: ['Paciente'],
+  identification: ['Terapeuta', 'Tutor'],
+  phoneNumber: ['Terapeuta', 'Tutor'],
+  telephone: ['Tutor'],
 };
 
 const spanColFullWidth = 24;
+const ThreeYearsAgo = dayjs(new Date()).subtract(3, 'years');
+const SixteenYearsAgo = dayjs(new Date()).subtract(16, 'years');
 
 export default function PersonDataSpecificForm({
-  selectedRole,
+  form,
   isEdit = false,
   gutterRow = 0,
   spanCol = spanColFullWidth,
   spanColMedium = spanColFullWidth,
 }: Props) {
   const { t } = useTranslation();
+  const { currentRoleSelected, phaseList, degreeList, tutorList } =
+    useFormCreateUserStore();
+
+  const disabledFutureDate = (current: any) => {
+    if (currentRoleSelected.name === 'Paciente') {
+      return current && current.valueOf() >= ThreeYearsAgo;
+    }
+
+    return current && current.valueOf() >= SixteenYearsAgo;
+  };
 
   return (
     <Form
@@ -42,15 +57,27 @@ export default function PersonDataSpecificForm({
       id="create_user_form_antd"
       layout="vertical"
       className={styles.wrapper_form_create_user}
+      form={form}
     >
       <Row gutter={gutterRow}>
         <Col sm={{ span: spanCol }} xs={{ span: spanColFullWidth }}>
           <Show>
             <Show.When
-              isTrue={inputVisibleByRole.birthday.includes(selectedRole)}
+              isTrue={inputVisibleByRole.birthday.includes(
+                currentRoleSelected.name,
+              )}
             >
-              <Form.Item name="bithday" label={t('User.fields.birthday.label')}>
-                <Input placeholder={t('User.fields.birthday.placeholder')} />
+              <Form.Item
+                name="birthday"
+                label={t('User.fields.birthday.label')}
+                rules={UserRules.user.birthday}
+              >
+                <DatePicker
+                  placeholder={t('User.fields.birthday.placeholder')}
+                  defaultPickerValue={ThreeYearsAgo}
+                  disabledDate={disabledFutureDate}
+                  style={{ width: '100%' }}
+                />
               </Form.Item>
             </Show.When>
           </Show>
@@ -58,14 +85,21 @@ export default function PersonDataSpecificForm({
         <Col sm={{ span: spanCol }} xs={{ span: spanColFullWidth }}>
           <Show>
             <Show.When
-              isTrue={inputVisibleByRole.gradeOfTea.includes(selectedRole)}
+              isTrue={inputVisibleByRole.teaGrade.includes(
+                currentRoleSelected.name,
+              )}
             >
               <Form.Item
-                name="gradeOfTea"
+                name="teaDegreeId"
                 label={t('User.fields.grade_of_tea.label')}
+                rules={UserRules.user.gradeOfTea}
               >
                 <Select placeholder={t('User.fields.grade_of_tea.placeholder')}>
-                  <Option value="demo">demo</Option>
+                  {degreeList.map((item) => (
+                    <Select.Option key={item.id} value={item.id}>
+                      {`${item.name}: ${item.description}`}
+                    </Select.Option>
+                  ))}
                 </Select>
               </Form.Item>
             </Show.When>
@@ -76,10 +110,22 @@ export default function PersonDataSpecificForm({
       <Row gutter={gutterRow}>
         <Col sm={{ span: spanCol }} xs={{ span: spanColFullWidth }}>
           <Show>
-            <Show.When isTrue={inputVisibleByRole.phase.includes(selectedRole)}>
-              <Form.Item name="bithday" label={t('User.fields.phase.label')}>
+            <Show.When
+              isTrue={inputVisibleByRole.teaPhase.includes(
+                currentRoleSelected.name,
+              )}
+            >
+              <Form.Item
+                name="phaseId"
+                label={t('User.fields.phase.label')}
+                rules={UserRules.user.phase}
+              >
                 <Select placeholder={t('User.fields.phase.placeholder')}>
-                  <Option value="demo">Fase 1</Option>
+                  {phaseList.map((item, index) => (
+                    <Select.Option key={item.id} value={item.id}>
+                      {`Fase ${index + 1} - ${item.name}`}
+                    </Select.Option>
+                  ))}
                 </Select>
               </Form.Item>
             </Show.When>
@@ -88,16 +134,23 @@ export default function PersonDataSpecificForm({
         <Col sm={{ span: spanCol }} xs={{ span: spanColFullWidth }}>
           <Show>
             <Show.When
-              isTrue={inputVisibleByRole.tutorInCharge.includes(selectedRole)}
+              isTrue={inputVisibleByRole.tutorInCharge.includes(
+                currentRoleSelected.name,
+              )}
             >
               <Form.Item
-                name="tutorInCharge"
+                name="tutorId"
                 label={t('User.fields.tutor_in_charge.label')}
+                rules={UserRules.user.tutorInCharge}
               >
                 <Select
                   placeholder={t('User.fields.tutor_in_charge.placeholder')}
                 >
-                  <Option value="demo">Demo</Option>
+                  {tutorList.map((item) => (
+                    <Select.Option key={item.id} value={item.id}>
+                      {item.fullName}
+                    </Select.Option>
+                  ))}
                 </Select>
               </Form.Item>
             </Show.When>
@@ -107,7 +160,9 @@ export default function PersonDataSpecificForm({
 
       <Show>
         <Show.When
-          isTrue={inputVisibleByRole.observations.includes(selectedRole)}
+          isTrue={inputVisibleByRole.observations.includes(
+            currentRoleSelected.name,
+          )}
         >
           <Form.Item
             name="observations"
@@ -125,11 +180,14 @@ export default function PersonDataSpecificForm({
         <Col sm={{ span: spanColMedium }} xs={{ span: spanColFullWidth }}>
           <Show>
             <Show.When
-              isTrue={inputVisibleByRole.identification.includes(selectedRole)}
+              isTrue={inputVisibleByRole.identification.includes(
+                currentRoleSelected.name,
+              )}
             >
               <Form.Item
-                name="identification"
+                name="identificationNumber"
                 label={t('User.fields.identification.label')}
+                rules={UserRules.user.identification}
               >
                 <Input
                   placeholder={t('User.fields.identification.placeholder')}
@@ -141,11 +199,14 @@ export default function PersonDataSpecificForm({
         <Col sm={{ span: spanColMedium }} xs={{ span: spanColFullWidth }}>
           <Show>
             <Show.When
-              isTrue={inputVisibleByRole.phoneNumber.includes(selectedRole)}
+              isTrue={inputVisibleByRole.phoneNumber.includes(
+                currentRoleSelected.name,
+              )}
             >
               <Form.Item
                 name="phoneNumber"
                 label={t('User.fields.phone_number.label')}
+                rules={UserRules.user.phoneNumber}
               >
                 <Input
                   placeholder={t('User.fields.phone_number.placeholder')}
@@ -157,11 +218,14 @@ export default function PersonDataSpecificForm({
         <Col sm={{ span: spanColMedium }} xs={{ span: spanColFullWidth }}>
           <Show>
             <Show.When
-              isTrue={inputVisibleByRole.telephone.includes(selectedRole)}
+              isTrue={inputVisibleByRole.telephone.includes(
+                currentRoleSelected.name,
+              )}
             >
               <Form.Item
                 name="telephone"
                 label={t('User.fields.telephone.label')}
+                rules={UserRules.user.telephone}
               >
                 <Input placeholder={t('User.fields.telephone.placeholder')} />
               </Form.Item>

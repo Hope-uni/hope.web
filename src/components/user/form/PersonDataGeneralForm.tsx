@@ -1,48 +1,27 @@
 import { Show } from '@/components/Show';
-import { Rules } from '@/constants/rules';
+import { Genders } from '@/constants/Forms';
+import { UserRules } from '@/constants/rules';
+import { useFormCreateUserStore } from '@/lib/store/formCreateUser';
 import styles from '@/styles/modules/user.module.scss';
-import { Col, Form, Input, Radio, Row } from 'antd';
-import { RadioChangeEvent } from 'antd/lib';
-import { Dispatch } from 'react';
+import { Col, Form, FormInstance, Input, Row, Select } from 'antd';
+import TextArea from 'antd/es/input/TextArea';
 import { useTranslation } from 'react-i18next';
 
 interface Props {
-  setCurrentRole: Dispatch<React.SetStateAction<string>>;
+  form?: FormInstance;
   isEdit?: boolean;
   gutterRow?: number | [number, number];
   spanCol?: number;
 }
 
 export default function PersonDataGeneralForm({
-  setCurrentRole,
+  form,
   isEdit = false,
   gutterRow = 0,
   spanCol = 24,
 }: Props) {
   const { t } = useTranslation();
-
-  const Roles = [
-    {
-      label: t('Role.catalog.patient'),
-      value: 'patient',
-    },
-    {
-      label: t('Role.catalog.tutor'),
-      value: 'tutor',
-    },
-    {
-      label: t('Role.catalog.therapist'),
-      value: 'therapist',
-    },
-    {
-      label: t('Role.catalog.admin'),
-      value: 'admin',
-    },
-  ];
-
-  const handleChangeRole = (e: RadioChangeEvent) => {
-    setCurrentRole(e.target.value);
-  };
+  const { isAdminRoleSelected, roleList } = useFormCreateUserStore();
 
   return (
     <Form
@@ -50,64 +29,101 @@ export default function PersonDataGeneralForm({
       id="create_user_form_antd"
       layout="vertical"
       className={styles.wrapper_form_create_user}
+      form={form}
     >
       <Show>
         <Show.When isTrue={!isEdit}>
           <Form.Item
-            name="role"
+            name="roles"
             label={t('User.fields.user_role.label')}
-            rules={Rules.user.user_role}
+            rules={UserRules.user.user_role}
+            validateStatus="success"
           >
-            <Radio.Group onChange={handleChangeRole}>
-              {Roles.map((item) => (
-                <Radio.Button key={item.value} value={item.value}>
-                  {item.label}
-                </Radio.Button>
+            <Select placeholder={t('User.fields.user_role.placeholder')}>
+              {roleList.map((item) => (
+                <Select.Option key={item.id} value={item.id}>
+                  {item.name}
+                </Select.Option>
               ))}
-            </Radio.Group>
+            </Select>
           </Form.Item>
         </Show.When>
       </Show>
 
-      <Row gutter={gutterRow}>
-        <Col sm={{ span: spanCol }} xs={{ span: 24 }}>
-          <Form.Item
-            name="first_name"
-            label={t('User.fields.first_name.label')}
-            rules={Rules.user.first_name}
-          >
-            <Input placeholder={t('User.fields.first_name.label')} />
-          </Form.Item>
-        </Col>
-        <Col sm={{ span: spanCol }} xs={{ span: 24 }}>
-          <Form.Item
-            name="second_name"
-            label={t('User.fields.second_name.label')}
-          >
-            <Input placeholder={t('User.fields.second_name.placeholder')} />
-          </Form.Item>
-        </Col>
-      </Row>
+      <Show>
+        <Show.When isTrue={!isAdminRoleSelected} name="personalData">
+          <Row gutter={gutterRow}>
+            <Col sm={{ span: spanCol }} xs={{ span: 24 }}>
+              <Form.Item
+                name="firstName"
+                label={t('User.fields.first_name.label')}
+                rules={UserRules.user.first_name}
+              >
+                <Input placeholder={t('User.fields.first_name.label')} />
+              </Form.Item>
+            </Col>
+            <Col sm={{ span: spanCol }} xs={{ span: 24 }}>
+              <Form.Item
+                name="secondName"
+                label={t('User.fields.second_name.label')}
+              >
+                <Input placeholder={t('User.fields.second_name.placeholder')} />
+              </Form.Item>
+            </Col>
+          </Row>
 
-      <Row gutter={gutterRow}>
-        <Col sm={{ span: spanCol }} xs={{ span: 24 }}>
-          <Form.Item
-            name="first_surname"
-            label={t('User.fields.first_surname.label')}
-            rules={Rules.user.first_surname}
-          >
-            <Input placeholder={t('User.fields.first_surname.placeholder')} />
-          </Form.Item>
-        </Col>
-        <Col sm={{ span: spanCol }} xs={{ span: 24 }}>
-          <Form.Item
-            name="second_surname"
-            label={t('User.fields.second_surname.label')}
-          >
-            <Input placeholder={t('User.fields.second_surname.placeholder')} />
-          </Form.Item>
-        </Col>
-      </Row>
+          <Row gutter={gutterRow}>
+            <Col sm={{ span: spanCol }} xs={{ span: 24 }}>
+              <Form.Item
+                name="surname"
+                label={t('User.fields.first_surname.label')}
+                rules={UserRules.user.first_surname}
+              >
+                <Input
+                  placeholder={t('User.fields.first_surname.placeholder')}
+                />
+              </Form.Item>
+            </Col>
+            <Col sm={{ span: spanCol }} xs={{ span: 24 }}>
+              <Form.Item
+                name="secondSurname"
+                label={t('User.fields.second_surname.label')}
+              >
+                <Input
+                  placeholder={t('User.fields.second_surname.placeholder')}
+                />
+              </Form.Item>
+            </Col>
+          </Row>
+
+          <Row gutter={gutterRow}>
+            <Col sm={{ span: spanCol }} xs={{ span: 24 }}>
+              <Form.Item
+                name="gender"
+                label={t('User.fields.gender.label')}
+                rules={UserRules.user.first_surname}
+              >
+                <Select
+                  placeholder={t('User.fields.gender.placeholder')}
+                  options={Genders}
+                />
+              </Form.Item>
+            </Col>
+            <Col sm={{ span: spanCol }} xs={{ span: 24 }}>
+              <Form.Item
+                name="address"
+                label={t('User.fields.address.label')}
+                rules={UserRules.user.address}
+              >
+                <TextArea
+                  rows={4}
+                  placeholder={t('User.fields.address.placeholder')}
+                />
+              </Form.Item>
+            </Col>
+          </Row>
+        </Show.When>
+      </Show>
     </Form>
   );
 }

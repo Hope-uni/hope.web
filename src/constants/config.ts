@@ -15,7 +15,7 @@ export const HopeLocales = {
   default: 'es',
 };
 
-const sizeChanger = ['5', '10', '25', '50', '100'];
+const sizeChanger = ['1', '5', '10', '25', '50', '100'];
 
 export const HopeTable: I_HopeTableConfig = {
   sizeChangerOptions: sizeChanger.reduce(
