@@ -1,4 +1,5 @@
 .wrapper_steps_create_user {
+    display: flex;
     padding: 10px;
     margin-top: 20px;
 
@@ -104,6 +105,22 @@
         &:hover{
             color: $primary-color;
         }
+    }
+}
+
+.user_row_card_mobile {
+    @extend .row-between-start;
+    border: $grey-dark solid 1px;
+    padding: 8px 12px;  
+    border-radius: 10px;  
+
+    .text_email, .text_username{
+        @extend .text-ellipse;
+        width: 200px;
+    }
+
+    .text_email{
+        color: $primary-color-text;
     }
 }
 

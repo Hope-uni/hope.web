@@ -29,6 +29,12 @@
         line-height: 21px;
         margin: 0;
     }
+
+    .btn_add_content {
+        :global(.ant-btn-icon){
+            display: none;
+        }
+    }
 }
 
 @media only screen and (max-width: $breakpointMobile) {
@@ -38,6 +44,21 @@
         }
         .caption{
             font-size: 14px;
+        }
+
+        .btn_add_content {
+            border-radius: 100px;
+            height: 45px;
+            width: 45px;
+
+            .btn_add_content_label{
+                display: none;
+            }
+
+            :global(.ant-btn-icon){
+                display: block;
+                font-size: 24px;
+            }
         }
     }
 }

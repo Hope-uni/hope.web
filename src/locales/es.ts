@@ -72,6 +72,23 @@ const es = {
         next_button: 'Siguiente',
         prev_button: 'Atrás',
         submit_button: 'Crear usuario',
+        steps: {
+          step_1: {
+            title: 'Datos generales',
+            titleForm: 'Información general del usuario',
+            description: 'Información general',
+          },
+          step_2: {
+            title: 'Datos especificos',
+            titleForm: 'Información especifica del {{roleName}}',
+            description: 'Datos del usuario',
+          },
+          step_3: {
+            title: 'Usuario',
+            titleForm: 'Crear usario',
+            description: 'Crear usuario',
+          },
+        },
       },
       edit: {
         title: 'Editar usuario',
@@ -92,30 +109,44 @@ const es = {
       },
       first_name: {
         label: 'Primer nombre',
-        placeholder: 'Ingrese su primer nombre',
+        placeholder: 'Ingrese el primer nombre',
         rules: {
           required: 'Primer nombre es requerido',
         },
       },
       second_name: {
         label: 'Segundo nombre',
-        placeholder: 'Ingrese su segundo nombre',
+        placeholder: 'Ingrese el segundo nombre',
         rules: {
           required: 'Segundo nombre es requerido',
         },
       },
       first_surname: {
         label: 'Primer apellido',
-        placeholder: 'Ingrese su primer apellido',
+        placeholder: 'Ingrese el primer apellido',
         rules: {
           required: 'Primer apellido es requerido',
         },
       },
       second_surname: {
         label: 'Segundo apellido',
-        placeholder: 'Ingrese su segundo apellido',
+        placeholder: 'Ingrese el segundo apellido',
         rules: {
           required: 'Segundo apellido es requerido',
+        },
+      },
+      gender: {
+        label: 'Género',
+        placeholder: 'Ingrese el género',
+        rules: {
+          required: 'Género es requerido',
+        },
+      },
+      address: {
+        label: 'Dirección',
+        placeholder: 'Ingrese una dirección',
+        rules: {
+          required: 'Dirección es requerido',
         },
       },
       birthday: {
@@ -343,6 +374,19 @@ const es = {
       admin: 'Admin',
     },
   },
+  Gender: {
+    catalog: {
+      masculine: 'Masculino',
+      female: 'Femenino',
+    },
+  },
+  Grades: {
+    catalog: {
+      grade_1: 'Grado 1',
+      grade_2: 'Grado 2',
+      grade_3: 'Grado 3',
+    },
+  },
   menu: {
     routes: {
       dashboard: 'Dashboard',
@@ -381,6 +425,8 @@ const es = {
     },
     table: {
       page: 'página',
+      range_results: '{{rangeFrom}}-{{rangeTo}} de {{total}} elementos',
+      single_results: 'Mostrando {{total}} elementos',
     },
     popupActions: {
       show: {
@@ -407,6 +453,45 @@ const es = {
         'Lo sentimos, pero la página que intentaste visitar no está disponible en este momento. Por favor, verifica la dirección e inténtalo de nuevo más tarde.',
     },
     unexpected_error: 'An unexpected error occurred. Please try again later.',
+  },
+  common: {
+    form: {
+      fields: {
+        username: {
+          rules: {
+            pattern: 'El usuario debe contener entre 3 y 16 carácteres',
+          },
+        },
+        email: {
+          rules: {
+            pattern: 'El correo electrónico no es válido',
+          },
+        },
+        identification: {
+          rules: {
+            pattern:
+              'El formato de número de identificación no es válido. Debe tener el siguiente formato: xxx-xxxxx-xxxxZ',
+          },
+        },
+        phone: {
+          rules: {
+            base: 'El formato no es válido:',
+            length: 'debe tener 8 dígitos en total',
+            numeric: 'no debe contener letras ni carácteres especiales',
+          },
+        },
+        mobile: {
+          rules: {
+            startWith: 'debe iniciar con un número entre 5 y 8',
+          },
+        },
+        landline: {
+          rules: {
+            startWith: 'debe iniciar con el número 2',
+          },
+        },
+      },
+    },
   },
 } as const;
 
