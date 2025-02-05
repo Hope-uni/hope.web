@@ -3,6 +3,7 @@
 import styles from '@/styles/modules/partials.module.scss';
 import { Button, Flex, Typography } from 'antd';
 import Link from 'next/link';
+import { BsPlusLg } from 'react-icons/bs';
 
 const { Title, Text } = Typography;
 
@@ -33,7 +34,13 @@ export const HeaderContent = ({
       </Flex>
       {routeLink && label && (
         <Link href={routeLink}>
-          <Button type="default">{label}</Button>
+          <Button
+            type="default"
+            icon={<BsPlusLg />}
+            className={styles.btn_add_content}
+          >
+            <span className={styles.btn_add_content_label}>{label}</span>
+          </Button>
         </Link>
       )}
     </Flex>

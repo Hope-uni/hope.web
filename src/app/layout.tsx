@@ -30,9 +30,7 @@ export default async function RootLayout({
         <SessionProviderClient session={session}>
           <AppProviderClient>
             <ConfigProvider theme={theme}>
-              <AntdRegistry>
-                <TableProvider>{children}</TableProvider>
-              </AntdRegistry>
+              <AntdRegistry>{children}</AntdRegistry>
             </ConfigProvider>
           </AppProviderClient>
         </SessionProviderClient>

@@ -2,19 +2,22 @@
 
 import WrapperTable from '@/components/table/Wrappertable';
 import { useUserColumns } from '@/components/user/list/UserColumn';
-import { useTable } from '@/context/Table/TableContext';
 import { E_ActionKeyTable } from '@/models/types/Table.d';
 import { Space, message } from 'antd';
 import { useTranslation } from 'react-i18next';
-import { getUserList } from '../../../../__mocks__/user';
+import { useFetchListUserQuery } from '@/lib/queries/user';
+import { useTableStore } from '@/lib/store/table';
 
 export default function UserIndex() {
   const { t } = useTranslation();
   const [columns] = useUserColumns();
-  const {
-    state: { searching },
-    dispatch,
-  } = useTable();
+  const { searching, paginationTable, dispatch } = useTableStore();
+  const { data, isLoading, isRefetching } = useFetchListUserQuery({
+    paginate: {
+      page: paginationTable?.page,
+      size: paginationTable?.size,
+    },
+  });
 
   const handleSearch = () => {
     dispatch({ type: E_ActionKeyTable.CLEAR_SELECTED });
@@ -23,16 +26,18 @@ export default function UserIndex() {
 
   return (
     <>
-      <Space direction="vertical" size={10}>
+      <Space direction="vertical" size={10} style={{ width: '100%' }}>
         <WrapperTable
           cols={columns}
-          data={getUserList.data}
+          data={data}
           searchable
           searchProps={{
             onSearch: handleSearch,
             searching: searching,
             placeholder: t('User.index.searchPlaceholder'),
           }}
+          loading={isLoading}
+          fetching={isRefetching}
         />
       </Space>
     </>

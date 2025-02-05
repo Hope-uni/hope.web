@@ -1,5 +1,12 @@
+import { API_PAYLOAD } from '@/models/types';
 import axios from 'axios';
-import { getSession } from 'next-auth/react';
+
+export const defaultPayload: API_PAYLOAD = {
+  body: undefined,
+  paginate: undefined,
+};
+
+import { getSession, signOut } from 'next-auth/react';
 
 const URl = process.env.NEXT_PUBLIC_API_URL;
 
@@ -30,6 +37,18 @@ API_HOPE_PROTECTED.interceptors.request.use(
     return config;
   },
   (error) => {
+    return Promise.reject(error);
+  },
+);
+
+API_HOPE_PROTECTED.interceptors.response.use(
+  async (response) => {
+    return response;
+  },
+  (error) => {
+    if (axios.isAxiosError(error) && error.response?.data.statusCode === 401) {
+      // TODO implements signOut and redirect to login.
+    }
     return Promise.reject(error);
   },
 );

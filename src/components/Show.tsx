@@ -6,6 +6,7 @@ interface ShowProps {
 
 interface ShowWhenProps {
   isTrue: boolean;
+  name?: string;
   children: ReactNode;
 }
 
@@ -34,7 +35,7 @@ export const Show: React.FC<ShowProps> & {
   return when.length > 0 ? when : otherwise;
 };
 
-const When: React.FC<ShowWhenProps> = ({ isTrue, children }) =>
+const When: React.FC<ShowWhenProps> = ({ isTrue, name, children }) =>
   isTrue && children;
 Show.When = When;
 
