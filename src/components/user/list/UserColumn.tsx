@@ -1,11 +1,31 @@
 import PopupActions from '@/components/table/PopupActions';
-import { User } from '@/models/schema';
+import { ListUserResponse, Role } from '@/models/schema';
 import { ActionType } from '@/models/types/Table';
+import { addResponsiveProperty } from '@/utils/table';
 import { StarFilled } from '@ant-design/icons';
 import { TableProps, Tag } from 'antd';
 import { useRouter } from 'next/navigation';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
+import UserRowCardMobile from '@/components/user/list/UserRowCardMobile';
+
+interface PropsActionUserPopup {
+  user: ListUserResponse;
+  handleAction: (id: string, pathModule: string) => void;
+}
+
+const ActionUserPopup = ({ user, handleAction }: PropsActionUserPopup) => {
+  const roleData = user.roles?.length > 0 ? user.roles[0] : ({} as Role);
+  const actionsUser: ActionType[] = ['show', 'edit', 'delete'];
+  return (
+    <PopupActions
+      id={user.id}
+      actions={actionsUser}
+      route="users"
+      onShow={() => handleAction(user.id, roleData.name)}
+    />
+  );
+};
 
 export const useUserColumns = () => {
   const router = useRouter();
@@ -20,7 +40,7 @@ export const useUserColumns = () => {
     [router],
   );
 
-  const columns: TableProps<User>['columns'] = [
+  const columns: TableProps<ListUserResponse>['columns'] = [
     {
       title: t('User.index.columns.email'),
       dataIndex: 'email',
@@ -40,7 +60,7 @@ export const useUserColumns = () => {
       width: '280px',
       className: 'table-cell-center',
       render: (_, { roles }) => {
-        const roleData = roles[0];
+        const roleData = roles?.length > 0 ? roles[0] : ({} as Role);
         if (roleData.name === 'Admin') {
           return (
             <div>
@@ -59,23 +79,21 @@ export const useUserColumns = () => {
       dataIndex: 'id',
       align: 'center',
       width: '60px',
-      render: (_, { id, roles }) => {
-        const roleData = roles[0];
-        const actionsUser: ActionType[] =
-          roleData.name !== 'Admin'
-            ? ['show', 'edit', 'delete']
-            : ['edit', 'delete'];
+      render: (_, user) => {
+        return <ActionUserPopup user={user} handleAction={handleShowDetail} />;
+      },
+    },
+    {
+      title: 'rowCardMobile',
+      dataIndex: 'mobile',
+      className: 'table-col-mobile',
+      render: (_, user) => {
         return (
-          <PopupActions
-            id={id}
-            actions={actionsUser}
-            route="users"
-            onShow={() => handleShowDetail(id, roleData.name)}
-          />
+          <UserRowCardMobile user={user} handleAction={handleShowDetail} />
         );
       },
     },
   ];
 
-  return [columns];
+  return [addResponsiveProperty(columns)];
 };

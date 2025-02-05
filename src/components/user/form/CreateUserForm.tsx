@@ -1,143 +1,180 @@
 'use client';
 
 import { Show } from '@/components/Show';
-import PersonDataGeneralForm from '@/components/user/form/PersonDataGeneralForm';
-import PersonDataSpecificForm from '@/components/user/form/PersonDataSpecificForm';
-import UserDataForm from '@/components/user/form/UserDataForm';
+import useStepFormUser from '@/hooks/useStepFormUser';
+import { useFormCreateUserStore } from '@/lib/store/formCreateUser';
+import { CreateUserSteps, FormCreateUser } from '@/models/schema';
+import { CreateUserHelper, CurrentRoleType } from '@/services/user/helpers';
 import styles from '@/styles/modules/user.module.scss';
-import { Button, Divider, Flex, Steps, Typography, message } from 'antd';
-import { useEffect, useState } from 'react';
+import { Alert, Button, Divider, Flex, Steps, Typography, message } from 'antd';
+import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 const { Text, Title } = Typography;
 
-interface StepFormInterface {
-  step: string;
-  title: string;
-  titleForm: string;
-  description: string;
-}
-
-// este objeto va a cambiar
-const stepsData: StepFormInterface[] = [
-  {
-    step: '1',
-    title: 'Datos generales',
-    titleForm: 'Información general del usuario',
-    description: 'Información general',
-  },
-  {
-    step: '2',
-    title: 'Datos especificos',
-    titleForm: 'Información especifica del paciente',
-    description: 'Datos del paciente',
-  },
-  {
-    step: '3',
-    title: 'Usuario',
-    titleForm: 'Crear usario',
-    description: 'Crear usuario',
-  },
-];
-
-const initialStep = 0;
-
 export default function CreateUserForm() {
   const { t } = useTranslation();
-  const [currentIndex, setCurrentIndex] = useState(initialStep);
-  const [current, setCurrent] = useState<StepFormInterface>(
-    stepsData[initialStep],
+  const [loadingForm, setLoadingForm] = useState(false);
+  const [messageErrorForm, setMessageErrorForm] = useState('');
+  const [messageErrorDetail, setMessageErrorDetail] = useState('');
+
+  const { fields, currentRoleSelected, setFields, setErrors } =
+    useFormCreateUserStore();
+
+  const {
+    stepsForm,
+    current,
+    currentIndex,
+    setCurrentIndex,
+    cleanForm,
+    getCurrentInstanceForm,
+    applyErrors,
+  } = useStepFormUser();
+
+  const handleSubmit = useCallback(
+    async (values: FormCreateUser) => {
+      try {
+        setLoadingForm(true);
+        setMessageErrorForm('');
+        setMessageErrorDetail('');
+        setErrors(undefined);
+
+        const res = await CreateUserHelper(
+          values,
+          currentRoleSelected.name as CurrentRoleType,
+        );
+
+        if (res.error && res.statusCode !== 201) {
+          if (
+            res.validationErrors &&
+            Object.keys(res.validationErrors).length > 0
+          ) {
+            applyErrors(res.validationErrors);
+          }
+
+          setMessageErrorForm(res.message);
+          setLoadingForm(false);
+          return;
+        }
+
+        cleanForm();
+        message.success(res.message);
+        setLoadingForm(false);
+      } catch (error) {
+        setLoadingForm(false);
+      }
+    },
+    [setErrors, currentRoleSelected.name, cleanForm, applyErrors],
   );
-  const [currentRole, setCurrentRole] = useState<string>('patient');
 
-  useEffect(() => {
-    setCurrent(stepsData[currentIndex]);
-  }, [currentIndex]);
+  const handleNext = useCallback(
+    async ({ isLastStep = false } = {}) => {
+      const currentInstanceForm = getCurrentInstanceForm();
 
-  const handleNext = () => {
-    setCurrentIndex(currentIndex + 1);
-  };
+      if (!currentInstanceForm) return;
+
+      const validate = await currentInstanceForm.validateFields();
+
+      if (!validate.errorFields) {
+        if (isLastStep) {
+          handleSubmit({
+            ...fields,
+            ...currentInstanceForm.getFieldsValue(),
+          });
+          return;
+        }
+        setFields({
+          ...fields,
+          ...currentInstanceForm.getFieldsValue(),
+        });
+        setCurrentIndex((prevIndex) => prevIndex + 1);
+      }
+    },
+    [getCurrentInstanceForm, setFields, fields, setCurrentIndex, handleSubmit],
+  );
 
   const handlePrev = () => {
-    setCurrentIndex(currentIndex - 1);
-  };
-
-  const handleSubmit = () => {
-    message.success('Processing complete!');
-  };
-
-  const items = stepsData.map((item) => ({
-    key: item.title,
-    title: item.title,
-    description: item.description,
-  }));
-
-  const forms: any = {
-    '1': <PersonDataGeneralForm setCurrentRole={setCurrentRole} />,
-    '2': <PersonDataSpecificForm selectedRole={currentRole} />,
-    '3': <UserDataForm />,
+    setCurrentIndex((prevIndex) => prevIndex - 1);
   };
 
   return (
-    <Flex
-      className={`${styles.wrapper_steps_create_user} steps_create_user`}
-      gap={10}
-    >
-      <Steps direction="vertical" current={currentIndex} items={items} />
-      <Divider type="vertical" className={styles.steps_divider} />
-      <Flex vertical className={styles.steps_content}>
-        <Flex vertical gap={10}>
+    <>
+      {messageErrorForm && (
+        <Alert
+          message={messageErrorForm}
+          description={messageErrorDetail}
+          banner
+          type="error"
+        />
+      )}
+      <div className={`${styles.wrapper_steps_create_user} steps_create_user`}>
+        <Steps
+          direction="vertical"
+          current={currentIndex}
+          items={stepsForm.items.map((item) => CreateUserSteps.parse(item))}
+        />
+        <Divider type="vertical" className={styles.steps_divider} />
+        <Flex vertical className={styles.steps_content}>
+          <Flex vertical gap={10}>
+            <Flex
+              className={styles.steps_content_title}
+              align="flex-start"
+              gap={10}
+            >
+              <Text className={styles.steps_current_step}>
+                {current?.step}
+                <span className={styles.total_steps}>
+                  /{stepsForm.items.length}
+                </span>
+              </Text>
+              <Title className={styles.steps_current_title}>
+                {current?.titleForm}
+              </Title>
+            </Flex>
+            {current && stepsForm.forms[current?.step]}
+          </Flex>
           <Flex
-            className={styles.steps_content_title}
-            align="flex-start"
+            justify="flex-end"
+            className={styles.steps_button_actions}
             gap={10}
           >
-            <Text className={styles.steps_current_step}>
-              {current?.step}
-              <span className={styles.total_steps}>/{stepsData.length}</span>
-            </Text>
-            <Title className={styles.steps_current_title}>
-              {current?.titleForm}
-            </Title>
+            <Show>
+              <Show.When isTrue={currentIndex > 0}>
+                <Button
+                  type="default"
+                  className={styles.button}
+                  onClick={handlePrev}
+                >
+                  {t('User.form.create.prev_button')}
+                </Button>
+              </Show.When>
+              <Show.When isTrue={currentIndex < stepsForm.items.length - 1}>
+                <Button
+                  type="primary"
+                  className={styles.button}
+                  onClick={() => handleNext()}
+                >
+                  {t('User.form.create.next_button')}
+                </Button>
+              </Show.When>
+              <Show.When isTrue={currentIndex === stepsForm.items.length - 1}>
+                <Button
+                  type="primary"
+                  className={styles.button}
+                  onClick={() =>
+                    handleNext({
+                      isLastStep: true,
+                    })
+                  }
+                  loading={loadingForm}
+                >
+                  {t('User.form.create.submit_button')}
+                </Button>
+              </Show.When>
+            </Show>
           </Flex>
-          {current && forms[current?.step]}
         </Flex>
-        <Flex
-          justify="flex-end"
-          className={styles.steps_button_actions}
-          gap={10}
-        >
-          <Show>
-            <Show.When isTrue={currentIndex > 0}>
-              <Button
-                type="default"
-                className={styles.button}
-                onClick={handlePrev}
-              >
-                {t('User.form.create.prev_button')}
-              </Button>
-            </Show.When>
-            <Show.When isTrue={currentIndex < stepsData.length - 1}>
-              <Button
-                type="primary"
-                className={styles.button}
-                onClick={handleNext}
-              >
-                {t('User.form.create.next_button')}
-              </Button>
-            </Show.When>
-            <Show.When isTrue={currentIndex === stepsData.length - 1}>
-              <Button
-                type="primary"
-                className={styles.button}
-                onClick={handleSubmit}
-              >
-                {t('User.form.create.submit_button')}
-              </Button>
-            </Show.When>
-          </Show>
-        </Flex>
-      </Flex>
-    </Flex>
+      </div>
+    </>
   );
 }
