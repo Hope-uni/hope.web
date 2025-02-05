@@ -122,7 +122,7 @@
 
 /*
 ** STEPS */
-.ant-steps{
+.ant-steps.customSteps{
     &.ant-steps-vertical{
         width: auto;
     }
@@ -134,7 +134,7 @@
 
             .ant-steps-item-tail::after{
                 width: 2px;
-                background-color: $grey-5 !important;
+                background-color: $grey-5;
             }
 
             .ant-steps-item-content{
@@ -429,14 +429,14 @@ label.ant-form-item-required {
 
 /*
 ** TABLE */
-.wrapper-header-table{
+.customTable .wrapper-header-table{
     margin-bottom: 20px;
 
     .select-size-changer{
         min-width: 120px;
 
         .ant-select-selector{
-            border: 1px solid $grey-dark !important;
+            border: 1px solid $grey-dark;
         }
 
     }
