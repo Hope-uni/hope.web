@@ -122,7 +122,7 @@
 
 /*
 ** STEPS */
-.ant-steps{
+.ant-steps.customSteps{
     &.ant-steps-vertical{
         width: auto;
     }
@@ -134,12 +134,7 @@
 
             .ant-steps-item-tail::after{
                 width: 2px;
-                background-color: $grey-5 !important;
-            }
-    
-            .ant-steps-item-icon{
-                background-color: $white;
-                border-color: $black;
+                background-color: $grey-5;
             }
 
             .ant-steps-item-content{
@@ -156,6 +151,15 @@
                     font-size: 15px;
                     font-weight: 300;
                     text-wrap: nowrap;
+                }
+            }
+        }
+
+        &:not(.ant-steps-item-error) {
+            > .ant-steps-item-container{
+                .ant-steps-item-icon{
+                    background-color: $white;
+                    border-color: $black;
                 }
             }
         }
@@ -313,10 +317,15 @@ label.ant-form-item-required {
 
 
 /*
-** SEARCH */
+** SEARCH TABLE */
 .wrapper-search{
     @extend .row-start;
+    position: relative;
     margin: 0;
+    max-width: 400px;
+    width: 400px;
+
+
 
     &.has-options{
         .ant-select{
@@ -343,6 +352,12 @@ label.ant-form-item-required {
         @extend .row-end !optional;
         flex-direction: row-reverse;
         width: 100%;
+
+        > .ant-flex,
+        .ant-space-compact,
+        .ant-space{
+            flex: 1;
+        }
     }
 
     .ant-input-group.ant-input-group-compact{
@@ -414,13 +429,14 @@ label.ant-form-item-required {
 
 /*
 ** TABLE */
-.wrapper-header-table{
+.customTable .wrapper-header-table{
     margin-bottom: 20px;
 
     .select-size-changer{
+        min-width: 120px;
 
         .ant-select-selector{
-            border: 1px solid $grey-dark !important;
+            border: 1px solid $grey-dark;
         }
 
     }
@@ -755,5 +771,79 @@ label.ant-form-item-required {
     .flex_upload_dragger{
         flex-direction: column;
         align-items: center;
+    }
+
+    /*
+    ** SEARCH TABLE */
+    .wrapper-search{
+        max-width: 100%;
+        width: 100%;
+
+        .inner-container{
+            .ant-input-group-wrapper{
+                width: 100%;
+            }
+        }
+    }
+
+    /*
+    ** TABLE */
+    .wrapper-header-table{
+        flex-direction: column;
+        gap: 16px 0;
+
+        .table-input-search{
+            width: 100%;
+        }
+    }
+
+    .ant-table-wrapper {
+
+        .ant-table {
+            .ant-table-thead{
+                display: none;
+            }
+    
+            .ant-table-tbody{
+                .ant-table-cell.table-col-mobile{
+                    display: block;
+                    padding: 0;
+                    margin-bottom: 10px;
+                    border-bottom: none;
+                }
+
+                .table_popup_actions_mobile{
+                    background-color: rgba($color: $primary-color, $alpha: 0.2);
+                    border-radius: 100%;
+
+                    svg {
+                        transform: rotate(180deg);
+                    }
+                }
+            }
+        }
+
+        .ant-table-pagination.ant-pagination {
+    
+            .ant-pagination-item{
+                min-width: 28px;
+                height: 28px;
+                margin: 0;
+                padding-top: 2px;
+            }
+    
+            .ant-pagination-prev, .ant-pagination-next{
+                min-width: 28px;
+                height: 28px;
+                margin: 0 5px;
+            }
+
+            .ant-pagination-jump-prev, .ant-pagination-jump-next {
+                min-width: 28px;
+                height: 28px;
+                margin: 0;
+                margin-inline-end: 0;
+            }
+        }
     }
 }

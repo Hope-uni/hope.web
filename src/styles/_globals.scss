@@ -55,10 +55,10 @@
 
 .text-ellipse{
     display: block; /* Fallback for non-webkit */
-    display: -webkit-box;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .text-ellipse.l-2{
