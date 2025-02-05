@@ -2,7 +2,7 @@
 
 import { GoToLogin } from '@/components/auth/GoToLogin';
 import { HeaderForm } from '@/components/auth/HeaderForm';
-import { Rules } from '@/constants/rules';
+import { AuthRules } from '@/constants/rules';
 import { AlertType } from '@/models/types/antd';
 import { ForgotPasswordService } from '@/services/auth/auth.service';
 import styles from '@/styles/modules/auth.module.scss';
@@ -57,7 +57,7 @@ export const ForgotPasswordForm = () => {
 
       {error && <Alert message={message} type={error} showIcon />}
 
-      <Form.Item name="emailOrUsername" rules={Rules.auth.emailOrUsername}>
+      <Form.Item name="emailOrUsername" rules={AuthRules.emailOrUsername}>
         <Input placeholder={t('Auth.fields.email_or_username.placeholder')} />
       </Form.Item>
 

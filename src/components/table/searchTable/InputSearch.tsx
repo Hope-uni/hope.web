@@ -80,7 +80,7 @@ const InputSearch = ({
       ),
       [E_FilterSearchType.TEXT]: (
         <Search
-          style={{ width: '400px' }}
+          className="table-input-search"
           placeholder={filterValue?.placeholder}
           value={searchValue.value}
           enterButton={<SearchOutlined />}

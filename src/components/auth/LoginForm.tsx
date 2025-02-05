@@ -2,7 +2,7 @@
 
 import { HeaderForm } from '@/components/auth/HeaderForm';
 import { DEFAULT_REDIRECT_HOME_URL } from '@/constants';
-import { Rules } from '@/constants/rules';
+import { AuthRules } from '@/constants/rules';
 import { AlertType } from '@/models/types/antd';
 import styles from '@/styles/modules/auth.module.scss';
 import { Alert, Button, Form, Input, message } from 'antd';
@@ -36,7 +36,6 @@ export const LoginForm = () => {
         ...values,
         redirect: false,
       });
-      console.log(res, 'res');
 
       if (res?.error) {
         if (res.error === 'unauthorized') {
@@ -44,6 +43,7 @@ export const LoginForm = () => {
           setMessage(t('Auth.errors.unauthorized'));
         } else {
           setError('error');
+          setMessage(res?.error);
         }
 
         setLoading(false);
@@ -76,7 +76,7 @@ export const LoginForm = () => {
       <FormItem
         name="email_username"
         className={styles.auth_form_input}
-        rules={Rules.auth.emailOrUsername}
+        rules={AuthRules.emailOrUsername}
       >
         <Input placeholder={t('Auth.fields.email_or_username.placeholder')} />
       </FormItem>
@@ -84,7 +84,7 @@ export const LoginForm = () => {
         <FormItem
           name="password"
           className={styles.auth_form_input}
-          rules={Rules.auth.password}
+          rules={AuthRules.password}
         >
           <Input
             type="password"
