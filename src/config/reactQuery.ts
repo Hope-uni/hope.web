@@ -1,0 +1,5 @@
+export const RQ_Conf = {
+  DEFAULT_STALE_TIME: 1000 * 60 * 60 * 24,
+  DEFAULT_CACHE_TIME: 1000 * 60 * 60 * 24,
+  REFETCH_ON_WINDOW_FOCUS: false,
+};
