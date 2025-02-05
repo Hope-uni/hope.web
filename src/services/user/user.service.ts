@@ -165,8 +165,6 @@ export const CreateTherapistService = async (
 
     return response.data;
   } catch (error) {
-    console.log(error);
-
     throw axiosErrorHandler(error);
   }
 };

@@ -43,18 +43,11 @@ API_HOPE_PROTECTED.interceptors.request.use(
 
 API_HOPE_PROTECTED.interceptors.response.use(
   async (response) => {
-    console.log(response, 'INTERCEPTORS_RESPONSE');
-
-    // signOut()
-
     return response;
   },
   (error) => {
-    console.log(error, 'ERROR_INTERCEPTORS_RESPONSE');
-    if (axios.isAxiosError(error)) {
-      if (error.response?.data.statusCode === 401) {
-        console.log('Unauthorized');
-      }
+    if (axios.isAxiosError(error) && error.response?.data.statusCode === 401) {
+      // TODO implements signOut and redirect to login.
     }
     return Promise.reject(error);
   },
