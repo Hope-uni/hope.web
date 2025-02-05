@@ -17,8 +17,6 @@ export default function SkeletonTable({
 }: Props) {
   const [columns] = useUserColumns();
 
-  console.log(fetching, 'fetching');
-
   const rows = useMemo(() => (size <= 10 ? size : 10), [size]);
 
   return (

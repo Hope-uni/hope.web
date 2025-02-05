@@ -109,6 +109,7 @@ export default function CreateUserForm() {
       )}
       <div className={`${styles.wrapper_steps_create_user} steps_create_user`}>
         <Steps
+          className="customSteps"
           direction="vertical"
           current={currentIndex}
           items={stepsForm.items.map((item) => CreateUserSteps.parse(item))}

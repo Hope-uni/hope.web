@@ -42,8 +42,6 @@ function WrapperTable({
   }, []);
 
   useEffect(() => {
-    console.count('useEffect 2');
-
     const totalResults = paginationFromAPI
       ? data?.paginate?.total
       : data?.data?.length;
@@ -102,6 +100,7 @@ function WrapperTable({
         <>
           <Table
             id={id}
+            className="customTable"
             columns={cols}
             dataSource={
               Array.isArray(data?.data) || Array.isArray(data)
