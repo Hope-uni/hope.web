@@ -1,122 +1,138 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import SkeletonTable from '@/components/table/SkeletonTable';
-import {
-  Flex,
-  Pagination,
-  Select,
-  Space,
-  Table,
-  TableProps,
-  Typography,
-} from 'antd';
-import SearchTable from './searchTable/SearchTable';
-import { TablePropsType } from '@/models/types/Table.d';
-import { useEffect, useState } from 'react';
-import { HopeTable } from '@/constants/config';
-
-const { Text } = Typography;
+import { Table } from 'antd';
+import { E_ActionKeyTable, TablePropsType } from '@/models/types/Table.d';
+import { useCallback, useEffect, useMemo } from 'react';
+import HeaderTable from './HeaderTable';
+import { useTableStore } from '@/lib/store/table';
 
 function WrapperTable({
   btnExtra = false,
-  customPagination = true,
-  pageSize,
+  pagination = true,
   typeSelection = 'radio',
   selection,
   cols,
-  data = [],
+  data = undefined,
   showHeader = true,
   searchable = false,
   stylesWrap,
   id,
   loading,
+  fetching,
   scroll = false,
   scrollHeight,
   searchProps,
 }: TablePropsType) {
-  const [pagination, setPagination] = useState<any>();
-  const [showTotal, setShowTotal] = useState<string>();
+  const { paginationTable, dispatch } = useTableStore();
+
+  const paginationFromAPI = useMemo(() => {
+    return data?.paginate && data?.paginate?.total;
+  }, [data?.paginate]);
 
   useEffect(() => {
-    setPagination({
+    dispatch({ type: E_ActionKeyTable.SET_SEARCH_RESULT, payload: [] });
+    dispatch({ type: E_ActionKeyTable.SET_SEARCHING, payload: false });
+
+    return () => {
+      dispatch({ type: E_ActionKeyTable.RESET_PAGINATION });
+      dispatch({ type: E_ActionKeyTable.CLEAR_SELECTED });
+      dispatch({ type: E_ActionKeyTable.CLEAR_MESSAGE });
+      dispatch({ type: E_ActionKeyTable.RESET_SEARCH });
+    };
+  }, []);
+
+  useEffect(() => {
+    console.count('useEffect 2');
+
+    const totalResults = paginationFromAPI
+      ? data?.paginate?.total
+      : data?.data?.length;
+
+    if (data?.data?.length > 0 && paginationTable?.totalData !== totalResults) {
+      const paginationData = !paginationFromAPI
+        ? {
+            totalPages: 0,
+            page: 1,
+            totalData: totalResults,
+          }
+        : {
+            totalPages: data?.paginate?.page_count ?? 0,
+            page: data?.paginate?.page,
+            size: data?.paginate?.page_size,
+            totalData: totalResults,
+          };
+
+      dispatch({
+        type: E_ActionKeyTable.SET_PAGINATION,
+        payload: {
+          ...paginationTable,
+          ...paginationData,
+        },
+      });
+    }
+  }, [data?.paginate, data?.data?.length, paginationTable, dispatch]);
+
+  const handleChangePagination = useCallback(
+    (page: number) => {
+      dispatch({
+        type: E_ActionKeyTable.SET_PAGINATION,
+        payload: {
+          ...paginationTable,
+          page: page,
+        },
+      });
+    },
+    [paginationTable, dispatch],
+  );
+
+  const paginationDataTable = useMemo(() => {
+    return {
       showSizeChanger: false,
-      pageSize: pageSize ?? '5',
-      total: data?.length,
-    });
-  }, [data?.length, pageSize]);
-
-  const handleSizeChanger = (value: any) => {
-    setPagination({
-      ...pagination,
-      pageSize: value,
-    });
-  };
-
-  const headerTable = () => {
-    return (
-      <Flex
-        className="wrapper-header-table"
-        justify={searchable && searchProps ? 'space-between' : 'flex-end'}
-        align="flex-end"
-      >
-        {searchable && searchProps && <SearchTable {...searchProps} />}
-        <Flex align="center" gap={20}>
-          <Text>{showTotal}</Text>
-          <Select
-            className="select-size-changer"
-            value={pagination?.pageSize}
-            onChange={handleSizeChanger}
-            options={HopeTable.sizeChangerOptions}
-          />
-        </Flex>
-      </Flex>
-    );
-  };
-
-  const handleShowTotal = (total: number, range: [number, number]) => {
-    setShowTotal(`${range[0]}-${range[1]} de ${total} elementos`);
-    return undefined;
-  };
+      pageSize: paginationTable?.size,
+      total: paginationTable?.totalData,
+      current: paginationTable?.page,
+      showTotal: undefined,
+      onChange: handleChangePagination,
+    };
+  }, [paginationTable, handleChangePagination]);
 
   return (
     <div style={{ ...stylesWrap }}>
-      <Table
-        id={id}
-        components={{
-          body: {
-            wrapper: loading
-              ? () => {
-                  return (
-                    <SkeletonTable
-                      size={10}
-                      colSpan={
-                        cols ? (selection ? cols.length + 1 : cols.length) : 1
-                      }
-                    />
-                  );
-                }
-              : undefined,
-          },
-        }}
-        columns={cols}
-        dataSource={data}
-        scroll={
-          scroll
-            ? {
-                x: 'max-content',
-                y: scrollHeight ?? undefined,
-              }
-            : undefined
-        }
-        pagination={{
-          showSizeChanger: false,
-          pageSize: pagination?.pageSize,
-          total: data?.length,
-          showTotal: handleShowTotal,
-        }}
-        showHeader={showHeader}
-        tableLayout="fixed"
-        title={() => headerTable()}
-        bordered={false}
-      />
+      {!loading && !fetching ? (
+        <>
+          <Table
+            id={id}
+            columns={cols}
+            dataSource={
+              Array.isArray(data?.data) || Array.isArray(data)
+                ? data?.data || data
+                : []
+            }
+            scroll={
+              scroll
+                ? {
+                    x: 'max-content',
+                    y: scrollHeight ?? undefined,
+                  }
+                : undefined
+            }
+            pagination={pagination ? paginationDataTable : false}
+            showHeader={showHeader}
+            tableLayout="fixed"
+            title={() => (
+              <HeaderTable searchProps={searchProps} searchable={searchable} />
+            )}
+            bordered={false}
+            rowKey="id"
+          />
+        </>
+      ) : (
+        <SkeletonTable
+          size={paginationTable.size}
+          colSpan={cols ? (selection ? cols.length + 1 : cols.length) : 1}
+          fetching={!loading && fetching}
+        />
+      )}
     </div>
   );
 }

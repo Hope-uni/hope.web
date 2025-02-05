@@ -2,7 +2,7 @@
 
 import { GoToLogin } from '@/components/auth/GoToLogin';
 import { HeaderForm } from '@/components/auth/HeaderForm';
-import { Rules } from '@/constants/rules';
+import { AuthRules } from '@/constants/rules';
 import { ResetPasswordService } from '@/services/auth/auth.service';
 import styles from '@/styles/modules/auth.module.scss';
 import { Button, Form, Input } from 'antd';
@@ -89,7 +89,7 @@ export const ResetPasswordForm = ({ token }: Props) => {
       <FormItem
         name="password"
         className={styles.auth_form_input}
-        rules={Rules.auth.password}
+        rules={AuthRules.password}
       >
         <Input
           type="password"
@@ -100,7 +100,7 @@ export const ResetPasswordForm = ({ token }: Props) => {
       <FormItem
         name="password"
         className={styles.auth_form_input}
-        rules={Rules.auth.confirmPassword}
+        rules={AuthRules.confirmPassword}
       >
         <Input
           type="password"

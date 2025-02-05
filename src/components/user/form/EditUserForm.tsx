@@ -29,18 +29,12 @@ export default function EditUserForm() {
         <Title level={3} className={styles.edit_user_title_sections}>
           {t('User.form.edit.title_data_general')}
         </Title>
-        <PersonDataGeneralForm
-          setCurrentRole={setCurrentRole}
-          isEdit
-          gutterRow={[20, 0]}
-          spanCol={12}
-        />
+        <PersonDataGeneralForm isEdit gutterRow={[20, 0]} spanCol={12} />
         <Divider type="horizontal" className={styles.section_divider} />
         <Title level={3} className={styles.edit_user_title_sections}>
           {t('User.form.edit.title_data_specific', { personType: currentRole })}
         </Title>
         <PersonDataSpecificForm
-          selectedRole={currentRole}
           isEdit
           gutterRow={[20, 0]}
           spanCol={12}
