@@ -5,23 +5,29 @@ import { useFormCreateUserStore } from '@/lib/store/formCreateUser';
 import styles from '@/styles/modules/user.module.scss';
 import { Col, Form, FormInstance, Input, Row, Select } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 interface Props {
   form?: FormInstance;
-  isEdit?: boolean;
   gutterRow?: number | [number, number];
   spanCol?: number;
 }
 
 export default function PersonDataGeneralForm({
   form,
-  isEdit = false,
   gutterRow = 0,
   spanCol = 24,
 }: Props) {
   const { t } = useTranslation();
-  const { isAdminRoleSelected, roleList } = useFormCreateUserStore();
+  const { isAdminRoleSelected, roleList, isEdit, fields } =
+    useFormCreateUserStore();
+
+  useEffect(() => {
+    if (isEdit) {
+      form?.setFieldsValue(fields);
+    }
+  }, [fields, form, isEdit]);
 
   return (
     <Form
@@ -97,11 +103,11 @@ export default function PersonDataGeneralForm({
           </Row>
 
           <Row gutter={gutterRow}>
-            <Col sm={{ span: spanCol }} xs={{ span: 24 }}>
+            <Col sm={{ span: 24 }} xs={{ span: 24 }}>
               <Form.Item
                 name="gender"
                 label={t('User.fields.gender.label')}
-                rules={UserRules.user.first_surname}
+                rules={UserRules.user.gender}
               >
                 <Select
                   placeholder={t('User.fields.gender.placeholder')}
@@ -109,7 +115,7 @@ export default function PersonDataGeneralForm({
                 />
               </Form.Item>
             </Col>
-            <Col sm={{ span: spanCol }} xs={{ span: 24 }}>
+            <Col sm={{ span: 24 }} xs={{ span: 24 }}>
               <Form.Item
                 name="address"
                 label={t('User.fields.address.label')}

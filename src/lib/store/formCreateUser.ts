@@ -2,6 +2,7 @@ import {
   FormCreateUser,
   ListRoleResponse,
   ListTutorResponse,
+  Role,
   TEAGrade,
   TEAPhase,
 } from '@/models/schema';
@@ -14,9 +15,10 @@ interface ErrorsForm {
 }
 
 interface FormCreateUserState {
+  isEdit: boolean;
   loadingForm: boolean;
   initCurrentRole: number;
-  currentRoleSelected: ListRoleResponse;
+  currentRoleSelected: ListRoleResponse | Role;
   isAdminRoleSelected: boolean;
   roleList: ListRoleResponse[];
   phaseList: TEAPhase[];
@@ -24,19 +26,21 @@ interface FormCreateUserState {
   tutorList: ListTutorResponse[];
   fields: FormCreateUser;
   errors: ErrorsForm | undefined;
+  setIsEdit: (value: boolean) => void;
   setLoadingForm: (loading: boolean) => void;
   setRoleList: (roles: ListRoleResponse[]) => void;
   setPhaseList: (roles: TEAPhase[]) => void;
   setDegreeList: (roles: TEAGrade[]) => void;
   setTutorList: (roles: ListTutorResponse[]) => void;
   setInitCurrentRole: (id: number) => void;
-  setCurrentRoleSelected: (role: ListRoleResponse) => void;
+  setCurrentRoleSelected: (role: ListRoleResponse | Role) => void;
   setIsAdminRoleSelected: (value: boolean) => void;
   setFields: (fields: FormCreateUser) => void;
   setErrors: (fields: ErrorsForm | undefined) => void;
 }
 
 export const useFormCreateUserStore = create<FormCreateUserState>()((set) => ({
+  isEdit: false,
   initCurrentRole: 4,
   currentRoleSelected: {} as ListRoleResponse,
   isAdminRoleSelected: false,
@@ -47,6 +51,7 @@ export const useFormCreateUserStore = create<FormCreateUserState>()((set) => ({
   tutorList: [],
   fields: {} as FormCreateUser,
   errors: {} as ErrorsForm,
+  setIsEdit: (value: boolean) => set({ isEdit: value }),
   setLoadingForm: (loading: boolean) => set({ loadingForm: loading }),
   setRoleList: (roles) => set({ roleList: roles }),
   setPhaseList: (phases: TEAPhase[]) => set({ phaseList: phases }),

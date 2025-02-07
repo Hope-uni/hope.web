@@ -1,5 +1,6 @@
 import { API_PAYLOAD } from '@/models/types';
 import {
+  FindUserByIdService,
   ListPatientService,
   ListRolesService,
   ListTherapistService,
@@ -10,14 +11,19 @@ import {
   ListDegreeService,
   ListPhaseService,
 } from '@/services/PECS/pecs.service';
+import {
+  CurrentRoleTypeFindUser,
+  FindUserByIdHelper,
+} from '@/services/user/helpers';
 import { keepPreviousData, useQueries, useQuery } from '@tanstack/react-query';
 
-export const useFetchCatalogInitCreateUserQuery = () => {
+export const useFetchCatalogInitCreateUserQuery = (isEdit: boolean) => {
   return useQueries({
     queries: [
       {
         queryKey: ['list-catalog-role'],
         queryFn: () => ListRolesService(),
+        enabled: !isEdit,
         placeholderData: keepPreviousData,
       },
       {
@@ -43,6 +49,29 @@ export const useFetchListUserQuery = (payload?: API_PAYLOAD) => {
   return useQuery({
     queryKey: ['list-user', payload],
     queryFn: () => ListUserService(payload),
+    placeholderData: keepPreviousData,
+  });
+};
+
+export const OptionsFindUserByIdQuery = (id: string | undefined) => {
+  return {
+    queryKey: ['find-user-by-id', id],
+    queryFn: () => FindUserByIdService(id),
+    placeholderData: keepPreviousData,
+  };
+};
+export const useFetchFindUserByIdQuery = (id: string | undefined) => {
+  return useQuery(OptionsFindUserByIdQuery(id));
+};
+
+export const useFetchFindUserByRoleQuery = (
+  role: string,
+  id: string | undefined,
+) => {
+  return useQuery({
+    queryKey: ['find-user-by-id', id],
+    queryFn: () => FindUserByIdHelper(role as CurrentRoleTypeFindUser, id),
+    enabled: !!role && !!id,
     placeholderData: keepPreviousData,
   });
 };

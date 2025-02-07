@@ -6,12 +6,12 @@ import { Col, DatePicker, Form, FormInstance, Input, Row, Select } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import { useTranslation } from 'react-i18next';
 import dayjs from 'dayjs';
+import { useEffect } from 'react';
 
 const { Option } = Select;
 
 interface Props {
   form?: FormInstance;
-  isEdit?: boolean;
   gutterRow?: number | [number, number];
   spanCol?: number;
   spanColMedium?: number;
@@ -34,14 +34,25 @@ const SixteenYearsAgo = dayjs(new Date()).subtract(16, 'years');
 
 export default function PersonDataSpecificForm({
   form,
-  isEdit = false,
   gutterRow = 0,
   spanCol = spanColFullWidth,
   spanColMedium = spanColFullWidth,
 }: Props) {
   const { t } = useTranslation();
-  const { currentRoleSelected, phaseList, degreeList, tutorList } =
-    useFormCreateUserStore();
+  const {
+    currentRoleSelected,
+    phaseList,
+    degreeList,
+    tutorList,
+    fields,
+    isEdit,
+  } = useFormCreateUserStore();
+
+  useEffect(() => {
+    if (isEdit) {
+      form?.setFieldsValue(fields);
+    }
+  }, [fields, form, isEdit]);
 
   const disabledFutureDate = (current: any) => {
     if (currentRoleSelected.name === 'Paciente') {
@@ -59,13 +70,16 @@ export default function PersonDataSpecificForm({
       className={styles.wrapper_form_create_user}
       form={form}
     >
-      <Row gutter={gutterRow}>
-        <Col sm={{ span: spanCol }} xs={{ span: spanColFullWidth }}>
-          <Show>
-            <Show.When
-              isTrue={inputVisibleByRole.birthday.includes(
-                currentRoleSelected.name,
-              )}
+      <Show>
+        <Show.When
+          isTrue={inputVisibleByRole.birthday.includes(
+            currentRoleSelected.name,
+          )}
+        >
+          <Row gutter={gutterRow}>
+            <Col
+              sm={{ span: spanColFullWidth }}
+              xs={{ span: spanColFullWidth }}
             >
               <Form.Item
                 name="birthday"
@@ -79,102 +93,88 @@ export default function PersonDataSpecificForm({
                   style={{ width: '100%' }}
                 />
               </Form.Item>
-            </Show.When>
-          </Show>
-        </Col>
-        <Col sm={{ span: spanCol }} xs={{ span: spanColFullWidth }}>
-          <Show>
-            <Show.When
-              isTrue={inputVisibleByRole.teaGrade.includes(
-                currentRoleSelected.name,
-              )}
-            >
-              <Form.Item
-                name="teaDegreeId"
-                label={t('User.fields.grade_of_tea.label')}
-                rules={UserRules.user.gradeOfTea}
-              >
-                <Select placeholder={t('User.fields.grade_of_tea.placeholder')}>
-                  {degreeList.map((item) => (
-                    <Select.Option key={item.id} value={item.id}>
-                      {`${item.name}: ${item.description}`}
-                    </Select.Option>
-                  ))}
-                </Select>
-              </Form.Item>
-            </Show.When>
-          </Show>
-        </Col>
-      </Row>
-
-      <Row gutter={gutterRow}>
-        <Col sm={{ span: spanCol }} xs={{ span: spanColFullWidth }}>
-          <Show>
-            <Show.When
-              isTrue={inputVisibleByRole.teaPhase.includes(
-                currentRoleSelected.name,
-              )}
-            >
-              <Form.Item
-                name="phaseId"
-                label={t('User.fields.phase.label')}
-                rules={UserRules.user.phase}
-              >
-                <Select placeholder={t('User.fields.phase.placeholder')}>
-                  {phaseList.map((item, index) => (
-                    <Select.Option key={item.id} value={item.id}>
-                      {`Fase ${index + 1} - ${item.name}`}
-                    </Select.Option>
-                  ))}
-                </Select>
-              </Form.Item>
-            </Show.When>
-          </Show>
-        </Col>
-        <Col sm={{ span: spanCol }} xs={{ span: spanColFullWidth }}>
-          <Show>
-            <Show.When
-              isTrue={inputVisibleByRole.tutorInCharge.includes(
-                currentRoleSelected.name,
-              )}
-            >
-              <Form.Item
-                name="tutorId"
-                label={t('User.fields.tutor_in_charge.label')}
-                rules={UserRules.user.tutorInCharge}
-              >
-                <Select
-                  placeholder={t('User.fields.tutor_in_charge.placeholder')}
-                >
-                  {tutorList.map((item) => (
-                    <Select.Option key={item.id} value={item.id}>
-                      {item.fullName}
-                    </Select.Option>
-                  ))}
-                </Select>
-              </Form.Item>
-            </Show.When>
-          </Show>
-        </Col>
-      </Row>
-
-      <Show>
-        <Show.When
-          isTrue={inputVisibleByRole.observations.includes(
-            currentRoleSelected.name,
-          )}
-        >
-          <Form.Item
-            name="observations"
-            label={t('User.fields.observations.label')}
-          >
-            <TextArea
-              rows={4}
-              placeholder={t('User.fields.observations.placeholder')}
-            />
-          </Form.Item>
+            </Col>
+          </Row>
         </Show.When>
       </Show>
+
+      {
+        <Show>
+          <Show.When isTrue={currentRoleSelected.name === 'Paciente'}>
+            <Row gutter={gutterRow}>
+              <Col sm={{ span: spanCol }} xs={{ span: spanColFullWidth }}>
+                <Form.Item
+                  name="teaDegreeId"
+                  label={t('User.fields.grade_of_tea.label')}
+                  rules={UserRules.user.gradeOfTea}
+                >
+                  <Select
+                    placeholder={t('User.fields.grade_of_tea.placeholder')}
+                  >
+                    {degreeList.map((item) => (
+                      <Select.Option key={item.id} value={item.id}>
+                        {`${item.name}: ${item.description}`}
+                      </Select.Option>
+                    ))}
+                  </Select>
+                </Form.Item>
+              </Col>
+              <Col sm={{ span: spanCol }} xs={{ span: spanColFullWidth }}>
+                <Form.Item
+                  name="phaseId"
+                  label={t('User.fields.phase.label')}
+                  rules={UserRules.user.phase}
+                >
+                  <Select placeholder={t('User.fields.phase.placeholder')}>
+                    {phaseList.map((item, index) => (
+                      <Select.Option key={item.id} value={item.id}>
+                        {`Fase ${index + 1} - ${item.name}`}
+                      </Select.Option>
+                    ))}
+                  </Select>
+                </Form.Item>
+              </Col>
+            </Row>
+
+            <Row gutter={gutterRow}>
+              <Col
+                sm={{ span: spanColFullWidth }}
+                xs={{ span: spanColFullWidth }}
+              >
+                <Form.Item
+                  name="tutorId"
+                  label={t('User.fields.tutor_in_charge.label')}
+                  rules={UserRules.user.tutorInCharge}
+                >
+                  <Select
+                    placeholder={t('User.fields.tutor_in_charge.placeholder')}
+                  >
+                    {tutorList.map((item) => (
+                      <Select.Option key={item.id} value={item.id}>
+                        {item.fullName}
+                      </Select.Option>
+                    ))}
+                  </Select>
+                </Form.Item>
+              </Col>
+              <Col
+                sm={{ span: spanColFullWidth }}
+                xs={{ span: spanColFullWidth }}
+              >
+                <Form.Item
+                  name="observations"
+                  label={t('User.fields.observations.label')}
+                >
+                  <TextArea
+                    rows={4}
+                    placeholder={t('User.fields.observations.placeholder')}
+                  />
+                </Form.Item>
+              </Col>
+            </Row>
+          </Show.When>
+        </Show>
+      }
 
       <Row gutter={gutterRow}>
         <Col sm={{ span: spanColMedium }} xs={{ span: spanColFullWidth }}>

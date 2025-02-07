@@ -15,6 +15,7 @@ const useStepFormUser = () => {
   const {
     initCurrentRole,
     isAdminRoleSelected,
+    currentRoleSelected,
     roleList,
     errors,
     setCurrentRoleSelected,
@@ -62,11 +63,14 @@ const useStepFormUser = () => {
     );
 
     if (currenRoleData) {
-      const isAdmin = currenRoleData.name === 'Admin' || false;
-      setIsAdminRoleSelected(isAdmin);
       setCurrentRoleSelected(currenRoleData);
     }
   }, [roleSelected, roleList, setIsAdminRoleSelected, setCurrentRoleSelected]);
+
+  useEffect(() => {
+    const isAdmin = currentRoleSelected.name === 'Admin' || false;
+    setIsAdminRoleSelected(isAdmin);
+  }, [currentRoleSelected, setIsAdminRoleSelected]);
 
   useEffect(() => {
     setCurrent(stepsForm.items[currentIndex]);
@@ -125,6 +129,30 @@ const useStepFormUser = () => {
     [setCurrentIndex, setErrors, stepsForm.items.length],
   );
 
+  const validateForm = useCallback(async () => {
+    const validateFormGeneral = await formGeneral.validateFields();
+    const validateFormSpecific = await formSpecific.validateFields();
+    const validateFormUser = await formUser.validateFields();
+
+    if (
+      !validateFormGeneral.errorFields &&
+      !validateFormSpecific.errorFields &&
+      !validateFormUser.errorFields
+    ) {
+      return true;
+    }
+
+    return false;
+  }, [formGeneral, formSpecific, formUser]);
+
+  const getCurrentValues = useCallback(() => {
+    return {
+      ...formGeneral.getFieldsValue(),
+      ...formSpecific.getFieldsValue(),
+      ...formUser.getFieldsValue(),
+    };
+  }, [formGeneral, formSpecific, formUser]);
+
   return {
     formGeneral,
     formSpecific,
@@ -137,6 +165,8 @@ const useStepFormUser = () => {
     cleanForm,
     getCurrentInstanceForm,
     applyErrors,
+    validateForm,
+    getCurrentValues,
   };
 };
 

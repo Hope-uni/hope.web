@@ -6,6 +6,7 @@ export const API = {
   User: {
     List: '/user',
     Create: '/user',
+    find: '/user',
     Role: {
       List: '/role',
     },
@@ -13,14 +14,17 @@ export const API = {
   Patient: {
     List: '/patient',
     Create: '/patient',
+    find: '/patient',
   },
   Tutor: {
     List: '/tutor',
-    Create: '/therapist',
+    Create: '/tutor',
+    find: '/tutor',
   },
   Therapist: {
     List: '/therapist',
     Create: '/therapist',
+    find: '/therapist',
   },
   PECS: {
     ListPhase: '/phase',

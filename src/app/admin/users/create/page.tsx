@@ -16,7 +16,7 @@ export default function CreatePatientPage() {
           title={t('User.form.create.title')}
           caption={t('User.form.create.caption')}
         />
-        <UserForm />
+        <UserForm isEdit={false} />
       </Space>
     </>
   );

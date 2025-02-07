@@ -13,6 +13,7 @@ import {
   Row,
   Upload,
 } from 'antd';
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { BsCloudDownloadFill } from 'react-icons/bs';
 
@@ -27,19 +28,23 @@ const normFile = (e: any) => {
 
 interface Props {
   form?: FormInstance;
-  isEdit?: boolean;
   gutterRow?: number | [number, number];
   spanCol?: number;
 }
 
 export default function UserDataForm({
   form,
-  isEdit = false,
   gutterRow = 0,
   spanCol = 24,
 }: Props) {
   const { t } = useTranslation();
-  const { isAdminRoleSelected } = useFormCreateUserStore();
+  const { isAdminRoleSelected, isEdit, fields } = useFormCreateUserStore();
+
+  useEffect(() => {
+    if (isEdit) {
+      form?.setFieldsValue(fields);
+    }
+  }, [fields, form, isEdit]);
 
   return (
     <Form
