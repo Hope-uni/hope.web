@@ -3,7 +3,11 @@
 import { Show } from '@/components/Show';
 import useStepFormUser from '@/hooks/useStepFormUser';
 import { useFormCreateUserStore } from '@/lib/store/formCreateUser';
-import { CreateUserSteps, FormCreateUser } from '@/models/schema';
+import {
+  CreateUserSteps,
+  FormCreateUser,
+  FormCreateUserError,
+} from '@/models/schema';
 import { CreateUserHelper, CurrentRoleType } from '@/services/user/helpers';
 import styles from '@/styles/modules/user.module.scss';
 import { Alert, Button, Divider, Flex, Steps, Typography, message } from 'antd';
@@ -15,11 +19,16 @@ const { Text, Title } = Typography;
 export default function CreateUserForm() {
   const { t } = useTranslation();
   const [loadingForm, setLoadingForm] = useState(false);
-  const [messageErrorForm, setMessageErrorForm] = useState('');
-  const [messageErrorDetail, setMessageErrorDetail] = useState('');
-
-  const { fields, currentRoleSelected, setFields, setErrors } =
-    useFormCreateUserStore();
+  const {
+    fields,
+    currentRoleSelected,
+    messageErrorForm,
+    messageErrorDetail,
+    setFields,
+    setErrors,
+    setMessageErrorForm,
+    setMessageErrorDetail,
+  } = useFormCreateUserStore();
 
   const {
     stepsForm,
@@ -49,7 +58,7 @@ export default function CreateUserForm() {
             res.validationErrors &&
             Object.keys(res.validationErrors).length > 0
           ) {
-            applyErrors(res.validationErrors);
+            applyErrors(res.validationErrors as FormCreateUserError);
           }
 
           setMessageErrorForm(res.message);
@@ -64,6 +73,7 @@ export default function CreateUserForm() {
         setLoadingForm(false);
       }
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [setErrors, currentRoleSelected.name, cleanForm, applyErrors],
   );
 

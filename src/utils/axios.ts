@@ -1,9 +1,10 @@
-import { API_RESPONSE } from '@/models/types';
+import { API_RESPONSE, I_VALIDATION_ERRORS } from '@/models/types';
 import axios, { AxiosError } from 'axios';
 
 export interface CustomError extends Error {
   statusCode?: number;
   error?: any;
+  validationErrors?: I_VALIDATION_ERRORS;
 }
 
 export const axiosErrorHandler = (
@@ -18,6 +19,7 @@ export const axiosErrorHandler = (
       message: err?.response?.data.message,
       statusCode: err?.response?.data.statusCode,
       error: err?.response?.data.error,
+      validationErrors: err?.response?.data.validationErrors,
     };
   }
 

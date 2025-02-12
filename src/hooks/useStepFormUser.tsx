@@ -2,10 +2,12 @@ import PersonDataGeneralForm from '@/components/user/form/PersonDataGeneralForm'
 import PersonDataSpecificForm from '@/components/user/form/PersonDataSpecificForm';
 import UserDataForm from '@/components/user/form/UserDataForm';
 import { StepFormInterface } from '@/constants/Forms';
+import { ROLES } from '@/constants/Role';
 import { useFormCreateUserStore } from '@/lib/store/formCreateUser';
 import { FormCreateUser, FormCreateUserError } from '@/models/schema';
 import { ParseToErrorAntd } from '@/services/user/helpers';
 import { getStepsForm } from '@/utils/createUserForm';
+import { validateRole } from '@/utils/session';
 import { Form } from 'antd';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
@@ -15,12 +17,17 @@ const useStepFormUser = () => {
   const {
     initCurrentRole,
     isAdminRoleSelected,
+    currentRoleSelected,
     roleList,
     errors,
+    messageErrorForm,
+    messageErrorDetail,
     setCurrentRoleSelected,
     setIsAdminRoleSelected,
     setFields,
     setErrors,
+    setMessageErrorForm,
+    setMessageErrorDetail,
   } = useFormCreateUserStore();
 
   const [formGeneral] = Form.useForm();
@@ -32,7 +39,7 @@ const useStepFormUser = () => {
     'identificationNumber',
     formSpecific,
   );
-  const username = Form.useWatch('username', formSpecific);
+  const username = Form.useWatch('username', formUser);
 
   const forms = useMemo(
     () => ({
@@ -62,11 +69,15 @@ const useStepFormUser = () => {
     );
 
     if (currenRoleData) {
-      const isAdmin = currenRoleData.name === 'Admin' || false;
-      setIsAdminRoleSelected(isAdmin);
       setCurrentRoleSelected(currenRoleData);
     }
-  }, [roleSelected, roleList, setIsAdminRoleSelected, setCurrentRoleSelected]);
+  }, [roleSelected, roleList, setCurrentRoleSelected]);
+
+  useEffect(() => {
+    const isAdmin =
+      validateRole(currentRoleSelected.name, ROLES.ADMIN) || false;
+    setIsAdminRoleSelected(isAdmin);
+  }, [currentRoleSelected, setIsAdminRoleSelected]);
 
   useEffect(() => {
     setCurrent(stepsForm.items[currentIndex]);
@@ -109,7 +120,7 @@ const useStepFormUser = () => {
       const { username, email, ...userSpecificErrors } = validationErrors;
 
       const errorsFormSpecific = ParseToErrorAntd(userSpecificErrors);
-      const errorsFormUser = ParseToErrorAntd([username, email]);
+      const errorsFormUser = ParseToErrorAntd({ username, email });
 
       setErrors({
         person: errorsFormSpecific,
@@ -125,6 +136,30 @@ const useStepFormUser = () => {
     [setCurrentIndex, setErrors, stepsForm.items.length],
   );
 
+  const validateForm = useCallback(async () => {
+    const validateFormGeneral = await formGeneral.validateFields();
+    const validateFormSpecific = await formSpecific.validateFields();
+    const validateFormUser = await formUser.validateFields();
+
+    if (
+      !validateFormGeneral.errorFields &&
+      !validateFormSpecific.errorFields &&
+      !validateFormUser.errorFields
+    ) {
+      return true;
+    }
+
+    return false;
+  }, [formGeneral, formSpecific, formUser]);
+
+  const getCurrentValues = useCallback(() => {
+    return {
+      ...formGeneral.getFieldsValue(),
+      ...formSpecific.getFieldsValue(),
+      ...formUser.getFieldsValue(),
+    };
+  }, [formGeneral, formSpecific, formUser]);
+
   return {
     formGeneral,
     formSpecific,
@@ -137,6 +172,8 @@ const useStepFormUser = () => {
     cleanForm,
     getCurrentInstanceForm,
     applyErrors,
+    validateForm,
+    getCurrentValues,
   };
 };
 

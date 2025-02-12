@@ -13,6 +13,7 @@ import {
   Row,
   Upload,
 } from 'antd';
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { BsCloudDownloadFill } from 'react-icons/bs';
 
@@ -27,63 +28,32 @@ const normFile = (e: any) => {
 
 interface Props {
   form?: FormInstance;
-  isEdit?: boolean;
   gutterRow?: number | [number, number];
   spanCol?: number;
 }
 
 export default function UserDataForm({
   form,
-  isEdit = false,
   gutterRow = 0,
   spanCol = 24,
 }: Props) {
   const { t } = useTranslation();
-  const { isAdminRoleSelected } = useFormCreateUserStore();
+  const { isAdminRoleSelected, isEdit, fields } = useFormCreateUserStore();
+
+  useEffect(() => {
+    if (isEdit) {
+      form?.setFieldsValue(fields);
+    }
+  }, [fields, form, isEdit]);
 
   return (
     <Form
-      name="create_login"
+      name="create_login_user"
       id="create_user_form_antd"
       layout="vertical"
       className={styles.wrapper_form_create_user}
       form={form}
     >
-      <Show>
-        <Show.When isTrue={!isAdminRoleSelected}>
-          <Form.Item label={t('User.fields.image_url.label')}>
-            <Flex gap={30} className="flex_upload_dragger">
-              <Avatar size={80} icon={<UserOutlined />} />
-              <Form.Item
-                name="image"
-                valuePropName="fileList"
-                getValueFromEvent={normFile}
-                style={{
-                  flex: 1,
-                }}
-              >
-                <Dragger
-                  className="uploadDragger"
-                  name="files"
-                  action="/upload.do"
-                >
-                  <p className="ant-upload-drag-icon">
-                    <BsCloudDownloadFill size={30} />
-                  </p>
-                  <p className="ant-upload-text">
-                    <strong>{t('components.dragger.title_bold')}</strong>{' '}
-                    {t('components.dragger.title_regular')}
-                  </p>
-                  <p className="ant-upload-hint">
-                    {t('components.dragger.caption')}
-                  </p>
-                </Dragger>
-              </Form.Item>
-            </Flex>
-          </Form.Item>
-        </Show.When>
-      </Show>
-
       <Row gutter={gutterRow}>
         <Col sm={{ span: spanCol }} xs={{ span: 24 }}>
           <Form.Item

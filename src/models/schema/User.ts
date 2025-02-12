@@ -11,13 +11,13 @@ export const UserSchema = z.object({
 
 export const PersonSchema = z.object({
   firstName: z.string(),
-  secondName: z.string().optional(),
+  secondName: z.string().optional().nullable(),
   surname: z.string(),
-  secondSurname: z.string().optional(),
+  secondSurname: z.string().optional().nullable(),
   image: z.string(),
   address: z.string(),
   birthday: z.string(),
-  gender: z.enum(['Masculino', 'Femenino']),
+  gender: z.enum(['Masculino', 'Femenino', 'masculino', 'femenino']),
 });
 
 export const ProfileSchema = PersonSchema.extend({
@@ -29,6 +29,7 @@ export const ProfileSchema = PersonSchema.extend({
 
 export const ListUserResponseSchema = z.object({
   id: z.string(),
+  profileId: z.string(),
   username: z.string(),
   email: z.string(),
   roles: z.array(RoleSchema),
@@ -61,8 +62,15 @@ export const CreateTherapistTutorPayloadSchema = CreateUserPayloadSchema.merge(
     .transform((val) => val.format('YYYY-MM-DD'))
     .optional(),
   identificationNumber: z.string(),
-  phoneNumber: z.string().optional(),
-  telephone: z.string().optional(),
+  phoneNumber: z
+    .union([z.number(), z.string()])
+    .transform((val) => String(val))
+    .optional(),
+  telephone: z
+    .union([z.number(), z.string()])
+    .transform((val) => String(val))
+    .optional(),
+  role: RoleSchema.optional(),
 });
 
 export const FormCreateUserSchema = z
@@ -71,9 +79,20 @@ export const FormCreateUserSchema = z
     ...CreatePatientPayloadSchema.shape,
     ...CreateTherapistTutorPayloadSchema.shape,
     birthday: z.instanceof(dayjs as unknown as typeof Dayjs),
+    phoneNumber: z
+      .union([z.number(), z.string()])
+      .transform((val) => String(val))
+      .optional()
+      .nullable(),
+    telephone: z
+      .union([z.number(), z.string()])
+      .transform((val) => String(val))
+      .optional()
+      .nullable(),
   })
   .partial()
   .extend({
+    id: z.string().optional(),
     ...CreateUserPayloadSchema.shape,
   });
 

@@ -26,7 +26,7 @@ export default function UserIndex() {
 
   return (
     <>
-      <Space direction="vertical" size={10} style={{ width: '100%' }}>
+      <Space direction="vertical" size={10} className="main-wrapper-table">
         <WrapperTable
           cols={columns}
           data={data}

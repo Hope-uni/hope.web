@@ -4,23 +4,19 @@ export const API = {
   Forgot_Password: 'auth/forgot-password',
   Reset_Password: 'auth/reset-password',
   User: {
-    List: '/user',
-    Create: '/user',
+    Index: '/user',
     Role: {
-      List: '/role',
+      Index: '/role',
     },
   },
   Patient: {
-    List: '/patient',
-    Create: '/patient',
+    Index: '/patient',
   },
   Tutor: {
-    List: '/tutor',
-    Create: '/therapist',
+    Index: '/tutor',
   },
   Therapist: {
-    List: '/therapist',
-    Create: '/therapist',
+    Index: '/therapist',
   },
   PECS: {
     ListPhase: '/phase',

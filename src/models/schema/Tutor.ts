@@ -27,10 +27,15 @@ export const ListTutorResponseSchema = z.object({
   id: z.number(),
   userId: z.number(),
   fullName: z.string(),
+  firstName: z.string(),
+  secondName: z.string().optional().nullable(),
+  surname: z.string(),
+  secondSurname: z.string().optional().nullable(),
   username: z.string(),
   phoneNumber: z.string(),
   telephone: z.string(),
-  children: z.array(z.any()),
+  children: z.array(z.any()).optional(),
+  patientsInCharge: z.number().optional(),
   image: z.string(),
 });
 

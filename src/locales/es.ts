@@ -94,9 +94,13 @@ const es = {
         title: 'Editar usuario',
         title_data_user: 'Información del usuario',
         title_data_general: 'Datos generales',
-        title_data_specific: 'Datos del {personType}',
+        title_data_specific: 'Datos del {{personType}}',
         cancel_button: 'Cancelar',
         edit_button: 'Editar',
+      },
+      feedback: {
+        user_not_found:
+          'El usuario solicitado no existe o no se encuentra registrado.',
       },
     },
     fields: {
@@ -245,12 +249,14 @@ const es = {
       title: 'Pacientes',
       caption: 'Listado de todos los pacientes.',
       createButton: 'Crear paciente',
+      searchPlaceholder: 'Buscar paciente...',
       columns: {
-        name: 'Correo electrónico',
+        name: 'Nombre',
         age: 'Edad',
         grade: 'Grado',
         phase: 'Fase',
         achievements: 'Logros',
+        years_old: '{{age}} años',
       },
     },
     detail: {
@@ -309,6 +315,7 @@ const es = {
       columns: {
         name: 'Nombre',
         email: 'Correo electrónico',
+        email_short: 'Correo',
         phone: 'Celular',
         patientsInCharge: 'Niños a cargo',
       },
@@ -491,6 +498,13 @@ const es = {
           },
         },
       },
+    },
+    not_asignment: 'Sin asignar',
+  },
+  feedback: {
+    message_error: {
+      title: '¡Lo sentimos, algo ha salido mal!',
+      subtitle: 'Ha ocurrido un error inesperado',
     },
   },
 } as const;
