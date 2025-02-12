@@ -429,6 +429,9 @@ label.ant-form-item-required {
 
 /*
 ** TABLE */
+.main-wrapper-table{
+    width: 100%;
+}
 .customTable .wrapper-header-table{
     margin-bottom: 20px;
 
@@ -679,7 +682,18 @@ label.ant-form-item-required {
              }
          }
      }
- }
+}
+.ant-descriptions.ant-descriptions-secondary {
+    .ant-descriptions-row .ant-descriptions-item .ant-descriptions-item-label{
+        font-weight: 400;
+        color: $grey-dark;
+    }
+    .ant-descriptions-row .ant-descriptions-item .ant-descriptions-item-content{
+        font-size: 14px;
+        font-weight: bold;
+        color: $black;
+    }
+}
 
 /*
 ** TABS */
@@ -719,6 +733,22 @@ label.ant-form-item-required {
                 fill: $warning;
             }
         }
+    }
+
+    &.tag-degree{
+        border-radius: 20px;
+        background-color: #ADDBF3;
+        border: 1px solid  $primary-color;
+        color: $primary-color;
+        font-weight: 500;
+    }
+
+    &.tag-not-assignment{
+        border-radius: 20px;
+        background-color: $grey;
+        border: 1px solid  $grey-dark;
+        color: $grey-dark;
+        font-weight: 500;
     }
     
 }

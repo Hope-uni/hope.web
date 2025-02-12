@@ -1,36 +1,43 @@
 'use client';
 
 import WrapperTable from '@/components/table/Wrappertable';
-import { Space, message } from 'antd';
-import { getPatientList } from '../../../../__mocks__/user';
-import { usePatientColumns } from './PatientColumn';
-import { useTable } from '@/context/Table/TableContext';
+import { useFetchListPatientQuery } from '@/lib/queries/user';
+import { useTableStore } from '@/lib/store/table';
 import { E_ActionKeyTable } from '@/models/types/Table.d';
+import { Space, message } from 'antd';
+import { useTranslation } from 'react-i18next';
+import { usePatientColumns } from './PatientColumn';
 
 export default function PatientIndex() {
+  const { t } = useTranslation();
   const [columns] = usePatientColumns();
-  const {
-    state: { searching },
-    dispatch,
-  } = useTable();
+  const { searching, paginationTable, dispatch } = useTableStore();
+  const { data, isLoading, isRefetching } = useFetchListPatientQuery({
+    paginate: {
+      page: paginationTable?.page,
+      size: paginationTable?.size,
+    },
+  });
 
   const handleSearch = () => {
     dispatch({ type: E_ActionKeyTable.CLEAR_SELECTED });
-    message.success('Processing complete!');
+    message.success('Processing complete!'); // TODO it's will change for message returned by api
   };
 
   return (
     <>
-      <Space direction="vertical" size={10}>
+      <Space direction="vertical" size={10} className="main-wrapper-table">
         <WrapperTable
           cols={columns}
-          data={getPatientList.data}
+          data={data}
           searchable
           searchProps={{
             onSearch: handleSearch,
             searching: searching,
-            placeholder: 'Buscar paciente...', //TODO luego se le aplicará internacionalización
+            placeholder: t('Patient.index.searchPlaceholder'),
           }}
+          loading={isLoading}
+          fetching={isRefetching}
         />
       </Space>
     </>

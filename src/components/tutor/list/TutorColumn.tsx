@@ -1,7 +1,10 @@
 'use client';
 
+import { UnassignedTag } from '@/components/common';
 import PopupActions from '@/components/table/PopupActions';
-import { Tutor } from '@/models/schema/index';
+import TutorRowCardMobile from '@/components/tutor/list/TutorRowCardMobile';
+import { ListTutorResponse } from '@/models/schema/index';
+import { addResponsiveProperty } from '@/utils/table';
 import { TableProps } from 'antd';
 import { useRouter } from 'next/navigation';
 import { useCallback } from 'react';
@@ -18,15 +21,10 @@ export const useTutorColumns = () => {
     [router],
   );
 
-  const columns: TableProps<Tutor>['columns'] = [
+  const columns: TableProps<ListTutorResponse>['columns'] = [
     {
       title: t('Tutor.index.columns.name'),
       dataIndex: 'fullName',
-      align: 'left',
-    },
-    {
-      title: t('Tutor.index.columns.email'),
-      dataIndex: 'email',
       align: 'left',
     },
     {
@@ -46,6 +44,13 @@ export const useTutorColumns = () => {
       dataIndex: 'patientsInCharge',
       align: 'center',
       width: '150px',
+      render: (_, { patientsInCharge }) => {
+        if (!!(patientsInCharge && patientsInCharge > 0)) {
+          return <span>{patientsInCharge}</span>;
+        }
+
+        return <UnassignedTag />;
+      },
     },
     {
       title: '',
@@ -63,7 +68,15 @@ export const useTutorColumns = () => {
         );
       },
     },
+    {
+      title: 'rowCardMobile',
+      dataIndex: 'mobile',
+      className: 'table-col-mobile',
+      render: (_, tutor) => {
+        return <TutorRowCardMobile tutor={tutor} />;
+      },
+    },
   ];
 
-  return [columns];
+  return [addResponsiveProperty(columns)];
 };

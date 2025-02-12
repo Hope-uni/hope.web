@@ -18,3 +18,20 @@ export const getCurrentUser = (session: UserSession) => {
 
   return defaultUser;
 };
+
+export const validateRole = (
+  userRole: string,
+  targetRole: string | string[],
+): boolean => {
+  if (!userRole || !targetRole) {
+    return false;
+  }
+
+  if (Array.isArray(targetRole)) {
+    return targetRole.some(
+      (role) => role.toLowerCase() === userRole.toLowerCase(),
+    );
+  }
+
+  return userRole.toLowerCase() === targetRole.toLowerCase();
+};
