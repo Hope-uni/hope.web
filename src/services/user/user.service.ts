@@ -8,11 +8,13 @@ import {
   CreateTutorResponse,
   CreateUserPayload,
   CreateUserResponse,
+  ListPatientResponse,
   ListRoleResponse,
+  ListTherapistResponse,
   ListTutorResponse,
   ListUserResponse,
 } from '@/models/schema';
-import { API_PAYLOAD, API_RESPONSE } from '@/models/types';
+import { API_PAYLOAD, API_RESPONSE, API_SINGLE_RESPONSE } from '@/models/types';
 import { axiosErrorHandler } from '@/utils/axios';
 import { valuesWithData } from '@/utils/objects';
 
@@ -23,7 +25,7 @@ export const ListRolesService = async () => {
   try {
     const response = await API_HOPE_PROTECTED.get<
       API_RESPONSE<ListRoleResponse[]>
-    >(API.User.Role.List);
+    >(API.User.Role.Index);
 
     return response.data;
   } catch (error) {
@@ -40,7 +42,7 @@ export const ListUserService = async (
   try {
     const response = await API_HOPE_PROTECTED.get<
       API_RESPONSE<ListUserResponse[]>
-    >(API.User.List, {
+    >(API.User.Index, {
       params: payload.paginate,
     });
 
@@ -54,7 +56,7 @@ export const FindUserByIdService = async (id: string | undefined) => {
   try {
     const response = await API_HOPE_PROTECTED.get<
       API_RESPONSE<ListUserResponse>
-    >(`${API.User.find}/${id}`);
+    >(`${API.User.Index}/${id}`);
 
     return response.data;
   } catch (error) {
@@ -66,7 +68,7 @@ export const CreateUserService = async (payload: CreateUserPayload) => {
   try {
     const response = await API_HOPE_PROTECTED.post<
       API_RESPONSE<ListUserResponse>
-    >(API.User.Create, {
+    >(API.User.Index, {
       ...payload,
     });
 
@@ -84,9 +86,21 @@ export const EditUserService = async (
     const validatePayload = valuesWithData(payload);
     const response = await API_HOPE_PROTECTED.put<
       API_RESPONSE<ListUserResponse>
-    >(`${API.User.Create}/${id}`, {
+    >(`${API.User.Index}/${id}`, {
       ...validatePayload,
     });
+
+    return response.data;
+  } catch (error) {
+    throw axiosErrorHandler(error);
+  }
+};
+
+export const DeleteUserService = async (id: string) => {
+  try {
+    const response = await API_HOPE_PROTECTED.delete<API_SINGLE_RESPONSE>(
+      `${API.User.Index}/${id}`,
+    );
 
     return response.data;
   } catch (error) {
@@ -102,8 +116,8 @@ export const ListPatientService = async (
 ) => {
   try {
     const response = await API_HOPE_PROTECTED.get<
-      API_RESPONSE<ListUserResponse[]>
-    >(API.Patient.List, {
+      API_RESPONSE<ListPatientResponse[]>
+    >(API.Patient.Index, {
       params: payload.paginate,
     });
 
@@ -117,7 +131,7 @@ export const FindPatientByIdService = async (id: string) => {
   try {
     const response = await API_HOPE_PROTECTED.get<
       API_RESPONSE<ListUserResponse[]>
-    >(`${API.Patient.find}/${id}`);
+    >(`${API.Patient.Index}/${id}`);
 
     return response.data;
   } catch (error) {
@@ -129,7 +143,7 @@ export const CreatePatientService = async (payload: CreatePatientPayload) => {
   try {
     const response = await API_HOPE_PROTECTED.post<
       API_RESPONSE<CreatePatientResponse>
-    >(API.Patient.Create, {
+    >(API.Patient.Index, {
       ...payload,
     });
 
@@ -147,9 +161,21 @@ export const EditPatientService = async (
     const validatePayload = valuesWithData(payload);
     const response = await API_HOPE_PROTECTED.put<
       API_RESPONSE<CreatePatientResponse>
-    >(`${API.Patient.Create}/${id}`, {
+    >(`${API.Patient.Index}/${id}`, {
       ...validatePayload,
     });
+
+    return response.data;
+  } catch (error) {
+    throw axiosErrorHandler(error);
+  }
+};
+
+export const DeletePatientService = async (id: string) => {
+  try {
+    const response = await API_HOPE_PROTECTED.delete<API_SINGLE_RESPONSE>(
+      `${API.Patient.Index}/${id}`,
+    );
 
     return response.data;
   } catch (error) {
@@ -166,7 +192,7 @@ export const ListTutorService = async (
   try {
     const response = await API_HOPE_PROTECTED.get<
       API_RESPONSE<ListTutorResponse[]>
-    >(API.Tutor.List, {
+    >(API.Tutor.Index, {
       params: payload.paginate,
     });
 
@@ -180,7 +206,7 @@ export const FindTutorByIdService = async (id: string | undefined) => {
   try {
     const response = await API_HOPE_PROTECTED.get<
       API_RESPONSE<CreateTutorResponse>
-    >(`${API.Tutor.find}/${id}`);
+    >(`${API.Tutor.Index}/${id}`);
 
     return response.data;
   } catch (error) {
@@ -194,7 +220,7 @@ export const CreateTutorService = async (
   try {
     const response = await API_HOPE_PROTECTED.post<
       API_RESPONSE<CreateTutorResponse>
-    >(API.Tutor.Create, {
+    >(API.Tutor.Index, {
       ...payload,
     });
 
@@ -212,9 +238,21 @@ export const EditTutorService = async (
     const validatePayload = valuesWithData(payload);
     const response = await API_HOPE_PROTECTED.put<
       API_RESPONSE<CreateTutorResponse>
-    >(`${API.Tutor.Create}/${id}`, {
+    >(`${API.Tutor.Index}/${id}`, {
       ...validatePayload,
     });
+
+    return response.data;
+  } catch (error) {
+    throw axiosErrorHandler(error);
+  }
+};
+
+export const DeleteTutorService = async (id: string) => {
+  try {
+    const response = await API_HOPE_PROTECTED.delete<API_SINGLE_RESPONSE>(
+      `${API.Tutor.Index}/${id}`,
+    );
 
     return response.data;
   } catch (error) {
@@ -229,12 +267,11 @@ export const ListTherapistService = async (
   payload: API_PAYLOAD = defaultPayload,
 ) => {
   try {
-    const response = await API_HOPE_PROTECTED.get<API_RESPONSE<any[]>>(
-      API.Therapist.List,
-      {
-        params: payload.paginate,
-      },
-    );
+    const response = await API_HOPE_PROTECTED.get<
+      API_RESPONSE<ListTherapistResponse[]>
+    >(API.Therapist.Index, {
+      params: payload.paginate,
+    });
 
     return response.data;
   } catch (error) {
@@ -246,7 +283,7 @@ export const FindTherapistByIdService = async (id: string | undefined) => {
   try {
     const response = await API_HOPE_PROTECTED.get<
       API_RESPONSE<CreateTherapistResponse>
-    >(`${API.Therapist.find}/${id}`);
+    >(`${API.Therapist.Index}/${id}`);
 
     return response.data;
   } catch (error) {
@@ -260,7 +297,7 @@ export const CreateTherapistService = async (
   try {
     const response = await API_HOPE_PROTECTED.post<
       API_RESPONSE<CreateTherapistResponse>
-    >(API.Therapist.Create, {
+    >(API.Therapist.Index, {
       ...payload,
     });
 
@@ -278,9 +315,21 @@ export const EditTherapistService = async (
     const validatePayload = valuesWithData(payload);
     const response = await API_HOPE_PROTECTED.put<
       API_RESPONSE<CreateTherapistResponse>
-    >(`${API.Therapist.Create}/${id}`, {
+    >(`${API.Therapist.Index}/${id}`, {
       ...validatePayload,
     });
+
+    return response.data;
+  } catch (error) {
+    throw axiosErrorHandler(error);
+  }
+};
+
+export const DeleteTherapistService = async (id: string) => {
+  try {
+    const response = await API_HOPE_PROTECTED.delete<API_SINGLE_RESPONSE>(
+      `${API.Therapist.Index}/${id}`,
+    );
 
     return response.data;
   } catch (error) {

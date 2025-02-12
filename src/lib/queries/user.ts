@@ -53,15 +53,12 @@ export const useFetchListUserQuery = (payload?: API_PAYLOAD) => {
   });
 };
 
-export const OptionsFindUserByIdQuery = (id: string | undefined) => {
-  return {
+export const useFetchFindUserByIdQuery = (id: string | undefined) => {
+  return useQuery({
     queryKey: ['find-user-by-id', id],
     queryFn: () => FindUserByIdService(id),
     placeholderData: keepPreviousData,
-  };
-};
-export const useFetchFindUserByIdQuery = (id: string | undefined) => {
-  return useQuery(OptionsFindUserByIdQuery(id));
+  });
 };
 
 export const useFetchFindUserByRoleQuery = (
@@ -86,7 +83,7 @@ export const useFetchListPatientQuery = (payload?: API_PAYLOAD) => {
 
 export const useFetchListTutorQuery = (payload?: API_PAYLOAD) => {
   return useQuery({
-    queryKey: ['list-patient', payload],
+    queryKey: ['list-tutor', payload],
     queryFn: () => ListTutorService(payload),
     placeholderData: keepPreviousData,
   });
@@ -94,7 +91,7 @@ export const useFetchListTutorQuery = (payload?: API_PAYLOAD) => {
 
 export const useFetchListTherapistQuery = (payload?: API_PAYLOAD) => {
   return useQuery({
-    queryKey: ['list-patient', payload],
+    queryKey: ['list-therapist', payload],
     queryFn: () => ListTherapistService(payload),
     placeholderData: keepPreviousData,
   });
