@@ -110,14 +110,12 @@ export default function EditUserForm() {
 
     fieldsFiltered = removeKeysFromObject(fields, keyToDelete);
 
-    console.log(values, fieldsFiltered);
-
     if (deepEqual(values, fieldsFiltered)) {
-      message.warning('no se detectaron cambios');
+      message.warning(t('User.form.feedback.not_changed_detect'));
       return;
     }
     handleSubmit();
-  }, [fields, getCurrentValues, handleSubmit]);
+  }, [fields, getCurrentValues, handleSubmit, t]);
 
   return (
     <Flex vertical className={`${styles.wrapper_edit_user}`} gap={10}>

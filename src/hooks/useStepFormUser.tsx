@@ -84,15 +84,11 @@ const useStepFormUser = () => {
   }, [stepsForm.items, currentIndex]);
 
   useEffect(() => {
-    console.log(errors, 'errors');
-    console.log(username, 'username');
-
     if (errors?.person && errors?.person?.length > 0 && identificationNumber) {
       formSpecific.setFields(errors?.person);
     }
 
     if (errors?.user && errors?.user?.length > 0 && username) {
-      console.log(formUser.getFieldsValue());
       formUser.setFields(errors?.user);
     }
   }, [
@@ -121,8 +117,6 @@ const useStepFormUser = () => {
 
   const applyErrors = useCallback(
     (validationErrors: FormCreateUserError) => {
-      console.log(validationErrors, 'validationErrors');
-
       const { username, email, ...userSpecificErrors } = validationErrors;
 
       const errorsFormSpecific = ParseToErrorAntd(userSpecificErrors);

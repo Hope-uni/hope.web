@@ -21,6 +21,7 @@ import {
 } from '@/services/user/user.service';
 import { CustomError } from '@/utils/axios';
 import { valuesWithData } from '@/utils/objects';
+import i18next from '@/i18n';
 
 export type CurrentRoleType = keyof typeof CreateUserServicesByRole;
 export type CurrentRoleTypeFindUser = keyof typeof FindUsersByRole;
@@ -43,7 +44,7 @@ const CreateUserServicesByRole = {
       } else {
         return {
           error: true,
-          message: 'Id no proporcionado',
+          message: i18next.t('Feedback.id_not_provided'),
         };
       }
     }
@@ -59,7 +60,7 @@ const CreateUserServicesByRole = {
       } else {
         return {
           error: true,
-          message: 'Id no proporcionado',
+          message: i18next.t('Feedback.id_not_provided'),
         };
       }
     }
@@ -75,7 +76,7 @@ const CreateUserServicesByRole = {
       } else {
         return {
           error: true,
-          message: 'Id no proporcionado',
+          message: i18next.t('Feedback.id_not_provided'),
         };
       }
     }
@@ -92,7 +93,7 @@ const CreateUserServicesByRole = {
       } else {
         return {
           error: true,
-          message: 'Id no proporcionado',
+          message: i18next.t('Feedback.id_not_provided'),
         };
       }
     }
@@ -108,7 +109,7 @@ const FindUsersByRole = {
     } else {
       return {
         error: true,
-        message: 'Id no proporcionado',
+        message: i18next.t('Feedback.id_not_provided'),
       };
     }
   },
@@ -118,7 +119,7 @@ const FindUsersByRole = {
     } else {
       return {
         error: true,
-        message: 'Id no proporcionado',
+        message: i18next.t('Feedback.id_not_provided'),
       };
     }
   },
@@ -128,7 +129,7 @@ const FindUsersByRole = {
     } else {
       return {
         error: true,
-        message: 'Id no proporcionado',
+        message: i18next.t('Feedback.id_not_provided'),
       };
     }
   },
@@ -171,7 +172,7 @@ export const CreateUserHelper = async (
 
     return {
       error: true,
-      message: message || 'Unknown error',
+      message: message || i18next.t('Feedback.unknow_error'),
       description,
       validationErrors,
     };
@@ -203,7 +204,7 @@ export const FindUserByIdHelper = async (
 
     return {
       error: true,
-      message: message || 'Unknown error',
+      message: message || i18next.t('Feedback.unknow_error'),
       description,
     };
   }
