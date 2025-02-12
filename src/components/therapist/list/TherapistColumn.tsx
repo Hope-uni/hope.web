@@ -1,5 +1,8 @@
+import { UnassignedTag } from '@/components/common';
 import PopupActions from '@/components/table/PopupActions';
-import { Therapist } from '@/models/schema';
+import TherapistRowCardMobile from '@/components/therapist/list/TherapistRowCardMobile';
+import { ListTherapistResponse } from '@/models/schema';
+import { addResponsiveProperty } from '@/utils/table';
 import { TableProps } from 'antd';
 import { useRouter } from 'next/navigation';
 import { useCallback } from 'react';
@@ -16,12 +19,12 @@ export const useTherapistColumns = () => {
     [router],
   );
 
-  const columns: TableProps<Therapist>['columns'] = [
+  const columns: TableProps<ListTherapistResponse>['columns'] = [
     {
       title: t('Therapist.index.columns.name'),
       dataIndex: 'fullName',
       align: 'left',
-      sorter: (a: Therapist, b: Therapist) =>
+      sorter: (a: ListTherapistResponse, b: ListTherapistResponse) =>
         a.fullName.localeCompare(b.fullName),
       sortDirections: ['descend', 'ascend'],
     },
@@ -42,6 +45,13 @@ export const useTherapistColumns = () => {
       dataIndex: 'patientsInCharge',
       align: 'center',
       width: '250px',
+      render: (_, { patientsInCharge }) => {
+        if (!!(patientsInCharge && patientsInCharge > 0)) {
+          return <span>{patientsInCharge}</span>;
+        }
+
+        return <UnassignedTag />;
+      },
     },
     {
       title: '',
@@ -59,7 +69,15 @@ export const useTherapistColumns = () => {
         );
       },
     },
+    {
+      title: 'rowCardMobile',
+      dataIndex: 'mobile',
+      className: 'table-col-mobile',
+      render: (_, therapist) => {
+        return <TherapistRowCardMobile therapist={therapist} />;
+      },
+    },
   ];
 
-  return [columns];
+  return [addResponsiveProperty(columns)];
 };

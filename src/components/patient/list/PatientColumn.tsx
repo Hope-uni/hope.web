@@ -1,6 +1,9 @@
+import { UnassignedTag } from '@/components/common';
+import PatientRowCardMobile from '@/components/patient/list/PatientRowCardMobile';
 import PopupActions from '@/components/table/PopupActions';
-import { Patient } from '@/models/schema';
-import { TableProps } from 'antd';
+import { ListPatientResponse } from '@/models/schema';
+import { addResponsiveProperty } from '@/utils/table';
+import { TableProps, Tag } from 'antd';
 import { useRouter } from 'next/navigation';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -11,12 +14,12 @@ export const usePatientColumns = () => {
 
   const handleEdit = useCallback(
     (id: number) => {
-      router.push(`/patients/edit/${id}`);
+      router.push(`/admin/users/edit/${id}`);
     },
     [router],
   );
 
-  const columns: TableProps<Patient>['columns'] = [
+  const columns: TableProps<ListPatientResponse>['columns'] = [
     {
       title: t('Patient.index.columns.name'),
       dataIndex: 'fullName',
@@ -26,19 +29,47 @@ export const usePatientColumns = () => {
       title: t('Patient.index.columns.age'),
       dataIndex: 'age',
       align: 'center',
-      width: '200px',
+      width: '100px',
+      render: (_, { age }) => (
+        <span>
+          {t('Patient.index.columns.years_old', {
+            age,
+          })}
+        </span>
+      ),
     },
     {
       title: t('Patient.index.columns.grade'),
-      dataIndex: 'teaGrade',
+      dataIndex: 'teaDegree',
       align: 'center',
-      width: '200px',
+      width: '150px',
+      render: (_, { teaDegree }) => {
+        if (!teaDegree) {
+          return <UnassignedTag />;
+        }
+        return <Tag className="tag-degree">{teaDegree}</Tag>;
+      },
     },
     {
       title: t('Patient.index.columns.phase'),
-      dataIndex: 'teaPhase',
+      dataIndex: 'phase',
       align: 'center',
-      width: '200px',
+      width: '350px',
+      render: (_, { phase }) => {
+        if (!phase) {
+          return <UnassignedTag />;
+        }
+        return <span>{phase}</span>;
+      },
+    },
+    {
+      title: t('Patient.index.columns.achievements'),
+      dataIndex: 'achievementCount',
+      align: 'center',
+      width: '80px',
+      render: (_, { achievementCount }) => {
+        return <span>{achievementCount || 0}</span>;
+      },
     },
     {
       title: '',
@@ -57,7 +88,15 @@ export const usePatientColumns = () => {
         );
       },
     },
+    {
+      title: 'rowCardMobile',
+      dataIndex: 'mobile',
+      className: 'table-col-mobile',
+      render: (_, patient) => {
+        return <PatientRowCardMobile patient={patient} />;
+      },
+    },
   ];
 
-  return [columns];
+  return [addResponsiveProperty(columns)];
 };

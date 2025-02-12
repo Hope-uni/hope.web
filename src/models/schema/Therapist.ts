@@ -14,6 +14,30 @@ export const TherapistSchema = z.object({
   user: UserSchema,
 });
 
+export const PatientInTherapistSchema = z.object({
+  id: z.number(),
+  userId: z.number(),
+  fullName: z.string(),
+  age: z.number(),
+});
+
+const ListTherapistResponseSchema = z.object({
+  id: z.number(),
+  userId: z.number(),
+  fullName: z.string(),
+  firstName: z.string(),
+  secondName: z.string().optional().nullable(),
+  surname: z.string(),
+  secondSurname: z.string().optional().nullable(),
+  username: z.string(),
+  email: z.string(),
+  phoneNumber: z.number(),
+  telephone: z.string().nullable(),
+  patients: z.array(PatientInTherapistSchema),
+  patientsInCharge: z.number().optional(),
+  image: z.string(),
+});
+
 export const CreateTherapistPayloadSchema = CreateUserPayloadSchema.merge(
   PersonSchema,
 ).extend({
@@ -25,6 +49,7 @@ export const CreateTherapistPayloadSchema = CreateUserPayloadSchema.merge(
 export const CreateTherapistResponseSchema = z.any();
 
 export type Therapist = z.infer<typeof TherapistSchema>;
+export type ListTherapistResponse = z.infer<typeof ListTherapistResponseSchema>;
 export type CreateTherapistPayload = z.infer<
   typeof CreateTherapistPayloadSchema
 >;
