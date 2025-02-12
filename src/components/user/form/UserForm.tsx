@@ -8,6 +8,7 @@ import { useFormCreateUserStore } from '@/lib/store/formCreateUser';
 import { Button, Result } from 'antd';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   isEdit?: boolean;
@@ -15,6 +16,7 @@ interface Props {
 }
 
 export default function UserForm({ isEdit = false, id }: Props) {
+  const { t } = useTranslation();
   const {
     setFields,
     setRoleList,
@@ -128,8 +130,7 @@ export default function UserForm({ isEdit = false, id }: Props) {
             <Result
               status="404"
               title="404"
-              subTitle="Sorry, the page you visited does not exist."
-              extra={<Button type="primary">Back Home</Button>}
+              subTitle={t('User.form.feedback.user_not_found')}
             />
           </Show.Else>
         </Show>
