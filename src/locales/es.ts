@@ -98,6 +98,10 @@ const es = {
         cancel_button: 'Cancelar',
         edit_button: 'Editar',
       },
+      feedback: {
+        user_not_found:
+          'El usuario solicitado no existe o no se encuentra registrado.',
+      },
     },
     fields: {
       user_role: {
@@ -491,6 +495,12 @@ const es = {
           },
         },
       },
+    },
+  },
+  feedback: {
+    message_error: {
+      title: '¡Lo sentimos, algo ha salido mal!',
+      subtitle: 'Ha ocurrido un error inesperado',
     },
   },
 } as const;
