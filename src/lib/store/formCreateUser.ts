@@ -26,6 +26,8 @@ interface FormCreateUserState {
   tutorList: ListTutorResponse[];
   fields: FormCreateUser;
   errors: ErrorsForm | undefined;
+  messageErrorForm?: string;
+  messageErrorDetail?: string;
   setIsEdit: (value: boolean) => void;
   setLoadingForm: (loading: boolean) => void;
   setRoleList: (roles: ListRoleResponse[]) => void;
@@ -37,6 +39,8 @@ interface FormCreateUserState {
   setIsAdminRoleSelected: (value: boolean) => void;
   setFields: (fields: FormCreateUser) => void;
   setErrors: (fields: ErrorsForm | undefined) => void;
+  setMessageErrorForm: (message?: string) => void;
+  setMessageErrorDetail: (message?: string) => void;
 }
 
 export const useFormCreateUserStore = create<FormCreateUserState>()((set) => ({
@@ -51,6 +55,8 @@ export const useFormCreateUserStore = create<FormCreateUserState>()((set) => ({
   tutorList: [],
   fields: {} as FormCreateUser,
   errors: {} as ErrorsForm,
+  messageErrorForm: '',
+  messageErrorDetail: '',
   setIsEdit: (value: boolean) => set({ isEdit: value }),
   setLoadingForm: (loading: boolean) => set({ loadingForm: loading }),
   setRoleList: (roles) => set({ roleList: roles }),
@@ -62,4 +68,7 @@ export const useFormCreateUserStore = create<FormCreateUserState>()((set) => ({
   setIsAdminRoleSelected: (value) => set({ isAdminRoleSelected: value }),
   setFields: (fields: FormCreateUser) => set({ fields: fields }),
   setErrors: (errors: ErrorsForm | undefined) => set({ errors: errors }),
+  setMessageErrorForm: (message?: string) => set({ messageErrorForm: message }),
+  setMessageErrorDetail: (message?: string) =>
+    set({ messageErrorDetail: message }),
 }));

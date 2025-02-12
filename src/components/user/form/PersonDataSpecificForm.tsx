@@ -64,7 +64,7 @@ export default function PersonDataSpecificForm({
 
   return (
     <Form
-      name="create_login"
+      name="create_login_specific"
       id="create_user_form_antd"
       layout="vertical"
       className={styles.wrapper_form_create_user}
@@ -157,20 +157,24 @@ export default function PersonDataSpecificForm({
                   </Select>
                 </Form.Item>
               </Col>
-              <Col
-                sm={{ span: spanColFullWidth }}
-                xs={{ span: spanColFullWidth }}
-              >
-                <Form.Item
-                  name="observations"
-                  label={t('User.fields.observations.label')}
-                >
-                  <TextArea
-                    rows={4}
-                    placeholder={t('User.fields.observations.placeholder')}
-                  />
-                </Form.Item>
-              </Col>
+              <Show>
+                <Show.When isTrue={!isEdit}>
+                  <Col
+                    sm={{ span: spanColFullWidth }}
+                    xs={{ span: spanColFullWidth }}
+                  >
+                    <Form.Item
+                      name="observations"
+                      label={t('User.fields.observations.label')}
+                    >
+                      <TextArea
+                        rows={4}
+                        placeholder={t('User.fields.observations.placeholder')}
+                      />
+                    </Form.Item>
+                  </Col>
+                </Show.When>
+              </Show>
             </Row>
           </Show.When>
         </Show>

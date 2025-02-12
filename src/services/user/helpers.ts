@@ -18,9 +18,9 @@ import {
   FindPatientByIdService,
   FindTherapistByIdService,
   FindTutorByIdService,
-  FindUserByIdService,
 } from '@/services/user/user.service';
 import { CustomError } from '@/utils/axios';
+import { valuesWithData } from '@/utils/objects';
 
 export type CurrentRoleType = keyof typeof CreateUserServicesByRole;
 export type CurrentRoleTypeFindUser = keyof typeof FindUsersByRole;
@@ -135,10 +135,12 @@ const FindUsersByRole = {
 };
 
 export const ParseToErrorAntd = (validationErrors: I_VALIDATION_ERRORS) => {
-  return Object.entries(validationErrors).map(([key, message]) => ({
-    name: key,
-    errors: [message],
-  }));
+  return Object.entries(valuesWithData(validationErrors)).map(
+    ([key, message]) => ({
+      name: key,
+      errors: [String(message)],
+    }),
+  );
 };
 
 export const CreateUserHelper = async (
@@ -152,6 +154,7 @@ export const CreateUserHelper = async (
 
     return {
       error: res.error,
+      data: res.data,
       statusCode: res?.statusCode,
       message: res.message,
       validationErrors: res?.validationErrors as FormCreateUserError,
@@ -159,6 +162,7 @@ export const CreateUserHelper = async (
   } catch (error) {
     let message = (error as Error)?.message;
     let description = '';
+    let validationErrors = (error as CustomError)?.validationErrors;
 
     if ((error as CustomError)?.statusCode === 500) {
       message = `500 (Internal Server Error)`;
@@ -169,6 +173,7 @@ export const CreateUserHelper = async (
       error: true,
       message: message || 'Unknown error',
       description,
+      validationErrors,
     };
   }
 };

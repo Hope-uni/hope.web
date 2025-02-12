@@ -20,8 +20,15 @@ export default function PersonDataGeneralForm({
   spanCol = 24,
 }: Props) {
   const { t } = useTranslation();
-  const { isAdminRoleSelected, roleList, isEdit, fields } =
-    useFormCreateUserStore();
+  const {
+    isAdminRoleSelected,
+    roleList,
+    isEdit,
+    fields,
+    setErrors,
+    setMessageErrorForm,
+    setMessageErrorDetail,
+  } = useFormCreateUserStore();
 
   useEffect(() => {
     if (isEdit) {
@@ -29,9 +36,15 @@ export default function PersonDataGeneralForm({
     }
   }, [fields, form, isEdit]);
 
+  const handleOnChangeSelectRole = () => {
+    setErrors(undefined);
+    setMessageErrorForm('');
+    setMessageErrorDetail('');
+  };
+
   return (
     <Form
-      name="create_login"
+      name="create_login_general"
       id="create_user_form_antd"
       layout="vertical"
       className={styles.wrapper_form_create_user}
@@ -45,7 +58,10 @@ export default function PersonDataGeneralForm({
             rules={UserRules.user.user_role}
             validateStatus="success"
           >
-            <Select placeholder={t('User.fields.user_role.placeholder')}>
+            <Select
+              placeholder={t('User.fields.user_role.placeholder')}
+              onChange={handleOnChangeSelectRole}
+            >
               {roleList.map((item) => (
                 <Select.Option key={item.id} value={item.id}>
                   {item.name}

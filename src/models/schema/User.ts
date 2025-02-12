@@ -62,8 +62,14 @@ export const CreateTherapistTutorPayloadSchema = CreateUserPayloadSchema.merge(
     .transform((val) => val.format('YYYY-MM-DD'))
     .optional(),
   identificationNumber: z.string(),
-  phoneNumber: z.string().optional(),
-  telephone: z.string().optional(),
+  phoneNumber: z
+    .union([z.number(), z.string()])
+    .transform((val) => String(val))
+    .optional(),
+  telephone: z
+    .union([z.number(), z.string()])
+    .transform((val) => String(val))
+    .optional(),
   role: RoleSchema.optional(),
 });
 
@@ -73,6 +79,16 @@ export const FormCreateUserSchema = z
     ...CreatePatientPayloadSchema.shape,
     ...CreateTherapistTutorPayloadSchema.shape,
     birthday: z.instanceof(dayjs as unknown as typeof Dayjs),
+    phoneNumber: z
+      .union([z.number(), z.string()])
+      .transform((val) => String(val))
+      .optional()
+      .nullable(),
+    telephone: z
+      .union([z.number(), z.string()])
+      .transform((val) => String(val))
+      .optional()
+      .nullable(),
   })
   .partial()
   .extend({

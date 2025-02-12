@@ -7,6 +7,7 @@ import UserDataForm from '@/components/user/form/UserDataForm';
 import useStepFormUser from '@/hooks/useStepFormUser';
 import { useOverlayStore } from '@/lib/store';
 import { useFormCreateUserStore } from '@/lib/store/formCreateUser';
+import { FormCreateUserError, FormCreateUserSchema } from '@/models/schema';
 import { CreateUserHelper, CurrentRoleType } from '@/services/user/helpers';
 import styles from '@/styles/modules/user.module.scss';
 import { deepEqual, removeKeysFromObject } from '@/utils/objects';
@@ -18,19 +19,25 @@ const { Title } = Typography;
 
 export default function EditUserForm() {
   const { t } = useTranslation();
-
-  const [messageErrorForm, setMessageErrorForm] = useState('');
-  const [messageErrorDetail, setMessageErrorDetail] = useState('');
-
   const { setLoading } = useOverlayStore();
 
-  const { isAdminRoleSelected, currentRoleSelected, fields, setErrors } =
-    useFormCreateUserStore();
+  const {
+    isAdminRoleSelected,
+    currentRoleSelected,
+    fields,
+    messageErrorForm,
+    messageErrorDetail,
+    setErrors,
+    setFields,
+    setMessageErrorForm,
+    setMessageErrorDetail,
+  } = useFormCreateUserStore();
 
   const {
     formGeneral,
     formSpecific,
     formUser,
+
     applyErrors,
     validateForm,
     getCurrentValues,
@@ -63,7 +70,7 @@ export default function EditUserForm() {
           res.validationErrors &&
           Object.keys(res.validationErrors).length > 0
         ) {
-          applyErrors(res.validationErrors);
+          applyErrors(res.validationErrors as FormCreateUserError);
         }
 
         setMessageErrorForm(res.message);
@@ -72,18 +79,27 @@ export default function EditUserForm() {
         return;
       }
 
+      setFields(
+        FormCreateUserSchema.parse({
+          ...fields,
+          ...values,
+        }),
+      );
+
       message.success(res.message);
       setLoading(false);
     } catch (error) {
       setLoading(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     setLoading,
     setErrors,
     validateForm,
     getCurrentValues,
     currentRoleSelected.name,
-    fields.id,
+    fields,
+    setFields,
     applyErrors,
   ]);
 
@@ -92,18 +108,16 @@ export default function EditUserForm() {
     let fieldsFiltered = undefined;
     let keyToDelete: (keyof typeof fields)[] = ['id', 'image'];
 
-    if (currentRoleSelected.name === 'Terapeuta') {
-      keyToDelete = [...keyToDelete, 'telephone'];
-    }
-
     fieldsFiltered = removeKeysFromObject(fields, keyToDelete);
+
+    console.log(values, fieldsFiltered);
 
     if (deepEqual(values, fieldsFiltered)) {
       message.warning('no se detectaron cambios');
       return;
     }
     handleSubmit();
-  }, [currentRoleSelected.name, fields, getCurrentValues, handleSubmit]);
+  }, [fields, getCurrentValues, handleSubmit]);
 
   return (
     <Flex vertical className={`${styles.wrapper_edit_user}`} gap={10}>

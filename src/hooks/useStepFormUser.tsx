@@ -2,10 +2,12 @@ import PersonDataGeneralForm from '@/components/user/form/PersonDataGeneralForm'
 import PersonDataSpecificForm from '@/components/user/form/PersonDataSpecificForm';
 import UserDataForm from '@/components/user/form/UserDataForm';
 import { StepFormInterface } from '@/constants/Forms';
+import { ROLES } from '@/constants/Role';
 import { useFormCreateUserStore } from '@/lib/store/formCreateUser';
 import { FormCreateUser, FormCreateUserError } from '@/models/schema';
 import { ParseToErrorAntd } from '@/services/user/helpers';
 import { getStepsForm } from '@/utils/createUserForm';
+import { validateRole } from '@/utils/session';
 import { Form } from 'antd';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
@@ -18,10 +20,14 @@ const useStepFormUser = () => {
     currentRoleSelected,
     roleList,
     errors,
+    messageErrorForm,
+    messageErrorDetail,
     setCurrentRoleSelected,
     setIsAdminRoleSelected,
     setFields,
     setErrors,
+    setMessageErrorForm,
+    setMessageErrorDetail,
   } = useFormCreateUserStore();
 
   const [formGeneral] = Form.useForm();
@@ -33,7 +39,7 @@ const useStepFormUser = () => {
     'identificationNumber',
     formSpecific,
   );
-  const username = Form.useWatch('username', formSpecific);
+  const username = Form.useWatch('username', formUser);
 
   const forms = useMemo(
     () => ({
@@ -65,10 +71,11 @@ const useStepFormUser = () => {
     if (currenRoleData) {
       setCurrentRoleSelected(currenRoleData);
     }
-  }, [roleSelected, roleList, setIsAdminRoleSelected, setCurrentRoleSelected]);
+  }, [roleSelected, roleList, setCurrentRoleSelected]);
 
   useEffect(() => {
-    const isAdmin = currentRoleSelected.name === 'Admin' || false;
+    const isAdmin =
+      validateRole(currentRoleSelected.name, ROLES.ADMIN) || false;
     setIsAdminRoleSelected(isAdmin);
   }, [currentRoleSelected, setIsAdminRoleSelected]);
 
@@ -77,11 +84,15 @@ const useStepFormUser = () => {
   }, [stepsForm.items, currentIndex]);
 
   useEffect(() => {
+    console.log(errors, 'errors');
+    console.log(username, 'username');
+
     if (errors?.person && errors?.person?.length > 0 && identificationNumber) {
       formSpecific.setFields(errors?.person);
     }
 
     if (errors?.user && errors?.user?.length > 0 && username) {
+      console.log(formUser.getFieldsValue());
       formUser.setFields(errors?.user);
     }
   }, [
@@ -110,10 +121,12 @@ const useStepFormUser = () => {
 
   const applyErrors = useCallback(
     (validationErrors: FormCreateUserError) => {
+      console.log(validationErrors, 'validationErrors');
+
       const { username, email, ...userSpecificErrors } = validationErrors;
 
       const errorsFormSpecific = ParseToErrorAntd(userSpecificErrors);
-      const errorsFormUser = ParseToErrorAntd([username, email]);
+      const errorsFormUser = ParseToErrorAntd({ username, email });
 
       setErrors({
         person: errorsFormSpecific,

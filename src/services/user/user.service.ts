@@ -117,7 +117,7 @@ export const FindPatientByIdService = async (id: string) => {
   try {
     const response = await API_HOPE_PROTECTED.get<
       API_RESPONSE<ListUserResponse[]>
-    >(`${API.User.find}/${id}`);
+    >(`${API.Patient.find}/${id}`);
 
     return response.data;
   } catch (error) {
@@ -147,7 +147,7 @@ export const EditPatientService = async (
     const validatePayload = valuesWithData(payload);
     const response = await API_HOPE_PROTECTED.put<
       API_RESPONSE<CreatePatientResponse>
-    >(`${API.User.Create}/${id}`, {
+    >(`${API.Patient.Create}/${id}`, {
       ...validatePayload,
     });
 
