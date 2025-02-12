@@ -8,6 +8,9 @@ import { useRouter } from 'next/navigation';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import UserRowCardMobile from '@/components/user/list/UserRowCardMobile';
+import { UnassignedTag } from '@/components/common';
+import { validateRole } from '@/utils/session';
+import { ROLES } from '@/constants/Role';
 
 interface PropsActionUserPopup {
   user: ListUserResponse;
@@ -61,7 +64,12 @@ export const useUserColumns = () => {
       className: 'table-cell-center',
       render: (_, { roles }) => {
         const roleData = roles?.length > 0 ? roles[0] : ({} as Role);
-        if (roleData.name === 'Admin') {
+
+        if (!roleData.name) {
+          return <UnassignedTag />;
+        }
+
+        if (validateRole(roleData.name, ROLES.ADMIN)) {
           return (
             <div>
               <Tag className="tag-role tag-role-admin">

@@ -249,12 +249,14 @@ const es = {
       title: 'Pacientes',
       caption: 'Listado de todos los pacientes.',
       createButton: 'Crear paciente',
+      searchPlaceholder: 'Buscar paciente...',
       columns: {
-        name: 'Correo electrónico',
+        name: 'Nombre',
         age: 'Edad',
         grade: 'Grado',
         phase: 'Fase',
         achievements: 'Logros',
+        years_old: '{{age}} años',
       },
     },
     detail: {
@@ -313,6 +315,7 @@ const es = {
       columns: {
         name: 'Nombre',
         email: 'Correo electrónico',
+        email_short: 'Correo',
         phone: 'Celular',
         patientsInCharge: 'Niños a cargo',
       },
@@ -496,6 +499,7 @@ const es = {
         },
       },
     },
+    not_asignment: 'Sin asignar',
   },
   feedback: {
     message_error: {
