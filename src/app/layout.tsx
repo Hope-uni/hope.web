@@ -2,8 +2,7 @@ import type { Metadata } from 'next';
 import { theme } from '@/theme/index';
 import { AntdRegistry } from '@ant-design/nextjs-registry';
 import '@/styles/main.scss';
-import { ConfigProvider } from 'antd';
-import { TableProvider } from '@/context/Table/TableProvider';
+import { App, ConfigProvider } from 'antd';
 import { getServerSession } from 'next-auth';
 import SessionProviderClient from '@/context/Auth/SessionProviderClient';
 import { AppProviderClient } from '@/context/AppProviderClient';
@@ -30,7 +29,9 @@ export default async function RootLayout({
         <SessionProviderClient session={session}>
           <AppProviderClient>
             <ConfigProvider theme={theme}>
-              <AntdRegistry>{children}</AntdRegistry>
+              <App>
+                <AntdRegistry>{children}</AntdRegistry>
+              </App>
             </ConfigProvider>
           </AppProviderClient>
         </SessionProviderClient>
