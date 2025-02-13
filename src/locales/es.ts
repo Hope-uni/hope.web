@@ -101,6 +101,7 @@ const es = {
       feedback: {
         user_not_found:
           'El usuario solicitado no existe o no se encuentra registrado.',
+        not_changed_detect: 'No se detectaron cambios',
       },
     },
     fields: {
