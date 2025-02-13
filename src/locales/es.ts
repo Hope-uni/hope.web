@@ -243,6 +243,15 @@ const es = {
         placeholder: 'Confirmar contraseña',
       },
     },
+    actions: {
+      delete: {
+        modal: {
+          title: 'Deshabilitar usuario',
+          description:
+            '¿Estás seguro/a de que deseas deshabilitar al usuario <StrongValue />?',
+        },
+      },
+    },
   },
   Patient: {
     index: {
@@ -277,6 +286,15 @@ const es = {
       grade: 'Grado {grade}',
       phase: 'Fase {phase}',
     },
+    actions: {
+      delete: {
+        modal: {
+          title: 'Deshabilitar paciente',
+          description:
+            '¿Estás seguro/a de que deseas deshabilitar al paciente <StrongValue />?',
+        },
+      },
+    },
   },
   Tutor: {
     index: {
@@ -304,6 +322,15 @@ const es = {
         address: 'Dirección',
       },
       title_children_in_charge: 'Niños a cargo',
+    },
+    actions: {
+      delete: {
+        modal: {
+          title: 'Deshabilitar tutor',
+          description:
+            '¿Estás seguro/a de que deseas deshabilitar al tutor <StrongValue />?',
+        },
+      },
     },
   },
   Therapist: {
@@ -334,6 +361,15 @@ const es = {
       },
       title_children_in_charge: 'Pacientes a cargo',
       title_activities_created: 'Actividades creadas',
+    },
+    actions: {
+      delete: {
+        modal: {
+          title: 'Deshabilitar terapeuta',
+          description:
+            '¿Estás seguro/a de que deseas deshabilitar al terapeuta <StrongValue />?',
+        },
+      },
     },
   },
   Pictogram: {
@@ -500,8 +536,22 @@ const es = {
       },
     },
     not_asignment: 'Sin asignar',
+    modals: {
+      delete: {
+        title: 'Deshabilitar {{entity}}',
+        description:
+          '¿Estás seguro/a de que deseas deshabilitar al {{entity}} {{value}}?',
+        caption: 'Por favor, confirma tu decisión para continuar',
+        btn_cancel: 'Cancelar',
+        btn_ok: 'Deshabilitar',
+      },
+    },
   },
   feedback: {
+    common: {
+      id_not_provided: 'Id no proporcionado',
+      unknow_error: 'Error desconocido',
+    },
     message_error: {
       title: '¡Lo sentimos, algo ha salido mal!',
       subtitle: 'Ha ocurrido un error inesperado',

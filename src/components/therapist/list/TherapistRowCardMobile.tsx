@@ -1,13 +1,10 @@
 import { Show } from '@/components/Show';
 import { UnassignedTag } from '@/components/common';
-import PopupActions from '@/components/table/PopupActions';
+import TherapistActions from '@/components/therapist/list/TherapistActions';
 import { ListTherapistResponse } from '@/models/schema';
-import { ActionType } from '@/models/types';
 import styles from '@/styles/modules/patient.module.scss';
 import { Descriptions, Flex } from 'antd';
 import { useTranslation } from 'react-i18next';
-
-const actionsUser: ActionType[] = ['show', 'edit', 'delete'];
 
 interface Props {
   therapist: ListTherapistResponse;
@@ -53,7 +50,7 @@ const TherapistRowCardMobile = ({ therapist }: Props) => {
       </Flex>
       <div>
         <div className="table_popup_actions_mobile">
-          <PopupActions id={therapist.id} actions={actionsUser} route="users" />
+          <TherapistActions therapist={therapist} />
         </div>
       </div>
     </div>

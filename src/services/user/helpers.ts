@@ -5,12 +5,20 @@ import {
   FormCreateUser,
   FormCreateUserError,
 } from '@/models/schema';
-import { I_VALIDATION_ERRORS } from '@/models/types';
+import {
+  API_RESPONSE,
+  API_SINGLE_RESPONSE,
+  I_VALIDATION_ERRORS,
+} from '@/models/types';
 import {
   CreatePatientService,
   CreateTherapistService,
   CreateTutorService,
   CreateUserService,
+  DeletePatientService,
+  DeleteTherapistService,
+  DeleteTutorService,
+  DeleteUserService,
   EditPatientService,
   EditTherapistService,
   EditTutorService,
@@ -25,6 +33,7 @@ import i18next from '@/i18n';
 
 export type CurrentRoleType = keyof typeof CreateUserServicesByRole;
 export type CurrentRoleTypeFindUser = keyof typeof FindUsersByRole;
+export type CurrentRoleTypeDeleteUser = keyof typeof DeleteUsersByRole;
 
 export interface ErrorAntd {
   name: string;
@@ -44,7 +53,7 @@ const CreateUserServicesByRole = {
       } else {
         return {
           error: true,
-          message: i18next.t('Feedback.id_not_provided'),
+          message: i18next.t('feedback.common.id_not_provided'),
         };
       }
     }
@@ -60,7 +69,7 @@ const CreateUserServicesByRole = {
       } else {
         return {
           error: true,
-          message: i18next.t('Feedback.id_not_provided'),
+          message: i18next.t('feedback.common.id_not_provided'),
         };
       }
     }
@@ -76,7 +85,7 @@ const CreateUserServicesByRole = {
       } else {
         return {
           error: true,
-          message: i18next.t('Feedback.id_not_provided'),
+          message: i18next.t('feedback.common.id_not_provided'),
         };
       }
     }
@@ -93,7 +102,7 @@ const CreateUserServicesByRole = {
       } else {
         return {
           error: true,
-          message: i18next.t('Feedback.id_not_provided'),
+          message: i18next.t('feedback.common.id_not_provided'),
         };
       }
     }
@@ -109,7 +118,7 @@ const FindUsersByRole = {
     } else {
       return {
         error: true,
-        message: i18next.t('Feedback.id_not_provided'),
+        message: i18next.t('feedback.common.id_not_provided'),
       };
     }
   },
@@ -119,7 +128,7 @@ const FindUsersByRole = {
     } else {
       return {
         error: true,
-        message: i18next.t('Feedback.id_not_provided'),
+        message: i18next.t('feedback.common.id_not_provided'),
       };
     }
   },
@@ -129,7 +138,50 @@ const FindUsersByRole = {
     } else {
       return {
         error: true,
-        message: i18next.t('Feedback.id_not_provided'),
+        message: i18next.t('feedback.common.id_not_provided'),
+      };
+    }
+  },
+};
+
+const DeleteUsersByRole = {
+  Admin: async (id?: string) => {
+    if (id) {
+      return await DeleteUserService(id);
+    } else {
+      return {
+        error: true,
+        message: i18next.t('feedback.common.id_not_provided'),
+      };
+    }
+  },
+  Paciente: async (id?: string) => {
+    if (id) {
+      return await DeletePatientService(id);
+    } else {
+      return {
+        error: true,
+        message: i18next.t('feedback.common.id_not_provided'),
+      };
+    }
+  },
+  Tutor: async (id?: string) => {
+    if (id) {
+      return await DeleteTutorService(id);
+    } else {
+      return {
+        error: true,
+        message: i18next.t('feedback.common.id_not_provided'),
+      };
+    }
+  },
+  Terapeuta: async (id?: string) => {
+    if (id) {
+      return await DeleteTherapistService(id);
+    } else {
+      return {
+        error: true,
+        message: i18next.t('feedback.common.id_not_provided'),
       };
     }
   },
@@ -151,7 +203,11 @@ export const CreateUserHelper = async (
   id?: string,
 ) => {
   try {
-    const res = await CreateUserServicesByRole[currentRole](values, update, id);
+    const res = (await CreateUserServicesByRole[currentRole](
+      values,
+      update,
+      id,
+    )) as API_RESPONSE<any>;
 
     return {
       error: res.error,
@@ -172,7 +228,7 @@ export const CreateUserHelper = async (
 
     return {
       error: true,
-      message: message || i18next.t('Feedback.unknow_error'),
+      message: message || i18next.t('feedback.common.unknow_error'),
       description,
       validationErrors,
     };
@@ -184,7 +240,7 @@ export const FindUserByIdHelper = async (
   id?: string,
 ) => {
   try {
-    const res = await FindUsersByRole[currentRole](id);
+    const res = (await FindUsersByRole[currentRole](id)) as API_RESPONSE<any>;
 
     return {
       data: res.data,
@@ -204,7 +260,38 @@ export const FindUserByIdHelper = async (
 
     return {
       error: true,
-      message: message || i18next.t('Feedback.unknow_error'),
+      message: message || i18next.t('feedback.common.unknow_error'),
+      description,
+    };
+  }
+};
+
+export const DeleteUserByIdHelper = async (
+  currentRole: CurrentRoleTypeDeleteUser,
+  id?: string,
+) => {
+  try {
+    const res = (await DeleteUsersByRole[currentRole](
+      id,
+    )) as API_SINGLE_RESPONSE;
+
+    return {
+      error: res.error,
+      statusCode: res?.statusCode,
+      message: res.message,
+    };
+  } catch (error) {
+    let message = (error as Error)?.message;
+    let description = '';
+
+    if ((error as CustomError)?.statusCode === 500) {
+      message = `500 (Internal Server Error)`;
+      description = message;
+    }
+
+    return {
+      error: true,
+      message: message || i18next.t('feedback.common.unknow_error'),
       description,
     };
   }

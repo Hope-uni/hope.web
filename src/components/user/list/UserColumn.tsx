@@ -1,47 +1,16 @@
-import PopupActions from '@/components/table/PopupActions';
+import { UnassignedTag } from '@/components/common';
+import UserActions from '@/components/user/list/UserActions';
+import UserRowCardMobile from '@/components/user/list/UserRowCardMobile';
+import { ROLES } from '@/constants/Role';
 import { ListUserResponse, Role } from '@/models/schema';
-import { ActionType } from '@/models/types/Table';
+import { validateRole } from '@/utils/session';
 import { addResponsiveProperty } from '@/utils/table';
 import { StarFilled } from '@ant-design/icons';
 import { TableProps, Tag } from 'antd';
-import { useRouter } from 'next/navigation';
-import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import UserRowCardMobile from '@/components/user/list/UserRowCardMobile';
-import { UnassignedTag } from '@/components/common';
-import { validateRole } from '@/utils/session';
-import { ROLES } from '@/constants/Role';
-
-interface PropsActionUserPopup {
-  user: ListUserResponse;
-  handleAction: (id: string, pathModule: string) => void;
-}
-
-const ActionUserPopup = ({ user, handleAction }: PropsActionUserPopup) => {
-  const roleData = user.roles?.length > 0 ? user.roles[0] : ({} as Role);
-  const actionsUser: ActionType[] = ['show', 'edit', 'delete'];
-  return (
-    <PopupActions
-      id={user.id}
-      actions={actionsUser}
-      route="users"
-      onShow={() => handleAction(user.id, roleData.name)}
-    />
-  );
-};
 
 export const useUserColumns = () => {
-  const router = useRouter();
   const { t } = useTranslation();
-
-  const handleShowDetail = useCallback(
-    (id: string, pathModule: string) => {
-      if (pathModule) {
-        router.push(`/admin/${pathModule}/${id}`);
-      }
-    },
-    [router],
-  );
 
   const columns: TableProps<ListUserResponse>['columns'] = [
     {
@@ -88,7 +57,7 @@ export const useUserColumns = () => {
       align: 'center',
       width: '60px',
       render: (_, user) => {
-        return <ActionUserPopup user={user} handleAction={handleShowDetail} />;
+        return <UserActions user={user} />;
       },
     },
     {
@@ -96,9 +65,7 @@ export const useUserColumns = () => {
       dataIndex: 'mobile',
       className: 'table-col-mobile',
       render: (_, user) => {
-        return (
-          <UserRowCardMobile user={user} handleAction={handleShowDetail} />
-        );
+        return <UserRowCardMobile user={user} />;
       },
     },
   ];
