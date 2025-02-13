@@ -29,7 +29,7 @@ export const theme: ThemeConfig = {
       colorPrimary: COLORS.primaryColor,
       colorTextBase: COLORS.black,
       fontSize: 16,
-      controlHeight: 48,
+      controlHeight: 40,
       algorithm: true, // Enable algorithm,
 
       defaultBg: COLORS.white,
