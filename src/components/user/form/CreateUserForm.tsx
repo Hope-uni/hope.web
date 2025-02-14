@@ -61,7 +61,7 @@ export default function CreateUserForm() {
             applyErrors(res.validationErrors as FormCreateUserError);
           }
 
-          setMessageErrorForm(res.message);
+          setMessageErrorForm(res?.message);
           setLoadingForm(false);
           return;
         }
