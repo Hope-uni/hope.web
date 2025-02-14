@@ -1,15 +1,19 @@
-import { Dropdown, Flex, message } from 'antd';
-import React from 'react';
+import ModalDelete from '@/components/ModalDelete';
 import { Show } from '@/components/Show';
-import { useRouter } from 'next/navigation';
 import { HopeTable } from '@/constants/config';
-import { BsThreeDotsVertical } from 'react-icons/bs';
+import { useModalDelete } from '@/lib/store/modalDelete';
 import { ActionTableOptionsType, ActionType } from '@/models/types/Table';
+import { Dropdown, Flex } from 'antd';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { BsThreeDotsVertical } from 'react-icons/bs';
 
 interface Props {
   id: number | string;
   actions: Array<ActionType>;
   route?: string;
+  modalDeleteTitle?: string | JSX.Element;
+  modalDeleteDescription?: string | JSX.Element;
   onShow?: () => void;
   onEdit?: () => void;
   onDelete?: () => void;
@@ -19,11 +23,15 @@ export default function PopupActions({
   id,
   actions,
   route,
+  modalDeleteTitle,
+  modalDeleteDescription,
   onShow,
   onEdit,
   onDelete,
 }: Props) {
   const router = useRouter();
+  const { setOpen } = useModalDelete();
+  const [openMenu, setOpenMenu] = useState(false);
 
   const HandlesActions = {
     show: () => {
@@ -53,19 +61,19 @@ export default function PopupActions({
       }
     },
     delete: () => {
-      if (onDelete) {
-        onDelete();
-        return;
-      }
-
-      message.success('Deleted');
+      setOpen(true);
     },
   };
 
   const handleSelectAction = (action: ActionType) => {
     if (action in HandlesActions) {
       HandlesActions[action]();
+      setOpenMenu(false);
     }
+  };
+
+  const handleVisibilityMenu = (flag: boolean) => {
+    setOpenMenu(flag);
   };
 
   const renderItem = () => {
@@ -99,14 +107,26 @@ export default function PopupActions({
   };
 
   return (
-    <Flex align="center" justify="center">
-      <Dropdown
-        className="popup-actions"
-        trigger={['click']}
-        dropdownRender={renderItem}
-      >
-        <BsThreeDotsVertical size={'12px'} />
-      </Dropdown>
-    </Flex>
+    <>
+      <Flex align="center" justify="center">
+        <Dropdown
+          className="popup-actions"
+          trigger={['click']}
+          dropdownRender={renderItem}
+          open={openMenu}
+          onOpenChange={(flag) => handleVisibilityMenu(flag)}
+        >
+          <BsThreeDotsVertical
+            size={'12px'}
+            onClick={() => handleVisibilityMenu(true)}
+          />
+        </Dropdown>
+      </Flex>
+      <ModalDelete
+        title={modalDeleteTitle}
+        description={modalDeleteDescription}
+        onOk={onDelete}
+      />
+    </>
   );
 }

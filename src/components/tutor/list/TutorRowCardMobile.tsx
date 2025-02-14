@@ -1,13 +1,10 @@
 import { Show } from '@/components/Show';
 import { UnassignedTag } from '@/components/common';
-import PopupActions from '@/components/table/PopupActions';
+import TutorActions from '@/components/tutor/list/TutorActions';
 import { ListTutorResponse } from '@/models/schema';
-import { ActionType } from '@/models/types';
 import styles from '@/styles/modules/patient.module.scss';
 import { Descriptions, Flex } from 'antd';
 import { useTranslation } from 'react-i18next';
-
-const actionsUser: ActionType[] = ['show', 'edit', 'delete'];
 
 interface Props {
   tutor: ListTutorResponse;
@@ -50,7 +47,7 @@ const TutorRowCardMobile = ({ tutor }: Props) => {
       </Flex>
       <div>
         <div className="table_popup_actions_mobile">
-          <PopupActions id={tutor.id} actions={actionsUser} route="users" />
+          <TutorActions tutor={tutor} />
         </div>
       </div>
     </div>

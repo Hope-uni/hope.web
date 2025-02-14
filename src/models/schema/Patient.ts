@@ -27,8 +27,8 @@ export const ListPatientResponseSchema = z.object({
   userId: z.string(),
   fullName: z.string(),
   age: z.number(),
-  teaDegree: z.string(),
-  phase: z.string(),
+  teaDegree: TEAGradeSchema,
+  phase: TEAPhaseSchema,
   achievementCount: z.number(),
   image: z.string(),
 });

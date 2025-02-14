@@ -1,13 +1,10 @@
 import { Show } from '@/components/Show';
 import { UnassignedTag } from '@/components/common';
-import PopupActions from '@/components/table/PopupActions';
+import PatientActions from '@/components/patient/list/PatientActions';
 import { ListPatientResponse } from '@/models/schema';
-import { ActionType } from '@/models/types';
 import styles from '@/styles/modules/patient.module.scss';
 import { Descriptions, Flex, Tag } from 'antd';
 import { useTranslation } from 'react-i18next';
-
-const actionsUser: ActionType[] = ['show', 'edit', 'delete'];
 
 interface Props {
   patient: ListPatientResponse;
@@ -25,8 +22,8 @@ const PatientRowCardMobile = ({ patient }: Props) => {
           <Descriptions className="ant-descriptions-secondary">
             <Descriptions.Item label={t('Patient.index.columns.grade')}>
               <Show>
-                <Show.When isTrue={!!patient.teaDegree}>
-                  <Tag className="tag-degree">{patient.teaDegree}</Tag>
+                <Show.When isTrue={!!patient.teaDegree.id}>
+                  <Tag className="tag-degree">{patient.teaDegree.name}</Tag>
                 </Show.When>
                 <Show.Else>
                   <UnassignedTag />
@@ -35,7 +32,9 @@ const PatientRowCardMobile = ({ patient }: Props) => {
             </Descriptions.Item>
             <Descriptions.Item label={t('Patient.index.columns.phase')}>
               <Show>
-                <Show.When isTrue={!!patient.phase}>{patient.phase}</Show.When>
+                <Show.When isTrue={!!patient.phase.id}>
+                  {patient.phase.name}
+                </Show.When>
                 <Show.Else>
                   <UnassignedTag />
                 </Show.Else>
@@ -54,7 +53,7 @@ const PatientRowCardMobile = ({ patient }: Props) => {
       </Flex>
       <div>
         <div className="table_popup_actions_mobile">
-          <PopupActions id={patient.id} actions={actionsUser} route="users" />
+          <PatientActions patient={patient} />
         </div>
       </div>
     </div>

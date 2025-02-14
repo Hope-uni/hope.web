@@ -1,23 +1,13 @@
 import { UnassignedTag } from '@/components/common';
+import PatientActions from '@/components/patient/list/PatientActions';
 import PatientRowCardMobile from '@/components/patient/list/PatientRowCardMobile';
-import PopupActions from '@/components/table/PopupActions';
 import { ListPatientResponse } from '@/models/schema';
 import { addResponsiveProperty } from '@/utils/table';
 import { TableProps, Tag } from 'antd';
-import { useRouter } from 'next/navigation';
-import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 
 export const usePatientColumns = () => {
-  const router = useRouter();
   const { t } = useTranslation();
-
-  const handleEdit = useCallback(
-    (id: number) => {
-      router.push(`/admin/users/edit/${id}`);
-    },
-    [router],
-  );
 
   const columns: TableProps<ListPatientResponse>['columns'] = [
     {
@@ -44,10 +34,10 @@ export const usePatientColumns = () => {
       align: 'center',
       width: '150px',
       render: (_, { teaDegree }) => {
-        if (!teaDegree) {
+        if (!teaDegree?.id) {
           return <UnassignedTag />;
         }
-        return <Tag className="tag-degree">{teaDegree}</Tag>;
+        return <Tag className="tag-degree">{teaDegree.name}</Tag>;
       },
     },
     {
@@ -56,10 +46,10 @@ export const usePatientColumns = () => {
       align: 'center',
       width: '350px',
       render: (_, { phase }) => {
-        if (!phase) {
+        if (!phase.id) {
           return <UnassignedTag />;
         }
-        return <span>{phase}</span>;
+        return <span>{phase.name}</span>;
       },
     },
     {
@@ -77,15 +67,8 @@ export const usePatientColumns = () => {
       align: 'center',
       width: '60px',
       className: 'td-actions',
-      render: (_, { id }) => {
-        return (
-          <PopupActions
-            id={id}
-            actions={['show', 'edit', 'delete']}
-            route="patients"
-            onEdit={() => handleEdit(id)}
-          />
-        );
+      render: (_, patient) => {
+        return <PatientActions patient={patient} />;
       },
     },
     {

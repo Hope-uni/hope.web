@@ -1,20 +1,16 @@
 import { Show } from '@/components/Show';
 import { UnassignedTag } from '@/components/common';
-import PopupActions from '@/components/table/PopupActions';
+import UserActions from '@/components/user/list/UserActions';
 import { ListUserResponse, Role } from '@/models/schema';
-import { ActionType } from '@/models/types';
 import styles from '@/styles/modules/user.module.scss';
 import { StarFilled } from '@ant-design/icons';
 import { Flex, Tag } from 'antd';
 
-const actionsUser: ActionType[] = ['show', 'edit', 'delete'];
-
 interface Props {
   user: ListUserResponse;
-  handleAction: (id: string, pathModule: string) => void;
 }
 
-const UserRowCardMobile = ({ user, handleAction }: Props) => {
+const UserRowCardMobile = ({ user }: Props) => {
   const roleData = user.roles?.length > 0 ? user.roles[0] : ({} as Role);
 
   return (
@@ -43,12 +39,7 @@ const UserRowCardMobile = ({ user, handleAction }: Props) => {
       </Flex>
       <div>
         <div className="table_popup_actions_mobile">
-          <PopupActions
-            id={user.id}
-            actions={actionsUser}
-            route="users"
-            onShow={() => handleAction(user.id, roleData.name)}
-          />
+          <UserActions user={user} />
         </div>
       </div>
     </div>

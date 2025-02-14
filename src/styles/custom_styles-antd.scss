@@ -763,6 +763,15 @@ label.ant-form-item-required {
     }
 }
 
+/*
+
+** MODAL */
+.ant-modal-root.secondary {
+    .ant-modal-mask {
+        background-color: rgba(0, 0, 0, 0.2);
+    }
+}
+
 @media only screen and (max-width: $breakpointMobile){
 
    /*
