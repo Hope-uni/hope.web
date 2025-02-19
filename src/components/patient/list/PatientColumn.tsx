@@ -45,11 +45,11 @@ export const usePatientColumns = () => {
       dataIndex: 'phase',
       align: 'center',
       width: '350px',
-      render: (_, { phase }) => {
-        if (!phase.id) {
+      render: (_, { currentPhase }) => {
+        if (!currentPhase.id) {
           return <UnassignedTag />;
         }
-        return <span>{phase.name}</span>;
+        return <span>{currentPhase.name}</span>;
       },
     },
     {

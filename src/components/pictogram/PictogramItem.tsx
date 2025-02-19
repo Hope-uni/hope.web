@@ -22,7 +22,7 @@ export default function PictogramItem({ pictogram }: Props) {
     >
       <Image
         className={styles.pictogram_list_item_image}
-        src={pictogram.image}
+        src={pictogram.imageUrl}
         width={50}
         height={50}
         alt={pictogram.name}

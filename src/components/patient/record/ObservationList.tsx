@@ -1,16 +1,15 @@
 'use client';
 
+import { Observation } from '@/models/schema';
 import styles from '@/styles/modules/patient.module.scss';
 import { Flex, Typography } from 'antd';
+import dayjs from 'dayjs';
+import 'dayjs/locale/es';
 import { useTranslation } from 'react-i18next';
 
-const { Title, Text } = Typography;
+dayjs.locale('es');
 
-interface Observation {
-  text: string;
-  date: string;
-  user: string;
-}
+const { Text } = Typography;
 
 interface Props {
   observations: Observation[];
@@ -20,18 +19,16 @@ export default function ObservationList({ observations }: Props) {
   const { t } = useTranslation();
   return (
     <Flex vertical gap={15} className={styles.observation_list}>
-      <Title className={styles.title_content_tab}>
-        {t('Patient.detail.title_observation')}
-      </Title>
       <Flex vertical gap={15} className={styles.observation_list_wrapper}>
         {observations.map((item, index) => {
           return (
             <Flex vertical key={index} className={styles.observation_list_item}>
               <Text className={styles.observation_list_caption}>
-                {item.date} - @{item.user}
+                {dayjs(item.createAt).format('DD MMMM, YYYY')} - @
+                {item.username}
               </Text>
               <Text className={styles.observation_list_content}>
-                {item.text}
+                {item.description}
               </Text>
             </Flex>
           );
