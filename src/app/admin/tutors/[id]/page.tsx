@@ -3,7 +3,7 @@
 import TutorDetail from '@/components/tutor/detail';
 import { ROLES } from '@/constants/Role';
 import { useFetchFindUserByRoleQuery } from '@/lib/queries/user';
-import { CreateTutorResponse } from '@/models/schema';
+import { DetailTutor } from '@/models/schema';
 import { LoadingOutlined } from '@ant-design/icons';
 import { Result, Spin } from 'antd';
 import { useEffect, useState } from 'react';
@@ -17,7 +17,7 @@ export default function DetailTutorPage({ params }: ParamsProps) {
   const { t } = useTranslation();
   const [userNotFound, setUserNotFound] = useState(false);
 
-  const { data, isLoading } = useFetchFindUserByRoleQuery<CreateTutorResponse>(
+  const { data, isLoading } = useFetchFindUserByRoleQuery<DetailTutor>(
     ROLES.TUTOR,
     params.id,
   );

@@ -3,7 +3,7 @@ import { Show } from '@/components/Show';
 import { RenderModeActionTypes } from '@/components/table/helpers';
 import PopupActions from '@/components/table/PopupActions';
 import { ROLES } from '@/constants/Role';
-import { ListTherapistResponse } from '@/models/schema';
+import { SingleTutorTherapist } from '@/models/schema';
 import { ActionType } from '@/models/types';
 import {
   CurrentRoleTypeDeleteUser,
@@ -17,7 +17,7 @@ import { useCallback, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 
 interface Props {
-  therapist: ListTherapistResponse;
+  therapist: SingleTutorTherapist;
   actions?: Array<ActionType>;
   classWrapper?: string;
   renderMode?: RenderModeActionTypes;

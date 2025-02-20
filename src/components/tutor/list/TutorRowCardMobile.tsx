@@ -1,13 +1,13 @@
 import { Show } from '@/components/Show';
 import { UnassignedTag } from '@/components/common';
 import TutorActions from '@/components/tutor/list/TutorActions';
-import { ListTutorResponse } from '@/models/schema';
+import { SingleTutorTherapist } from '@/models/schema';
 import styles from '@/styles/modules/patient.module.scss';
 import { Descriptions, Flex } from 'antd';
 import { useTranslation } from 'react-i18next';
 
 interface Props {
-  tutor: ListTutorResponse;
+  tutor: SingleTutorTherapist;
 }
 
 const TutorRowCardMobile = ({ tutor }: Props) => {

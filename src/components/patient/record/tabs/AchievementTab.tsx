@@ -2,13 +2,13 @@
 
 import AchievementItem from '@/components/achievement/AchievementItem';
 import PatientActions from '@/components/patient/list/PatientActions';
-import { CreatePatientResponse } from '@/models/schema';
+import { DetailPatient, SinglePatientSchema } from '@/models/schema';
 import styles from '@/styles/modules/patient.module.scss';
 import { Empty, Flex, Typography } from 'antd';
 import { useTranslation } from 'react-i18next';
 
 interface Props {
-  patient: CreatePatientResponse;
+  patient: DetailPatient;
 }
 
 export default function AchievementTab({ patient }: Props) {
@@ -22,7 +22,10 @@ export default function AchievementTab({ patient }: Props) {
             <Typography.Title className={styles.title_content_tab}>
               {t('Patient.detail.title_achieved_achievements')}
             </Typography.Title>
-            <PatientActions patient={patient} renderMode="assign_achievement" />
+            <PatientActions
+              patient={SinglePatientSchema.parse(patient)}
+              renderMode="assign_achievement"
+            />
           </Flex>
           <Flex
             className={styles.achievement_list_wrapper}
@@ -42,7 +45,10 @@ export default function AchievementTab({ patient }: Props) {
             description={t('Patient.detail.feedback.no_assigned_achievements')}
             style={{ marginTop: 30 }}
           />
-          <PatientActions patient={patient} renderMode="assign_achievement" />
+          <PatientActions
+            patient={SinglePatientSchema.parse(patient)}
+            renderMode="assign_achievement"
+          />
         </div>
       )}
     </Flex>

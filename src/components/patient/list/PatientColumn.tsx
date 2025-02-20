@@ -1,7 +1,7 @@
 import { UnassignedTag } from '@/components/common';
 import PatientActions from '@/components/patient/list/PatientActions';
 import PatientRowCardMobile from '@/components/patient/list/PatientRowCardMobile';
-import { ListPatientResponse } from '@/models/schema';
+import { SinglePatient } from '@/models/schema';
 import { addResponsiveProperty } from '@/utils/table';
 import { TableProps, Tag } from 'antd';
 import { useTranslation } from 'react-i18next';
@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next';
 export const usePatientColumns = () => {
   const { t } = useTranslation();
 
-  const columns: TableProps<ListPatientResponse>['columns'] = [
+  const columns: TableProps<SinglePatient>['columns'] = [
     {
       title: t('Patient.index.columns.name'),
       dataIndex: 'fullName',

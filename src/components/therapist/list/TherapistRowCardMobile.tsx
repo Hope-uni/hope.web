@@ -1,13 +1,13 @@
 import { Show } from '@/components/Show';
 import { UnassignedTag } from '@/components/common';
 import TherapistActions from '@/components/therapist/list/TherapistActions';
-import { ListTherapistResponse } from '@/models/schema';
+import { SingleTutorTherapist } from '@/models/schema';
 import styles from '@/styles/modules/patient.module.scss';
 import { Descriptions, Flex } from 'antd';
 import { useTranslation } from 'react-i18next';
 
 interface Props {
-  therapist: ListTherapistResponse;
+  therapist: SingleTutorTherapist;
 }
 
 const TherapistRowCardMobile = ({ therapist }: Props) => {

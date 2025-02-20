@@ -5,8 +5,8 @@ import useDetailTherapist from '@/components/therapist/detail/useDetailTherapist
 import TherapistActions from '@/components/therapist/list/TherapistActions';
 import CardProfile from '@/components/user/detail/CardProfile';
 import {
-  CreateTherapistResponse,
-  ListTherapistResponseSchema,
+  DetailTherapist,
+  SingleTutorTherapistSchema,
   UserProfileCardSchema,
 } from '@/models/schema';
 import styles from '@/styles/modules/therapist.module.scss';
@@ -17,7 +17,7 @@ import { useTranslation } from 'react-i18next';
 const { useBreakpoint } = Grid;
 
 interface Props {
-  therapist: CreateTherapistResponse;
+  therapist: DetailTherapist;
 }
 
 export default function TherapistDetail({ therapist }: Props) {
@@ -38,7 +38,7 @@ export default function TherapistDetail({ therapist }: Props) {
           <Flex gap={10} align="center">
             {screens.xs && (
               <TherapistActions
-                therapist={ListTherapistResponseSchema.parse(therapist)}
+                therapist={SingleTutorTherapistSchema.parse(therapist)}
                 actions={['edit', 'delete', 'assign_patient']}
                 classWrapper="popup_actions_primary_vertical"
               />
@@ -49,11 +49,11 @@ export default function TherapistDetail({ therapist }: Props) {
                   <Button type="default">{t('Actions.edit')}</Button>
                 </Link>
                 <TherapistActions
-                  therapist={ListTherapistResponseSchema.parse(therapist)}
+                  therapist={SingleTutorTherapistSchema.parse(therapist)}
                   renderMode="assign_patient"
                 />
                 <TherapistActions
-                  therapist={ListTherapistResponseSchema.parse(therapist)}
+                  therapist={SingleTutorTherapistSchema.parse(therapist)}
                   renderMode="delete"
                 />
               </Flex>

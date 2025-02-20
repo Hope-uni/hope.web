@@ -7,9 +7,9 @@ import TherapistActions from '@/components/therapist/list/TherapistActions';
 import TutorActions from '@/components/tutor/list/TutorActions';
 import CardProfile from '@/components/user/detail/CardProfile';
 import {
-  CreatePatientResponse,
-  ListTherapistResponseSchema,
-  ListTutorResponseSchema,
+  DetailPatient,
+  SinglePatientSchema,
+  SingleTutorTherapistSchema,
   UserProfileCardSchema,
 } from '@/models/schema';
 import styles from '@/styles/modules/patient.module.scss';
@@ -23,7 +23,7 @@ import PatientActions from '@/components/patient/list/PatientActions';
 const { useBreakpoint } = Grid;
 
 interface Props {
-  patient: CreatePatientResponse;
+  patient: DetailPatient;
 }
 
 export default function PatientDetail({ patient }: Props) {
@@ -81,7 +81,7 @@ export default function PatientDetail({ patient }: Props) {
               <Flex gap={10} align="center">
                 {screens.xs && (
                   <PatientActions
-                    patient={patient}
+                    patient={SinglePatientSchema.parse(patient)}
                     actions={['edit', 'delete']}
                     classWrapper="popup_actions_primary_vertical"
                   />
@@ -91,7 +91,10 @@ export default function PatientDetail({ patient }: Props) {
                     <Link href={`/admin/users/edit/${patient.userId}`}>
                       <Button type="default">{t('Actions.edit')}</Button>
                     </Link>
-                    <PatientActions patient={patient} renderMode="delete" />
+                    <PatientActions
+                      patient={SinglePatientSchema.parse(patient)}
+                      renderMode="delete"
+                    />
                   </Flex>
                 )}
                 <Dropdown trigger={['click']} dropdownRender={renderItem}>
@@ -141,7 +144,7 @@ export default function PatientDetail({ patient }: Props) {
                   infoDescription={itemInfoTutor}
                   menuAction={
                     <TutorActions
-                      tutor={ListTutorResponseSchema.parse(patient.tutor)}
+                      tutor={SingleTutorTherapistSchema.parse(patient.tutor)}
                       actions={['show']}
                       classWrapper="popup_actions_primary_vertical"
                     />
@@ -156,7 +159,7 @@ export default function PatientDetail({ patient }: Props) {
                   infoDescription={itemInfoTherapist}
                   menuAction={
                     <TherapistActions
-                      therapist={ListTherapistResponseSchema.parse(
+                      therapist={SingleTutorTherapistSchema.parse(
                         patient.therapist,
                       )}
                       actions={['show']}

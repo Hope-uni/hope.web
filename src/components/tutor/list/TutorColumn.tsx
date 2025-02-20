@@ -3,7 +3,7 @@
 import { UnassignedTag } from '@/components/common';
 import TutorActions from '@/components/tutor/list/TutorActions';
 import TutorRowCardMobile from '@/components/tutor/list/TutorRowCardMobile';
-import { ListTutorResponse } from '@/models/schema/index';
+import { SingleTutorTherapist } from '@/models/schema/index';
 import { addResponsiveProperty } from '@/utils/table';
 import { TableProps } from 'antd';
 import { useTranslation } from 'react-i18next';
@@ -11,7 +11,7 @@ import { useTranslation } from 'react-i18next';
 export const useTutorColumns = () => {
   const { t } = useTranslation();
 
-  const columns: TableProps<ListTutorResponse>['columns'] = [
+  const columns: TableProps<SingleTutorTherapist>['columns'] = [
     {
       title: t('Tutor.index.columns.name'),
       dataIndex: 'fullName',

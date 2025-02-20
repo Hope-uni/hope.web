@@ -5,8 +5,8 @@ import useDetailTutor from '@/components/tutor/detail/useDetailTutor';
 import TutorActions from '@/components/tutor/list/TutorActions';
 import CardProfile from '@/components/user/detail/CardProfile';
 import {
-  CreateTutorResponse,
-  ListTutorResponseSchema,
+  DetailTutor,
+  SingleTutorTherapistSchema,
   UserProfileCardSchema,
 } from '@/models/schema';
 import styles from '@/styles/modules/tutor.module.scss';
@@ -17,7 +17,7 @@ import { useTranslation } from 'react-i18next';
 const { useBreakpoint } = Grid;
 
 interface Props {
-  tutor: CreateTutorResponse;
+  tutor: DetailTutor;
 }
 
 export default function TutorDetail({ tutor }: Props) {
@@ -38,7 +38,7 @@ export default function TutorDetail({ tutor }: Props) {
           <Flex gap={10} align="center">
             {screens.xs && (
               <TutorActions
-                tutor={ListTutorResponseSchema.parse(tutor)}
+                tutor={SingleTutorTherapistSchema.parse(tutor)}
                 actions={['edit', 'delete']}
                 classWrapper="popup_actions_primary_vertical"
               />
@@ -49,7 +49,7 @@ export default function TutorDetail({ tutor }: Props) {
                   <Button type="default">{t('Actions.edit')}</Button>
                 </Link>
                 <TutorActions
-                  tutor={ListTutorResponseSchema.parse(tutor)}
+                  tutor={SingleTutorTherapistSchema.parse(tutor)}
                   renderMode="delete"
                 />
               </Flex>

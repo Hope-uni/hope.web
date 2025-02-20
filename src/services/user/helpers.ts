@@ -1,13 +1,13 @@
 import {
-  CreatePatientPayloadSchema,
-  CreatePatientResponse,
-  CreateTherapistResponse,
-  CreateTherapistTutorPayloadSchema,
-  CreateTutorResponse,
+  PayloadPatientSchema,
+  DetailPatient,
   CreateUserPayloadSchema,
   FormCreateUser,
   FormCreateUserError,
-  ListUserResponse,
+  SingleUser,
+  PayloadTutorTherapistSchema,
+  DetailTherapist,
+  DetailTutor,
 } from '@/models/schema';
 import {
   API_RESPONSE,
@@ -65,7 +65,7 @@ const CreateUserServicesByRole = {
     return await CreateUserService(userAdminPayload);
   },
   Paciente: async (values: FormCreateUser, update: boolean, id?: string) => {
-    const userPatientPayload = CreatePatientPayloadSchema.parse(values);
+    const userPatientPayload = PayloadPatientSchema.parse(values);
 
     if (update) {
       if (id) {
@@ -81,7 +81,7 @@ const CreateUserServicesByRole = {
     return await CreatePatientService(userPatientPayload);
   },
   Tutor: async (values: FormCreateUser, update: boolean, id?: string) => {
-    const userTutorPayload = CreateTherapistTutorPayloadSchema.parse(values);
+    const userTutorPayload = PayloadTutorTherapistSchema.parse(values);
 
     if (update) {
       if (id) {
@@ -97,8 +97,7 @@ const CreateUserServicesByRole = {
     return await CreateTutorService(userTutorPayload);
   },
   Terapeuta: async (values: FormCreateUser, update: boolean, id?: string) => {
-    const userTherapistPayload =
-      CreateTherapistTutorPayloadSchema.parse(values);
+    const userTherapistPayload = PayloadTutorTherapistSchema.parse(values);
 
     if (update) {
       if (id) {
@@ -250,10 +249,10 @@ export const FindUserByIdHelper = async (
 
     return {
       data: res.data as
-        | ListUserResponse
-        | CreatePatientResponse
-        | CreateTutorResponse
-        | CreateTherapistResponse,
+        | SingleUser
+        | DetailPatient
+        | DetailTutor
+        | DetailTherapist,
       error: res.error,
       statusCode: res?.statusCode,
       message: res.message,

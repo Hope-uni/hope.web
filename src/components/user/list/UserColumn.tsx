@@ -2,7 +2,7 @@ import { UnassignedTag } from '@/components/common';
 import UserActions from '@/components/user/list/UserActions';
 import UserRowCardMobile from '@/components/user/list/UserRowCardMobile';
 import { ROLES } from '@/constants/Role';
-import { ListUserResponse, Role } from '@/models/schema';
+import { SingleUser, Role } from '@/models/schema';
 import { validateRole } from '@/utils/session';
 import { addResponsiveProperty } from '@/utils/table';
 import { StarFilled } from '@ant-design/icons';
@@ -12,7 +12,7 @@ import { useTranslation } from 'react-i18next';
 export const useUserColumns = () => {
   const { t } = useTranslation();
 
-  const columns: TableProps<ListUserResponse>['columns'] = [
+  const columns: TableProps<SingleUser>['columns'] = [
     {
       title: t('User.index.columns.email'),
       dataIndex: 'email',

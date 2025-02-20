@@ -1,7 +1,7 @@
 import { useActivityColumns } from '@/components/activity/list/ActivityColumn';
 import { usePatientColumns } from '@/components/patient/list/PatientColumn';
 import WrapperTable from '@/components/table/Wrappertable';
-import { CreateTherapistResponse } from '@/models/schema';
+import { DetailTherapist } from '@/models/schema';
 import styles from '@/styles/modules/therapist.module.scss';
 import {
   Col,
@@ -26,7 +26,7 @@ dayjs.locale('es');
 const { useBreakpoint } = Grid;
 const { Title } = Typography;
 
-const useDetailTherapist = (therapist: CreateTherapistResponse) => {
+const useDetailTherapist = (therapist: DetailTherapist) => {
   const screens = useBreakpoint();
   const { t } = useTranslation();
   const [patientColumns] = usePatientColumns();
