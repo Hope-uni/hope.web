@@ -33,7 +33,7 @@ export default function PatientDetail({ patient }: Props) {
     useDataPatient(patient);
 
   const handleSwitchChange = (checked: boolean) => {
-    console.log(checked);
+    // TODO implements api services
   };
 
   const renderItem = () => {
