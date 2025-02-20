@@ -32,10 +32,10 @@ const TutorRowCardMobile = ({ tutor }: Props) => {
               <Show>
                 <Show.When
                   isTrue={
-                    !!(tutor.patientsInCharge && tutor.patientsInCharge > 0)
+                    !!(tutor.childrenInCharge && tutor.childrenInCharge > 0)
                   }
                 >
-                  {tutor.patientsInCharge}
+                  {tutor.childrenInCharge}
                 </Show.When>
                 <Show.Else>
                   <UnassignedTag />
@@ -46,9 +46,10 @@ const TutorRowCardMobile = ({ tutor }: Props) => {
         </Flex>
       </Flex>
       <div>
-        <div className="table_popup_actions_mobile">
-          <TutorActions tutor={tutor} />
-        </div>
+        <TutorActions
+          tutor={tutor}
+          classWrapper="popup_actions_primary_vertical"
+        />
       </div>
     </div>
   );
