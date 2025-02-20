@@ -40,27 +40,6 @@
 /*
 ** MODAL DELETE */
 .modal_delete_content {
-    position: relative;
-
-    .modal_delete_close_icon{
-        position: absolute;
-        padding: 0;
-        top: 0;
-        right: 0;
-        height: unset;
-    }
-    
-    .modal_delete_header {
-        margin: 0 0 10px 0;
-
-        .modal_delete_header_title{
-            color: $primary-color;
-            font-weight: 600;
-            font-size: 18px;
-            line-height: 40px;
-            margin: 0;
-        }
-    }
 
     .modal_delete_body {
         .modal_delete_body_description {
@@ -76,23 +55,22 @@
         }
     }
 
-    .modal_delete_footer {
-        @extend .row-end;
-        gap: 10px;
-        margin: 40px 0 0 0;
-
-        .modal_delete_footer_btn_cancel{
-            background-color: $grey;
-            border-color: $grey-3;
-        }
-
-        .modal_delete_footer_btn_delete{
-            background-color: $error;
-            border-color: $error;
-            color: $main-grey;
-        }
+    .modal_delete_footer_btn_delete{
+        background-color: $error;
+        border-color: $error;
+        color: $main-grey;
     }
 }
+
+.modal_next_phase_content {
+
+    .footer_btn_confirm{
+        background-color: $success;
+        border-color: $success;
+        color: $main-grey;
+    }
+}
+
 
 @media only screen and (max-width: $breakpointMobile) {
     .wrapper_header_content{

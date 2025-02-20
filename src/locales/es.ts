@@ -284,8 +284,32 @@ const es = {
       title_info_tutor: 'Información del tutor',
       title_info_therapist: 'Terapeuta a cargo',
       progress: 'Progreso',
+      progress_with_percent: 'Progreso {{value}}%',
       grade: 'Grado {grade}',
-      phase: 'Fase {phase}',
+      phase: 'Fase {{phase}}',
+      phase_2: 'Fase: {{phase}}',
+      card_profile: {
+        info_descriptions: {
+          email: 'Correo',
+          telephone: 'Teléfono',
+        },
+      },
+      description_patient: {
+        birthday: 'Fecha de nacimiento',
+        telephone: 'Teléfono de casa',
+        address: 'Dirección',
+      },
+      feedback: {
+        current_activity_not_assigned:
+          'El paciente no tiene ninguna actividad asignada.',
+        no_completed_activities:
+          'El paciente no ha completado ninguna actividad.',
+        no_created_custom_pictograms:
+          'El paciente no ha creado pictogramas personalizados.',
+        no_assigned_achievements: 'El paciente no tiene logros asignados.',
+        no_therapist_assigned: 'El paciente no tiene terapeuta asignado.',
+        no_created_observation: 'El paciente no tiene observación.',
+      },
     },
     actions: {
       delete: {
@@ -293,6 +317,39 @@ const es = {
           title: 'Deshabilitar paciente',
           description:
             '¿Estás seguro/a de que deseas deshabilitar al paciente <StrongValue />?',
+        },
+      },
+      next_phase: {
+        modal: {
+          title: 'Avanzar de nivel',
+          description:
+            '¿Estás seguro/a de que deseas avanzar de fase a <StrongValue />?',
+          ok_text: 'Confirmar',
+        },
+      },
+      add_observation: {
+        button_add: 'Agregar obvervación',
+        button_add_mobile: 'Agregar',
+        modal: {
+          title: 'Agregar nueva observación',
+          ok_text: 'Guardar',
+        },
+      },
+      add_achievement: {
+        button_add: 'Asignar logro',
+        button_add_mobile: 'Asignar',
+        modal: {
+          title: 'Asignar logros',
+          ok_text: 'Guardar',
+        },
+      },
+    },
+    fields: {
+      assign_achievements: {
+        label: 'Logros',
+        placeholder: 'Lista de logros',
+        rules: {
+          required: 'Logro es requerido',
         },
       },
     },
@@ -323,6 +380,9 @@ const es = {
         address: 'Dirección',
       },
       title_children_in_charge: 'Niños a cargo',
+      feedback: {
+        no_children_not_assigned: 'El tutor no tiene pacientes asignados.',
+      },
     },
     actions: {
       delete: {
@@ -362,6 +422,11 @@ const es = {
       },
       title_children_in_charge: 'Pacientes a cargo',
       title_activities_created: 'Actividades creadas',
+      feedback: {
+        current_activity_not_created:
+          'El terapeuta no tiene actividades creadas.',
+        no_children_not_assigned: 'El terapeuta no tiene pacientes asignados.',
+      },
     },
     actions: {
       delete: {
@@ -369,6 +434,22 @@ const es = {
           title: 'Deshabilitar terapeuta',
           description:
             '¿Estás seguro/a de que deseas deshabilitar al terapeuta <StrongValue />?',
+        },
+      },
+      assign_patients: {
+        button_add: 'Asignar pacientes',
+        modal: {
+          title: 'Asignar paciente',
+          ok_text: 'Guardar',
+        },
+      },
+    },
+    fields: {
+      assign_patients: {
+        label: 'Pacientes',
+        placeholder: 'Lista de pacientes disponibles',
+        rules: {
+          required: 'Pacientes es requerido',
         },
       },
     },
@@ -478,6 +559,9 @@ const es = {
       },
       edit: {
         label: 'Editar',
+      },
+      assign_patients: {
+        label: 'Asignar pacientes',
       },
       ediAssigments: {
         label: 'Editar asignaciones',

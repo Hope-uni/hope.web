@@ -86,8 +86,9 @@ export type TablePropsType = {
   typeSelection?: string;
   selection?: any;
   cols: TableProps<any>['columns'];
-  data?: API_RESPONSE<ANY>;
+  data?: API_RESPONSE<any> | any; // TODO Replacing this any requires a refactor
   showHeader?: boolean;
+  showTitle?: boolean;
   searchable?: boolean;
   stylesWrap?: any;
   id?: string;
@@ -98,7 +99,12 @@ export type TablePropsType = {
   searchProps?: SearchPropsType;
 };
 
-export type ActionType = 'show' | 'edit' | 'assign' | 'delete';
+export type ActionType =
+  | 'show'
+  | 'edit'
+  | 'assign_patient'
+  | 'assign'
+  | 'delete';
 
 export interface ActionTableOptionsType {
   label: string;

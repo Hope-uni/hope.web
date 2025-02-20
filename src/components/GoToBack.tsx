@@ -6,11 +6,19 @@ import { useRouter } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import { BsChevronLeft } from 'react-icons/bs';
 
-export default function GoToBack() {
+interface Props {
+  onGoToBack?: () => void;
+}
+
+export default function GoToBack({ onGoToBack }: Props) {
   const router = useRouter();
   const { t } = useTranslation();
 
   const handleGoToBack = () => {
+    if (onGoToBack) {
+      onGoToBack();
+      return;
+    }
     router.back();
   };
 

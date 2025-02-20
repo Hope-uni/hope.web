@@ -1,12 +1,15 @@
-import ModalDelete from '@/components/ModalDelete';
+import HModal from '@/components/common/Modals';
 import { Show } from '@/components/Show';
 import { HopeTable } from '@/constants/config';
-import { useModalDelete } from '@/lib/store/modalDelete';
+import { API_SINGLE_RESPONSE } from '@/models/types';
 import { ActionTableOptionsType, ActionType } from '@/models/types/Table';
-import { Dropdown, Flex } from 'antd';
+import styles from '@/styles/modules/partials.module.scss';
+import { Button, Dropdown, Flex, message } from 'antd';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { BsThreeDotsVertical } from 'react-icons/bs';
+import { RenderModeActionTypes } from './helpers';
 
 interface Props {
   id: number | string;
@@ -14,9 +17,11 @@ interface Props {
   route?: string;
   modalDeleteTitle?: string | JSX.Element;
   modalDeleteDescription?: string | JSX.Element;
+  classWrapper?: string;
+  renderMode?: RenderModeActionTypes;
   onShow?: () => void;
   onEdit?: () => void;
-  onDelete?: () => void;
+  onDelete?: () => Promise<API_SINGLE_RESPONSE>;
 }
 
 export default function PopupActions({
@@ -25,12 +30,16 @@ export default function PopupActions({
   route,
   modalDeleteTitle,
   modalDeleteDescription,
+  classWrapper,
+  renderMode = 'popup',
   onShow,
   onEdit,
   onDelete,
 }: Props) {
+  const { t } = useTranslation();
   const router = useRouter();
-  const { setOpen } = useModalDelete();
+  const [loading, setLoading] = useState(false);
+  const [openModalDelete, setOpenModalDelete] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);
 
   const HandlesActions = {
@@ -54,6 +63,9 @@ export default function PopupActions({
         router.push(`/admin/${route}/edit/${id}`);
       }
     },
+    assign_patient: () => {
+      //TODO do something
+    },
     assign: () => {
       if (onEdit) {
         onEdit();
@@ -61,9 +73,36 @@ export default function PopupActions({
       }
     },
     delete: () => {
-      setOpen(true);
+      setOpenModalDelete(true);
     },
   };
+
+  const handleDelete = useCallback(async () => {
+    try {
+      if (!onDelete) {
+        return;
+      }
+
+      setLoading(true);
+
+      const res = await onDelete();
+
+      if (res.error) {
+        message.error(res.message);
+        setLoading(false);
+        setOpenModalDelete(false);
+        return;
+      }
+
+      setLoading(false);
+      setOpenModalDelete(false);
+      message.success(res.message);
+    } catch (error) {
+      setLoading(false);
+      setOpenModalDelete(false);
+      message.error((error as Error).message);
+    }
+  }, [onDelete]);
 
   const handleSelectAction = (action: ActionType) => {
     if (action in HandlesActions) {
@@ -84,7 +123,7 @@ export default function PopupActions({
         data-menu-list="true"
       >
         {HopeTable.actionTableOptions?.map((item: ActionTableOptionsType) => (
-          <>
+          <div key={item.key}>
             <Show>
               <Show.When isTrue={actions.includes(item.actionType)}>
                 <li
@@ -100,7 +139,7 @@ export default function PopupActions({
                 </li>
               </Show.When>
             </Show>
-          </>
+          </div>
         ))}
       </ul>
     );
@@ -108,25 +147,60 @@ export default function PopupActions({
 
   return (
     <>
-      <Flex align="center" justify="center">
-        <Dropdown
-          className="popup-actions"
-          trigger={['click']}
-          dropdownRender={renderItem}
-          open={openMenu}
-          onOpenChange={(flag) => handleVisibilityMenu(flag)}
-        >
-          <BsThreeDotsVertical
-            size={'12px'}
-            onClick={() => handleVisibilityMenu(true)}
-          />
-        </Dropdown>
-      </Flex>
-      <ModalDelete
+      <Show>
+        <Show.When isTrue={renderMode === 'popup'}>
+          <div className={classWrapper}>
+            <Flex align="center" justify="center">
+              <Dropdown
+                className="popup-actions"
+                trigger={['click']}
+                dropdownRender={renderItem}
+                open={openMenu}
+                onOpenChange={(flag) => handleVisibilityMenu(flag)}
+              >
+                <BsThreeDotsVertical
+                  size={'12px'}
+                  onClick={() => handleVisibilityMenu(true)}
+                />
+              </Dropdown>
+            </Flex>
+          </div>
+        </Show.When>
+
+        <Show.When isTrue={renderMode === 'delete'}>
+          <Button
+            className="default-error-color"
+            type="default"
+            onClick={HandlesActions['delete']}
+            loading={loading}
+          >
+            {t('Actions.delete')}
+          </Button>
+        </Show.When>
+      </Show>
+      <HModal
+        open={openModalDelete}
+        loading={loading}
+        onOpen={setOpenModalDelete}
+        okText={t('common.modals.delete.btn_ok')}
+        okButtonProps={{
+          type: 'default',
+          onClick: handleDelete,
+          loading: loading,
+          className: styles.modal_delete_footer_btn_delete,
+        }}
         title={modalDeleteTitle}
-        description={modalDeleteDescription}
-        onOk={onDelete}
-      />
+        className={styles.modal_delete_content}
+      >
+        <div className={styles.modal_delete_body}>
+          <p className={styles.modal_delete_body_description}>
+            {modalDeleteDescription}
+          </p>
+          <p className={styles.modal_delete_body_caption}>
+            {t('common.modals.delete.caption')}
+          </p>
+        </div>
+      </HModal>
     </>
   );
 }
