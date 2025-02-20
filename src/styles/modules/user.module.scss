@@ -64,11 +64,28 @@
 }
 
 .card_profile{
+    @extend .col-center;
+    gap: 10px;
+}
+.card_profile_row {
+    @extend .row-start-center;
+    gap: 10px;
+}
+
+.card_profile, .card_profile_row{
+
+    .card_profile_header_menu{
+        @extend .row-between-start;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
     .title_card{
        @extend .text_primary-blue;
        font-weight: 600;
        font-size: 16px;
        text-align: center;
+       margin: 0;
     }
     .full_name{
         color: $primary-color-text;
@@ -164,6 +181,48 @@
             .edit_user_title_sections{
                 font-size: 18px;
                 margin-bottom: 10px;
+            }
+        }
+    }
+
+    .card_profile_row {
+        flex-direction: column;
+        justify-content: center;
+        width: 100%;
+    }
+    .card_profile, .card_profile_row{
+        .full_name{
+            text-align: center;
+        }
+        .caption{
+            color: $grey-dark;
+            font-weight: 400;
+            margin: 0;
+            font-size: 18px;
+        }
+        .username{
+            color: $grey-dark;
+            font-weight: 400;
+            margin: 0;
+            font-size: 14px;
+        }
+    
+        .profile_detail{
+            cursor: pointer;
+    
+            .profile_detail_text{
+                color: $secondary-color;
+                font-size: 12px;
+                font-weight: 500;
+                margin: 0;
+            }
+    
+            svg {
+                color: $secondary-color;
+            }
+    
+            &:hover{
+                color: $primary-color;
             }
         }
     }

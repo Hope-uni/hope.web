@@ -11,3 +11,13 @@
         font-size: 14px;
     }
 }
+
+@media only screen and (max-width: $breakpointMobile) {
+    .pictogram_list_wrapper{
+        justify-content: space-between;
+    }
+    .pictogram_list_item {
+        width: 150px;
+        height: 150px;
+    }
+}

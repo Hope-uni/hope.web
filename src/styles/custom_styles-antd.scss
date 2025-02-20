@@ -433,6 +433,7 @@ label.ant-form-item-required {
     width: 100%;
 }
 .customTable .wrapper-header-table{
+    padding: 16px 0;
     margin-bottom: 20px;
 
     .select-size-changer{
@@ -449,7 +450,7 @@ label.ant-form-item-required {
     .ant-table{
 
         .ant-table-title{
-            padding: 16px 0;
+            padding: 0;
         }
 
         .ant-table-thead{
@@ -518,24 +519,6 @@ label.ant-form-item-required {
         }
     }
 
-    .popup-actions{
-        color: $primary-color;
-        cursor: pointer;
-        padding: 5px;
-        width: 28px;
-        height: 28px;
-        border-radius: 20px;
-        transform: rotate(90deg);
-
-        &:hover {
-            background-color: rgba($color: $primary-color, $alpha: 0.2);
-        }
-
-        &.ant-dropdown-open{
-            background-color: rgba($color: $primary-color, $alpha: 0.2);
-        }
-    }
-
     .ant-table-pagination.ant-pagination{
         margin-top: 32px !important;
 
@@ -572,6 +555,38 @@ label.ant-form-item-required {
                 color: $grey-3;
             }
         }
+    }
+}
+
+/*
+** POPUP ACTIONS */
+.popup_actions_primary_vertical{
+    background-color: rgba($color: $primary-color, $alpha: 0.2);
+    border-radius: 100%;
+
+    svg {
+        transform: rotate(180deg);
+    }
+}
+.popup_actions_primary_horizontal{
+    background-color: rgba($color: $primary-color, $alpha: 0.2);
+    border-radius: 100%;
+}
+.popup-actions{
+    color: $primary-color;
+    cursor: pointer;
+    padding: 5px;
+    width: 28px;
+    height: 28px;
+    border-radius: 20px;
+    transform: rotate(90deg);
+
+    &:hover {
+        background-color: rgba($color: $primary-color, $alpha: 0.2);
+    }
+
+    &.ant-dropdown-open{
+        background-color: rgba($color: $primary-color, $alpha: 0.2);
     }
 }
 
@@ -626,6 +641,21 @@ label.ant-form-item-required {
         @extend .text-ellipse;
         width: 100%;
     }
+    &.ant-select-multiple.primary {
+        .ant-select-selection-overflow{
+            .ant-select-selection-item{
+                background-color: $info_op;
+                border-color: $primary-color;
+                border-radius: 20px;
+
+                .ant-select-selection-item-remove{
+                    .anticon.anticon-close{
+                        color: $primary-color;
+                    }
+                }
+            }
+        }
+    }
 }
 
 /*
@@ -645,6 +675,10 @@ label.ant-form-item-required {
         .ant-descriptions-item-label{
             font-weight: bold;
         }
+    }
+
+    .ant-descriptions-row:last-child .ant-descriptions-item {
+        padding-bottom: 0;
     }
 
    &.card_profile_descriptions{
@@ -764,12 +798,96 @@ label.ant-form-item-required {
 }
 
 /*
-
 ** MODAL */
 .ant-modal-root.secondary {
     .ant-modal-mask {
         background-color: rgba(0, 0, 0, 0.2);
     }
+}
+/*
+** MODAL DELETE */
+.ant-modal-wrap.primary{
+    .ant-modal{
+
+        .primary_modal_close_icon{
+            position: absolute;
+            padding: 0;
+            top: 20px;
+            right: 20px;
+            height: unset;
+        }
+
+        .ant-modal-header {
+            margin: 0 0 10px 0;
+    
+            .ant-modal-title{
+                color: $primary-color;
+                font-weight: 600;
+                font-size: 18px;
+                line-height: 40px;
+                margin: 0;
+            }
+        }
+
+        .ant-modal-footer {
+            @extend .row-end;
+            gap: 10px;
+            margin: 40px 0 0 0;
+
+            .ant-btn{
+                margin: 0;
+            }
+    
+            .primary_modal_footer_btn_cancel{
+                background-color: $grey;
+                border-color: $grey-3;
+            }
+    
+            .modal_delete_footer_btn_delete{
+                background-color: $error;
+                border-color: $error;
+                color: $main-grey;
+            }
+        }
+    }
+}
+.modal_delete_content {
+    position: relative;
+
+    
+    
+    .modal_delete_header {
+        margin: 0 0 10px 0;
+
+        .modal_delete_header_title{
+            color: $primary-color;
+            font-weight: 600;
+            font-size: 18px;
+            line-height: 40px;
+            margin: 0;
+        }
+    }
+
+    .modal_delete_body {
+        .modal_delete_body_description {
+            color: $primary-color-text;
+            font-size: 16px;
+            margin: 0 0 10px 0;
+        }
+
+        .modal_delete_body_caption {
+            color: $grey-dark;
+            font-size: 16px;
+            margin: 0;
+        }
+    }
+}
+
+
+/*
+** FLEX */
+body .ant-flex {
+    padding: unset;
 }
 
 @media only screen and (max-width: $breakpointMobile){
@@ -858,15 +976,6 @@ label.ant-form-item-required {
                     margin-bottom: 10px;
                     border-bottom: none;
                 }
-
-                .table_popup_actions_mobile{
-                    background-color: rgba($color: $primary-color, $alpha: 0.2);
-                    border-radius: 100%;
-
-                    svg {
-                        transform: rotate(180deg);
-                    }
-                }
             }
         }
 
@@ -899,6 +1008,68 @@ label.ant-form-item-required {
     .ant-select{
         .ant-select-selector .ant-select-selection-placeholder{
             width: 200px;
+        }
+    }
+
+    /*
+    ** DESCRIPTION */
+    .ant-descriptions.ant-descriptions_vertical, .ant-descriptions{
+    
+       &.card_profile_descriptions{
+            .ant-descriptions-row .ant-descriptions-item {
+                .ant-descriptions-item-label, .ant-descriptions-item-content{
+                    font-size: 16px;
+                    line-height: 18px;
+                }
+            }
+        }
+    }
+    .ant-descriptions.ant-descriptions_vertical{
+       .ant-descriptions-row:nth-child(even) .ant-descriptions-item {
+            padding-bottom: 15px;
+        }
+        .ant-descriptions-row:last-child .ant-descriptions-item {
+            padding-bottom: 0;
+        }
+    }
+
+    /*
+    ** TABS */
+    .ant-tabs.record-tab{
+        .ant-tabs-tab{
+            .ant-tabs-tab-btn{
+                display: flex;
+                align-items: center;
+
+                .ant-tabs-tab-icon{
+                    display: block;
+                    margin-inline-end: 5px;
+                    width: 20px;
+                    height: 20px;
+                    object-fit: contain;
+                }
+
+                span:not(.ant-tabs-tab-icon){
+                    display: none;
+                }
+            }
+
+            &.ant-tabs-tab-active{
+                .ant-tabs-tab-btn{
+                    display: flex;
+    
+                    .ant-tabs-tab-icon{
+                        color: $primary-color;
+                    }
+                    span:not(.ant-tabs-tab-icon){
+                        display: block;
+                    }
+                }
+            }
+        }
+
+        .ant-tabs-content-holder{
+            padding: 10px;
         }
     }
 }

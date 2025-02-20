@@ -14,7 +14,7 @@ export const PersonSchema = z.object({
   secondName: z.string().optional().nullable(),
   surname: z.string(),
   secondSurname: z.string().optional().nullable(),
-  image: z.string(),
+  image: z.string().nullable(),
   address: z.string(),
   birthday: z.string(),
   gender: z.enum(['Masculino', 'Femenino', 'masculino', 'femenino']),
@@ -101,6 +101,18 @@ export const CreateUserSteps = z.object({
   description: z.string(),
 });
 
+export const UserProfileCardSchema = z
+  .object({
+    id: z.number(),
+    userId: z.number(),
+    fullName: z.string(),
+    username: z.string(),
+    image: z.string().nullable(),
+    age: z.number().optional(),
+    gender: z.string().optional(),
+  })
+  .nullable();
+
 export type User = z.infer<typeof UserSchema>;
 export type ListUserResponse = z.infer<typeof ListUserResponseSchema>;
 
@@ -116,3 +128,5 @@ export type CreatePatientPayload = z.infer<typeof CreatePatientPayloadSchema>;
 export type CreateTherapistTutorPayload = z.infer<
   typeof CreateTherapistTutorPayloadSchema
 >;
+
+export type UserProfileCard = z.infer<typeof UserProfileCardSchema>;

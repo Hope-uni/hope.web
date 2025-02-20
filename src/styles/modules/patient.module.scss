@@ -1,4 +1,13 @@
+.white_card_layout_vertical {
+    @extend .col-start;
+}
+
 .white_card_layout {
+    @extend .row-start;
+}
+
+.white_card_layout_vertical, .white_card_layout {
+    @extend .row-start;
     background-color: $white;
     border-radius: 20px;
     flex: 1;
@@ -32,8 +41,6 @@
     }
 }
 
-
-
 .observation_list{
     .observation_list_title{
         color: $primary-color-text;
@@ -66,11 +73,25 @@
     }
 }
 
+.current_activity {
+    .current_activity_container{
+        @extend .row-start;
+        gap: 50px
+    }
+
+    .current_activity_item_container{ 
+        flex: 1;
+    }
+}
 .activity_progress{
+    flex: 1;
+    max-width: 200px;
+
     .activity_progress_text{
         color: $grey-dark;
         font-weight: 400;
         line-height: normal;
+        text-align: center;
     }
 
     .completed_activities{
@@ -140,4 +161,34 @@
         font-size: 14px;
         font-weight: bold;
     }
+}
+
+@media only screen and (max-width: $breakpointMobile) {
+    .observation_list{
+        .observation_list_title{
+            color: $primary-color-text;
+            font-size: 22px;
+            font-weight: 600;
+            line-height: normal;
+            margin: 0;
+        }
+    
+        .observation_list_wrapper{
+            height: 200px;
+            max-height: 300px;
+        }
+    }
+
+    .current_activity {
+        .current_activity_container{
+            flex-direction: column-reverse;
+            gap: 15px;
+        }
+    }
+
+    .activity_progress{
+        max-width: 100%;
+        width: 100%;
+    }
+    
 }

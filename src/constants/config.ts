@@ -3,7 +3,7 @@ import {
   BsTrash2Fill,
   BsFillPersonCheckFill,
 } from 'react-icons/bs';
-import { FaEye } from 'react-icons/fa';
+import { FaEye, FaUserPlus } from 'react-icons/fa';
 import i18next from '@/i18n';
 import {
   I_HopeTableConfig,
@@ -41,6 +41,13 @@ export const HopeTable: I_HopeTableConfig = {
       icon: BsPencilFill,
       key: '2',
       actionType: 'edit',
+      colorClassName: 'text-color-link',
+    },
+    {
+      label: i18next.t('components.popupActions.assign_patients.label'),
+      icon: FaUserPlus,
+      key: '3',
+      actionType: 'assign_patient',
       colorClassName: 'text-color-link',
     },
     {

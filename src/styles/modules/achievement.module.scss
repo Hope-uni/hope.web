@@ -12,3 +12,10 @@
         font-size: 14px;
     }
 }
+
+@media only screen and (max-width: $breakpointMobile) {
+    .achievement_list_item {
+        width: 65px;
+        height: 65px;
+    }
+}
