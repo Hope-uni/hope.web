@@ -18,7 +18,7 @@ import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 import { BsFillCaretDownFill } from 'react-icons/bs';
 import { HiCog6Tooth } from 'react-icons/hi2';
-import PatientActions from '../list/PatientActions';
+import PatientActions from '@/components/patient/list/PatientActions';
 
 const { useBreakpoint } = Grid;
 

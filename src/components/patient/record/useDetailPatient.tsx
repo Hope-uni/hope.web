@@ -15,11 +15,6 @@ import {
   BsImages,
   BsPersonBadge,
 } from 'react-icons/bs';
-import {
-  getAchievementList,
-  getActivitiesList,
-  getPictogramsList,
-} from '../../../../__mocks__/user';
 
 dayjs.locale('es');
 
@@ -28,8 +23,6 @@ const { useBreakpoint } = Grid;
 const useDataPatient = (patient: CreatePatientResponse) => {
   const screens = useBreakpoint();
   const { t } = useTranslation();
-
-  console.log('ups!!!, un console.log XD');
 
   const itemsGeneralInfo: DescriptionsProps['items'] = useMemo(
     () => [

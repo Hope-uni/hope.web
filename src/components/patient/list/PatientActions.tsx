@@ -55,7 +55,6 @@ const PatientActions = ({
 
   const handleOpenNextPhase = useCallback(() => {
     setOpenNextPhase(true);
-    console.log('otro console.log, que barbaridad!!!');
   }, []);
 
   const handleOpenAddObservation = useCallback(() => {
@@ -192,17 +191,17 @@ const PatientActions = ({
         open={openAddAchievement}
         loading={loading}
         onOpen={setOpenAddAchievement}
-        okText={t('Patient.actions.add_observation.modal.ok_text')}
+        okText={t('Patient.actions.add_achievement.modal.ok_text')}
         okButtonProps={{
           type: 'primary',
           onClick: handleDelete,
           loading: loading,
           className: styles.footer_btn_confirm,
         }}
-        title={t('Patient.actions.add_observation.modal.title')}
+        title={t('Patient.actions.add_achievement.modal.title')}
       >
         <Form
-          name="add_observation"
+          name="add_achievement"
           id="create_user_form_antd"
           layout="vertical"
         >
