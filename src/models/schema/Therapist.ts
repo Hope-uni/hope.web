@@ -1,6 +1,8 @@
 import { z } from 'zod';
 import {
+  ActivitySchema,
   CreateUserPayloadSchema,
+  ListPatientResponseSchema,
   PersonSchema,
   UserSchema,
 } from '@/models/schema';
@@ -13,30 +15,19 @@ export const TherapistSchema = z.object({
   patientsInCharge: z.number(),
   user: UserSchema,
 });
+export type Therapist = z.infer<typeof TherapistSchema>;
 
-export const PatientInTherapistSchema = z.object({
+export const ListTherapistResponseSchema = z.object({
   id: z.number(),
   userId: z.number(),
+  image: z.string().nullable(),
   fullName: z.string(),
-  age: z.number(),
-});
-
-const ListTherapistResponseSchema = z.object({
-  id: z.number(),
-  userId: z.number(),
-  fullName: z.string(),
-  firstName: z.string(),
-  secondName: z.string().optional().nullable(),
-  surname: z.string(),
-  secondSurname: z.string().optional().nullable(),
-  username: z.string(),
   email: z.string(),
-  phoneNumber: z.number(),
-  telephone: z.string().nullable(),
-  patients: z.array(PatientInTherapistSchema),
-  patientsInCharge: z.number().optional(),
-  image: z.string(),
+  username: z.string(),
+  phoneNumber: z.string().optional(),
+  childrenInCharge: z.number().optional(),
 });
+export type ListTherapistResponse = z.infer<typeof ListTherapistResponseSchema>;
 
 export const CreateTherapistPayloadSchema = CreateUserPayloadSchema.merge(
   PersonSchema,
@@ -45,14 +36,23 @@ export const CreateTherapistPayloadSchema = CreateUserPayloadSchema.merge(
   phoneNumber: z.string(),
   telephone: z.string(),
 });
-
-export const CreateTherapistResponseSchema = z.any();
-
-export type Therapist = z.infer<typeof TherapistSchema>;
-export type ListTherapistResponse = z.infer<typeof ListTherapistResponseSchema>;
 export type CreateTherapistPayload = z.infer<
   typeof CreateTherapistPayloadSchema
 >;
+
+export const CreateTherapistResponseSchema = z.object({
+  ...PersonSchema.shape,
+  id: z.number(),
+  userId: z.string(),
+  username: z.string(),
+  email: z.string(),
+  fullName: z.string(),
+  age: z.number(),
+  identificationNumber: z.string(),
+  phoneNumber: z.string().optional(),
+  children: z.array(ListPatientResponseSchema).nullable().optional(),
+  activities: z.array(ActivitySchema).nullable().optional(),
+});
 export type CreateTherapistResponse = z.infer<
   typeof CreateTherapistResponseSchema
 >;

@@ -130,7 +130,7 @@ export const ListPatientService = async (
 export const FindPatientByIdService = async (id: string) => {
   try {
     const response = await API_HOPE_PROTECTED.get<
-      API_RESPONSE<ListUserResponse[]>
+      API_RESPONSE<CreatePatientResponse>
     >(`${API.Patient.Index}/${id}`);
 
     return response.data;

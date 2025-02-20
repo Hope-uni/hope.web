@@ -34,9 +34,9 @@ export const useTutorColumns = () => {
       dataIndex: 'patientsInCharge',
       align: 'center',
       width: '150px',
-      render: (_, { patientsInCharge }) => {
-        if (!!(patientsInCharge && patientsInCharge > 0)) {
-          return <span>{patientsInCharge}</span>;
+      render: (_, { childrenInCharge }) => {
+        if (!!(childrenInCharge && childrenInCharge > 0)) {
+          return <span>{childrenInCharge}</span>;
         }
 
         return <UnassignedTag />;

@@ -1,5 +1,15 @@
 import { z } from 'zod';
-import { TEAGradeSchema, TEAPhaseSchema, UserSchema } from '@/models/schema';
+import {
+  CurrentActivitySchema,
+  PersonSchema,
+  SingleActivitySchema,
+  TEAGradeSchema,
+  TEAPhaseSchema,
+  UserSchema,
+  AchievementSchema,
+  ObservationSchema,
+  PictogramSchema,
+} from '@/models/schema';
 
 export const PatientSchema = z.object({
   id: z.number(),
@@ -11,16 +21,22 @@ export const PatientSchema = z.object({
   achievementCount: z.number(),
   user: UserSchema,
 });
+export type Patient = z.infer<typeof PatientSchema>;
 
-export const TutorInPatientSchema = z.object({
+export const TherapistTutorInPatientSchema = z.object({
   id: z.number(),
   userId: z.number(),
-  image: z.string(),
+  image: z.string().nullable(),
   fullName: z.string(),
+  email: z.string(),
   username: z.string(),
-  correo: z.string(),
-  telefono: z.number(),
+  phoneNumber: z.any().optional(),
+  telephone: z.any().optional(),
+  childrenInCharge: z.number().optional(),
 });
+export type TherapistTutorInPatient = z.infer<
+  typeof TherapistTutorInPatientSchema
+>;
 
 export const ListPatientResponseSchema = z.object({
   id: z.number(),
@@ -28,13 +44,29 @@ export const ListPatientResponseSchema = z.object({
   fullName: z.string(),
   age: z.number(),
   teaDegree: TEAGradeSchema,
-  phase: TEAPhaseSchema,
+  currentPhase: TEAPhaseSchema,
   achievementCount: z.number(),
-  image: z.string(),
+  image: z.string().optional().nullable(),
 });
-
-export const CreatePatientResponseSchema = z.any();
-
-export type Patient = z.infer<typeof PatientSchema>;
-export type CreatePatientResponse = z.infer<typeof CreatePatientResponseSchema>;
 export type ListPatientResponse = z.infer<typeof ListPatientResponseSchema>;
+
+export const CreatePatientResponseSchema = z.object({
+  ...PersonSchema.shape,
+  id: z.number(),
+  userId: z.string(),
+  username: z.string(),
+  fullName: z.string(),
+  age: z.number(),
+  teaDegree: TEAGradeSchema,
+  currentPhase: TEAPhaseSchema,
+  phaseProgress: z.string(),
+  telephone: z.any().optional(),
+  observations: z.array(ObservationSchema).nullable(),
+  tutor: TherapistTutorInPatientSchema,
+  therapist: TherapistTutorInPatientSchema,
+  currentActivity: CurrentActivitySchema.nullable(),
+  activities: z.array(SingleActivitySchema).nullable(),
+  pictograms: z.array(PictogramSchema).nullable(),
+  achievements: z.array(AchievementSchema),
+});
+export type CreatePatientResponse = z.infer<typeof CreatePatientResponseSchema>;
