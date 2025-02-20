@@ -1,7 +1,7 @@
 import {
   FormCreateUser,
   ListRoleResponse,
-  ListTutorResponse,
+  SingleTutorTherapist,
   Role,
   TEAGrade,
   TEAPhase,
@@ -23,7 +23,7 @@ interface FormCreateUserState {
   roleList: ListRoleResponse[];
   phaseList: TEAPhase[];
   degreeList: TEAGrade[];
-  tutorList: ListTutorResponse[];
+  tutorList: SingleTutorTherapist[];
   fields: FormCreateUser;
   errors: ErrorsForm | undefined;
   messageErrorForm?: string;
@@ -33,7 +33,7 @@ interface FormCreateUserState {
   setRoleList: (roles: ListRoleResponse[]) => void;
   setPhaseList: (roles: TEAPhase[]) => void;
   setDegreeList: (roles: TEAGrade[]) => void;
-  setTutorList: (roles: ListTutorResponse[]) => void;
+  setTutorList: (roles: SingleTutorTherapist[]) => void;
   setInitCurrentRole: (id: number) => void;
   setCurrentRoleSelected: (role: ListRoleResponse | Role) => void;
   setIsAdminRoleSelected: (value: boolean) => void;
@@ -62,7 +62,7 @@ export const useFormCreateUserStore = create<FormCreateUserState>()((set) => ({
   setRoleList: (roles) => set({ roleList: roles }),
   setPhaseList: (phases: TEAPhase[]) => set({ phaseList: phases }),
   setDegreeList: (degrees: TEAGrade[]) => set({ degreeList: degrees }),
-  setTutorList: (tutors: ListTutorResponse[]) => set({ tutorList: tutors }),
+  setTutorList: (tutors: SingleTutorTherapist[]) => set({ tutorList: tutors }),
   setInitCurrentRole: (id: number) => set({ initCurrentRole: id }),
   setCurrentRoleSelected: (role) => set({ currentRoleSelected: role }),
   setIsAdminRoleSelected: (value) => set({ isAdminRoleSelected: value }),

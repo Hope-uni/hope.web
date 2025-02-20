@@ -106,7 +106,7 @@ export default function EditUserForm() {
   const validateIfFormHasChanged = useCallback(() => {
     let values = getCurrentValues();
     let fieldsFiltered = undefined;
-    let keyToDelete: (keyof typeof fields)[] = ['id', 'image'];
+    let keyToDelete: (keyof typeof fields)[] = ['id'];
 
     fieldsFiltered = removeKeysFromObject(fields, keyToDelete);
 

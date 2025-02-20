@@ -54,6 +54,18 @@ export default function UserDataForm({
       className={styles.wrapper_form_create_user}
       form={form}
     >
+      <Show>
+        <Show.When isTrue={!isAdminRoleSelected}>
+          <Row gutter={gutterRow}>
+            <Col>
+              <Form.Item name="image" label={t('User.fields.image_url.label')}>
+                <Input placeholder={t('User.fields.image_url.placeholder')} />
+              </Form.Item>
+            </Col>
+          </Row>
+        </Show.When>
+      </Show>
+
       <Row gutter={gutterRow}>
         <Col sm={{ span: spanCol }} xs={{ span: 24 }}>
           <Form.Item

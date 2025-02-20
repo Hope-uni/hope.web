@@ -1,13 +1,13 @@
 import { Show } from '@/components/Show';
 import { UnassignedTag } from '@/components/common';
 import UserActions from '@/components/user/list/UserActions';
-import { ListUserResponse, Role } from '@/models/schema';
+import { SingleUser, Role } from '@/models/schema';
 import styles from '@/styles/modules/user.module.scss';
 import { StarFilled } from '@ant-design/icons';
 import { Flex, Tag } from 'antd';
 
 interface Props {
-  user: ListUserResponse;
+  user: SingleUser;
 }
 
 const UserRowCardMobile = ({ user }: Props) => {

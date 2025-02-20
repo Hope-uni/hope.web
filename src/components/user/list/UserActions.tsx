@@ -1,7 +1,7 @@
 import PopupActions from '@/components/table/PopupActions';
 import { RoutesName } from '@/constants';
 import { ROLES } from '@/constants/Role';
-import { ListUserResponse, Role } from '@/models/schema';
+import { SingleUser, Role } from '@/models/schema';
 import { ActionType } from '@/models/types';
 import {
   CurrentRoleTypeDeleteUser,
@@ -13,7 +13,7 @@ import { useCallback, useMemo } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 
 interface Props {
-  user: ListUserResponse;
+  user: SingleUser;
   actions?: Array<ActionType>;
   classWrapper?: string;
 }
@@ -37,21 +37,17 @@ const UserActions = ({
   const actionPath = useMemo(() => {
     const roleUser = getFirstRole(user.roles);
     let pathDetail = RoutesName.patient.index;
-    let pathEdit = RoutesName.patient.edit;
 
     if (validateRole(roleUser?.name, ROLES.THERAPIST)) {
       pathDetail = RoutesName.therapist.index;
-      pathEdit = RoutesName.therapist.edit;
     }
 
     if (validateRole(roleUser?.name, ROLES.TUTOR)) {
       pathDetail = RoutesName.tutor.index;
-      pathEdit = RoutesName.tutor.edit;
     }
 
     return {
       detail: pathDetail,
-      edit: pathEdit,
     };
   }, [user.roles]);
 
@@ -60,8 +56,8 @@ const UserActions = ({
   }, [router, user.profileId, actionPath.detail]);
 
   const handleEdit = useCallback(() => {
-    router.push(`${actionPath.edit}/${user.id}`);
-  }, [router, user.id, actionPath.edit]);
+    router.push(`${RoutesName.user.edit}/${user.id}`);
+  }, [router, user.id]);
 
   const handleDelete = useCallback(async () => {
     const role = user.roles?.length > 0 ? user.roles[0] : ({} as Role);
