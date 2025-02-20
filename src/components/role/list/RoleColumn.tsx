@@ -19,7 +19,7 @@ export const useRoleColumns = () => {
       title: t('Role.index.columns.permission'),
       dataIndex: 'id',
       render: (_, { permissions }) => {
-        if (permissions.length === 0) {
+        if (permissions?.length === 0) {
           return <UnassignedTag />;
         }
 

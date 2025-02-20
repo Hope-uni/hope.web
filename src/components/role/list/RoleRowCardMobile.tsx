@@ -24,7 +24,7 @@ const RoleRowCardMobile = ({ role }: Props) => {
             {t('Role.index.columns.permission')}:
           </span>
           <div>
-            {role.permissions.length === 0 ? (
+            {role?.permissions?.length === 0 ? (
               <UnassignedTag />
             ) : (
               <Flex gap={8} wrap>
