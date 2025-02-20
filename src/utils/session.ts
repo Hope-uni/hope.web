@@ -1,3 +1,4 @@
+import { Role } from '@/models/schema';
 import { UserSession } from '@/models/types/auth';
 
 export const getCurrentUser = (session: UserSession) => {
@@ -20,7 +21,7 @@ export const getCurrentUser = (session: UserSession) => {
 };
 
 export const validateRole = (
-  userRole: string,
+  userRole: string | undefined | null,
   targetRole: string | string[],
 ): boolean => {
   if (!userRole || !targetRole) {
@@ -34,4 +35,8 @@ export const validateRole = (
   }
 
   return userRole.toLowerCase() === targetRole.toLowerCase();
+};
+
+export const getFirstRole = (roles: Role[]) => {
+  return roles?.length > 0 ? roles[0] : null;
 };

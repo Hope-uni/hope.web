@@ -1,4 +1,4 @@
-import { API_PAYLOAD } from '@/models/types';
+import { API_PAYLOAD, API_RESPONSE } from '@/models/types';
 import {
   FindUserByIdService,
   ListPatientService,
@@ -61,13 +61,16 @@ export const useFetchFindUserByIdQuery = (id: string | undefined) => {
   });
 };
 
-export const useFetchFindUserByRoleQuery = (
+export const useFetchFindUserByRoleQuery = <T = unknown>(
   role: string,
   id: string | undefined,
 ) => {
-  return useQuery({
-    queryKey: ['find-user-by-id', id],
-    queryFn: () => FindUserByIdHelper(role as CurrentRoleTypeFindUser, id),
+  return useQuery<API_RESPONSE<T>>({
+    queryKey: ['find-user-by-role', id],
+    queryFn: () =>
+      FindUserByIdHelper(role as CurrentRoleTypeFindUser, id) as Promise<
+        API_RESPONSE<T>
+      >,
     enabled: !!role && !!id,
     placeholderData: keepPreviousData,
   });
