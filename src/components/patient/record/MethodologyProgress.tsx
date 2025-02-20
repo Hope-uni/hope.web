@@ -1,7 +1,7 @@
 'use client';
 
 import PatientActions from '@/components/patient/list/PatientActions';
-import { CreatePatientResponse } from '@/models/schema';
+import { DetailPatient, SinglePatientSchema } from '@/models/schema';
 import styles from '@/styles/modules/patient.module.scss';
 import COLORS from '@/styles/modules/variablesExport.module.scss';
 import { Flex, Grid, Progress, Typography } from 'antd';
@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next';
 const { useBreakpoint } = Grid;
 
 interface Props {
-  patient: CreatePatientResponse;
+  patient: DetailPatient;
 }
 
 export default function MethodologyProgress({ patient }: Props) {
@@ -43,7 +43,10 @@ export default function MethodologyProgress({ patient }: Props) {
               {t('Patient.detail.phase', { phase: patient?.currentPhase?.id })}
             </Typography.Text>
           </Flex>
-          <PatientActions patient={patient} renderMode="next_phase" />
+          <PatientActions
+            patient={SinglePatientSchema.parse(patient)}
+            renderMode="next_phase"
+          />
         </Flex>
       </Flex>
     </Flex>

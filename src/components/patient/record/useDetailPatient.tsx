@@ -2,7 +2,7 @@ import AchievementTab from '@/components/patient/record/tabs/AchievementTab';
 import ActivityTab from '@/components/patient/record/tabs/ActivitiesTab';
 import PictogramTab from '@/components/patient/record/tabs/PictogramTab';
 import RecordTab from '@/components/patient/record/tabs/RecordTab';
-import { CreatePatientResponse } from '@/models/schema';
+import { DetailPatient } from '@/models/schema';
 import { DescriptionsProps, Grid } from 'antd';
 import { TabsProps } from 'antd/lib';
 import dayjs from 'dayjs';
@@ -20,7 +20,7 @@ dayjs.locale('es');
 
 const { useBreakpoint } = Grid;
 
-const useDataPatient = (patient: CreatePatientResponse) => {
+const useDataPatient = (patient: DetailPatient) => {
   const screens = useBreakpoint();
   const { t } = useTranslation();
 

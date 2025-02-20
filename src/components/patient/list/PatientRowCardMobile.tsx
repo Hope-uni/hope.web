@@ -1,13 +1,13 @@
 import { Show } from '@/components/Show';
 import { UnassignedTag } from '@/components/common';
 import PatientActions from '@/components/patient/list/PatientActions';
-import { ListPatientResponse } from '@/models/schema';
+import { SinglePatient } from '@/models/schema';
 import styles from '@/styles/modules/patient.module.scss';
 import { Descriptions, Flex, Tag } from 'antd';
 import { useTranslation } from 'react-i18next';
 
 interface Props {
-  patient: ListPatientResponse;
+  patient: SinglePatient;
 }
 
 const PatientRowCardMobile = ({ patient }: Props) => {

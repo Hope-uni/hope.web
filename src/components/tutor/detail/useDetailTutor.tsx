@@ -1,6 +1,6 @@
 import { usePatientColumns } from '@/components/patient/list/PatientColumn';
 import WrapperTable from '@/components/table/Wrappertable';
-import { CreateTutorResponse } from '@/models/schema';
+import { DetailTutor } from '@/models/schema';
 import styles from '@/styles/modules/tutor.module.scss';
 import {
   Col,
@@ -25,7 +25,7 @@ dayjs.locale('es');
 const { useBreakpoint } = Grid;
 const { Title } = Typography;
 
-const useDetailTutor = (tutor: CreateTutorResponse) => {
+const useDetailTutor = (tutor: DetailTutor) => {
   const screens = useBreakpoint();
   const { t } = useTranslation();
   const [columns] = usePatientColumns();

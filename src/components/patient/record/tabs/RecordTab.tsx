@@ -6,7 +6,11 @@ import ObservationList from '@/components/patient/record/ObservationList';
 import TherapistActions from '@/components/therapist/list/TherapistActions';
 import TutorActions from '@/components/tutor/list/TutorActions';
 import CardProfile from '@/components/user/detail/CardProfile';
-import { CreatePatientResponse, UserProfileCardSchema } from '@/models/schema';
+import {
+  DetailPatient,
+  SinglePatientSchema,
+  UserProfileCardSchema,
+} from '@/models/schema';
 import styles from '@/styles/modules/patient.module.scss';
 import {
   Descriptions,
@@ -22,7 +26,7 @@ import { useTranslation } from 'react-i18next';
 const { useBreakpoint } = Grid;
 
 interface Props {
-  patient: CreatePatientResponse;
+  patient: DetailPatient;
   items: DescriptionsProps['items'];
   itemInfoTutor: DescriptionsProps['items'] | null;
   itemInfoTherapist: DescriptionsProps['items'] | null;
@@ -74,7 +78,10 @@ export default function RecordTab({
           <Typography.Title className={styles.title_content_tab}>
             {t('Patient.detail.title_observation')}
           </Typography.Title>
-          <PatientActions patient={patient} renderMode="add_observation" />
+          <PatientActions
+            patient={SinglePatientSchema.parse(patient)}
+            renderMode="add_observation"
+          />
         </Flex>
         {patient.observations && patient.observations?.length > 0 ? (
           <>

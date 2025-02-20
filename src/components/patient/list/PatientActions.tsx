@@ -3,7 +3,7 @@ import { Show } from '@/components/Show';
 import { RenderModeActionTypes } from '@/components/table/helpers';
 import PopupActions from '@/components/table/PopupActions';
 import { ROLES } from '@/constants/Role';
-import { CreatePatientResponse, ListPatientResponse } from '@/models/schema';
+import { SinglePatient } from '@/models/schema';
 import { ActionType } from '@/models/types';
 import {
   CurrentRoleTypeDeleteUser,
@@ -22,7 +22,7 @@ import { BsChevronDoubleUp } from 'react-icons/bs';
 const { useBreakpoint } = Grid;
 
 interface Props {
-  patient: ListPatientResponse | CreatePatientResponse;
+  patient: SinglePatient;
   actions?: Array<ActionType>;
   classWrapper?: string;
   renderMode?: RenderModeActionTypes;
