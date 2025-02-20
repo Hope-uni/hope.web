@@ -75,7 +75,7 @@ const TherapistActions = ({
         </Button>
       </Show.When>
 
-      {/* assign achievement to patient modal */}
+      {/* assign patients to patient modal */}
       <HModal
         open={openAssignPatient}
         loading={loading}
