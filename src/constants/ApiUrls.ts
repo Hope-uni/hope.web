@@ -22,4 +22,7 @@ export const API = {
     ListPhase: '/phase',
     ListDegree: '/teaDegree',
   },
+  Activity: {
+    Index: 'activity',
+  },
 };

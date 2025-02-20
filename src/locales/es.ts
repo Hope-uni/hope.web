@@ -480,6 +480,15 @@ const es = {
         phase: 'Fase',
       },
     },
+    actions: {
+      delete: {
+        modal: {
+          title: 'Eliminar actividad',
+          description:
+            '¿Estás seguro/a de que deseas elminar la actividad <StrongValue />?',
+        },
+      },
+    },
   },
   Achievement: {
     index: {
