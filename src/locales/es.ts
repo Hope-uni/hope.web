@@ -489,8 +489,13 @@ const es = {
   },
   Role: {
     index: {
-      title: 'Logros',
-      caption: 'Listado de todos los logros.',
+      title: 'Roles',
+      caption: 'Listado de todos los Roles.',
+      searchPlaceholder: 'Buscar rol, permiso...',
+      columns: {
+        name: 'Nombre',
+        permission: 'Permisos',
+      },
     },
     catalog: {
       patient: 'Paciente',
