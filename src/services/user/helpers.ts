@@ -1,9 +1,13 @@
 import {
   CreatePatientPayloadSchema,
+  CreatePatientResponse,
+  CreateTherapistResponse,
   CreateTherapistTutorPayloadSchema,
+  CreateTutorResponse,
   CreateUserPayloadSchema,
   FormCreateUser,
   FormCreateUserError,
+  ListUserResponse,
 } from '@/models/schema';
 import {
   API_RESPONSE,
@@ -240,10 +244,16 @@ export const FindUserByIdHelper = async (
   id?: string,
 ) => {
   try {
-    const res = (await FindUsersByRole[currentRole](id)) as API_RESPONSE<any>;
+    const res = (await FindUsersByRole[currentRole](
+      id,
+    )) as API_RESPONSE<unknown>;
 
     return {
-      data: res.data,
+      data: res.data as
+        | ListUserResponse
+        | CreatePatientResponse
+        | CreateTutorResponse
+        | CreateTherapistResponse,
       error: res.error,
       statusCode: res?.statusCode,
       message: res.message,

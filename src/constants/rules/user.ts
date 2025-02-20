@@ -98,7 +98,7 @@ export const UserRules = {
         required: true,
         message: i18next.t('User.fields.telephone.rules.required'),
       },
-      ...CommonRules.mobile,
+      ...CommonRules.landline,
     ] as Rule[],
     image_url: [
       {

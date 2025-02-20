@@ -1,19 +1,27 @@
-import { useModalDelete } from '@/lib/store/modalDelete';
+import styles from '@/styles/modules/partials.module.scss';
 import { Button, Modal } from 'antd';
-import { useCallback } from 'react';
+import { Dispatch, SetStateAction, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { BsXLg } from 'react-icons/bs';
-import styles from '@/styles/modules/partials.module.scss';
 
 interface Props {
   title?: string | JSX.Element;
   description?: string | JSX.Element;
+  open: boolean;
+  loading: boolean;
+  setOpen: Dispatch<SetStateAction<boolean>>;
   onOk?: () => void;
 }
 
-const ModalDelete = ({ title, description, onOk }: Props) => {
+const ModalDelete = ({
+  title,
+  description,
+  open,
+  loading,
+  setOpen,
+  onOk,
+}: Props) => {
   const { t } = useTranslation();
-  const { open, loading, setOpen } = useModalDelete();
 
   const handleOnCancel = useCallback(() => {
     if (!loading) {
@@ -30,6 +38,7 @@ const ModalDelete = ({ title, description, onOk }: Props) => {
       title={null}
       footer={null}
       closeIcon={null}
+      destroyOnClose
     >
       <div className={styles.modal_delete_content}>
         <Button

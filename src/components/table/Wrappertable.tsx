@@ -1,10 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import SkeletonTable from '@/components/table/SkeletonTable';
-import { Table } from 'antd';
+import { useTableStore } from '@/lib/store/table';
 import { E_ActionKeyTable, TablePropsType } from '@/models/types/Table.d';
+import { Table } from 'antd';
 import { useCallback, useEffect, useMemo } from 'react';
 import HeaderTable from './HeaderTable';
-import { useTableStore } from '@/lib/store/table';
 
 function WrapperTable({
   btnExtra = false,
@@ -14,6 +14,7 @@ function WrapperTable({
   cols,
   data = undefined,
   showHeader = true,
+  showTitle = true,
   searchable = false,
   stylesWrap,
   id,
@@ -118,9 +119,14 @@ function WrapperTable({
             pagination={pagination ? paginationDataTable : false}
             showHeader={showHeader}
             tableLayout="fixed"
-            title={() => (
-              <HeaderTable searchProps={searchProps} searchable={searchable} />
-            )}
+            title={() =>
+              showTitle ? (
+                <HeaderTable
+                  searchProps={searchProps}
+                  searchable={searchable}
+                />
+              ) : null
+            }
             bordered={false}
             rowKey="id"
           />

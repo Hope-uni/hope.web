@@ -1,26 +1,36 @@
 /* eslint-disable react/display-name */
 'use client';
 
+import { Show } from '@/components/Show';
 import { colorList } from '@/constants/Avatar';
+import { UserProfileCard } from '@/models/schema';
 import styles from '@/styles/modules/user.module.scss';
-import { Avatar, Descriptions, Divider, Flex, Typography } from 'antd';
+import {
+  Avatar,
+  Descriptions,
+  Divider,
+  Empty,
+  Flex,
+  Grid,
+  Typography,
+} from 'antd';
 import { DescriptionsProps } from 'antd/lib';
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { BsChevronRight } from 'react-icons/bs';
 
 const { Title, Text } = Typography;
-
+const { useBreakpoint } = Grid;
 interface Props {
-  user: any;
+  user: UserProfileCard | null;
   layout?: 'vertical' | 'horizontal';
   title?: string;
-  infoDescription?: DescriptionsProps['items'];
+  infoDescription?: DescriptionsProps['items'] | null;
   showUser?: boolean;
+  menuAction?: JSX.Element;
 }
 
 interface AvatarProfileProps {
-  imageProfile?: string;
+  imageProfile?: string | null;
   userId: number;
   size: number;
 }
@@ -48,88 +58,103 @@ export default function CardProfile({
   title,
   infoDescription,
   showUser = false,
+  menuAction,
 }: Props) {
+  const screens = useBreakpoint();
   const { t } = useTranslation();
 
   if (layout === 'vertical') {
     return (
-      <Flex
-        gap="10px"
-        className={styles.card_profile}
-        vertical
-        justify="center"
-      >
-        {title && <Title className={styles.title_card}>{title}</Title>}
-        <Flex vertical align="center" justify="flex-start" gap={10}>
-          <AvatarProfile userId={user.id} size={60} />
-          <Flex vertical gap={3} align="center">
-            <Title
-              level={3}
-              className={styles.full_name}
-              style={{
-                fontSize: '16px',
-                lineHeight: '20px',
-                textAlign: 'center',
-              }}
-            >
-              {user.fullName}
-            </Title>
+      <div className={styles.card_profile} style={{ flex: 1 }}>
+        <div className={styles.card_profile_header_menu}>
+          {title && <Title className={styles.title_card}>{title}</Title>}
+          <Show>
+            <Show.When isTrue={!!menuAction && !!user}>{menuAction}</Show.When>
+          </Show>
+        </div>
+        {user && infoDescription ? (
+          <>
+            {screens.sm && (
+              <>
+                <Flex vertical align="center" justify="flex-start" gap={10}>
+                  <AvatarProfile
+                    imageProfile={user.image}
+                    userId={user.id}
+                    size={60}
+                  />
+                  <Flex vertical gap={3} align="center">
+                    <Title
+                      level={3}
+                      className={styles.full_name}
+                      style={{
+                        fontSize: '16px',
+                        lineHeight: '20px',
+                        textAlign: 'center',
+                      }}
+                    >
+                      {user.fullName}
+                    </Title>
+                  </Flex>
+                </Flex>
+                <Divider
+                  dashed={true}
+                  style={{
+                    borderColor: '#626262',
+                    borderStyle: 'dashed',
+                    borderWidth: '2px 0 0',
+                    margin: '10px',
+                  }}
+                />
+              </>
+            )}
+            {infoDescription && infoDescription?.length > 0 && (
+              <Descriptions
+                items={infoDescription}
+                column={1}
+                className="card_profile_descriptions"
+                layout={screens.sm ? 'horizontal' : 'vertical'}
+              />
+            )}
+          </>
+        ) : (
+          <Flex justify="center">
+            <Empty
+              description={t('Patient.detail.feedback.no_therapist_assigned')}
+              image={Empty.PRESENTED_IMAGE_SIMPLE}
+            />
           </Flex>
-          <Flex justify="end">
-            <Flex align="center" className={styles.profile_detail} gap={4}>
-              <Text className={styles.profile_detail_text}>
-                {t('Actions.view_detail')}
-              </Text>
-              <BsChevronRight size="12px" />
-            </Flex>
-          </Flex>
-        </Flex>
-        <Divider
-          dashed={true}
-          style={{
-            borderColor: '#626262',
-            borderStyle: 'dashed',
-            borderWidth: '2px 0 0',
-            margin: '10px',
-          }}
-        />
-        {infoDescription && infoDescription?.length > 0 && (
-          <Descriptions
-            items={infoDescription}
-            column={1}
-            className="card_profile_descriptions"
-          />
         )}
-      </Flex>
+      </div>
     );
   }
 
   return (
-    <Flex
-      align="center"
-      justify="flex-start"
-      gap="10px"
-      className={styles.card_profile}
-    >
-      <AvatarProfile userId={user.id} size={85} />
-      <Flex vertical>
-        <Title
-          level={3}
-          className={styles.full_name}
-          style={{
-            fontSize: '22px',
-          }}
-        >
-          {user.fullName}
-        </Title>
-        <Flex gap={8}>
-          <Text className={styles.caption}>
-            {user.age} {t('components.CardProfile.years_old')}
-          </Text>
-          |<Text className={styles.caption}>{user.gender}</Text>
-        </Flex>
-        {showUser && <Text className={styles.username}>@{user.username}</Text>}
-      </Flex>
-    </Flex>
+    <>
+      {user ? (
+        <div className={styles.card_profile_row}>
+          <AvatarProfile userId={user.id} size={screens.xs ? 120 : 85} />
+          <Flex vertical>
+            <Title
+              level={3}
+              className={styles.full_name}
+              style={{
+                fontSize: '22px',
+              }}
+            >
+              {user.fullName}
+            </Title>
+            <Flex gap={8} justify={screens.xs ? 'center' : 'start'}>
+              <Text className={styles.caption}>
+                {user.age} {t('components.CardProfile.years_old')}
+              </Text>
+              |<Text className={styles.caption}>{user.gender}</Text>
+            </Flex>
+            {showUser && (
+              <Text className={styles.username}>@{user.username}</Text>
+            )}
+          </Flex>
+        </div>
+      ) : null}
+    </>
   );
 }
