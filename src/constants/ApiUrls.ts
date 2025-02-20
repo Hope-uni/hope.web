@@ -25,4 +25,7 @@ export const API = {
   Activity: {
     Index: 'activity',
   },
+  Pictogram: {
+    Index: 'pictogram',
+  },
 };
