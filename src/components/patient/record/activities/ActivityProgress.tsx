@@ -1,5 +1,6 @@
 'use client';
 
+import { CurrentActivity } from '@/models/schema';
 import styles from '@/styles/modules/patient.module.scss';
 import COLORS from '@/styles/modules/variablesExport.module.scss';
 import { Flex, Progress, Typography } from 'antd';
@@ -9,33 +10,29 @@ import { BsCheckCircle } from 'react-icons/bs';
 const { Text } = Typography;
 
 interface Props {
-  percent: number;
-  totalActivities: number;
-  completedActivities: number;
+  activity: CurrentActivity;
 }
 
-export default function ActivityProgress({
-  percent,
-  totalActivities,
-  completedActivities,
-}: Props) {
+export default function ActivityProgress({ activity }: Props) {
   const { t } = useTranslation();
 
   return (
     <Flex className={styles.activity_progress} vertical gap={5}>
       <Flex justify="space-between">
         <Text className={styles.activity_progress_text}>
-          {t('Patient.detail.progress')} {percent}%
+          {t('Patient.detail.progress_with_percent', {
+            value: activity.progress,
+          })}
         </Text>
         <Flex align="center" gap={5}>
           <BsCheckCircle size={14} color={COLORS.success} />
           <Text className={styles.completed_activities}>
-            {completedActivities}/{totalActivities}
+            {activity.satisfactoryAttempts}/{activity.satisfactoryPoints}
           </Text>
         </Flex>
       </Flex>
       <Progress
-        percent={percent}
+        percent={activity.progress}
         showInfo={false}
         strokeColor={COLORS.success}
         strokeWidth={8}

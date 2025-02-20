@@ -27,25 +27,30 @@ export const useGetUserForEdit = (id?: string) => {
     const { data, statusCode, message } = await FindUserByIdService(id);
 
     if (statusCode === 404 && !data) {
+      setError(message);
       setUserNotFound(true);
+      setLoadingEdit(false);
       return;
     }
 
     if (!data || !data?.roles || data?.roles?.length === 0) {
+      setError(message);
       setUserNotFound(true);
+      setLoadingEdit(false);
       return;
     }
 
     const role = data.roles[0];
 
     if (!validateRole(role.name, ROLES.ADMIN)) {
-      const userData = await FindUserByIdHelper(
+      //TODO Replacing this any requires a refactor
+      const userData: any = await FindUserByIdHelper(
         role?.name as CurrentRoleTypeFindUser,
         data?.profileId,
       );
 
       if (userData.error) {
-        setError(message);
+        setError(userData.message);
         setUserNotFound(true);
         setLoadingEdit(false);
         return;

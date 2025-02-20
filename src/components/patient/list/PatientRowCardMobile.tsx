@@ -32,8 +32,8 @@ const PatientRowCardMobile = ({ patient }: Props) => {
             </Descriptions.Item>
             <Descriptions.Item label={t('Patient.index.columns.phase')}>
               <Show>
-                <Show.When isTrue={!!patient.phase.id}>
-                  {patient.phase.name}
+                <Show.When isTrue={!!patient.currentPhase.id}>
+                  {patient.currentPhase.name}
                 </Show.When>
                 <Show.Else>
                   <UnassignedTag />
@@ -52,9 +52,10 @@ const PatientRowCardMobile = ({ patient }: Props) => {
         </Flex>
       </Flex>
       <div>
-        <div className="table_popup_actions_mobile">
-          <PatientActions patient={patient} />
-        </div>
+        <PatientActions
+          patient={patient}
+          classWrapper="popup_actions_primary_vertical"
+        />
       </div>
     </div>
   );

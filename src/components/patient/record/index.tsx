@@ -2,52 +2,38 @@
 
 import GoToBack from '@/components/GoToBack';
 import Progress from '@/components/patient/record/MethodologyProgress';
-import AchievementTab from '@/components/patient/record/tabs/AchievementTab';
-import ActivityTab from '@/components/patient/record/tabs/ActivitiesTab';
-import PictogramTab from '@/components/patient/record/tabs/PictogramTab';
-import RecordTab from '@/components/patient/record/tabs/RecordTab';
+import useDataPatient from '@/components/patient/record/useDetailPatient';
+import TherapistActions from '@/components/therapist/list/TherapistActions';
+import TutorActions from '@/components/tutor/list/TutorActions';
 import CardProfile from '@/components/user/detail/CardProfile';
-import { Patient } from '@/models/schema';
+import {
+  CreatePatientResponse,
+  ListTherapistResponseSchema,
+  ListTutorResponseSchema,
+  UserProfileCardSchema,
+} from '@/models/schema';
 import styles from '@/styles/modules/patient.module.scss';
-import {
-  Button,
-  Col,
-  Dropdown,
-  Flex,
-  Row,
-  Switch,
-  Tabs,
-  TabsProps,
-  Typography,
-} from 'antd';
-import { DescriptionsProps } from 'antd/lib';
-import { useMemo } from 'react';
+import { Button, Col, Dropdown, Flex, Grid, Row, Switch, Tabs } from 'antd';
+import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
-import {
-  BsAward,
-  BsCardChecklist,
-  BsChevronDoubleUp,
-  BsFillCaretDownFill,
-  BsImages,
-  BsPersonBadge,
-} from 'react-icons/bs';
+import { BsFillCaretDownFill } from 'react-icons/bs';
 import { HiCog6Tooth } from 'react-icons/hi2';
-import {
-  getAchievementList,
-  getActivitiesList,
-  getObservationList,
-  getPictogramsList,
-} from '../../../../__mocks__/user';
+import PatientActions from '@/components/patient/list/PatientActions';
+
+const { useBreakpoint } = Grid;
 
 interface Props {
-  patient: Patient;
+  patient: CreatePatientResponse;
 }
 
 export default function PatientDetail({ patient }: Props) {
+  const screens = useBreakpoint();
   const { t } = useTranslation();
+  const { itemInfoTherapist, itemInfoTutor, itemsTab } =
+    useDataPatient(patient);
 
   const handleSwitchChange = (checked: boolean) => {
-    console.log(checked);
+    // TODO implements api services
   };
 
   const renderItem = () => {
@@ -72,92 +58,6 @@ export default function PatientDetail({ patient }: Props) {
     );
   };
 
-  // TODO data quemada por mientras
-  const items: DescriptionsProps['items'] = useMemo(
-    () => [
-      {
-        key: '1',
-        label: 'Fecha denacimiento',
-        children: '11 de mayo 1999',
-      },
-      {
-        key: '2',
-        label: 'Teléfono de casa',
-        children: '2225 1234',
-      },
-      {
-        key: '3',
-        label: 'Dirección',
-        span: 2,
-        children:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ',
-      },
-    ],
-    [],
-  );
-
-  // TODO data quemada por mientras
-  const itemInfoTutor: DescriptionsProps['items'] = useMemo(() => {
-    return [
-      {
-        key: '1',
-        label: 'Correo',
-        children: 'samuelbarberena12@gmail.com',
-      },
-      {
-        key: '2',
-        label: 'Teléfono',
-        children: '8888 8888',
-      },
-    ];
-  }, []);
-
-  // TODO data quemada por mientras
-  const itemInfoTherapist: DescriptionsProps['items'] = useMemo(() => {
-    return [
-      {
-        key: '1',
-        label: 'Correo',
-        children: 'walterwhiteelmeromero@gmail.com',
-      },
-      {
-        key: '2',
-        label: 'Teléfono',
-        children: '8888 9999',
-      },
-    ];
-  }, []);
-
-  const itemsTab: TabsProps['items'] = useMemo(
-    () => [
-      {
-        key: '1',
-        label: t('Patient.detail.tabs.record_tab'),
-        icon: <BsPersonBadge size={20} />,
-        children: <RecordTab items={items} observations={getObservationList} />,
-      },
-      {
-        key: '2',
-        label: t('Patient.detail.tabs.actividades_tab'),
-        icon: <BsCardChecklist size={20} />,
-        children: <ActivityTab activities={getActivitiesList.data} />,
-      },
-      {
-        key: '3',
-        label: t('Patient.detail.tabs.pictogramas_tab'),
-        icon: <BsImages size={20} />,
-        children: <PictogramTab pictograms={getPictogramsList} />,
-      },
-      {
-        key: '4',
-        label: t('Patient.detail.tabs.logros_tab'),
-        icon: <BsAward size={20} />,
-        children: <AchievementTab achievements={getAchievementList} />,
-      },
-    ],
-    [items, t],
-  );
-
   return (
     <>
       <Row
@@ -167,20 +67,33 @@ export default function PatientDetail({ patient }: Props) {
           height: '100%',
         }}
       >
-        <Col span={17}>
-          <Flex
-            vertical
-            className={styles.white_card_layout}
-            justify="flex-start"
-            gap={30}
+        <Col sm={17} xs={24}>
+          <div
+            className={styles.white_card_layout_vertical}
+            style={{ gap: 30 }}
           >
-            <Flex justify="space-between" align="flex-start">
+            <Flex
+              justify="space-between"
+              align="center"
+              style={{ width: '100%' }}
+            >
               <GoToBack />
               <Flex gap={10} align="center">
-                <Button type="default">{t('Actions.edit')}</Button>
-                <Button className="default-error-color" type="default">
-                  {t('Actions.delete')}
-                </Button>
+                {screens.xs && (
+                  <PatientActions
+                    patient={patient}
+                    actions={['edit', 'delete']}
+                    classWrapper="popup_actions_primary_vertical"
+                  />
+                )}
+                {screens.sm && (
+                  <Flex gap={10}>
+                    <Link href={`/admin/users/edit/${patient.userId}`}>
+                      <Button type="default">{t('Actions.edit')}</Button>
+                    </Link>
+                    <PatientActions patient={patient} renderMode="delete" />
+                  </Flex>
+                )}
                 <Dropdown trigger={['click']} dropdownRender={renderItem}>
                   <Flex gap={2} align="center">
                     <HiCog6Tooth size={'24px'} />
@@ -190,51 +103,71 @@ export default function PatientDetail({ patient }: Props) {
               </Flex>
             </Flex>
 
-            <Flex justify="space-between" align="flex-start">
-              <CardProfile user={{ ...patient, ...patient.user }} />
-              <Flex justify="flex-end">
-                <Flex vertical align="center" justify="center">
-                  <Progress percent={75} grade={3} phase={2} />
-                  <Flex className={styles.upgrade_phase} gap={4}>
-                    <BsChevronDoubleUp size="18px" />
-                    <Typography.Text
-                      underline
-                      className={styles.upgrade_phase_text}
-                    >
-                      {t('Actions.Upload_phase')}
-                    </Typography.Text>
+            <Flex
+              justify={screens.sm ? 'space-between' : 'center'}
+              align="flex-start"
+              style={{ width: '100%' }}
+            >
+              <Col>
+                <CardProfile user={UserProfileCardSchema.parse(patient)} />
+              </Col>
+              {screens.sm && (
+                <Col>
+                  <Flex justify="flex-end">
+                    <Flex vertical align="center" justify="center">
+                      <Progress patient={patient} />
+                    </Flex>
                   </Flex>
-                </Flex>
-              </Flex>
+                </Col>
+              )}
             </Flex>
 
             <Tabs
               className="record-tab"
               defaultActiveKey="1"
               items={itemsTab}
+              style={{ width: '100%' }}
             />
-          </Flex>
+          </div>
         </Col>
-        <Col span={7}>
-          <Flex vertical gap={30}>
-            <Flex className={styles.white_card_layout} align="flex-start">
-              <CardProfile
-                user={{ ...patient, ...patient.user }}
-                layout="vertical"
-                title={t('Patient.detail.title_info_tutor')}
-                infoDescription={itemInfoTutor}
-              />
+        {screens.sm && (
+          <Col sm={7} xs={24}>
+            <Flex vertical gap={30}>
+              <div className={styles.white_card_layout}>
+                <CardProfile
+                  user={UserProfileCardSchema.parse(patient.tutor)}
+                  layout="vertical"
+                  title={t('Patient.detail.title_info_tutor')}
+                  infoDescription={itemInfoTutor}
+                  menuAction={
+                    <TutorActions
+                      tutor={ListTutorResponseSchema.parse(patient.tutor)}
+                      actions={['show']}
+                      classWrapper="popup_actions_primary_vertical"
+                    />
+                  }
+                />
+              </div>
+              <div className={styles.white_card_layout}>
+                <CardProfile
+                  user={UserProfileCardSchema.parse(patient.therapist)}
+                  layout="vertical"
+                  title={t('Patient.detail.title_info_therapist')}
+                  infoDescription={itemInfoTherapist}
+                  menuAction={
+                    <TherapistActions
+                      therapist={ListTherapistResponseSchema.parse(
+                        patient.therapist,
+                      )}
+                      actions={['show']}
+                      classWrapper="popup_actions_primary_vertical"
+                    />
+                  }
+                />
+              </div>
             </Flex>
-            <Flex className={styles.white_card_layout} align="flex-start">
-              <CardProfile
-                user={{ ...patient, ...patient.user }}
-                layout="vertical"
-                title={t('Patient.detail.title_info_therapist')}
-                infoDescription={itemInfoTherapist}
-              />
-            </Flex>
-          </Flex>
-        </Col>
+          </Col>
+        )}
       </Row>
     </>
   );

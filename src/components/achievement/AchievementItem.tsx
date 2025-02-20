@@ -26,7 +26,7 @@ export default function AchievementItem({
     >
       <Image
         className={styles.achievement_list_item_image}
-        src={achievement.image}
+        src={achievement.imageUrl}
         width={35}
         height={35}
         alt={achievement.name}

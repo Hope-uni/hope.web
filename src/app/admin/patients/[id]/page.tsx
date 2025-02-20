@@ -1,10 +1,12 @@
 'use client';
 
 import PatientDetail from '@/components/patient/record';
-import { useMemo } from 'react';
-import { getPatientList } from '../../../../../__mocks__/user';
-import { Result } from 'antd';
-import { Patient } from '@/models/schema';
+import { ROLES } from '@/constants/Role';
+import { useFetchFindUserByRoleQuery } from '@/lib/queries/user';
+import { CreatePatientResponse } from '@/models/schema';
+import { LoadingOutlined } from '@ant-design/icons';
+import { Result, Spin } from 'antd';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 interface ParamsProps {
@@ -13,21 +15,36 @@ interface ParamsProps {
 
 export default function DetailPatientPage({ params }: ParamsProps) {
   const { t } = useTranslation();
-  const user = useMemo(() => {
-    return getPatientList.data.find(
-      (item: Patient) => item.id.toString() === params.id,
-    );
-  }, [params]);
+  const [userNotFound, setUserNotFound] = useState(false);
 
-  if (!user) {
-    return (
-      <Result status="404" title="404" subTitle={t('Status.result.code_404')} />
+  const { data, isLoading } =
+    useFetchFindUserByRoleQuery<CreatePatientResponse>(
+      ROLES.PATIENT,
+      params.id,
     );
-  }
+
+  useEffect(() => {
+    setUserNotFound(!data?.data);
+  }, [data?.data, userNotFound]);
 
   return (
     <>
-      <PatientDetail patient={user} />
+      {!isLoading && data ? (
+        <>
+          {!!data?.data ? (
+            <PatientDetail patient={data.data} />
+          ) : (
+            <Result
+              status="404"
+              title="404"
+              subTitle={data.message ?? t('User.form.feedback.user_not_found')}
+            />
+          )}
+        </>
+      ) : (
+        //TODO change by skeleton
+        <Spin fullscreen indicator={<LoadingOutlined spin />} size="large" />
+      )}
     </>
   );
 }

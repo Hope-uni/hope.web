@@ -38,7 +38,7 @@ const UserRowCardMobile = ({ user }: Props) => {
         </Flex>
       </Flex>
       <div>
-        <div className="table_popup_actions_mobile">
+        <div className="popup_actions_primary_vertical">
           <UserActions user={user} />
         </div>
       </div>
