@@ -5,13 +5,13 @@ import stylesPictogram from '@/styles/modules/pictogram.module.scss';
 import { Empty, Flex, Typography } from 'antd';
 
 import PictogramItem from '@/components/pictogram/PictogramItem';
-import { Pictogram } from '@/models/schema/Pictogram';
+import { SinglePictogram } from '@/models/schema/Pictogram';
 import { useTranslation } from 'react-i18next';
 
 const { Title } = Typography;
 
 interface Props {
-  pictograms: Pictogram[] | null;
+  pictograms: SinglePictogram[] | null;
 }
 
 export default function PictogramTab({ pictograms }: Props) {
