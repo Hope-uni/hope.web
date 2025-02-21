@@ -515,7 +515,7 @@ const es = {
         modal: {
           title_create: 'Crear categoría',
           ok_text_create: 'Guardar',
-          title_edit: 'Crear',
+          title_edit: 'Editar categoría',
           ok_text_edit: 'Editar',
         },
       },
