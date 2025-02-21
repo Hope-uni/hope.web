@@ -458,6 +458,22 @@ const es = {
     index: {
       title: 'Pictogramas',
       caption: 'Listado de todos los pictogramas.',
+      createButton: 'Crear pictograma',
+      searchPlaceholder: 'Buscar pictogramas...',
+      columns: {
+        image: 'Image',
+        name: 'Nombre',
+        category: 'Categoría',
+      },
+    },
+    actions: {
+      delete: {
+        modal: {
+          title: 'Eliminar pictograma',
+          description:
+            '¿Estás seguro/a de que deseas deshabilitar el pictograma <StrongValue />?',
+        },
+      },
     },
   },
   Category: {
@@ -480,6 +496,15 @@ const es = {
         phase: 'Fase',
       },
     },
+    actions: {
+      delete: {
+        modal: {
+          title: 'Eliminar actividad',
+          description:
+            '¿Estás seguro/a de que deseas elminar la actividad <StrongValue />?',
+        },
+      },
+    },
   },
   Achievement: {
     index: {
@@ -489,8 +514,13 @@ const es = {
   },
   Role: {
     index: {
-      title: 'Logros',
-      caption: 'Listado de todos los logros.',
+      title: 'Roles',
+      caption: 'Listado de todos los Roles.',
+      searchPlaceholder: 'Buscar rol, permiso...',
+      columns: {
+        name: 'Nombre',
+        permission: 'Permisos',
+      },
     },
     catalog: {
       patient: 'Paciente',
@@ -621,6 +651,7 @@ const es = {
       },
     },
     not_asignment: 'Sin asignar',
+    uncategorized: 'Sin categoría',
     modals: {
       delete: {
         title: 'Deshabilitar {{entity}}',

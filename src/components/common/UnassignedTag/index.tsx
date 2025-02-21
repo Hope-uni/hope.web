@@ -1,10 +1,18 @@
 import { Tag } from 'antd';
 import { useTranslation } from 'react-i18next';
 
-const UnassignedTag = () => {
+interface Props {
+  customLabel?: string;
+}
+
+const UnassignedTag = ({ customLabel }: Props) => {
   const { t } = useTranslation();
 
-  return <Tag className="tag-not-assignment">{t('common.not_asignment')}</Tag>;
+  return (
+    <Tag className="tag-not-assignment">
+      {customLabel || t('common.not_asignment')}
+    </Tag>
+  );
 };
 
 export default UnassignedTag;

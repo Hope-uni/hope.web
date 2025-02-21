@@ -751,6 +751,7 @@ label.ant-form-item-required {
 /*
 ** TAGS */
 .ant-tag{ 
+    text-align: center;
 
     &.tag-role{
         border-radius: 20px;
@@ -783,6 +784,14 @@ label.ant-form-item-required {
         border: 1px solid  $grey-dark;
         color: $grey-dark;
         font-weight: 500;
+    }
+
+    &.tag-permission{
+        border-radius: 20px;
+        background-color: #FFEDE5;
+        border: 1px solid  $secondary-color;
+        font-weight: 500;
+        margin: 0;
     }
     
 }

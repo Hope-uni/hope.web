@@ -1,23 +1,18 @@
 'use client';
 
-import { useActivityColumns } from '@/components/activity/list/ActivityColumn';
+import { useRoleColumns } from '@/components/role/list/RoleColumn';
 import WrapperTable from '@/components/table/Wrappertable';
-import { useFetchListActivitiesQuery } from '@/lib/queries/activity';
+import { useFetchListRoleQuery } from '@/lib/queries/role';
 import { useTableStore } from '@/lib/store/table';
 import { E_ActionKeyTable } from '@/models/types/Table.d';
-import { message, Space } from 'antd';
+import { Space, message } from 'antd';
 import { useTranslation } from 'react-i18next';
 
-export default function PatientIndex() {
+export default function RoleIndex() {
   const { t } = useTranslation();
-  const [columns] = useActivityColumns();
-  const { searching, paginationTable, dispatch } = useTableStore();
-  const { data, isLoading, isRefetching } = useFetchListActivitiesQuery({
-    paginate: {
-      page: paginationTable?.page,
-      size: paginationTable?.size,
-    },
-  });
+  const [columns] = useRoleColumns();
+  const { searching, dispatch } = useTableStore();
+  const { data, isLoading, isRefetching } = useFetchListRoleQuery();
 
   const handleSearch = () => {
     dispatch({ type: E_ActionKeyTable.CLEAR_SELECTED });
@@ -34,10 +29,11 @@ export default function PatientIndex() {
           searchProps={{
             onSearch: handleSearch,
             searching: searching,
-            placeholder: t('Activity.index.searchPlaceholder'),
+            placeholder: t('Role.index.searchPlaceholder'),
           }}
           loading={isLoading}
           fetching={isRefetching}
+          pagination={false}
         />
       </Space>
     </>

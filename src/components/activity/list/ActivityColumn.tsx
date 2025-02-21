@@ -1,17 +1,14 @@
-import React, { useCallback } from 'react';
+import { SingleActivity } from '@/models/schema';
+import { addResponsiveProperty } from '@/utils/table';
 import { TableProps } from 'antd';
-import { Activity } from '@/models/schema';
-import PopupActions from '@/components/table/PopupActions';
 import { useTranslation } from 'react-i18next';
+import ActionsActions from './ActivityActions';
+import ActivityRowCardMobile from './ActivityRowCardMobile';
 
 export const useActivityColumns = () => {
   const { t } = useTranslation();
 
-  const handleEdit = useCallback((id: number) => {
-    //TODO se abrirá un modal para editar
-  }, []);
-
-  const columns: TableProps<Activity>['columns'] = [
+  const columns: TableProps<SingleActivity>['columns'] = [
     {
       title: t('Activity.index.columns.name'),
       dataIndex: 'name',
@@ -27,19 +24,24 @@ export const useActivityColumns = () => {
       title: t('Activity.index.columns.assignments'),
       dataIndex: 'assignments',
       align: 'center',
-      width: '150px',
+      width: '130px',
+      render: (_, { assignments }) => {
+        return <span>{assignments?.length || 0}</span>;
+      },
     },
     {
       title: t('Activity.index.columns.points'),
-      dataIndex: 'points',
+      dataIndex: 'satisfactoryPoints',
       align: 'center',
-      width: '150px',
+      width: '100px',
     },
     {
       title: t('Activity.index.columns.phase'),
-      dataIndex: 'teaPhase',
+      dataIndex: 'phase',
       align: 'center',
-      width: '150px',
+      render: (_, { phase }) => {
+        return <span>{phase.name}</span>;
+      },
     },
     {
       title: '',
@@ -47,18 +49,19 @@ export const useActivityColumns = () => {
       align: 'center',
       width: '60px',
       className: 'td-actions',
-      render: (_, { id }) => {
-        return (
-          <PopupActions
-            id={id}
-            actions={['edit', 'delete']}
-            route="activities"
-            onEdit={() => handleEdit(id)}
-          />
-        );
+      render: (_, activity) => {
+        return <ActionsActions activity={activity} />;
+      },
+    },
+    {
+      title: 'rowCardMobile',
+      dataIndex: 'mobile',
+      className: 'table-col-mobile',
+      render: (_, activity) => {
+        return <ActivityRowCardMobile activity={activity} />;
       },
     },
   ];
 
-  return [columns];
+  return [addResponsiveProperty(columns)];
 };
