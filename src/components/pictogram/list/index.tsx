@@ -1,18 +1,18 @@
 'use client';
 
-import { useActivityColumns } from '@/components/activity/list/ActivityColumn';
+import { usePictogramColumns } from '@/components/pictogram/list/PictogramColumns';
 import WrapperTable from '@/components/table/Wrappertable';
-import { useFetchListActivitiesQuery } from '@/lib/queries/activity';
+import { useFetchListPictogramsQuery } from '@/lib/queries/pictogram';
 import { useTableStore } from '@/lib/store/table';
 import { E_ActionKeyTable } from '@/models/types/Table.d';
-import { message, Space } from 'antd';
+import { Space, message } from 'antd';
 import { useTranslation } from 'react-i18next';
 
-export default function PatientIndex() {
+export default function PictogramsIndex() {
   const { t } = useTranslation();
-  const [columns] = useActivityColumns();
+  const [columns] = usePictogramColumns();
   const { searching, paginationTable, dispatch } = useTableStore();
-  const { data, isLoading, isRefetching } = useFetchListActivitiesQuery({
+  const { data, isLoading, isRefetching } = useFetchListPictogramsQuery({
     paginate: {
       page: paginationTable?.page,
       size: paginationTable?.size,
@@ -34,7 +34,7 @@ export default function PatientIndex() {
           searchProps={{
             onSearch: handleSearch,
             searching: searching,
-            placeholder: t('Activity.index.searchPlaceholder'),
+            placeholder: t('Pictogram.index.searchPlaceholder'),
           }}
           loading={isLoading}
           fetching={isRefetching}

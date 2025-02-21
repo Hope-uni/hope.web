@@ -458,6 +458,22 @@ const es = {
     index: {
       title: 'Pictogramas',
       caption: 'Listado de todos los pictogramas.',
+      createButton: 'Crear pictograma',
+      searchPlaceholder: 'Buscar pictogramas...',
+      columns: {
+        image: 'Image',
+        name: 'Nombre',
+        category: 'Categoría',
+      },
+    },
+    actions: {
+      delete: {
+        modal: {
+          title: 'Eliminar pictograma',
+          description:
+            '¿Estás seguro/a de que deseas deshabilitar el pictograma <StrongValue />?',
+        },
+      },
     },
   },
   Category: {
@@ -478,6 +494,15 @@ const es = {
         assignments: 'Asignaciones',
         points: 'Puntos',
         phase: 'Fase',
+      },
+    },
+    actions: {
+      delete: {
+        modal: {
+          title: 'Eliminar actividad',
+          description:
+            '¿Estás seguro/a de que deseas elminar la actividad <StrongValue />?',
+        },
       },
     },
   },
@@ -626,6 +651,7 @@ const es = {
       },
     },
     not_asignment: 'Sin asignar',
+    uncategorized: 'Sin categoría',
     modals: {
       delete: {
         title: 'Deshabilitar {{entity}}',
