@@ -2,7 +2,7 @@
 
 import { Show } from '@/components/Show';
 import useStepFormUser from '@/hooks/useStepFormUser';
-import { useFormCreateUserStore } from '@/lib/store/formCreateUser';
+import { useFormCreateUserStore } from '@/lib/store/forms/formCreateUser';
 import {
   CreateUserSteps,
   FormCreateUser,

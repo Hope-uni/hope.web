@@ -229,7 +229,7 @@
 
 /*
 ** FORM CREATE USER */
-#create_user_form_antd{
+#create_user_form_antd, #phase_form_antd{
 
     .ant-radio-group{
         @extend .row-start;
@@ -255,6 +255,10 @@
                 color: $white;
             }
         }
+    }
+
+    .ant-input-number{
+        width: 100%;
     }
 }
 
@@ -726,6 +730,7 @@ label.ant-form-item-required {
         font-size: 14px;
         font-weight: bold;
         color: $black;
+        align-items: center;
     }
 }
 
@@ -891,7 +896,6 @@ label.ant-form-item-required {
         }
     }
 }
-
 
 /*
 ** FLEX */

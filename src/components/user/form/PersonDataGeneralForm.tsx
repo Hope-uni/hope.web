@@ -1,7 +1,7 @@
 import { Show } from '@/components/Show';
 import { Genders } from '@/constants/Forms';
 import { UserRules } from '@/constants/rules';
-import { useFormCreateUserStore } from '@/lib/store/formCreateUser';
+import { useFormCreateUserStore } from '@/lib/store/forms/formCreateUser';
 import styles from '@/styles/modules/user.module.scss';
 import { Col, Form, FormInstance, Input, Row, Select } from 'antd';
 import TextArea from 'antd/es/input/TextArea';

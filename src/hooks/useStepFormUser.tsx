@@ -3,7 +3,7 @@ import PersonDataSpecificForm from '@/components/user/form/PersonDataSpecificFor
 import UserDataForm from '@/components/user/form/UserDataForm';
 import { StepFormInterface } from '@/constants/Forms';
 import { ROLES } from '@/constants/Role';
-import { useFormCreateUserStore } from '@/lib/store/formCreateUser';
+import { useFormCreateUserStore } from '@/lib/store/forms/formCreateUser';
 import { FormCreateUser, FormCreateUserError } from '@/models/schema';
 import { ParseToErrorAntd } from '@/services/user/helpers';
 import { getStepsForm } from '@/utils/createUserForm';
