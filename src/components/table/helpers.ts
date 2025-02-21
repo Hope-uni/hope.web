@@ -3,5 +3,6 @@ export type RenderModeActionTypes =
   | 'delete'
   | 'next_phase'
   | 'add_observation'
+  | 'add_category'
   | 'assign_achievement'
   | 'assign_patient';

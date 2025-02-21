@@ -480,6 +480,45 @@ const es = {
     index: {
       title: 'Categorías',
       caption: 'Listado de todos las categorias de pictogramas.',
+      createButton: 'Crear categoría',
+      searchPlaceholder: 'Buscar categoría...',
+      columns: {
+        icon: 'Icono',
+        name: 'Descripción',
+      },
+    },
+    fields: {
+      name: {
+        label: 'Nombre',
+        placeholder: 'Nombre de la categoría',
+        rules: {
+          required: 'Nombre es requerido',
+        },
+      },
+      icon: {
+        label: 'Imagen',
+        placeholder: 'Imagen de la cateogría',
+        rules: {
+          required: 'Imagen es requerida',
+        },
+      },
+    },
+    actions: {
+      delete: {
+        modal: {
+          title: 'Eliminar categoría',
+          description:
+            '¿Estás seguro/a de que deseas deshabilitar la categoría <StrongValue />?',
+        },
+      },
+      form: {
+        modal: {
+          title_create: 'Crear categoría',
+          ok_text_create: 'Guardar',
+          title_edit: 'Crear',
+          ok_text_edit: 'Editar',
+        },
+      },
     },
   },
   Activity: {
