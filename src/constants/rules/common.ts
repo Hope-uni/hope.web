@@ -12,6 +12,7 @@ export const RegexRules = {
     startWith_landline: /^2/,
     length: /^\d{8}$/,
   },
+  positiveInteger: /^[1-9]\d*$/,
 };
 
 const validatorPhone = (value: any, type: 'mobile' | 'landline') => {

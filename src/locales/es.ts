@@ -535,6 +535,50 @@ const es = {
       female: 'Femenino',
     },
   },
+  Phase: {
+    index: {
+      title: 'Fases',
+      caption: 'Lista de todos las fases.',
+      searchPlaceholder: 'Buscar fases...',
+      columns: {
+        name: 'Nombre',
+        description: 'Descripción',
+        scoreActivities: 'Act. requeridas',
+      },
+    },
+    actions: {
+      edit: {
+        modal: {
+          title: 'Editar Fase',
+          ok_text: 'editar',
+        },
+      },
+    },
+    fields: {
+      name: {
+        label: 'Nombre',
+        placeholder: 'Ingrese el nombre de la phase',
+        rules: {
+          required: 'Nombre es requerido',
+        },
+      },
+      description: {
+        label: 'Descripción',
+        placeholder: 'Ingrese la description de la phase',
+        rules: {
+          required: 'Descripción es requerido',
+        },
+      },
+      scoreActivities: {
+        label: 'Act. requeridas',
+        placeholder: 'Ingrese la cantidad de actividades requeridas',
+        rules: {
+          required: 'Act. requeridas es requerido',
+          integer: 'Act. requeridas debe ser un entero positivo',
+        },
+      },
+    },
+  },
   Grades: {
     catalog: {
       grade_1: 'Grado 1',
@@ -667,6 +711,7 @@ const es = {
     common: {
       id_not_provided: 'Id no proporcionado',
       unknow_error: 'Error desconocido',
+      not_changed_detect: 'No se detectaron cambios',
     },
     message_error: {
       title: '¡Lo sentimos, algo ha salido mal!',

@@ -19,8 +19,12 @@ export const API = {
     Index: '/therapist',
   },
   PECS: {
-    ListPhase: '/phase',
-    ListDegree: '/teaDegree',
+    Phase: {
+      index: '/phase',
+    },
+    Degree: {
+      index: '/teaDegree',
+    },
   },
   Activity: {
     Index: 'activity',
