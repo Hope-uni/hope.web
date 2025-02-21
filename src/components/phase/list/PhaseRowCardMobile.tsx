@@ -2,7 +2,7 @@ import { TEAPhase } from '@/models/schema';
 import styles from '@/styles/modules/pecs.module.scss';
 import { Descriptions, Flex } from 'antd';
 import { useTranslation } from 'react-i18next';
-import PhaseActions from './PhaseActions';
+import PhaseActions from '@/components/phase/list/PhaseActions';
 
 interface Props {
   phase: TEAPhase;
