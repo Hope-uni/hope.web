@@ -479,7 +479,7 @@ const es = {
   Category: {
     index: {
       title: 'Categorías',
-      caption: 'Listado de todos las categorias de pictogramas.',
+      caption: 'Listado de todos las categorías de pictogramas.',
       createButton: 'Crear categoría',
       searchPlaceholder: 'Buscar categoría...',
       columns: {
