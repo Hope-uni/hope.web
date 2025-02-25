@@ -1,6 +1,6 @@
 import { API_HOPE_PROTECTED, defaultPayload } from '@/config';
 import { API } from '@/constants/ApiUrls';
-import { Pictogram } from '@/models/schema';
+import { SinglePictogram } from '@/models/schema';
 import { API_PAYLOAD, API_RESPONSE, API_SINGLE_RESPONSE } from '@/models/types';
 import { axiosErrorHandler } from '@/utils/axios';
 
@@ -8,12 +8,11 @@ export const ListPictogramsService = async (
   payload: API_PAYLOAD = defaultPayload,
 ) => {
   try {
-    const response = await API_HOPE_PROTECTED.get<API_RESPONSE<Pictogram[]>>(
-      API.Pictogram.Index,
-      {
-        params: payload.paginate,
-      },
-    );
+    const response = await API_HOPE_PROTECTED.get<
+      API_RESPONSE<SinglePictogram[]>
+    >(API.Pictogram.Index, {
+      params: payload.paginate,
+    });
 
     return response.data;
   } catch (error) {
