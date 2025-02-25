@@ -21,10 +21,13 @@ export default function PhaseForm({ form }: Props) {
       </Form.Item>
       <Form.Item
         name="description"
-        label={t('User.fields.address.label')}
+        label={t('Phase.fields.description.label')}
         rules={PhaseRules.description}
       >
-        <TextArea rows={4} placeholder={t('User.fields.address.placeholder')} />
+        <TextArea
+          rows={4}
+          placeholder={t('Phase.fields.description.placeholder')}
+        />
       </Form.Item>
       <Form.Item
         name="scoreActivities"

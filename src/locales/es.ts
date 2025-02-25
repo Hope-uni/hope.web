@@ -557,14 +557,14 @@ const es = {
     fields: {
       name: {
         label: 'Nombre',
-        placeholder: 'Ingrese el nombre de la phase',
+        placeholder: 'Ingrese el nombre de la fase',
         rules: {
           required: 'Nombre es requerido',
         },
       },
       description: {
         label: 'Descripción',
-        placeholder: 'Ingrese la description de la phase',
+        placeholder: 'Ingrese la description de la fase',
         rules: {
           required: 'Descripción es requerido',
         },
