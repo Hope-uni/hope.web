@@ -16,7 +16,7 @@ export const ListPictogramsService = async (
 
     return response.data;
   } catch (error) {
-    throw axiosErrorHandler(error);
+    return axiosErrorHandler(error);
   }
 };
 
@@ -28,6 +28,6 @@ export const DeletePictogramService = async (id: string) => {
 
     return response.data;
   } catch (error) {
-    throw axiosErrorHandler(error);
+    return axiosErrorHandler(error);
   }
 };

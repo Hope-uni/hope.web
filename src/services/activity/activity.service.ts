@@ -16,7 +16,7 @@ export const ListActivitiesService = async (
 
     return response.data;
   } catch (error) {
-    throw axiosErrorHandler(error);
+    return axiosErrorHandler(error);
   }
 };
 
@@ -28,6 +28,6 @@ export const DeleteActivityService = async (id: string) => {
 
     return response.data;
   } catch (error) {
-    throw axiosErrorHandler(error);
+    return axiosErrorHandler(error);
   }
 };
