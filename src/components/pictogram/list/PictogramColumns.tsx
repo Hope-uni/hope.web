@@ -1,5 +1,5 @@
 import { UnassignedTag } from '@/components/common';
-import { Pictogram } from '@/models/schema';
+import { SinglePictogram } from '@/models/schema';
 import { addResponsiveProperty } from '@/utils/table';
 import { Image, TableProps, Tag } from 'antd';
 import { useTranslation } from 'react-i18next';
@@ -9,7 +9,7 @@ import PictogramRowCardMobile from './PictogramRowCardMobile';
 export const usePictogramColumns = () => {
   const { t } = useTranslation();
 
-  const columns: TableProps<Pictogram>['columns'] = [
+  const columns: TableProps<SinglePictogram>['columns'] = [
     {
       title: t('Pictogram.index.columns.image'),
       dataIndex: 'imageUrl',
