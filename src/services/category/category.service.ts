@@ -17,7 +17,7 @@ export const ListCategoryPictogramService = async (
 
     return response.data;
   } catch (error) {
-    throw axiosErrorHandler(error);
+    return axiosErrorHandler(error);
   }
 };
 
@@ -33,7 +33,7 @@ export const CreateCategoryPictogramService = async (
 
     return response.data;
   } catch (error) {
-    throw axiosErrorHandler(error);
+    return axiosErrorHandler(error);
   }
 };
 
@@ -51,7 +51,7 @@ export const EditCategoryPictogramService = async (
 
     return response.data;
   } catch (error) {
-    throw axiosErrorHandler(error);
+    return axiosErrorHandler(error);
   }
 };
 
@@ -63,6 +63,6 @@ export const DeleteCategoryPictogramService = async (id: string) => {
 
     return response.data;
   } catch (error) {
-    throw axiosErrorHandler(error);
+    return axiosErrorHandler(error);
   }
 };
