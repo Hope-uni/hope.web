@@ -12,6 +12,7 @@ interface Props {
   caption?: string;
   label?: string;
   routeLink?: string;
+  customBtn?: JSX.Element;
 }
 
 export const HeaderContent = ({
@@ -19,6 +20,7 @@ export const HeaderContent = ({
   caption = '',
   label = '',
   routeLink,
+  customBtn,
 }: Props) => {
   return (
     <Flex
@@ -43,6 +45,7 @@ export const HeaderContent = ({
           </Button>
         </Link>
       )}
+      {customBtn && customBtn}
     </Flex>
   );
 };

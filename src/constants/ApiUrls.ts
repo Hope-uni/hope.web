@@ -32,4 +32,7 @@ export const API = {
   Pictogram: {
     Index: 'pictogram',
   },
+  CategoryPictogram: {
+    Index: 'category',
+  },
 };

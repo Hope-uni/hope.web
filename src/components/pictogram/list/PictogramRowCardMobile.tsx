@@ -1,13 +1,13 @@
 import { UnassignedTag } from '@/components/common';
-import { Pictogram } from '@/models/schema';
+import { SinglePictogram } from '@/models/schema';
 import styles from '@/styles/modules/user.module.scss';
 import { Flex, Tag } from 'antd';
 import { useTranslation } from 'react-i18next';
-import PictogramItem from '../PictogramItem';
-import PictogramActions from './PictogramActions';
+import PictogramItem from '@/components/pictogram/PictogramItem';
+import PictogramActions from '@/components/pictogram/list/PictogramActions';
 
 interface Props {
-  pictogram: Pictogram;
+  pictogram: SinglePictogram;
 }
 
 const PictogramRowCardMobile = ({ pictogram }: Props) => {

@@ -4,7 +4,7 @@ import {
   CurrentActivitySchema,
   ObservationSchema,
   PersonSchema,
-  PictogramSchema,
+  SinglePictogramSchema,
   SingleActivitySchema,
   TEAGradeSchema,
   TEAPhaseSchema,
@@ -60,7 +60,7 @@ export const DetailPatientSchema = z.object({
   therapist: SingleTutorTherapistSchema,
   currentActivity: CurrentActivitySchema.nullable(),
   activities: z.array(SingleActivitySchema).nullable(),
-  pictograms: z.array(PictogramSchema).nullable(),
+  pictograms: z.array(SinglePictogramSchema).nullable(),
   achievements: z.array(AchievementSchema),
 });
 export type DetailPatient = z.infer<typeof DetailPatientSchema>;

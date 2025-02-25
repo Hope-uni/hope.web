@@ -1,12 +1,12 @@
 import PopupActions from '@/components/table/PopupActions';
-import { Pictogram } from '@/models/schema';
+import { SinglePictogram } from '@/models/schema';
 import { ActionType } from '@/models/types';
 import { DeletePictogramService } from '@/services/pictogram/pictogram.service';
 import { useCallback } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 
 interface Props {
-  pictogram: Pictogram;
+  pictogram: SinglePictogram;
   actions?: Array<ActionType>;
   classWrapper?: string;
 }

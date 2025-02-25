@@ -6,7 +6,7 @@ import PersonDataSpecificForm from '@/components/user/form/PersonDataSpecificFor
 import UserDataForm from '@/components/user/form/UserDataForm';
 import useStepFormUser from '@/hooks/useStepFormUser';
 import { useOverlayStore } from '@/lib/store';
-import { useFormCreateUserStore } from '@/lib/store/formCreateUser';
+import { useFormCreateUserStore } from '@/lib/store/forms/formCreateUser';
 import { FormCreateUserError, FormCreateUserSchema } from '@/models/schema';
 import { CreateUserHelper, CurrentRoleType } from '@/services/user/helpers';
 import styles from '@/styles/modules/user.module.scss';
