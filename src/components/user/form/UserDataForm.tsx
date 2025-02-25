@@ -1,6 +1,6 @@
 import { Show } from '@/components/Show';
 import { UserRules } from '@/constants/rules';
-import { useFormCreateUserStore } from '@/lib/store/formCreateUser';
+import { useFormCreateUserStore } from '@/lib/store/forms/formCreateUser';
 import styles from '@/styles/modules/user.module.scss';
 import { UserOutlined } from '@ant-design/icons';
 import {

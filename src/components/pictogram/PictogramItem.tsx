@@ -1,6 +1,6 @@
 'use client';
 
-import { Pictogram } from '@/models/schema/Pictogram';
+import { SinglePictogram } from '@/models/schema/Pictogram';
 import styles from '@/styles/modules/pictogram.module.scss';
 import { Flex, Typography } from 'antd';
 import Image from 'next/image';
@@ -8,7 +8,7 @@ import Image from 'next/image';
 const { Text } = Typography;
 
 interface Props {
-  pictogram: Pictogram;
+  pictogram: SinglePictogram;
 }
 
 export default function PictogramItem({ pictogram }: Props) {
