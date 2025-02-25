@@ -1,6 +1,6 @@
-import React, { useMemo } from 'react';
 import { Flex, Skeleton, Space, Table } from 'antd';
-import { useUserColumns } from '../user/list/UserColumn';
+import { TableProps } from 'antd/lib';
+import { useMemo } from 'react';
 
 const { Input, Button } = Skeleton;
 
@@ -8,15 +8,15 @@ interface Props {
   size?: number;
   colSpan: number;
   fetching?: boolean;
+  columns?: TableProps<unknown>['columns'];
 }
 
 export default function SkeletonTable({
   size = 10,
   colSpan,
   fetching = false,
+  columns,
 }: Props) {
-  const [columns] = useUserColumns();
-
   const rows = useMemo(() => (size <= 10 ? size : 10), [size]);
 
   return (

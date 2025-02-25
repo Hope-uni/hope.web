@@ -1,6 +1,7 @@
 'use client';
 
 import { HeaderContent } from '@/components/layouts/partials/HeaderContent';
+import RoleIndex from '@/components/role/list';
 import { Space } from 'antd';
 import { useTranslation } from 'react-i18next';
 
@@ -14,6 +15,7 @@ export default function TherapistsPage() {
           caption={t('Role.index.caption')}
         />
       </Space>
+      <RoleIndex />
     </>
   );
 }

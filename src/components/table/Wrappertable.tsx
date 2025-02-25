@@ -136,6 +136,7 @@ function WrapperTable({
           size={paginationTable.size}
           colSpan={cols ? (selection ? cols.length + 1 : cols.length) : 1}
           fetching={!loading && fetching}
+          columns={cols} //TODO This implementation needs improvement
         />
       )}
     </div>

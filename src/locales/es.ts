@@ -458,12 +458,67 @@ const es = {
     index: {
       title: 'Pictogramas',
       caption: 'Listado de todos los pictogramas.',
+      createButton: 'Crear pictograma',
+      searchPlaceholder: 'Buscar pictogramas...',
+      columns: {
+        image: 'Image',
+        name: 'Nombre',
+        category: 'Categoría',
+      },
+    },
+    actions: {
+      delete: {
+        modal: {
+          title: 'Eliminar pictograma',
+          description:
+            '¿Estás seguro/a de que deseas deshabilitar el pictograma <StrongValue />?',
+        },
+      },
     },
   },
   Category: {
     index: {
       title: 'Categorías',
-      caption: 'Listado de todos las categorias de pictogramas.',
+      caption: 'Listado de todos las categorías de pictogramas.',
+      createButton: 'Crear categoría',
+      searchPlaceholder: 'Buscar categoría...',
+      columns: {
+        icon: 'Icono',
+        name: 'Descripción',
+      },
+    },
+    fields: {
+      name: {
+        label: 'Nombre',
+        placeholder: 'Nombre de la categoría',
+        rules: {
+          required: 'Nombre es requerido',
+        },
+      },
+      icon: {
+        label: 'Imagen',
+        placeholder: 'Imagen de la cateogría',
+        rules: {
+          required: 'Imagen es requerida',
+        },
+      },
+    },
+    actions: {
+      delete: {
+        modal: {
+          title: 'Eliminar categoría',
+          description:
+            '¿Estás seguro/a de que deseas deshabilitar la categoría <StrongValue />?',
+        },
+      },
+      form: {
+        modal: {
+          title_create: 'Crear categoría',
+          ok_text_create: 'Guardar',
+          title_edit: 'Editar categoría',
+          ok_text_edit: 'Editar',
+        },
+      },
     },
   },
   Activity: {
@@ -480,6 +535,15 @@ const es = {
         phase: 'Fase',
       },
     },
+    actions: {
+      delete: {
+        modal: {
+          title: 'Eliminar actividad',
+          description:
+            '¿Estás seguro/a de que deseas elminar la actividad <StrongValue />?',
+        },
+      },
+    },
   },
   Achievement: {
     index: {
@@ -489,8 +553,13 @@ const es = {
   },
   Role: {
     index: {
-      title: 'Logros',
-      caption: 'Listado de todos los logros.',
+      title: 'Roles',
+      caption: 'Listado de todos los Roles.',
+      searchPlaceholder: 'Buscar rol, permiso...',
+      columns: {
+        name: 'Nombre',
+        permission: 'Permisos',
+      },
     },
     catalog: {
       patient: 'Paciente',
@@ -503,6 +572,50 @@ const es = {
     catalog: {
       masculine: 'Masculino',
       female: 'Femenino',
+    },
+  },
+  Phase: {
+    index: {
+      title: 'Fases',
+      caption: 'Lista de todos las fases.',
+      searchPlaceholder: 'Buscar fases...',
+      columns: {
+        name: 'Nombre',
+        description: 'Descripción',
+        scoreActivities: 'Act. requeridas',
+      },
+    },
+    actions: {
+      edit: {
+        modal: {
+          title: 'Editar Fase',
+          ok_text: 'editar',
+        },
+      },
+    },
+    fields: {
+      name: {
+        label: 'Nombre',
+        placeholder: 'Ingrese el nombre de la fase',
+        rules: {
+          required: 'Nombre es requerido',
+        },
+      },
+      description: {
+        label: 'Descripción',
+        placeholder: 'Ingrese la description de la fase',
+        rules: {
+          required: 'Descripción es requerido',
+        },
+      },
+      scoreActivities: {
+        label: 'Act. requeridas',
+        placeholder: 'Ingrese la cantidad de actividades requeridas',
+        rules: {
+          required: 'Act. requeridas es requerido',
+          integer: 'Act. requeridas debe ser un entero positivo',
+        },
+      },
     },
   },
   Grades: {
@@ -621,6 +734,7 @@ const es = {
       },
     },
     not_asignment: 'Sin asignar',
+    uncategorized: 'Sin categoría',
     modals: {
       delete: {
         title: 'Deshabilitar {{entity}}',
@@ -636,6 +750,7 @@ const es = {
     common: {
       id_not_provided: 'Id no proporcionado',
       unknow_error: 'Error desconocido',
+      not_changed_detect: 'No se detectaron cambios',
     },
     message_error: {
       title: '¡Lo sentimos, algo ha salido mal!',
