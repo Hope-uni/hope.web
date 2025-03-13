@@ -1,6 +1,11 @@
 import { Rule } from 'antd/es/form';
 import i18next from 'i18next';
 
+export const CharacterLimit = {
+  name: 100,
+  descriptions: 255,
+};
+
 export const RegexRules = {
   emailRegex: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
   usernameRegex: /^[a-zA-Z0-9]{3,16}$/,
@@ -13,6 +18,7 @@ export const RegexRules = {
     length: /^\d{8}$/,
   },
   positiveInteger: /^[1-9]\d*$/,
+  isMobile: /Mobi|Android|iPhone|iPad|iPod|Windows Phone|BlackBerry/i,
 };
 
 const validatorPhone = (value: any, type: 'mobile' | 'landline') => {
@@ -121,4 +127,8 @@ export const CommonRules = {
       },
     },
   ] as Rule[],
+};
+
+export const validateDeviceUserIsMobile = () => {
+  return RegexRules.isMobile.test(navigator.userAgent);
 };

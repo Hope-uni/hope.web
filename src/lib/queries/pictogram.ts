@@ -5,7 +5,7 @@ import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
 export const useFetchListCategoryPictogramsQuery = (payload?: API_PAYLOAD) => {
   return useQuery({
-    queryKey: ['list-category-pictograms'],
+    queryKey: ['list-category-pictograms', payload],
     queryFn: () => ListCategoryPictogramService(payload),
     placeholderData: keepPreviousData,
   });
@@ -13,7 +13,7 @@ export const useFetchListCategoryPictogramsQuery = (payload?: API_PAYLOAD) => {
 
 export const useFetchListPictogramsQuery = (payload?: API_PAYLOAD) => {
   return useQuery({
-    queryKey: ['list-pictograms'],
+    queryKey: ['list-pictograms', payload],
     queryFn: () => ListPictogramsService(payload),
     placeholderData: keepPreviousData,
   });

@@ -525,7 +525,7 @@ const es = {
     index: {
       title: 'Actividades',
       caption: 'Listado de todos las actividades.',
-      createButton: 'Crear tutor',
+      createButton: 'Crear actividad',
       searchPlaceholder: 'Buscar actividades...',
       columns: {
         name: 'Nombre',
@@ -535,12 +535,81 @@ const es = {
         phase: 'Fase',
       },
     },
+    form: {
+      feedback: {
+        activity_not_found:
+          'La actividad solicitado no existe o no está registrada.',
+      },
+    },
+    fields: {
+      name: {
+        label: 'Nombre',
+        placeholder: 'Nombre de la actividad',
+        rules: {
+          required: 'Nombre es requerido',
+          len: 'Nombre de la actividad debe contener máximo 30 caracteres',
+        },
+      },
+      description: {
+        label: 'Descripción',
+        placeholder: 'Descripción corta de la actividad a realizar',
+        rules: {
+          required: 'Descripción es requerido',
+        },
+      },
+      satisfactoryPoints: {
+        label: 'Puntos',
+        placeholder: 'Puntos para pasar de fase',
+        rules: {
+          required: 'Puntos es requerido',
+          max: 'Puntos no debe ser mayor a {{points}}',
+        },
+      },
+      phase: {
+        label: 'Phase',
+        placeholder: 'Fase de la actividad',
+        rules: {
+          required: 'Fase es requerido',
+        },
+      },
+      pictogramSentence: {
+        label: 'Solución de la actividad',
+        placeholderSearch: 'Buscar pictogramas por nombre...',
+        labelPreviewSentence: 'Oración solución',
+        captionSelectPictograms:
+          '<bold>Selecciona</bold> los pictogramas haciendo <bold>clic</bold> en ellos para construir la <bold>solución</bold>. La oración aparecerá en la parte <bold>inferior</bold>.',
+        captionPreviewSentence:
+          'Reorganiza los pictogramas a tu gusto, moviéndolos en el orden que prefieras.',
+        captionOverlayPictogramDesktop:
+          '*Si el nombre del pictograma no se ve completo, pasa el cursor sobre el icono para ver el nombre completo.',
+        captionOverlayPictogramMobile:
+          '*Si el nombre del pictograma no se ve completo, mantén presionado el icono para ver el nombre completo.',
+        rules: {
+          required: 'Solución es requerido',
+          min: 'Debe seleccionar al menos un pictograma',
+          max: 'La solución no debe contener más de {{limit}} pictogramas',
+        },
+      },
+    },
     actions: {
+      detail: {
+        modal: {
+          title: 'Detalle actividad',
+        },
+      },
       delete: {
         modal: {
           title: 'Eliminar actividad',
           description:
             '¿Estás seguro/a de que deseas elminar la actividad <StrongValue />?',
+        },
+      },
+      form: {
+        modal: {
+          title_create: 'Crear actividad',
+          ok_text_create: 'Guardar',
+          title_edit: 'Editar actividad',
+          ok_text_edit: 'Editar',
         },
       },
     },
@@ -731,6 +800,10 @@ const es = {
             startWith: 'debe iniciar con el número 2',
           },
         },
+      },
+      rules: {
+        max_len_100: '{{field}} debe tener como máximo 100 caracteres',
+        max_len_255: '{{field}} debe tener como máximo 255 caracteres',
       },
     },
     not_asignment: 'Sin asignar',

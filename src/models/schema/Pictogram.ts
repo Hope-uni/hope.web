@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 export const PayloadCategoryPictogramSchema = z.object({
   name: z.string(),
-  icon: z.string(),
+  icon: z.string().optional(),
 });
 export type PayloadCategory = z.infer<typeof PayloadCategoryPictogramSchema>;
 export type FormCategoryErrors = Record<
@@ -32,3 +32,10 @@ export const SinglePictogramSchema = PictogramSchema.extend({
   category: CategoryPictogramSchema,
 });
 export type SinglePictogram = z.infer<typeof SinglePictogramSchema>;
+
+export const SinglePictogramWithOutCategorySchema = PictogramSchema.extend({
+  id: z.number(),
+});
+export type SinglePictogramWithOutCategory = z.infer<
+  typeof SinglePictogramWithOutCategorySchema
+>;
