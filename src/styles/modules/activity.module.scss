@@ -20,3 +20,127 @@
     margin: 0;
   }
 }
+
+.pictogram_sentence_wrapper{
+
+  .solution_field_label{
+    font-size: 16px;
+    color: $primary-color-text;
+    font-weight: 400;
+  }
+
+  .pictograms_slider{
+    background-color: $grey-2;
+    border: 1px solid $grey-dark;
+    border-radius: 8px;
+    padding: 10px 30px;
+    margin-top: 10px;
+
+    .caption_select_pictogram{
+      @extend .row-start;
+      gap: 5px;
+      margin-bottom: 20px;
+
+      svg{
+        margin-top: 1px;
+        fill: $primary-color;
+        font-size: 18px;
+      }
+
+      .caption_text{
+        font-size: 16px;
+        color: $primary-color-text;
+      }
+    }
+
+    .caption_overlay_pictogram{
+      display: block;
+      font-size: 14px;
+      color: $grey-dark;
+      margin-top: 8px;
+      font-style: italic;
+    }
+
+  }
+
+  .container_selected_pictogram{
+    position: relative;
+
+    .btn_unselect_pictogram{
+      @extend .col-center;
+      position: absolute;
+      padding: 3px;
+      margin: 0;
+      background-color: $error;
+      border: none;
+      width: 32px;
+      height: 32px;
+      top: 0;
+      right: 0;
+      z-index: 999;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+
+    .btn_unselect_pictogram_from_list {
+      @extend .btn_unselect_pictogram;
+      width: 25px;
+      height: 25px;
+      top: -5px;
+      right: -5px;
+    }
+  }
+}
+
+.solution_preview {
+  margin-top: 20px;
+
+  .solution_preview_label{
+    font-size: 16px;
+    color: $primary-color-text;
+    font-weight: 400;
+  }
+  .solution_preview_caption{
+    font-size: 14px;
+    color: $grey-dark;
+    font-weight: 200;
+  }
+
+  .solution_preview_pictograms{
+    @extend .row-start;
+    background-color: $success_op;
+    border: 1px solid $success;
+    padding: 20px 5px;
+    margin-top: 10px;
+    gap: 8px;
+    overflow-y: auto;
+  }
+
+  .solution_preview_text{
+    display: block;
+    font-size: 16px;
+    color: $primary-color-text;
+    margin: 10px 0 0;
+  }
+}
+
+.detail_activity{
+  .text_name, .solution_preview_label{
+    color: $primary-color-text;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0;
+  }
+  .text_description{
+    color: $grey-dark;
+    font-size: 14px;
+    margin: 0;
+  }
+
+  .solution_text {
+    display: block;
+    color: $grey-dark;
+    margin-top: 20px;
+    font-size: 18px;
+  }
+}

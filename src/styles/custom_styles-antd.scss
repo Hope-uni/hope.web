@@ -33,7 +33,7 @@
                     font-size: 16px;
                     font-style: normal;
                     font-weight: 400;
-                    line-height: 18px;
+                    line-height: normal;
                     margin-inline-start: 12px;
                 }
                 
@@ -66,7 +66,7 @@
                         font-size: 16px;
                         font-style: normal;
                         font-weight: 400;
-                        line-height: 18px;
+                        line-height: normal;
                     }
 
                     &.ant-menu-item-selected{
@@ -229,7 +229,7 @@
 
 /*
 ** FORM CREATE USER */
-#create_user_form_antd, #phase_form_antd{
+#create_user_form_antd, #phase_form_antd, #activity_form_antd{
 
     .ant-radio-group{
         @extend .row-start;
@@ -277,6 +277,13 @@ label.ant-form-item-required {
     .ant-input:not(textarea){
         height: 35px;
     }
+
+    .ant-form-item.input-hidden{
+        .ant-form-item-control-input{
+            min-height: unset;
+        }
+    }
+    
 }
 
 /*
@@ -789,6 +796,7 @@ label.ant-form-item-required {
         border: 1px solid  $grey-dark;
         color: $grey-dark;
         font-weight: 500;
+        font-size: 16px;
     }
 
     &.tag-permission{
@@ -821,6 +829,8 @@ label.ant-form-item-required {
 /*
 ** MODAL DELETE */
 .ant-modal-wrap.primary{
+    padding: 20px;
+
     .ant-modal{
 
         .primary_modal_close_icon{
@@ -1084,5 +1094,11 @@ body .ant-flex {
         .ant-tabs-content-holder{
             padding: 10px;
         }
+    }
+
+    /*
+    ** MODAL DELETE */
+    .ant-modal-wrap.primary{
+        padding: 0;
     }
 }

@@ -1,0 +1,28 @@
+#splide-pictograms.splide{
+
+  .splide__arrows{
+    width: 100%;
+    .splide__arrow{
+      @extend .col-center;
+      position: absolute;
+      padding: 0;
+      margin: 0;
+      background-color: transparent;
+      border: none;
+      top: calc(50% - 12px);
+
+      svg{
+        fill: $primary-color;
+        stroke: $primary-color;
+      }
+
+      &.splide__arrow--prev{
+        left: -25px;
+      }
+
+      &.splide__arrow--next{
+        right: -25px;
+      }
+    }
+  }
+}
