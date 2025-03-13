@@ -466,7 +466,39 @@ const es = {
         category: 'Categoría',
       },
     },
+    form: {},
+    fields: {
+      name: {
+        label: 'Nombre',
+        placeholder: 'Nombre del pictograma',
+        rules: {
+          required: 'Nombre del pictograma es requerido',
+        },
+      },
+      category: {
+        label: 'Categoría',
+        placeholder: 'Seleccione una categoría',
+        rules: {
+          required: 'Categoría es requerido',
+        },
+      },
+      image: {
+        label: 'Imagen',
+        placeholder: 'Imagen',
+        rules: {
+          required: 'Imagen es requerido',
+        },
+      },
+    },
     actions: {
+      form: {
+        modal: {
+          title_create: 'Crear pictograma',
+          ok_text_create: 'Guardar',
+          title_edit: 'Editar pictograma',
+          ok_text_edit: 'Editar',
+        },
+      },
       delete: {
         modal: {
           title: 'Eliminar pictograma',
@@ -802,8 +834,9 @@ const es = {
         },
       },
       rules: {
-        max_len_100: '{{field}} debe tener como máximo 100 caracteres',
-        max_len_255: '{{field}} debe tener como máximo 255 caracteres',
+        max_len: '{{field}} debe tener como máximo {{limit}} caracteres',
+        whitespace: 'No se permiten espacios en blancos',
+        only_spaces_between_words: 'Solo se permite un espacio entre palabras',
       },
     },
     not_asignment: 'Sin asignar',

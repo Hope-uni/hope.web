@@ -19,6 +19,11 @@ export const RegexRules = {
   },
   positiveInteger: /^[1-9]\d*$/,
   isMobile: /Mobi|Android|iPhone|iPad|iPod|Windows Phone|BlackBerry/i,
+  textSpaces: {
+    noDoubleSpaces: /^(?!.*\s{2}).*$/,
+    whitespace: /^[A-Za-z]+(?: [A-Za-z]+)*$/,
+    onlySpaces: /^\s+$/,
+  },
 };
 
 const validatorPhone = (value: any, type: 'mobile' | 'landline') => {
@@ -59,6 +64,20 @@ const validatorPhone = (value: any, type: 'mobile' | 'landline') => {
       new Error(
         `${i18next.t('common.form.fields.phone.rules.base')} ${i18next.t('common.form.fields.phone.rules.length')}`,
       ),
+    );
+  }
+
+  return Promise.resolve();
+};
+
+const validatorWhiteSpaces = (value: any) => {
+  if (RegexRules.textSpaces.onlySpaces.test(value)) {
+    return Promise.reject(i18next.t('common.form.rules.whitespace'));
+  }
+
+  if (value && !RegexRules.textSpaces.noDoubleSpaces.test(value)) {
+    return Promise.reject(
+      i18next.t('common.form.rules.only_spaces_between_words'),
     );
   }
 
@@ -127,6 +146,36 @@ export const CommonRules = {
       },
     },
   ] as Rule[],
+  textWhiteSpace: [
+    {
+      validator: async (_, value) => {
+        if (!value) return Promise.resolve();
+
+        return validatorWhiteSpaces(value);
+      },
+    },
+  ] as Rule[],
+};
+
+export const TextWhiteSpaceWithMaxLenRule = (maxLen: number) => {
+  return [
+    {
+      validator: async (_, value) => {
+        if (!value) return Promise.resolve();
+
+        if (value.length > maxLen) {
+          return Promise.reject(
+            i18next.t('common.form.rules.max_len', {
+              field: i18next.t('Activity.fields.description.label'),
+              limit: maxLen,
+            }),
+          );
+        }
+
+        return validatorWhiteSpaces(value);
+      },
+    },
+  ] as Rule[];
 };
 
 export const validateDeviceUserIsMobile = () => {
