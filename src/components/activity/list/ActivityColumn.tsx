@@ -2,8 +2,8 @@ import { SingleActivity } from '@/models/schema';
 import { addResponsiveProperty } from '@/utils/table';
 import { TableProps } from 'antd';
 import { useTranslation } from 'react-i18next';
-import ActionsActions from './ActivityActions';
 import ActivityRowCardMobile from './ActivityRowCardMobile';
+import ActivityActions from '@/components/activity/list/ActivityActions';
 
 export const useActivityColumns = () => {
   const { t } = useTranslation();
@@ -50,7 +50,7 @@ export const useActivityColumns = () => {
       width: '60px',
       className: 'td-actions',
       render: (_, activity) => {
-        return <ActionsActions activity={activity} />;
+        return <ActivityActions activity={activity} />;
       },
     },
     {

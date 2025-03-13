@@ -1,4 +1,4 @@
-import ActionsActions from '@/components/activity/list/ActivityActions';
+import ActivityActions from '@/components/activity/list/ActivityActions';
 import { SingleActivity } from '@/models/schema';
 import styles from '@/styles/modules/activity.module.scss';
 import { Descriptions, Flex } from 'antd';
@@ -32,7 +32,7 @@ const ActivityRowCardMobile = ({ activity }: Props) => {
         </Flex>
       </Flex>
       <div>
-        <ActionsActions
+        <ActivityActions
           activity={activity}
           classWrapper="popup_actions_primary_vertical"
         />
