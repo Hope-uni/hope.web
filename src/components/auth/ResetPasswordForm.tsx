@@ -10,6 +10,7 @@ import Link from 'antd/es/typography/Link';
 import FormItem from 'antd/lib/form/FormItem';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 interface ResetPasswordFormValues {
   password: string;
@@ -91,7 +92,8 @@ export const ResetPasswordForm = ({ token }: Props) => {
         className={styles.auth_form_input}
         rules={AuthRules.password}
       >
-        <Input
+        <Input.Password
+          iconRender={(visible) => (visible ? <FaEye /> : <FaEyeSlash />)}
           type="password"
           placeholder={t('Auth.fields.password.placeholder')}
         />
@@ -102,7 +104,8 @@ export const ResetPasswordForm = ({ token }: Props) => {
         className={styles.auth_form_input}
         rules={AuthRules.confirmPassword}
       >
-        <Input
+        <Input.Password
+          iconRender={(visible) => (visible ? <FaEye /> : <FaEyeSlash />)}
           type="password"
           placeholder={t('Auth.fields.confirm_password.placeholder')}
         />

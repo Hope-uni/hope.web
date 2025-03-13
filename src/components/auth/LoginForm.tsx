@@ -12,6 +12,7 @@ import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 interface LoginFormValues {
   email_username: string;
@@ -86,7 +87,8 @@ export const LoginForm = () => {
           className={styles.auth_form_input}
           rules={AuthRules.password}
         >
-          <Input
+          <Input.Password
+            iconRender={(visible) => (visible ? <FaEye /> : <FaEyeSlash />)}
             type="password"
             placeholder={t('Auth.fields.password.placeholder')}
           />
