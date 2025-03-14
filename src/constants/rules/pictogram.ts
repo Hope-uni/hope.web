@@ -13,7 +13,10 @@ export const PictogramRules = {
       required: true,
       message: i18next.t('Pictogram.fields.name.rules.required'),
     },
-    ...TextWhiteSpaceWithMaxLenRule(Pictogram_Name_Max_Len),
+    ...TextWhiteSpaceWithMaxLenRule(
+      Pictogram_Name_Max_Len,
+      i18next.t('Pictogram.fields.name.label'),
+    ),
   ] as Rule[],
   category: [
     {

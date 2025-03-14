@@ -1,6 +1,10 @@
 import i18next from '@/i18n';
 import { Rule } from 'antd/lib/form';
 import { RegexRules } from '@/constants/rules';
+import {
+  CharacterLimit,
+  TextWhiteSpaceWithMaxLenRule,
+} from '@/constants/rules';
 
 export const PhaseRules = {
   name: [
@@ -8,12 +12,20 @@ export const PhaseRules = {
       required: true,
       message: i18next.t('Phase.fields.name.rules.required'),
     },
+    ...TextWhiteSpaceWithMaxLenRule(
+      CharacterLimit.name,
+      i18next.t('Phase.fields.name.label'),
+    ),
   ] as Rule[],
   description: [
     {
       required: true,
       message: i18next.t('Phase.fields.description.rules.required'),
     },
+    ...TextWhiteSpaceWithMaxLenRule(
+      CharacterLimit.descriptions,
+      i18next.t('Phase.fields.description.label'),
+    ),
   ] as Rule[],
   scoreActivities: [
     {

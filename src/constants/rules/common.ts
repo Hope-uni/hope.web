@@ -157,7 +157,7 @@ export const CommonRules = {
   ] as Rule[],
 };
 
-export const TextWhiteSpaceWithMaxLenRule = (maxLen: number) => {
+export const TextWhiteSpaceWithMaxLenRule = (maxLen: number, field: string) => {
   return [
     {
       validator: async (_, value) => {
@@ -166,7 +166,7 @@ export const TextWhiteSpaceWithMaxLenRule = (maxLen: number) => {
         if (value.length > maxLen) {
           return Promise.reject(
             i18next.t('common.form.rules.max_len', {
-              field: i18next.t('Activity.fields.description.label'),
+              field: field,
               limit: maxLen,
             }),
           );

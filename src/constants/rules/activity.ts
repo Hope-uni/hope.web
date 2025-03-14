@@ -27,7 +27,10 @@ export const ActivityRules = {
       required: true,
       message: i18next.t('Activity.fields.description.rules.required'),
     },
-    ...TextWhiteSpaceWithMaxLenRule(CharacterLimit.descriptions),
+    ...TextWhiteSpaceWithMaxLenRule(
+      CharacterLimit.descriptions,
+      i18next.t('Activity.fields.description.label'),
+    ),
   ] as Rule[],
   satisfactoryPoints: [
     {
