@@ -538,7 +538,7 @@ const es = {
     form: {
       feedback: {
         activity_not_found:
-          'La actividad solicitado no existe o no está registrada.',
+          'La actividad solicitada no existe o no está registrada.',
       },
     },
     fields: {
