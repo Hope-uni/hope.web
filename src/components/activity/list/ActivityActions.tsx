@@ -4,6 +4,7 @@ import { Show } from '@/components/Show';
 import { RenderModeActionTypes } from '@/components/table/helpers';
 import PopupActions from '@/components/table/PopupActions';
 import { RoutesName } from '@/constants';
+import { useOpenNotification } from '@/context/Notification/NotificationProvider';
 import { useOverlayStore } from '@/lib/store';
 import { FormActivityErrors, SingleActivity } from '@/models/schema';
 import { ActionType } from '@/models/types';
@@ -14,7 +15,7 @@ import {
 import { ParseToErrorAntd } from '@/services/user/helpers';
 import styles from '@/styles/modules/partials.module.scss';
 import { useQueryClient } from '@tanstack/react-query';
-import { Button, Form, message } from 'antd';
+import { Button, Form } from 'antd';
 import { useRouter } from 'next/navigation';
 import { useCallback, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
@@ -34,6 +35,7 @@ const ActivityActions = ({
   renderMode = 'popup',
 }: Props) => {
   const { t } = useTranslation();
+  const { openNotification } = useOpenNotification();
   const router = useRouter();
   const [form] = Form.useForm();
   const [loadingForm, setLoadingForm] = useState(false);
@@ -85,14 +87,17 @@ const ActivityActions = ({
         return;
       }
 
-      message.success(res.message);
+      openNotification.success({
+        description: res.message,
+      });
+
       setLoadingForm(false);
       setOpenForm(false);
       form.resetFields();
     } catch (error) {
       setLoadingForm(false);
     }
-  }, [form, applyErrors]);
+  }, [form, applyErrors, openNotification]);
 
   const handleDelete = useCallback(async () => {
     return await DeleteActivityService(String(activity?.id));

@@ -2,18 +2,20 @@
 
 import { useActivityColumns } from '@/components/activity/list/ActivityColumn';
 import WrapperTable from '@/components/table/Wrappertable';
+import { useOpenNotification } from '@/context/Notification/NotificationProvider';
 import { useFetchListActivitiesQuery } from '@/lib/queries/activity';
 import { useFetchListPhasesQuery } from '@/lib/queries/pecs';
 import { useFetchListPictogramsQuery } from '@/lib/queries/pictogram';
 import { useFormActivityStore } from '@/lib/store/forms/formActivity';
 import { useTableStore } from '@/lib/store/table';
 import { E_ActionKeyTable } from '@/models/types/Table.d';
-import { message, Space } from 'antd';
+import { Space } from 'antd';
 import { useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 export default function PatientIndex() {
   const { t } = useTranslation();
+  const { openNotification } = useOpenNotification();
   const { setPhaseList, setPictogramList } = useFormActivityStore();
   const [columns] = useActivityColumns();
   const { searching, paginationTable, dispatch } = useTableStore();
@@ -52,7 +54,9 @@ export default function PatientIndex() {
 
   const handleSearch = () => {
     dispatch({ type: E_ActionKeyTable.CLEAR_SELECTED });
-    message.success('Processing complete!'); // TODO it's will change for message returned by api
+    openNotification.success({
+      description: 'Processing complete!',
+    }); // TODO it's will change for message returned by api
   };
 
   return (

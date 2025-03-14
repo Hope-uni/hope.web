@@ -2,14 +2,16 @@
 
 import { useCategoryColumns } from '@/components/category/list/CategoryColumn';
 import WrapperTable from '@/components/table/Wrappertable';
+import { useOpenNotification } from '@/context/Notification/NotificationProvider';
 import { useFetchListCategoryPictogramsQuery } from '@/lib/queries/pictogram';
 import { useTableStore } from '@/lib/store/table';
 import { E_ActionKeyTable } from '@/models/types/Table.d';
-import { Space, message } from 'antd';
+import { Space } from 'antd';
 import { useTranslation } from 'react-i18next';
 
 export default function CategoryIndex() {
   const { t } = useTranslation();
+  const { openNotification } = useOpenNotification();
   const [columns] = useCategoryColumns();
   const { searching, paginationTable, dispatch } = useTableStore();
   const { data, isLoading, isRefetching } = useFetchListCategoryPictogramsQuery(
@@ -23,7 +25,9 @@ export default function CategoryIndex() {
 
   const handleSearch = () => {
     dispatch({ type: E_ActionKeyTable.CLEAR_SELECTED });
-    message.success('Processing complete!'); // TODO it's will change for message returned by api
+    openNotification.success({
+      description: 'Processing complete!',
+    }); // TODO it's will change for message returned by api
   };
 
   return (

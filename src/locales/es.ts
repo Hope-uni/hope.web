@@ -862,6 +862,20 @@ const es = {
       title: '¡Lo sentimos, algo ha salido mal!',
       subtitle: 'Ha ocurrido un error inesperado',
     },
+    notification: {
+      success: {
+        messageDefault: '¡Hecho!',
+      },
+      info: {
+        messageDefault: '¡Aviso!',
+      },
+      warning: {
+        messageDefault: 'Advertencia!',
+      },
+      error: {
+        messageDefault: '¡Algo salió mal!',
+      },
+    },
   },
 } as const;
 
