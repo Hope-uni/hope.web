@@ -2,15 +2,14 @@
 
 import { GoToLogin } from '@/components/auth/GoToLogin';
 import { HeaderForm } from '@/components/auth/HeaderForm';
+import { InputPassword } from '@/components/common/Inputs';
 import { AuthRules } from '@/constants/rules';
 import { ResetPasswordService } from '@/services/auth/auth.service';
 import styles from '@/styles/modules/auth.module.scss';
-import { Button, Form, Input } from 'antd';
+import { Button, Form } from 'antd';
 import Link from 'antd/es/typography/Link';
-import FormItem from 'antd/lib/form/FormItem';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 interface ResetPasswordFormValues {
   password: string;
@@ -87,29 +86,21 @@ export const ResetPasswordForm = ({ token }: Props) => {
         space="10px 0 5px 0"
       />
 
-      <FormItem
+      <InputPassword
         name="password"
         className={styles.auth_form_input}
         rules={AuthRules.password}
-      >
-        <Input.Password
-          iconRender={(visible) => (visible ? <FaEye /> : <FaEyeSlash />)}
-          type="password"
-          placeholder={t('Auth.fields.password.placeholder')}
-        />
-      </FormItem>
+        placeholderInput={t('Auth.fields.password.placeholder')}
+        showWarningOnCapsLock={false}
+      />
 
-      <FormItem
-        name="password"
+      <InputPassword
+        name="confirmPassword"
         className={styles.auth_form_input}
         rules={AuthRules.confirmPassword}
-      >
-        <Input.Password
-          iconRender={(visible) => (visible ? <FaEye /> : <FaEyeSlash />)}
-          type="password"
-          placeholder={t('Auth.fields.confirm_password.placeholder')}
-        />
-      </FormItem>
+        placeholderInput={t('Auth.fields.confirm_password.placeholder')}
+        showWarningOnCapsLock={false}
+      />
 
       <Form.Item className={styles.rowCenter}>
         <Button

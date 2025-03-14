@@ -226,6 +226,23 @@
                 }
             }
         }
+
+        &.ant-form-item-has-warning{
+            .ant-form-item-control-input-content{
+                > .ant-input[aria-invalid="true"], > .ant-input-password[aria-invalid="true"]{
+                    border-color: $warning;
+                }
+
+                .ant-input-outlined:focus-within{
+                    box-shadow: inset 0 -4px 0 -2px rgba($warning, 0.9);
+                }
+
+                .ant-input-prefix svg{
+                    color: $warning;
+                    font-size: 20px;
+                }
+            }
+        }
     }
     .ant-form-item-control-input-content{
         > .ant-input, > .ant-input-password{
@@ -249,7 +266,7 @@
         .ant-input-password {
             .ant-input-suffix svg{
                 cursor: pointer;
-                fill: $primary-color;
+                color: $primary-color;
                 font-size: 20px;
             }
         }
