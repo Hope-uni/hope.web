@@ -16,11 +16,11 @@ export const ActivityRules = {
       required: true,
       message: i18next.t('Activity.fields.name.rules.required'),
     },
-    {
-      max: Pictogram_Name_Max_Len,
-      message: i18next.t('Activity.fields.name.rules.len'),
-    },
-    ...CommonRules.textWhiteSpace,
+    ...TextWhiteSpaceAndLenRule({
+      minLen: CharacterLimit.min.name,
+      maxLen: Pictogram_Name_Max_Len,
+      field: i18next.t('Activity.fields.name.label'),
+    }),
   ] as Rule[],
   description: [
     {
