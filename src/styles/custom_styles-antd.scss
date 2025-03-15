@@ -214,15 +214,67 @@
 #auth_form_antd{
     .ant-form-item{
         width: 100%;
-    }
-    .ant-form-item-control-input-content .ant-input{
-        border-radius: 0;
-        border: none;
-        border-bottom: 1px solid $black;
 
-        &::placeholder{
-            @extend .text_sz-6;
-            color: $grey-4;
+        &.ant-form-item-has-error{
+            .ant-form-item-control-input-content{
+                > .ant-input[aria-invalid="true"], > .ant-input-password[aria-invalid="true"]{
+                    border-color: $error;
+                }
+
+                .ant-input-outlined:focus-within{
+                    box-shadow: inset 0 -4px 0 -2px rgba($error, 0.9);
+                }
+            }
+        }
+
+        &.ant-form-item-has-warning{
+            .ant-form-item-control-input-content{
+                > .ant-input[aria-invalid="true"], > .ant-input-password[aria-invalid="true"]{
+                    border-color: $warning;
+                }
+
+                .ant-input-outlined:focus-within{
+                    box-shadow: inset 0 -4px 0 -2px rgba($warning, 0.9);
+                }
+
+                .ant-input-prefix svg{
+                    color: $warning;
+                    font-size: 20px;
+                }
+            }
+        }
+    }
+    .ant-form-item-control-input-content{
+        > .ant-input, > .ant-input-password{
+            border-radius: 0;
+            border: none;
+            border-bottom: 1px solid $black;
+    
+            &::placeholder{
+                @extend .text_sz-6;
+                color: $grey-4;
+            }
+        }
+
+        .ant-input {
+            &::placeholder{
+                @extend .text_sz-6;
+                color: $grey-4;
+            }
+        }
+
+        .ant-input-password {
+            .ant-input-suffix svg{
+                cursor: pointer;
+                color: $primary-color;
+                font-size: 20px;
+            }
+        }
+
+        .ant-input-outlined:focus-within{
+            border-radius: 0;
+            border: none;
+            box-shadow: inset 0 -4px 0 -2px rgba($primary-color, 0.9);
         }
     }
 }
@@ -911,6 +963,85 @@ label.ant-form-item-required {
 ** FLEX */
 body .ant-flex {
     padding: unset;
+}
+
+/*
+** NOTIFICATION */
+.ant-notification{
+    .ant-notification-notice-wrapper{
+        .ant-notification-notice{
+            &.primary-notification{
+                @extend .row-between;
+                padding: 10px 15px 10px 8px;
+
+                &.ant-notification-notice-success{
+                    color: $success;
+                }
+
+                &.ant-notification-notice-info{
+                    color: $info;
+                }
+
+                &.ant-notification-notice-warning{
+                    color: $warning;
+                }
+
+                &.ant-notification-notice-error{
+                    color: $error;
+                }
+
+                .ant-notification-notice-content{
+                    position: relative;
+                    padding-left: 5px;
+
+                    .ant-notification-notice-with-icon{
+                        padding: 4px  10px 8px 10px;
+
+                        .anticon{
+                            color: currentColor;
+                            font-size: 30px;
+                            top: calc((100% - 30px) / 2);
+                        }
+
+                        .ant-notification-notice-message{
+                            margin-bottom: 0;
+                            margin-inline-start: 42px;
+                            color: $primary-color-text;
+                            font-weight: 600;
+                            font-size: 17px;
+                        }
+                        .ant-notification-notice-description{
+                            margin-bottom: 0;
+                            margin-inline-start: 42px;
+                            color: $grey-dark;
+                            font-size: 16px;
+                        }
+                    }
+
+                    &::before{
+                        content: "";
+                        display: block;
+                        position: absolute;
+                        left: 0;
+                        top: 0;
+                        width: 5px;
+                        height: 100%;
+                        background-color: currentColor;
+                        border-radius: 10px;
+                    }
+                }
+
+                .ant-notification-notice-close{
+                    position: static;
+
+                    svg {
+                        color: $secondary-color;
+                        font-size: 16px;
+                    }
+                }
+            }
+        }
+    }
 }
 
 @media only screen and (max-width: $breakpointMobile){

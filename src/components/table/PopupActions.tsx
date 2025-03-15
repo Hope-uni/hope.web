@@ -1,10 +1,11 @@
 import HModal from '@/components/common/Modals';
 import { Show } from '@/components/Show';
 import { HopeTable } from '@/constants/config';
+import { useOpenNotification } from '@/context/Notification/NotificationProvider';
 import { API_SINGLE_RESPONSE } from '@/models/types';
 import { ActionTableOptionsType, ActionType } from '@/models/types/Table';
 import styles from '@/styles/modules/partials.module.scss';
-import { Button, Dropdown, Flex, message } from 'antd';
+import { Button, Dropdown, Flex } from 'antd';
 import { useRouter } from 'next/navigation';
 import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -37,6 +38,7 @@ export default function PopupActions({
   onDelete,
 }: Props) {
   const { t } = useTranslation();
+  const { openNotification } = useOpenNotification();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [openModalDelete, setOpenModalDelete] = useState(false);
@@ -88,7 +90,9 @@ export default function PopupActions({
       const res = await onDelete();
 
       if (res.error) {
-        message.error(res.message);
+        openNotification.error({
+          description: res.message,
+        });
         setLoading(false);
         setOpenModalDelete(false);
         return;
@@ -96,13 +100,17 @@ export default function PopupActions({
 
       setLoading(false);
       setOpenModalDelete(false);
-      message.success(res.message);
+      openNotification.success({
+        description: res.message,
+      });
     } catch (error) {
       setLoading(false);
       setOpenModalDelete(false);
-      message.error((error as Error).message);
+      openNotification.error({
+        description: (error as Error).message,
+      });
     }
-  }, [onDelete]);
+  }, [onDelete, openNotification]);
 
   const handleSelectAction = (action: ActionType) => {
     if (action in HandlesActions) {

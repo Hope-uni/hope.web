@@ -1,7 +1,9 @@
 import HModal from '@/components/common/Modals';
+import PictogramForm from '@/components/pictogram/form';
 import { Show } from '@/components/Show';
 import { RenderModeActionTypes } from '@/components/table/helpers';
 import PopupActions from '@/components/table/PopupActions';
+import { useOpenNotification } from '@/context/Notification/NotificationProvider';
 import { FormPictogramErrors, SinglePictogram } from '@/models/schema';
 import { ActionType } from '@/models/types';
 import {
@@ -12,11 +14,10 @@ import {
 import { ParseToErrorAntd } from '@/services/user/helpers';
 import styles from '@/styles/modules/partials.module.scss';
 import { deepEqual, removeKeysFromObject } from '@/utils/objects';
-import { Button, Form, message } from 'antd';
+import { Button, Form } from 'antd';
 import { useCallback, useEffect, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { BsPlusLg } from 'react-icons/bs';
-import PictogramForm from '@/components/pictogram/form';
 
 interface Props {
   pictogram?: SinglePictogram;
@@ -32,6 +33,7 @@ const PictogramActions = ({
   renderMode = 'popup',
 }: Props) => {
   const { t } = useTranslation();
+  const { openNotification } = useOpenNotification();
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const [openForm, setOpenForm] = useState(false);
@@ -98,14 +100,16 @@ const PictogramActions = ({
         return;
       }
 
-      message.success(res.message);
+      openNotification.success({
+        description: res.message,
+      });
       setLoading(false);
       setOpenForm(false);
       form.resetFields();
     } catch (error) {
       setLoading(false);
     }
-  }, [form, isEdit, pictogram, applyErrors]);
+  }, [form, isEdit, pictogram, openNotification, applyErrors]);
 
   const validateIfFormHasChanged = useCallback(() => {
     if (pictogram) {
@@ -116,12 +120,14 @@ const PictogramActions = ({
       fieldsFiltered = removeKeysFromObject(pictogram, keyToDelete);
 
       if (deepEqual(values, fieldsFiltered)) {
-        message.warning(t('feedback.common.not_changed_detect'));
+        openNotification.warning({
+          description: t('feedback.common.not_changed_detect'),
+        });
         return;
       }
       handleSubmit();
     }
-  }, [form, pictogram, handleSubmit, t]);
+  }, [pictogram, form, handleSubmit, openNotification, t]);
 
   const handleDelete = useCallback(async () => {
     return await DeletePictogramService(String(pictogram?.id));

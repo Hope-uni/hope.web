@@ -5,13 +5,14 @@ import { DEFAULT_REDIRECT_HOME_URL } from '@/constants';
 import { AuthRules } from '@/constants/rules';
 import { AlertType } from '@/models/types/antd';
 import styles from '@/styles/modules/auth.module.scss';
-import { Alert, Button, Form, Input, message } from 'antd';
+import { Alert, Button, Form, Input } from 'antd';
 import FormItem from 'antd/lib/form/FormItem';
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import InputPassword from '../common/Inputs/InputPassword';
 
 interface LoginFormValues {
   email_username: string;
@@ -81,16 +82,13 @@ export const LoginForm = () => {
         <Input placeholder={t('Auth.fields.email_or_username.placeholder')} />
       </FormItem>
       <div className="w-100">
-        <FormItem
+        <InputPassword
           name="password"
           className={styles.auth_form_input}
           rules={AuthRules.password}
-        >
-          <Input
-            type="password"
-            placeholder={t('Auth.fields.password.placeholder')}
-          />
-        </FormItem>
+          placeholderInput={t('Auth.fields.password.placeholder')}
+          showWarningOnCapsLock
+        />
         <Link href="/forgot-password" className={styles.auth_form_link_forgot}>
           {t('Auth.form.forgot_password_link')}
         </Link>
