@@ -2,14 +2,16 @@
 
 import WrapperTable from '@/components/table/Wrappertable';
 import { useTherapistColumns } from '@/components/therapist/list/TherapistColumn';
+import { useOpenNotification } from '@/context/Notification/NotificationProvider';
 import { useFetchListTherapistQuery } from '@/lib/queries/user';
 import { useTableStore } from '@/lib/store/table';
 import { E_ActionKeyTable } from '@/models/types/Table.d';
-import { message, Space } from 'antd';
+import { Space } from 'antd';
 import { useTranslation } from 'react-i18next';
 
 export default function TherapistIndex() {
   const { t } = useTranslation();
+  const { openNotification } = useOpenNotification();
   const [columns] = useTherapistColumns();
   const { searching, paginationTable, dispatch } = useTableStore();
   const { data, isLoading, isRefetching } = useFetchListTherapistQuery({
@@ -21,7 +23,9 @@ export default function TherapistIndex() {
 
   const handleSearch = () => {
     dispatch({ type: E_ActionKeyTable.CLEAR_SELECTED });
-    message.success('Processing complete!'); // TODO it's will change for message returned by api
+    openNotification.success({
+      description: 'Processing complete!',
+    }); // TODO it's will change for message returned by api
   };
 
   return (

@@ -2,7 +2,7 @@
 
 import { HeaderContent } from '@/components/layouts/partials/HeaderContent';
 import PatientIndex from '@/components/pictogram/list';
-import { RoutesName } from '@/constants';
+import PictogramActions from '@/components/pictogram/list/PictogramActions';
 import { Space } from 'antd';
 import { useTranslation } from 'react-i18next';
 
@@ -14,8 +14,7 @@ export default function TherapistsPage() {
         <HeaderContent
           title={t('Pictogram.index.title')}
           caption={t('Pictogram.index.caption')}
-          label={t('Pictogram.index.createButton')}
-          routeLink={RoutesName.pictogram.create}
+          customBtn={<PictogramActions renderMode="add_pictogram" />}
         />
       </Space>
       <PatientIndex />

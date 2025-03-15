@@ -466,7 +466,39 @@ const es = {
         category: 'Categoría',
       },
     },
+    form: {},
+    fields: {
+      name: {
+        label: 'Nombre',
+        placeholder: 'Nombre del pictograma',
+        rules: {
+          required: 'Nombre del pictograma es requerido',
+        },
+      },
+      category: {
+        label: 'Categoría',
+        placeholder: 'Seleccione una categoría',
+        rules: {
+          required: 'Categoría es requerido',
+        },
+      },
+      image: {
+        label: 'Imagen',
+        placeholder: 'Imagen',
+        rules: {
+          required: 'Imagen es requerido',
+        },
+      },
+    },
     actions: {
+      form: {
+        modal: {
+          title_create: 'Crear pictograma',
+          ok_text_create: 'Guardar',
+          title_edit: 'Editar pictograma',
+          ok_text_edit: 'Editar',
+        },
+      },
       delete: {
         modal: {
           title: 'Eliminar pictograma',
@@ -525,7 +557,7 @@ const es = {
     index: {
       title: 'Actividades',
       caption: 'Listado de todos las actividades.',
-      createButton: 'Crear tutor',
+      createButton: 'Crear actividad',
       searchPlaceholder: 'Buscar actividades...',
       columns: {
         name: 'Nombre',
@@ -535,12 +567,81 @@ const es = {
         phase: 'Fase',
       },
     },
+    form: {
+      feedback: {
+        activity_not_found:
+          'La actividad solicitada no existe o no está registrada.',
+      },
+    },
+    fields: {
+      name: {
+        label: 'Nombre',
+        placeholder: 'Nombre de la actividad',
+        rules: {
+          required: 'Nombre es requerido',
+          len: 'Nombre de la actividad debe contener máximo 30 caracteres',
+        },
+      },
+      description: {
+        label: 'Descripción',
+        placeholder: 'Descripción corta de la actividad a realizar',
+        rules: {
+          required: 'Descripción es requerido',
+        },
+      },
+      satisfactoryPoints: {
+        label: 'Puntos',
+        placeholder: 'Puntos para pasar de fase',
+        rules: {
+          required: 'Puntos es requerido',
+          max: 'Puntos no debe ser mayor a {{points}}',
+        },
+      },
+      phase: {
+        label: 'Phase',
+        placeholder: 'Fase de la actividad',
+        rules: {
+          required: 'Fase es requerido',
+        },
+      },
+      pictogramSentence: {
+        label: 'Solución de la actividad',
+        placeholderSearch: 'Buscar pictogramas por nombre...',
+        labelPreviewSentence: 'Oración solución',
+        captionSelectPictograms:
+          '<bold>Selecciona</bold> los pictogramas haciendo <bold>clic</bold> en ellos para construir la <bold>solución</bold>. La oración aparecerá en la parte <bold>inferior</bold>.',
+        captionPreviewSentence:
+          'Reorganiza los pictogramas a tu gusto, moviéndolos en el orden que prefieras.',
+        captionOverlayPictogramDesktop:
+          '*Si el nombre del pictograma no se ve completo, pasa el cursor sobre el icono para ver el nombre completo.',
+        captionOverlayPictogramMobile:
+          '*Si el nombre del pictograma no se ve completo, mantén presionado el icono para ver el nombre completo.',
+        rules: {
+          required: 'Solución es requerido',
+          min: 'Debe seleccionar al menos un pictograma',
+          max: 'La solución no debe contener más de {{limit}} pictogramas',
+        },
+      },
+    },
     actions: {
+      detail: {
+        modal: {
+          title: 'Detalle actividad',
+        },
+      },
       delete: {
         modal: {
           title: 'Eliminar actividad',
           description:
             '¿Estás seguro/a de que deseas elminar la actividad <StrongValue />?',
+        },
+      },
+      form: {
+        modal: {
+          title_create: 'Crear actividad',
+          ok_text_create: 'Guardar',
+          title_edit: 'Editar actividad',
+          ok_text_edit: 'Editar',
         },
       },
     },
@@ -698,6 +799,9 @@ const es = {
   common: {
     form: {
       fields: {
+        general_field: {
+          label: 'Este campo',
+        },
         username: {
           rules: {
             pattern: 'El usuario debe contener entre 3 y 16 carácteres',
@@ -732,6 +836,13 @@ const es = {
           },
         },
       },
+      rules: {
+        max_len: '{{field}} debe tener como máximo {{limit}} caracteres',
+        min_len: '{{field}} debe tener como mínimo {{limit}} caracteres',
+        max_min_len: '{{field}} debe tener entre {{min}} y {{max}} caracteres',
+        whitespace: 'No se permiten espacios en blancos',
+        only_spaces_between_words: 'Solo se permite un espacio entre palabras',
+      },
     },
     not_asignment: 'Sin asignar',
     uncategorized: 'Sin categoría',
@@ -755,6 +866,20 @@ const es = {
     message_error: {
       title: '¡Lo sentimos, algo ha salido mal!',
       subtitle: 'Ha ocurrido un error inesperado',
+    },
+    notification: {
+      success: {
+        messageDefault: '¡Hecho!',
+      },
+      info: {
+        messageDefault: '¡Aviso!',
+      },
+      warning: {
+        messageDefault: '¡Advertencia!',
+      },
+      error: {
+        messageDefault: '¡Algo salió mal!',
+      },
     },
   },
 } as const;
