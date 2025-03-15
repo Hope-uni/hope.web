@@ -2,8 +2,14 @@ import { Rule } from 'antd/es/form';
 import i18next from 'i18next';
 
 export const CharacterLimit = {
-  name: 100,
-  descriptions: 255,
+  max: {
+    name: 100,
+    descriptions: 255,
+  },
+  min: {
+    name: 3,
+    descriptions: 6,
+  },
 };
 
 export const RegexRules = {
@@ -157,16 +163,35 @@ export const CommonRules = {
   ] as Rule[],
 };
 
-export const TextWhiteSpaceWithMaxLenRule = (maxLen: number) => {
+type TextWhiteSpaceAndLenRuleType = {
+  maxLen?: number;
+  minLen?: number;
+  field?: string;
+};
+
+export const TextWhiteSpaceAndLenRule = ({
+  maxLen = CharacterLimit.max.descriptions,
+  minLen = CharacterLimit.min.name,
+  field = i18next.t('common.form.fields.general_field.label'),
+}: TextWhiteSpaceAndLenRuleType) => {
   return [
     {
       validator: async (_, value) => {
         if (!value) return Promise.resolve();
 
+        if (value.length < minLen) {
+          return Promise.reject(
+            i18next.t('common.form.rules.min_len', {
+              field: field,
+              limit: minLen,
+            }),
+          );
+        }
+
         if (value.length > maxLen) {
           return Promise.reject(
             i18next.t('common.form.rules.max_len', {
-              field: i18next.t('Activity.fields.description.label'),
+              field: field,
               limit: maxLen,
             }),
           );

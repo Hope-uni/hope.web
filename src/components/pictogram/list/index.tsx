@@ -2,6 +2,7 @@
 
 import { usePictogramColumns } from '@/components/pictogram/list/PictogramColumns';
 import WrapperTable from '@/components/table/Wrappertable';
+import { useOpenNotification } from '@/context/Notification/NotificationProvider';
 import {
   useFetchListCategoryPictogramsQuery,
   useFetchListPictogramsQuery,
@@ -9,12 +10,13 @@ import {
 import { useFormPictogramStore } from '@/lib/store/forms/formPictogram';
 import { useTableStore } from '@/lib/store/table';
 import { E_ActionKeyTable } from '@/models/types/Table.d';
-import { Space, message } from 'antd';
+import { Space } from 'antd';
 import { useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 export default function PictogramsIndex() {
   const { t } = useTranslation();
+  const { openNotification } = useOpenNotification();
   const { setCategoryList } = useFormPictogramStore();
   const [columns] = usePictogramColumns();
   const { searching, paginationTable, dispatch } = useTableStore();
@@ -42,7 +44,9 @@ export default function PictogramsIndex() {
 
   const handleSearch = () => {
     dispatch({ type: E_ActionKeyTable.CLEAR_SELECTED });
-    message.success('Processing complete!'); // TODO it's will change for message returned by api
+    openNotification.success({
+      description: 'Processing complete!',
+    }); // TODO it's will change for message returned by api
   };
 
   return (

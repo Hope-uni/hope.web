@@ -1,13 +1,14 @@
 import HModal from '@/components/common/Modals';
 import PhaseForm from '@/components/phase/form';
 import PopupActions from '@/components/table/PopupActions';
+import { useOpenNotification } from '@/context/Notification/NotificationProvider';
 import { FormPhaseErrors, TEAPhase } from '@/models/schema';
 import { ActionType } from '@/models/types';
 import { EditPhaseService } from '@/services/PECS/pecs.service';
 import { ParseToErrorAntd } from '@/services/user/helpers';
 import styles from '@/styles/modules/partials.module.scss';
 import { deepEqual, removeKeysFromObject } from '@/utils/objects';
-import { Form, message } from 'antd';
+import { Form } from 'antd';
 import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -19,6 +20,7 @@ interface Props {
 
 const PhaseActions = ({ phase, actions = ['edit'], classWrapper }: Props) => {
   const { t } = useTranslation();
+  const { openNotification } = useOpenNotification();
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
@@ -66,13 +68,15 @@ const PhaseActions = ({ phase, actions = ['edit'], classWrapper }: Props) => {
         return;
       }
 
-      message.success(res.message);
+      openNotification.success({
+        description: res.message,
+      });
       setLoading(false);
       setOpenEdit(false);
     } catch (error) {
       setLoading(false);
     }
-  }, [applyErrors, form, phase.id]);
+  }, [applyErrors, form, openNotification, phase.id]);
 
   const validateIfFormHasChanged = useCallback(() => {
     let values = form.getFieldsValue();
@@ -82,11 +86,13 @@ const PhaseActions = ({ phase, actions = ['edit'], classWrapper }: Props) => {
     fieldsFiltered = removeKeysFromObject(phase, keyToDelete);
 
     if (deepEqual(values, fieldsFiltered)) {
-      message.warning(t('feedback.common.not_changed_detect'));
+      openNotification.warning({
+        description: t('feedback.common.not_changed_detect'),
+      });
       return;
     }
     handleEdit();
-  }, [phase, form, handleEdit, t]);
+  }, [form, phase, handleEdit, openNotification, t]);
 
   return (
     <>

@@ -965,6 +965,85 @@ body .ant-flex {
     padding: unset;
 }
 
+/*
+** NOTIFICATION */
+.ant-notification{
+    .ant-notification-notice-wrapper{
+        .ant-notification-notice{
+            &.primary-notification{
+                @extend .row-between;
+                padding: 10px 15px 10px 8px;
+
+                &.ant-notification-notice-success{
+                    color: $success;
+                }
+
+                &.ant-notification-notice-info{
+                    color: $info;
+                }
+
+                &.ant-notification-notice-warning{
+                    color: $warning;
+                }
+
+                &.ant-notification-notice-error{
+                    color: $error;
+                }
+
+                .ant-notification-notice-content{
+                    position: relative;
+                    padding-left: 5px;
+
+                    .ant-notification-notice-with-icon{
+                        padding: 4px  10px 8px 10px;
+
+                        .anticon{
+                            color: currentColor;
+                            font-size: 30px;
+                            top: calc((100% - 30px) / 2);
+                        }
+
+                        .ant-notification-notice-message{
+                            margin-bottom: 0;
+                            margin-inline-start: 42px;
+                            color: $primary-color-text;
+                            font-weight: 600;
+                            font-size: 17px;
+                        }
+                        .ant-notification-notice-description{
+                            margin-bottom: 0;
+                            margin-inline-start: 42px;
+                            color: $grey-dark;
+                            font-size: 16px;
+                        }
+                    }
+
+                    &::before{
+                        content: "";
+                        display: block;
+                        position: absolute;
+                        left: 0;
+                        top: 0;
+                        width: 5px;
+                        height: 100%;
+                        background-color: currentColor;
+                        border-radius: 10px;
+                    }
+                }
+
+                .ant-notification-notice-close{
+                    position: static;
+
+                    svg {
+                        color: $secondary-color;
+                        font-size: 16px;
+                    }
+                }
+            }
+        }
+    }
+}
+
 @media only screen and (max-width: $breakpointMobile){
 
    /*
