@@ -101,41 +101,44 @@ export default function PersonDataSpecificForm({
       {
         <Show>
           <Show.When isTrue={currentRoleSelected.name === 'Paciente'}>
-            <Row gutter={gutterRow}>
-              <Col sm={{ span: spanCol }} xs={{ span: spanColFullWidth }}>
-                <Form.Item
-                  name="teaDegreeId"
-                  label={t('User.fields.grade_of_tea.label')}
-                  rules={UserRules.user.gradeOfTea}
-                >
-                  <Select
-                    placeholder={t('User.fields.grade_of_tea.placeholder')}
-                  >
-                    {degreeList.map((item) => (
-                      <Select.Option key={item.id} value={item.id}>
-                        {`${item.name}: ${item.description}`}
-                      </Select.Option>
-                    ))}
-                  </Select>
-                </Form.Item>
-              </Col>
-              <Col sm={{ span: spanCol }} xs={{ span: spanColFullWidth }}>
-                <Form.Item
-                  name="phaseId"
-                  label={t('User.fields.phase.label')}
-                  rules={UserRules.user.phase}
-                >
-                  <Select placeholder={t('User.fields.phase.placeholder')}>
-                    {phaseList.map((item, index) => (
-                      <Select.Option key={item.id} value={item.id}>
-                        {`Fase ${index + 1} - ${item.name}`}
-                      </Select.Option>
-                    ))}
-                  </Select>
-                </Form.Item>
-              </Col>
-            </Row>
-
+            <Show>
+              <Show.When isTrue={!isEdit}>
+                <Row gutter={gutterRow}>
+                  <Col sm={{ span: spanCol }} xs={{ span: spanColFullWidth }}>
+                    <Form.Item
+                      name="teaDegreeId"
+                      label={t('User.fields.grade_of_tea.label')}
+                      rules={UserRules.user.gradeOfTea}
+                    >
+                      <Select
+                        placeholder={t('User.fields.grade_of_tea.placeholder')}
+                      >
+                        {degreeList.map((item) => (
+                          <Select.Option key={item.id} value={item.id}>
+                            {`${item.name}: ${item.description}`}
+                          </Select.Option>
+                        ))}
+                      </Select>
+                    </Form.Item>
+                  </Col>
+                  <Col sm={{ span: spanCol }} xs={{ span: spanColFullWidth }}>
+                    <Form.Item
+                      name="phaseId"
+                      label={t('User.fields.phase.label')}
+                      rules={UserRules.user.phase}
+                    >
+                      <Select placeholder={t('User.fields.phase.placeholder')}>
+                        {phaseList.map((item, index) => (
+                          <Select.Option key={item.id} value={item.id}>
+                            {`Fase ${index + 1} - ${item.name}`}
+                          </Select.Option>
+                        ))}
+                      </Select>
+                    </Form.Item>
+                  </Col>
+                </Row>
+              </Show.When>
+            </Show>
             <Row gutter={gutterRow}>
               <Col
                 sm={{ span: spanColFullWidth }}

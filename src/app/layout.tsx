@@ -7,6 +7,8 @@ import { getServerSession } from 'next-auth';
 import SessionProviderClient from '@/context/Auth/SessionProviderClient';
 import { AppProviderClient } from '@/context/AppProviderClient';
 
+import '@splidejs/splide/css/core';
+
 interface RootLayoutProps {
   children: React.ReactNode;
   params: { locale: string };

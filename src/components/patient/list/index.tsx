@@ -1,15 +1,17 @@
 'use client';
 
 import WrapperTable from '@/components/table/Wrappertable';
+import { useOpenNotification } from '@/context/Notification/NotificationProvider';
 import { useFetchListPatientQuery } from '@/lib/queries/user';
 import { useTableStore } from '@/lib/store/table';
 import { E_ActionKeyTable } from '@/models/types/Table.d';
-import { Space, message } from 'antd';
+import { Space } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { usePatientColumns } from './PatientColumn';
 
 export default function PatientIndex() {
   const { t } = useTranslation();
+  const { openNotification } = useOpenNotification();
   const [columns] = usePatientColumns();
   const { searching, paginationTable, dispatch } = useTableStore();
   const { data, isLoading, isRefetching } = useFetchListPatientQuery({
@@ -21,7 +23,9 @@ export default function PatientIndex() {
 
   const handleSearch = () => {
     dispatch({ type: E_ActionKeyTable.CLEAR_SELECTED });
-    message.success('Processing complete!'); // TODO it's will change for message returned by api
+    openNotification.success({
+      description: 'Processing complete!',
+    }); // TODO it's will change for message returned by api
   };
 
   return (

@@ -15,7 +15,7 @@ export const initialState: I_TableState = {
     currentPage: undefined,
     totalData: 0,
     page: 1,
-    size: 5,
+    size: 10,
   },
 };
 

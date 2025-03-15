@@ -6,26 +6,33 @@ import { BsXLg } from 'react-icons/bs';
 interface Props extends ModalProps {
   title?: string | JSX.Element;
   description?: string | JSX.Element;
-  loading: boolean;
-  onOpen: Dispatch<SetStateAction<boolean>>;
+  loading?: boolean;
+  onOpen?: Dispatch<SetStateAction<boolean>>;
   children: ReactNode;
+  onClose?: () => void;
 }
 
 const HModal = ({
   description,
-  loading,
+  loading = false,
   onOpen,
   onOk,
   children,
+  onClose,
   ...props
 }: Props) => {
   const { t } = useTranslation();
 
   const handleOnCancel = useCallback(() => {
     if (!loading) {
-      onOpen(false);
+      if (onOpen) {
+        onOpen(false);
+      }
+      if (onClose) {
+        onClose();
+      }
     }
-  }, [loading, onOpen]);
+  }, [loading, onClose, onOpen]);
 
   return (
     <Modal

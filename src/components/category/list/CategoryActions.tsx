@@ -3,6 +3,7 @@ import HModal from '@/components/common/Modals';
 import { Show } from '@/components/Show';
 import { RenderModeActionTypes } from '@/components/table/helpers';
 import PopupActions from '@/components/table/PopupActions';
+import { useOpenNotification } from '@/context/Notification/NotificationProvider';
 import { CategoryPictogram, FormCategoryErrors } from '@/models/schema';
 import { ActionType } from '@/models/types';
 import {
@@ -13,7 +14,7 @@ import {
 import { ParseToErrorAntd } from '@/services/user/helpers';
 import styles from '@/styles/modules/partials.module.scss';
 import { deepEqual, removeKeysFromObject } from '@/utils/objects';
-import { Button, Form, message } from 'antd';
+import { Button, Form } from 'antd';
 import { useCallback, useEffect, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { BsPlusLg } from 'react-icons/bs';
@@ -32,6 +33,7 @@ const CategoryActions = ({
   renderMode = 'popup',
 }: Props) => {
   const { t } = useTranslation();
+  const { openNotification } = useOpenNotification();
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const [openForm, setOpenForm] = useState(false);
@@ -95,14 +97,16 @@ const CategoryActions = ({
         return;
       }
 
-      message.success(res.message);
+      openNotification.success({
+        description: res.message,
+      });
       setLoading(false);
       setOpenForm(false);
       form.resetFields();
     } catch (error) {
       setLoading(false);
     }
-  }, [form, isEdit, category, applyErrors]);
+  }, [form, isEdit, category, openNotification, applyErrors]);
 
   const validateIfFormHasChanged = useCallback(() => {
     if (category) {
@@ -113,12 +117,14 @@ const CategoryActions = ({
       fieldsFiltered = removeKeysFromObject(category, keyToDelete);
 
       if (deepEqual(values, fieldsFiltered)) {
-        message.warning(t('feedback.common.not_changed_detect'));
+        openNotification.warning({
+          description: t('feedback.common.not_changed_detect'),
+        });
         return;
       }
       handleSubmit();
     }
-  }, [form, category, handleSubmit, t]);
+  }, [category, form, handleSubmit, openNotification, t]);
 
   const handleDelete = useCallback(async () => {
     return await DeleteCategoryPictogramService(String(category?.id));

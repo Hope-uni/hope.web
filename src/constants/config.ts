@@ -9,6 +9,7 @@ import {
   I_HopeTableConfig,
   SizeChangerOptionsType,
 } from '@/models/types/Table';
+import placeholderImage from '@/assets/img/placeholderImage_bn.svg';
 
 export const HopeLocales = {
   languages: ['es', 'en'],
@@ -53,16 +54,20 @@ export const HopeTable: I_HopeTableConfig = {
     {
       label: i18next.t('components.popupActions.ediAssigments.label'),
       icon: BsFillPersonCheckFill,
-      key: '3',
+      key: '4',
       actionType: 'assign',
       colorClassName: 'text-color-link',
     },
     {
       label: i18next.t('components.popupActions.delete.label'),
       icon: BsTrash2Fill,
-      key: '4',
+      key: '5',
       actionType: 'delete',
       colorClassName: 'text-color-error',
     },
   ],
+};
+
+export const ImageConfig = {
+  defaultPlaceholder: placeholderImage,
 };

@@ -1,0 +1,45 @@
+.orderable-list-wrapper{
+  .orderable-list-item.floating {
+    position: absolute;
+    box-shadow: 5px 5px 10px rgba(0,0,0,0.5);
+  }
+
+  .orderable-list-item.drop-zone {
+    background-color: #ccc;
+    transition-property: height padding;
+    transition-duration: 250ms;
+    transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+    overflow: hidden;
+  }
+  
+  .orderable-list-item.drop-zone.hidden {
+    height: 0px;
+    padding: 0px
+  }
+
+  .btn-draggable-item{
+    padding: 0;
+    margin: 0;
+    background-color: transparent;
+    border: none;
+  }
+}
+.container-sortable-item{
+  position: relative;
+
+  .btn_unselect_pictogram{
+    @extend .col-center;
+    position: absolute;
+    padding: 3px;
+    margin: 0;
+    background-color: $error;
+    border: none;
+    width: 25px;
+    height: 25px;
+    top: -5px;
+    right: -5px;
+    z-index: 999;
+    border-radius: 20px;
+    cursor: pointer;
+  }
+}

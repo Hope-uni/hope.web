@@ -4,6 +4,7 @@ import { Show } from '@/components/Show';
 import PersonDataGeneralForm from '@/components/user/form/PersonDataGeneralForm';
 import PersonDataSpecificForm from '@/components/user/form/PersonDataSpecificForm';
 import UserDataForm from '@/components/user/form/UserDataForm';
+import { useOpenNotification } from '@/context/Notification/NotificationProvider';
 import useStepFormUser from '@/hooks/useStepFormUser';
 import { useOverlayStore } from '@/lib/store';
 import { useFormCreateUserStore } from '@/lib/store/forms/formCreateUser';
@@ -11,14 +12,15 @@ import { FormCreateUserError, FormCreateUserSchema } from '@/models/schema';
 import { CreateUserHelper, CurrentRoleType } from '@/services/user/helpers';
 import styles from '@/styles/modules/user.module.scss';
 import { deepEqual, removeKeysFromObject } from '@/utils/objects';
-import { Alert, Button, Divider, Flex, Typography, message } from 'antd';
-import { useCallback, useState } from 'react';
+import { Alert, Button, Divider, Flex, Typography } from 'antd';
+import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 
 const { Title } = Typography;
 
 export default function EditUserForm() {
   const { t } = useTranslation();
+  const { openNotification } = useOpenNotification();
   const { setLoading } = useOverlayStore();
 
   const {
@@ -86,7 +88,9 @@ export default function EditUserForm() {
         }),
       );
 
-      message.success(res.message);
+      openNotification.success({
+        description: res.message,
+      });
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -111,11 +115,13 @@ export default function EditUserForm() {
     fieldsFiltered = removeKeysFromObject(fields, keyToDelete);
 
     if (deepEqual(values, fieldsFiltered)) {
-      message.warning(t('User.form.feedback.not_changed_detect'));
+      openNotification.warning({
+        description: t('User.form.feedback.not_changed_detect'),
+      });
       return;
     }
     handleSubmit();
-  }, [fields, getCurrentValues, handleSubmit, t]);
+  }, [fields, getCurrentValues, handleSubmit, openNotification, t]);
 
   return (
     <Flex vertical className={`${styles.wrapper_edit_user}`} gap={10}>
