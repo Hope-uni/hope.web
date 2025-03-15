@@ -2,16 +2,26 @@
 
 import { usePictogramColumns } from '@/components/pictogram/list/PictogramColumns';
 import WrapperTable from '@/components/table/Wrappertable';
-import { useFetchListPictogramsQuery } from '@/lib/queries/pictogram';
+import { useOpenNotification } from '@/context/Notification/NotificationProvider';
+import {
+  useFetchListCategoryPictogramsQuery,
+  useFetchListPictogramsQuery,
+} from '@/lib/queries/pictogram';
+import { useFormPictogramStore } from '@/lib/store/forms/formPictogram';
 import { useTableStore } from '@/lib/store/table';
 import { E_ActionKeyTable } from '@/models/types/Table.d';
-import { Space, message } from 'antd';
+import { Space } from 'antd';
+import { useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 export default function PictogramsIndex() {
   const { t } = useTranslation();
+  const { openNotification } = useOpenNotification();
+  const { setCategoryList } = useFormPictogramStore();
   const [columns] = usePictogramColumns();
   const { searching, paginationTable, dispatch } = useTableStore();
+
+  const queryCategory = useFetchListCategoryPictogramsQuery();
   const { data, isLoading, isRefetching } = useFetchListPictogramsQuery({
     paginate: {
       page: paginationTable?.page,
@@ -19,9 +29,24 @@ export default function PictogramsIndex() {
     },
   });
 
+  const loading = useMemo(
+    () => !(!isLoading && !queryCategory.isLoading),
+    [isLoading, queryCategory.isLoading],
+  );
+
+  useEffect(() => {
+    if (!loading) {
+      if (queryCategory?.data && queryCategory?.data?.data) {
+        setCategoryList(queryCategory?.data.data || []);
+      }
+    }
+  }, [loading, queryCategory?.data, setCategoryList]);
+
   const handleSearch = () => {
     dispatch({ type: E_ActionKeyTable.CLEAR_SELECTED });
-    message.success('Processing complete!'); // TODO it's will change for message returned by api
+    openNotification.success({
+      description: 'Processing complete!',
+    }); // TODO it's will change for message returned by api
   };
 
   return (
