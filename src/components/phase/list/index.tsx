@@ -29,7 +29,7 @@ export default function PhaseIndex() {
         <WrapperTable
           cols={columns}
           data={data}
-          searchable
+          searchable={false}
           searchProps={{
             onSearch: handleSearch,
             searching: searching,

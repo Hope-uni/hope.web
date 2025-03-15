@@ -48,6 +48,15 @@ const PictogramSentenceField = () => {
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
+    return () => {
+      setSolutionSentenceList([]);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  console.log(solutionSentenceList);
+
+  useEffect(() => {
     setSolutionSentenceText(
       solutionSentenceList.map((item) => item.name).join(' '),
     );
@@ -196,8 +205,8 @@ const PictogramSentenceField = () => {
                   <PictogramItem
                     key={pictogram.id}
                     pictogram={pictogram}
-                    sizeContainer={60}
-                    sizeImg={30}
+                    sizeContainer={100}
+                    sizeImg={80}
                     showLabel={false}
                     onClick={() => handleSelectPictogram(pictogram)}
                   />
