@@ -54,8 +54,6 @@ const PictogramSentenceField = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  console.log(solutionSentenceList);
-
   useEffect(() => {
     setSolutionSentenceText(
       solutionSentenceList.map((item) => item.name).join(' '),
