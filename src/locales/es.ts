@@ -598,7 +598,7 @@ const es = {
         },
       },
       phase: {
-        label: 'Phase',
+        label: 'Fase',
         placeholder: 'Fase de la actividad',
         rules: {
           required: 'Fase es requerido',

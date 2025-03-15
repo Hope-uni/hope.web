@@ -34,7 +34,7 @@ export default function TherapistIndex() {
         <WrapperTable
           cols={columns}
           data={data?.data}
-          searchable
+          searchable={false}
           searchProps={{
             onSearch: handleSearch,
             searching: searching,

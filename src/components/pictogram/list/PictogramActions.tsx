@@ -115,9 +115,13 @@ const PictogramActions = ({
     if (pictogram) {
       let values = form.getFieldsValue();
       let fieldsFiltered = undefined;
-      let keyToDelete: (keyof typeof pictogram)[] = ['id'];
+      let keyToDelete: (keyof typeof pictogram)[] = ['id', 'category'];
 
       fieldsFiltered = removeKeysFromObject(pictogram, keyToDelete);
+      fieldsFiltered = {
+        ...fieldsFiltered,
+        categoryId: pictogram.category.id,
+      };
 
       if (deepEqual(values, fieldsFiltered)) {
         openNotification.warning({

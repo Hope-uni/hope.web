@@ -34,7 +34,7 @@ export default function PatientIndex() {
         <WrapperTable
           cols={columns}
           data={data}
-          searchable
+          searchable={false}
           searchProps={{
             onSearch: handleSearch,
             searching: searching,

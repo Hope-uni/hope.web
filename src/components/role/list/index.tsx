@@ -29,7 +29,7 @@ export default function RoleIndex() {
         <WrapperTable
           cols={columns}
           data={data}
-          searchable
+          searchable={false}
           searchProps={{
             onSearch: handleSearch,
             searching: searching,

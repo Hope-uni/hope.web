@@ -95,6 +95,7 @@ export default function ActivityForm({ form }: Props) {
         name="pictogramSentence"
         className="input-hidden"
         rules={ActivityRules.pictogramSentence}
+        validateFirst={false}
       >
         <Input readOnly type="hidden" />
       </Form.Item>

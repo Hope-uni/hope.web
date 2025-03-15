@@ -57,8 +57,8 @@ const ActivityDetail = ({ activity }: Props) => {
                   pictogram={SinglePictogramWithOutCategorySchema.parse(
                     pictogram,
                   )}
-                  sizeContainer={60}
-                  sizeImg={30}
+                  sizeContainer={100}
+                  sizeImg={80}
                   showLabel={false}
                 />
               </div>

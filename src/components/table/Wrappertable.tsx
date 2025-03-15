@@ -57,7 +57,7 @@ function WrapperTable({
         : {
             totalPages: data?.paginate?.page_count ?? 0,
             page: data?.paginate?.page,
-            size: data?.paginate?.page_size,
+            size: data?.paginate?.size,
             totalData: totalResults,
           };
 
