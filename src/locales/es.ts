@@ -799,6 +799,9 @@ const es = {
   common: {
     form: {
       fields: {
+        general_field: {
+          label: 'Este campo',
+        },
         username: {
           rules: {
             pattern: 'El usuario debe contener entre 3 y 16 carácteres',
@@ -835,6 +838,8 @@ const es = {
       },
       rules: {
         max_len: '{{field}} debe tener como máximo {{limit}} caracteres',
+        min_len: '{{field}} debe tener como mínimo {{limit}} caracteres',
+        max_min_len: '{{field}} debe tener entre {{min}} y {{max}} caracteres',
         whitespace: 'No se permiten espacios en blancos',
         only_spaces_between_words: 'Solo se permite un espacio entre palabras',
       },
@@ -861,6 +866,20 @@ const es = {
     message_error: {
       title: '¡Lo sentimos, algo ha salido mal!',
       subtitle: 'Ha ocurrido un error inesperado',
+    },
+    notification: {
+      success: {
+        messageDefault: '¡Hecho!',
+      },
+      info: {
+        messageDefault: '¡Aviso!',
+      },
+      warning: {
+        messageDefault: '¡Advertencia!',
+      },
+      error: {
+        messageDefault: '¡Algo salió mal!',
+      },
     },
   },
 } as const;

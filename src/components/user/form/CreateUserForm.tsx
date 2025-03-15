@@ -1,6 +1,7 @@
 'use client';
 
 import { Show } from '@/components/Show';
+import { useOpenNotification } from '@/context/Notification/NotificationProvider';
 import useStepFormUser from '@/hooks/useStepFormUser';
 import { useFormCreateUserStore } from '@/lib/store/forms/formCreateUser';
 import {
@@ -10,7 +11,7 @@ import {
 } from '@/models/schema';
 import { CreateUserHelper, CurrentRoleType } from '@/services/user/helpers';
 import styles from '@/styles/modules/user.module.scss';
-import { Alert, Button, Divider, Flex, Steps, Typography, message } from 'antd';
+import { Alert, Button, Divider, Flex, Steps, Typography } from 'antd';
 import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -18,6 +19,7 @@ const { Text, Title } = Typography;
 
 export default function CreateUserForm() {
   const { t } = useTranslation();
+  const { openNotification } = useOpenNotification();
   const [loadingForm, setLoadingForm] = useState(false);
   const {
     fields,
@@ -67,14 +69,22 @@ export default function CreateUserForm() {
         }
 
         cleanForm();
-        message.success(res.message);
+        openNotification.success({
+          description: res.message,
+        });
         setLoadingForm(false);
       } catch (error) {
         setLoadingForm(false);
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [setErrors, currentRoleSelected.name, cleanForm, applyErrors],
+    [
+      setErrors,
+      currentRoleSelected.name,
+      cleanForm,
+      applyErrors,
+      openNotification,
+    ],
   );
 
   const handleNext = useCallback(
