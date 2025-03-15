@@ -870,7 +870,7 @@ const es = {
         messageDefault: '¡Aviso!',
       },
       warning: {
-        messageDefault: 'Advertencia!',
+        messageDefault: '¡Advertencia!',
       },
       error: {
         messageDefault: '¡Algo salió mal!',
