@@ -26,6 +26,10 @@ export const PayloadPictogramSchema = PictogramSchema.extend({
   categoryId: z.union([z.number(), z.string()]),
 });
 export type PayloadPictogram = z.infer<typeof PayloadPictogramSchema>;
+export type FormPictogramErrors = Record<
+  keyof z.infer<typeof PayloadPictogramSchema>,
+  string
+>;
 
 export const SinglePictogramSchema = PictogramSchema.extend({
   id: z.number(),

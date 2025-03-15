@@ -1,6 +1,10 @@
 import i18next from '@/i18n';
 import { Rule } from 'antd/lib/form';
-import { CommonRules } from './common';
+import {
+  CharacterLimit,
+  CommonRules,
+  TextWhiteSpaceAndLenRule,
+} from '@/constants/rules';
 
 export const UserRules = {
   user: {
@@ -15,24 +19,40 @@ export const UserRules = {
         required: true,
         message: i18next.t('User.fields.first_name.rules.required'),
       },
+      ...TextWhiteSpaceAndLenRule({
+        maxLen: CharacterLimit.max.name,
+        field: i18next.t('User.fields.first_name.label'),
+      }),
     ] as Rule[],
     second_name: [
       {
         required: true,
         message: i18next.t('User.fields.second_name.rules.required'),
       },
+      ...TextWhiteSpaceAndLenRule({
+        maxLen: CharacterLimit.max.name,
+        field: i18next.t('User.fields.second_name.label'),
+      }),
     ] as Rule[],
     first_surname: [
       {
         required: true,
         message: i18next.t('User.fields.first_surname.rules.required'),
       },
+      ...TextWhiteSpaceAndLenRule({
+        maxLen: CharacterLimit.max.name,
+        field: i18next.t('User.fields.first_surname.label'),
+      }),
     ] as Rule[],
     second_surname: [
       {
         required: true,
         message: i18next.t('User.fields.second_surname.rules.required'),
       },
+      ...TextWhiteSpaceAndLenRule({
+        maxLen: CharacterLimit.max.name,
+        field: i18next.t('User.fields.second_surname.label'),
+      }),
     ] as Rule[],
     gender: [
       {
@@ -48,6 +68,11 @@ export const UserRules = {
         required: true,
         message: i18next.t('User.fields.address.rules.required'),
       },
+      ...TextWhiteSpaceAndLenRule({
+        minLen: CharacterLimit.min.descriptions,
+        maxLen: CharacterLimit.max.descriptions,
+        field: i18next.t('User.fields.address.label'),
+      }),
     ] as Rule[],
     birthday: [
       {
@@ -78,6 +103,11 @@ export const UserRules = {
         required: true,
         message: i18next.t('User.fields.observations.rules.required'),
       },
+      ...TextWhiteSpaceAndLenRule({
+        minLen: CharacterLimit.min.descriptions,
+        maxLen: CharacterLimit.max.descriptions,
+        field: i18next.t('User.fields.observations.label'),
+      }),
     ] as Rule[],
     identification: [
       {

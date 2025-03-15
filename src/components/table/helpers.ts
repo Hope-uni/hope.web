@@ -6,4 +6,5 @@ export type RenderModeActionTypes =
   | 'add_category'
   | 'assign_achievement'
   | 'assign_patient'
-  | 'add_activity';
+  | 'add_activity'
+  | 'add_pictogram';
