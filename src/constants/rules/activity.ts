@@ -3,7 +3,7 @@ import { Rule } from 'antd/lib/form';
 import {
   CharacterLimit,
   CommonRules,
-  TextWhiteSpaceWithMaxLenRule,
+  TextWhiteSpaceAndLenRule,
 } from '@/constants/rules';
 
 const Pictogram_Name_Max_Len = 30;
@@ -27,10 +27,10 @@ export const ActivityRules = {
       required: true,
       message: i18next.t('Activity.fields.description.rules.required'),
     },
-    ...TextWhiteSpaceWithMaxLenRule(
-      CharacterLimit.descriptions,
-      i18next.t('Activity.fields.description.label'),
-    ),
+    ...TextWhiteSpaceAndLenRule({
+      minLen: CharacterLimit.min.descriptions,
+      field: i18next.t('Activity.fields.description.label'),
+    }),
   ] as Rule[],
   satisfactoryPoints: [
     {
