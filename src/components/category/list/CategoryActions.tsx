@@ -36,7 +36,7 @@ const CategoryActions = ({
   renderMode = 'popup',
 }: Props) => {
   const { t } = useTranslation();
-  const [invalidateQueries] = useInvalidateQueries();
+  const { invalidateQueries } = useInvalidateQueries();
   const { openNotification } = useOpenNotification();
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
@@ -112,7 +112,14 @@ const CategoryActions = ({
     } catch (error) {
       setLoading(false);
     }
-  }, [form, isEdit, category, openNotification, applyErrors]);
+  }, [
+    form,
+    isEdit,
+    category,
+    invalidateQueries,
+    openNotification,
+    applyErrors,
+  ]);
 
   const validateIfFormHasChanged = useCallback(() => {
     if (category) {

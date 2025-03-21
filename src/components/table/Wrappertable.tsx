@@ -2,9 +2,11 @@
 import SkeletonTable from '@/components/table/SkeletonTable';
 import { useTableStore } from '@/lib/store/table';
 import { E_ActionKeyTable, TablePropsType } from '@/models/types/Table.d';
-import { Table } from 'antd';
+import { Grid, Table } from 'antd';
 import { useCallback, useEffect, useMemo } from 'react';
 import HeaderTable from './HeaderTable';
+
+const { useBreakpoint } = Grid;
 
 function WrapperTable({
   btnExtra = false,
@@ -23,7 +25,10 @@ function WrapperTable({
   scroll = false,
   scrollHeight,
   searchProps,
+  stripped = true,
+  onRowClick,
 }: TablePropsType) {
+  const screens = useBreakpoint();
   const { paginationTable, dispatch } = useTableStore();
 
   const paginationFromAPI = useMemo(() => {
@@ -95,13 +100,22 @@ function WrapperTable({
     };
   }, [paginationTable, handleChangePagination]);
 
+  const handleOnRow = (record: any, rowIndex: number | undefined) => {
+    if (onRowClick) {
+      return {
+        onClick: () => onRowClick(record, rowIndex),
+      };
+    }
+    return {};
+  };
+
   return (
     <div style={{ ...stylesWrap }}>
       {!loading && !fetching ? (
         <>
           <Table
             id={id}
-            className="customTable"
+            className={`customTable ${stripped ? 'table-stripped' : ''} ${onRowClick ? 'table-row-clickable' : ''}`}
             columns={cols}
             dataSource={
               Array.isArray(data?.data) || Array.isArray(data)
@@ -109,7 +123,7 @@ function WrapperTable({
                 : []
             }
             scroll={
-              scroll
+              screens.sm && scroll
                 ? {
                     x: 'max-content',
                     y: scrollHeight ?? undefined,
@@ -129,6 +143,8 @@ function WrapperTable({
             }
             bordered={false}
             rowKey="id"
+            rowHoverable={Boolean(onRowClick)}
+            onRow={handleOnRow}
           />
         </>
       ) : (

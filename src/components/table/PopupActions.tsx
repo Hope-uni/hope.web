@@ -5,12 +5,16 @@ import { useOpenNotification } from '@/context/Notification/NotificationProvider
 import { API_SINGLE_RESPONSE } from '@/models/types';
 import { ActionTableOptionsType, ActionType } from '@/models/types/Table';
 import styles from '@/styles/modules/partials.module.scss';
-import { Button, Dropdown, Flex } from 'antd';
+import { useQueryClient } from '@tanstack/react-query';
+import { Button, Dropdown, Flex, Grid, Tooltip } from 'antd';
 import { useRouter } from 'next/navigation';
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import { RenderModeActionTypes } from './helpers';
+import useInvalidateQueries from '@/hooks/useInvalidateQueries';
+
+const { useBreakpoint } = Grid;
 
 interface Props {
   id: number | string;
@@ -20,12 +24,14 @@ interface Props {
   modalDeleteDescription?: string | JSX.Element;
   classWrapper?: string;
   renderMode?: RenderModeActionTypes;
+  queryKey?: string;
+  displayOutsidePopup?: boolean;
   onShow?: () => void;
   onEdit?: () => void;
   onDelete?: () => Promise<API_SINGLE_RESPONSE>;
 }
 
-export default function PopupActions({
+export const PopupActions = ({
   id,
   actions,
   route,
@@ -33,16 +39,28 @@ export default function PopupActions({
   modalDeleteDescription,
   classWrapper,
   renderMode = 'popup',
+  queryKey,
+  displayOutsidePopup = false,
   onShow,
   onEdit,
   onDelete,
-}: Props) {
+}: Props) => {
   const { t } = useTranslation();
+  const screens = useBreakpoint();
+  const { invalidateQueries } = useInvalidateQueries();
   const { openNotification } = useOpenNotification();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [openModalDelete, setOpenModalDelete] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);
+
+  const visibleActions = useMemo(
+    () =>
+      HopeTable.actionTableOptions.filter((item) =>
+        actions.includes(item.actionType),
+      ),
+    [actions],
+  );
 
   const HandlesActions = {
     show: () => {
@@ -98,6 +116,10 @@ export default function PopupActions({
         return;
       }
 
+      if (queryKey) {
+        await invalidateQueries([queryKey]);
+      }
+
       setLoading(false);
       setOpenModalDelete(false);
       openNotification.success({
@@ -110,7 +132,7 @@ export default function PopupActions({
         description: (error as Error).message,
       });
     }
-  }, [onDelete, openNotification]);
+  }, [invalidateQueries, onDelete, openNotification, queryKey]);
 
   const handleSelectAction = (action: ActionType) => {
     if (action in HandlesActions) {
@@ -126,27 +148,23 @@ export default function PopupActions({
   const renderItem = () => {
     return (
       <ul
-        className={`popup-actions-dropdown ant-dropdown-menu ant-dropdown-menu-root ant-dropdown-menu-vertical`}
+        className={`popup-actions-dropdown ant-dropdown-menu ant-dropdown-menu-root ant-dropdown-menu-vertical table-popup-actions`}
         role="menu"
         data-menu-list="true"
       >
-        {HopeTable.actionTableOptions?.map((item: ActionTableOptionsType) => (
+        {visibleActions?.map((item: ActionTableOptionsType) => (
           <div key={item.key}>
-            <Show>
-              <Show.When isTrue={actions.includes(item.actionType)}>
-                <li
-                  className={`ant-dropdown-menu-item ${item.colorClassName}`}
-                  role="menuitem"
-                  key={item?.key}
-                  onClick={() => handleSelectAction(item.actionType)}
-                >
-                  <item.icon />
-                  <span className="ant-dropdown-menu-title-content">
-                    {item?.label}
-                  </span>
-                </li>
-              </Show.When>
-            </Show>
+            <li
+              className={`ant-dropdown-menu-item item-popup-action ${item.colorClassName}`}
+              role="menuitem"
+              key={item?.key}
+              onClick={() => handleSelectAction(item.actionType)}
+            >
+              <item.icon />
+              <span className="ant-dropdown-menu-title-content">
+                {item?.label}
+              </span>
+            </li>
           </div>
         ))}
       </ul>
@@ -157,22 +175,41 @@ export default function PopupActions({
     <>
       <Show>
         <Show.When isTrue={renderMode === 'popup'}>
-          <div className={classWrapper}>
-            <Flex align="center" justify="center">
-              <Dropdown
-                className="popup-actions"
-                trigger={['click']}
-                dropdownRender={renderItem}
-                open={openMenu}
-                onOpenChange={(flag) => handleVisibilityMenu(flag)}
+          <>
+            {screens.sm && displayOutsidePopup ? (
+              <div
+                className={`popup-actions-list-container table-popup-actions`}
               >
-                <BsThreeDotsVertical
-                  size={'12px'}
-                  onClick={() => handleVisibilityMenu(true)}
-                />
-              </Dropdown>
-            </Flex>
-          </div>
+                {visibleActions?.map((item: ActionTableOptionsType) => (
+                  <Tooltip key={item?.key} title={item.label}>
+                    <span
+                      className={`item-popup-action ${item.colorClassName}`}
+                      onClick={() => handleSelectAction(item.actionType)}
+                    >
+                      <item.icon />
+                    </span>
+                  </Tooltip>
+                ))}
+              </div>
+            ) : (
+              <div className={classWrapper}>
+                <Flex align="center" justify="center">
+                  <Dropdown
+                    className="popup-actions"
+                    trigger={['click']}
+                    dropdownRender={renderItem}
+                    open={openMenu}
+                    onOpenChange={(flag) => handleVisibilityMenu(flag)}
+                  >
+                    <BsThreeDotsVertical
+                      size={'12px'}
+                      onClick={() => handleVisibilityMenu(true)}
+                    />
+                  </Dropdown>
+                </Flex>
+              </div>
+            )}
+          </>
         </Show.When>
 
         <Show.When isTrue={renderMode === 'delete'}>
@@ -211,4 +248,4 @@ export default function PopupActions({
       </HModal>
     </>
   );
-}
+};

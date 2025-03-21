@@ -6,6 +6,7 @@ import {
   DetailTherapist,
   DetailTutor,
   ListRoleResponse,
+  Observation,
   PayloadPatient,
   PayloadTutorTherapist,
   SinglePatient,
@@ -179,6 +180,25 @@ export const DeletePatientService = async (id: string) => {
   try {
     const response = await API_HOPE_PROTECTED.delete<API_SINGLE_RESPONSE>(
       `${API.Patient.Index}/${id}`,
+    );
+
+    return response.data;
+  } catch (error) {
+    throw axiosErrorHandler(error);
+  }
+};
+
+export const AddObservationToPatientService = async (
+  patientId: number,
+  description: string,
+) => {
+  try {
+    const response = await API_HOPE_PROTECTED.post<API_RESPONSE<Observation>>(
+      API.Patient.AddObservation,
+      {
+        patientId,
+        description,
+      },
     );
 
     return response.data;

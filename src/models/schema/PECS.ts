@@ -7,9 +7,17 @@ export const TEAGradeSchema = z.object({
 });
 export type TEAGrade = z.infer<typeof TEAGradeSchema>;
 
-export const PayloadPhaseSchema = z.object({
+export const BaseTEAPhaseSchema = z.object({
   name: z.string(),
   description: z.string(),
+});
+
+export const TEAPhaseSchema = BaseTEAPhaseSchema.extend({
+  id: z.number(),
+});
+export type TEAPhase = z.infer<typeof TEAPhaseSchema>;
+
+export const PayloadPhaseSchema = BaseTEAPhaseSchema.extend({
   scoreActivities: z.number(),
 });
 export type PayloadPhase = z.infer<typeof PayloadPhaseSchema>;
@@ -18,10 +26,13 @@ export type FormPhaseErrors = Record<
   string
 >;
 
-export const TEAPhaseSchema = PayloadPhaseSchema.extend({
+/**
+ * Schema for a single TEA phase used in lists.
+ */
+export const SingleTEAPhaseSchema = PayloadPhaseSchema.extend({
   id: z.number(),
 });
-export type TEAPhase = z.infer<typeof TEAPhaseSchema>;
+export type SingleTEAPhase = z.infer<typeof SingleTEAPhaseSchema>;
 
 export const PECSSchema = z.object({
   grades: TEAGradeSchema,

@@ -24,7 +24,7 @@ const { Title } = Typography;
 
 export default function EditUserForm() {
   const { t } = useTranslation();
-  const [invalidateQueries] = useInvalidateQueries();
+  const { invalidateQueries } = useInvalidateQueries();
   const { openNotification } = useOpenNotification();
   const { setLoading } = useOverlayStore();
 
@@ -126,6 +126,7 @@ export default function EditUserForm() {
     fields,
     setFields,
     applyErrors,
+    invalidateQueries,
   ]);
 
   const validateIfFormHasChanged = useCallback(() => {

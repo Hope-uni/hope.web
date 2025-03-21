@@ -21,7 +21,7 @@ interface NotificationContent {
 const ConfigNotification = {
   className: 'primary-notification',
   placement: 'topRight' as const,
-  duration: null,
+  duration: 3,
   closeIcon: <BsXLg />,
 };
 
