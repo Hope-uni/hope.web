@@ -6,10 +6,12 @@ interface FormCreateUserState {
   pictogramList: SinglePictogram[];
   solutionSentenceList: SinglePictogram[];
   solutionSentenceText: string;
+  loadingDetail: boolean;
   setPhaseList: (phases: TEAPhase[]) => void;
   setPictogramList: (pictograms: SinglePictogram[]) => void;
   setSolutionSentenceList: (pictograms: SinglePictogram[]) => void;
   setSolutionSentenceText: (solution: string) => void;
+  seLoadingDetail: (loading: boolean) => void;
 }
 
 export const useFormActivityStore = create<FormCreateUserState>()((set) => ({
@@ -17,6 +19,7 @@ export const useFormActivityStore = create<FormCreateUserState>()((set) => ({
   pictogramList: [],
   solutionSentenceList: [],
   solutionSentenceText: '',
+  loadingDetail: false,
   setPhaseList: (phases: TEAPhase[]) => set({ phaseList: phases }),
   setPictogramList: (pictograms: SinglePictogram[]) =>
     set({ pictogramList: pictograms }),
@@ -24,4 +27,5 @@ export const useFormActivityStore = create<FormCreateUserState>()((set) => ({
     set({ solutionSentenceList: pictograms }),
   setSolutionSentenceText: (solution: string) =>
     set({ solutionSentenceText: solution }),
+  seLoadingDetail: (loading: boolean) => set({ loadingDetail: loading }),
 }));

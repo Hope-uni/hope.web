@@ -1,3 +1,4 @@
+import { QueryKeys } from '@/constants';
 import { API_PAYLOAD, API_RESPONSE } from '@/models/types';
 import {
   FindUserByIdService,
@@ -21,23 +22,23 @@ export const useFetchCatalogInitCreateUserQuery = (isEdit: boolean) => {
   return useQueries({
     queries: [
       {
-        queryKey: ['list-catalog-role'],
+        queryKey: [QueryKeys.Role.CatalogRole],
         queryFn: () => ListRolesService(),
         enabled: !isEdit,
         placeholderData: keepPreviousData,
       },
       {
-        queryKey: ['list-catalog-phase'],
+        queryKey: [QueryKeys.Phase.CatalogPhase],
         queryFn: () => ListPhaseService(),
         placeholderData: keepPreviousData,
       },
       {
-        queryKey: ['list-catalog-degree'],
+        queryKey: [QueryKeys.Degree.CatalogDegree],
         queryFn: () => ListDegreeService(),
         placeholderData: keepPreviousData,
       },
       {
-        queryKey: ['list-catalog-tutor'],
+        queryKey: [QueryKeys.User.CatalogTutor],
         queryFn: () => ListTutorService(),
         placeholderData: keepPreviousData,
       },
@@ -47,7 +48,7 @@ export const useFetchCatalogInitCreateUserQuery = (isEdit: boolean) => {
 
 export const useFetchListUserQuery = (payload?: API_PAYLOAD) => {
   return useQuery({
-    queryKey: ['list-user', payload],
+    queryKey: [QueryKeys.User.ListUser, payload],
     queryFn: () => ListUserService(payload),
     placeholderData: keepPreviousData,
   });
@@ -55,7 +56,7 @@ export const useFetchListUserQuery = (payload?: API_PAYLOAD) => {
 
 export const useFetchFindUserByIdQuery = (id: string | undefined) => {
   return useQuery({
-    queryKey: ['find-user-by-id', id],
+    queryKey: [QueryKeys.User.FindById, id],
     queryFn: () => FindUserByIdService(id),
     placeholderData: keepPreviousData,
   });
@@ -66,7 +67,7 @@ export const useFetchFindUserByRoleQuery = <T = unknown>(
   id: string | undefined,
 ) => {
   return useQuery<API_RESPONSE<T>>({
-    queryKey: ['find-user-by-role', id],
+    queryKey: [QueryKeys.User.FindByRole, id],
     queryFn: () =>
       FindUserByIdHelper(role as CurrentRoleTypeFindUser, id) as Promise<
         API_RESPONSE<T>
@@ -78,7 +79,7 @@ export const useFetchFindUserByRoleQuery = <T = unknown>(
 
 export const useFetchListPatientQuery = (payload?: API_PAYLOAD) => {
   return useQuery({
-    queryKey: ['list-patient', payload],
+    queryKey: [QueryKeys.User.ListPatient, payload],
     queryFn: () => ListPatientService(payload),
     placeholderData: keepPreviousData,
   });
@@ -86,7 +87,7 @@ export const useFetchListPatientQuery = (payload?: API_PAYLOAD) => {
 
 export const useFetchListTutorQuery = (payload?: API_PAYLOAD) => {
   return useQuery({
-    queryKey: ['list-tutor', payload],
+    queryKey: [QueryKeys.User.ListTutor, payload],
     queryFn: () => ListTutorService(payload),
     placeholderData: keepPreviousData,
   });
@@ -94,7 +95,7 @@ export const useFetchListTutorQuery = (payload?: API_PAYLOAD) => {
 
 export const useFetchListTherapistQuery = (payload?: API_PAYLOAD) => {
   return useQuery({
-    queryKey: ['list-therapist', payload],
+    queryKey: [QueryKeys.User.ListTherapist, payload],
     queryFn: () => ListTherapistService(payload),
     placeholderData: keepPreviousData,
   });

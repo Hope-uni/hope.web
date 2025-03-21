@@ -1,3 +1,4 @@
+import { QueryKeys } from '@/constants';
 import { API_PAYLOAD } from '@/models/types';
 import {
   FindActivityByIdService,
@@ -7,7 +8,7 @@ import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
 export const useFetchListActivitiesQuery = (payload?: API_PAYLOAD) => {
   return useQuery({
-    queryKey: ['list-catalog-role', payload],
+    queryKey: [QueryKeys.Activity.ListActivity, payload],
     queryFn: () => ListActivitiesService(payload),
     placeholderData: keepPreviousData,
   });
@@ -15,7 +16,7 @@ export const useFetchListActivitiesQuery = (payload?: API_PAYLOAD) => {
 
 export const useFetchFindActivityByIdQuery = (id: number) => {
   return useQuery({
-    queryKey: ['find-activity-by-id', id],
+    queryKey: [QueryKeys.Activity.FindById, id],
     queryFn: () => FindActivityByIdService(id),
     placeholderData: keepPreviousData,
   });
