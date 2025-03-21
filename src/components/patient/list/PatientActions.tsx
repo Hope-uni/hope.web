@@ -89,10 +89,6 @@ const PatientActions = ({
     );
   }, [patient.id]);
 
-  console.log([QueryKeys.User.FindByRole, [String(patient.id), ROLES.PATIENT]]);
-
-  console.log('🔍 Queries en caché:', queryClient.getQueryCache());
-
   const handleAddObservation = useCallback(async () => {
     try {
       setLoadingForm(true);
