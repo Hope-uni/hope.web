@@ -43,6 +43,8 @@ export const usePictogramColumns = () => {
       dataIndex: 'id',
       align: 'center',
       width: '60px',
+      fixed: 'right',
+      className: 'td-actions',
       render: (_, pictogram) => {
         return <PictogramActions pictogram={pictogram} />;
       },

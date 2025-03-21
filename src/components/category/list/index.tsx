@@ -44,6 +44,7 @@ export default function CategoryIndex() {
           }}
           loading={isLoading}
           fetching={isRefetching}
+          scroll
         />
       </Space>
     </>

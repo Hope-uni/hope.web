@@ -2,8 +2,10 @@ import PhaseForm from '@/components/category/form';
 import HModal from '@/components/common/Modals';
 import { Show } from '@/components/Show';
 import { RenderModeActionTypes } from '@/components/table/helpers';
-import PopupActions from '@/components/table/PopupActions';
+import { PopupActions } from '@/components/table/PopupActions';
+import { QueryKeys } from '@/constants';
 import { useOpenNotification } from '@/context/Notification/NotificationProvider';
+import useInvalidateQueries from '@/hooks/useInvalidateQueries';
 import { CategoryPictogram, FormCategoryErrors } from '@/models/schema';
 import { ActionType } from '@/models/types';
 import {
@@ -14,6 +16,7 @@ import {
 import { ParseToErrorAntd } from '@/services/user/helpers';
 import styles from '@/styles/modules/partials.module.scss';
 import { deepEqual, removeKeysFromObject } from '@/utils/objects';
+import { useQueryClient } from '@tanstack/react-query';
 import { Button, Form } from 'antd';
 import { useCallback, useEffect, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
@@ -33,6 +36,7 @@ const CategoryActions = ({
   renderMode = 'popup',
 }: Props) => {
   const { t } = useTranslation();
+  const [invalidateQueries] = useInvalidateQueries();
   const { openNotification } = useOpenNotification();
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
@@ -97,6 +101,8 @@ const CategoryActions = ({
         return;
       }
 
+      await invalidateQueries([QueryKeys.Pictogram.ListCategory]);
+
       openNotification.success({
         description: res.message,
       });
@@ -140,6 +146,7 @@ const CategoryActions = ({
               actions={actions}
               route="categories"
               classWrapper={classWrapper}
+              queryKey={QueryKeys.Pictogram.ListCategory}
               onEdit={handleOpenEdit}
               onDelete={handleDelete}
               modalDeleteTitle={t('Category.actions.delete.modal.title')}

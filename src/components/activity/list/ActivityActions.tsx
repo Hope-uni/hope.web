@@ -2,9 +2,10 @@ import ActivityForm from '@/components/activity/form';
 import HModal from '@/components/common/Modals';
 import { Show } from '@/components/Show';
 import { RenderModeActionTypes } from '@/components/table/helpers';
-import PopupActions from '@/components/table/PopupActions';
-import { RoutesName } from '@/constants';
+import { PopupActions } from '@/components/table/PopupActions';
+import { QueryKeys, RoutesName } from '@/constants';
 import { useOpenNotification } from '@/context/Notification/NotificationProvider';
+import useInvalidateQueries from '@/hooks/useInvalidateQueries';
 import { useOverlayStore } from '@/lib/store';
 import { FormActivityErrors, SingleActivity } from '@/models/schema';
 import { ActionType } from '@/models/types';
@@ -35,6 +36,7 @@ const ActivityActions = ({
   renderMode = 'popup',
 }: Props) => {
   const { t } = useTranslation();
+  const [invalidateQueries] = useInvalidateQueries();
   const { openNotification } = useOpenNotification();
   const router = useRouter();
   const [form] = Form.useForm();
@@ -86,6 +88,8 @@ const ActivityActions = ({
         setLoadingForm(false);
         return;
       }
+
+      await invalidateQueries([QueryKeys.Activity.ListActivity]);
 
       openNotification.success({
         description: res.message,
