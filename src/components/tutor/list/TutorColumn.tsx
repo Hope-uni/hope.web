@@ -47,6 +47,8 @@ export const useTutorColumns = () => {
       dataIndex: 'id',
       align: 'center',
       width: '60px',
+      fixed: 'right',
+      className: 'td-actions',
       render: (_, tutor) => {
         return <TutorActions tutor={tutor} />;
       },

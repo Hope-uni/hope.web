@@ -56,6 +56,8 @@ export const useUserColumns = () => {
       dataIndex: 'id',
       align: 'center',
       width: '60px',
+      fixed: 'right',
+      className: 'td-actions',
       render: (_, user) => {
         return <UserActions user={user} />;
       },

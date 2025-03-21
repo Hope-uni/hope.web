@@ -31,8 +31,9 @@ export const SingleActivitySchema = ActivitySchema.extend({
         id: z.number(),
       }),
     )
-    .nullable(),
-  user: UserActivitySchema,
+    .nullable()
+    .optional(),
+  user: UserActivitySchema.optional(),
 });
 export type SingleActivity = z.infer<typeof SingleActivitySchema>;
 
@@ -56,14 +57,4 @@ export type PayloadActivity = z.infer<typeof PayloadActivitySchema>;
 export type FormActivityErrors = Record<
   keyof z.infer<typeof PayloadActivitySchema>,
   string
->;
-
-export const UpdateActivityResponseSchema = z.object({
-  id: z.number(),
-  pictogramSentence: z.array(z.number()),
-  phase: TEAPhaseSchema,
-  user: UserActivitySchema,
-});
-export type UpdateActivityResponse = z.infer<
-  typeof UpdateActivityResponseSchema
 >;

@@ -97,6 +97,8 @@ export type TablePropsType = {
   scroll?: boolean;
   scrollHeight?: string | number;
   searchProps?: SearchPropsType;
+  stripped?: boolean;
+  onRowClick?: (record: any, rowIndex: number | undefined) => void;
 };
 
 export type ActionType =

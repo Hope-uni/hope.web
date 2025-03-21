@@ -4,7 +4,10 @@ import { Show } from '@/components/Show';
 import PersonDataGeneralForm from '@/components/user/form/PersonDataGeneralForm';
 import PersonDataSpecificForm from '@/components/user/form/PersonDataSpecificForm';
 import UserDataForm from '@/components/user/form/UserDataForm';
+import { QueryKeys } from '@/constants';
+import { ROLES } from '@/constants/Role';
 import { useOpenNotification } from '@/context/Notification/NotificationProvider';
+import useInvalidateQueries from '@/hooks/useInvalidateQueries';
 import useStepFormUser from '@/hooks/useStepFormUser';
 import { useOverlayStore } from '@/lib/store';
 import { useFormCreateUserStore } from '@/lib/store/forms/formCreateUser';
@@ -12,6 +15,7 @@ import { FormCreateUserError, FormCreateUserSchema } from '@/models/schema';
 import { CreateUserHelper, CurrentRoleType } from '@/services/user/helpers';
 import styles from '@/styles/modules/user.module.scss';
 import { deepEqual, removeKeysFromObject } from '@/utils/objects';
+import { validateRole } from '@/utils/session';
 import { Alert, Button, Divider, Flex, Typography } from 'antd';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -20,6 +24,7 @@ const { Title } = Typography;
 
 export default function EditUserForm() {
   const { t } = useTranslation();
+  const { invalidateQueries } = useInvalidateQueries();
   const { openNotification } = useOpenNotification();
   const { setLoading } = useOverlayStore();
 
@@ -88,6 +93,22 @@ export default function EditUserForm() {
         }),
       );
 
+      let queriesKeyToInvalidate = [QueryKeys.User.ListUser];
+
+      if (validateRole(currentRoleSelected.name, ROLES.PATIENT)) {
+        queriesKeyToInvalidate.push(QueryKeys.User.ListPatient);
+      }
+
+      if (validateRole(currentRoleSelected.name, ROLES.THERAPIST)) {
+        queriesKeyToInvalidate.push(QueryKeys.User.ListTherapist);
+      }
+
+      if (validateRole(currentRoleSelected.name, ROLES.TUTOR)) {
+        queriesKeyToInvalidate.push(QueryKeys.User.ListTutor);
+      }
+
+      await invalidateQueries(queriesKeyToInvalidate);
+
       openNotification.success({
         description: res.message,
       });
@@ -105,6 +126,7 @@ export default function EditUserForm() {
     fields,
     setFields,
     applyErrors,
+    invalidateQueries,
   ]);
 
   const validateIfFormHasChanged = useCallback(() => {

@@ -38,6 +38,7 @@ export default function RoleIndex() {
           loading={isLoading}
           fetching={isRefetching}
           pagination={false}
+          scroll
         />
       </Space>
     </>

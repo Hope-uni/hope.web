@@ -1,5 +1,5 @@
 import { RenderModeActionTypes } from '@/components/table/helpers';
-import PopupActions from '@/components/table/PopupActions';
+import { PopupActions } from '@/components/table/PopupActions';
 import { ROLES } from '@/constants/Role';
 import { SingleTutorTherapist } from '@/models/schema';
 import { ActionType } from '@/models/types';

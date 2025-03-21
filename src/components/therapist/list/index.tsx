@@ -2,15 +2,18 @@
 
 import WrapperTable from '@/components/table/Wrappertable';
 import { useTherapistColumns } from '@/components/therapist/list/TherapistColumn';
+import { RoutesName } from '@/constants';
 import { useOpenNotification } from '@/context/Notification/NotificationProvider';
 import { useFetchListTherapistQuery } from '@/lib/queries/user';
 import { useTableStore } from '@/lib/store/table';
 import { E_ActionKeyTable } from '@/models/types/Table.d';
 import { Space } from 'antd';
+import { useRouter } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 
 export default function TherapistIndex() {
   const { t } = useTranslation();
+  const router = useRouter();
   const { openNotification } = useOpenNotification();
   const [columns] = useTherapistColumns();
   const { searching, paginationTable, dispatch } = useTableStore();
@@ -28,6 +31,12 @@ export default function TherapistIndex() {
     }); // TODO it's will change for message returned by api
   };
 
+  const handleOnRowClick = (record: any, rowIndex: number | undefined) => {
+    router.push(`${RoutesName.therapist.index}/${record?.id}`, {
+      scroll: false,
+    });
+  };
+
   return (
     <>
       <Space direction="vertical" size={10} className="main-wrapper-table">
@@ -42,6 +51,8 @@ export default function TherapistIndex() {
           }}
           loading={isLoading}
           fetching={isRefetching}
+          scroll
+          onRowClick={handleOnRowClick}
         />
       </Space>
     </>
