@@ -42,6 +42,7 @@ export default function UserIndex() {
           }}
           loading={isLoading}
           fetching={isRefetching}
+          scroll
         />
       </Space>
     </>
