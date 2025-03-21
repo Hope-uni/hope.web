@@ -4,13 +4,16 @@ import { useCallback } from 'react';
 const useInvalidateQueries = () => {
   const queryClient = useQueryClient();
 
-  const invalidateQueries = useCallback(async (queries: string[]) => {
-    await queryClient.invalidateQueries({
-      queryKey: queries,
-    });
-  }, []);
+  const invalidateQueries = useCallback(
+    async (queries: string[]) => {
+      await queryClient.invalidateQueries({
+        queryKey: queries,
+      });
+    },
+    [queryClient],
+  );
 
-  return [invalidateQueries];
+  return { invalidateQueries, queryClient };
 };
 
 export default useInvalidateQueries;

@@ -67,7 +67,7 @@ export const useFetchFindUserByRoleQuery = <T = unknown>(
   id: string | undefined,
 ) => {
   return useQuery<API_RESPONSE<T>>({
-    queryKey: [QueryKeys.User.FindByRole, id],
+    queryKey: [QueryKeys.User.FindByRole, [id, role]],
     queryFn: () =>
       FindUserByIdHelper(role as CurrentRoleTypeFindUser, id) as Promise<
         API_RESPONSE<T>

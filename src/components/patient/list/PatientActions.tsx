@@ -2,12 +2,18 @@ import HModal from '@/components/common/Modals';
 import { Show } from '@/components/Show';
 import { RenderModeActionTypes } from '@/components/table/helpers';
 import { PopupActions } from '@/components/table/PopupActions';
+import { QueryKeys } from '@/constants';
 import { ROLES } from '@/constants/Role';
-import { SinglePatient } from '@/models/schema';
-import { ActionType } from '@/models/types';
+import { UserRules } from '@/constants/rules';
+import { useOpenNotification } from '@/context/Notification/NotificationProvider';
+import useInvalidateQueries from '@/hooks/useInvalidateQueries';
+import { DetailPatient, Observation, SinglePatient } from '@/models/schema';
+import { ActionType, API_RESPONSE } from '@/models/types';
+import { AddObservationToPatientService } from '@/services';
 import {
   CurrentRoleTypeDeleteUser,
   DeleteUserByIdHelper,
+  ParseToErrorAntd,
 } from '@/services/user/helpers';
 import styles from '@/styles/modules/partials.module.scss';
 import stylesPatient from '@/styles/modules/patient.module.scss';
@@ -20,6 +26,10 @@ import { Trans, useTranslation } from 'react-i18next';
 import { BsChevronDoubleUp } from 'react-icons/bs';
 
 const { useBreakpoint } = Grid;
+
+interface FormAddObservationErrors {
+  description: string;
+}
 
 interface Props {
   patient: SinglePatient;
@@ -36,22 +46,15 @@ const PatientActions = ({
 }: Props) => {
   const screens = useBreakpoint();
   const { t } = useTranslation();
+  const { queryClient } = useInvalidateQueries();
+  const { openNotification } = useOpenNotification();
   const router = useRouter();
-  const [loading, setLoading] = useState(false);
+  const [loadingForm, setLoadingForm] = useState(false);
   const [openNextPhase, setOpenNextPhase] = useState(false);
   const [openAddObservation, setOpenAddObservation] = useState(false);
   const [openAddAchievement, setOpenAddAchievement] = useState(false);
 
-  const handleEdit = useCallback(() => {
-    router.push(`/admin/users/edit/${patient.userId}`);
-  }, [router, patient.userId]);
-
-  const handleDelete = useCallback(async () => {
-    return await DeleteUserByIdHelper(
-      ROLES.PATIENT as CurrentRoleTypeDeleteUser,
-      String(patient.id),
-    );
-  }, [patient.id]);
+  const [formObservation] = Form.useForm();
 
   const handleOpenNextPhase = useCallback(() => {
     setOpenNextPhase(true);
@@ -64,6 +67,97 @@ const PatientActions = ({
   const handleOpenAddAchievement = useCallback(() => {
     setOpenAddAchievement(true);
   }, []);
+
+  const applyErrorsAddObservation = useCallback(
+    (validationErrors: FormAddObservationErrors) => {
+      const errors = ParseToErrorAntd(validationErrors);
+      if (errors.length > 0) {
+        formObservation.setFields(errors);
+      }
+    },
+    [formObservation],
+  );
+
+  const handleEdit = useCallback(() => {
+    router.push(`/admin/users/edit/${patient.userId}`);
+  }, [router, patient.userId]);
+
+  const handleDelete = useCallback(async () => {
+    return await DeleteUserByIdHelper(
+      ROLES.PATIENT as CurrentRoleTypeDeleteUser,
+      String(patient.id),
+    );
+  }, [patient.id]);
+
+  console.log([QueryKeys.User.FindByRole, [String(patient.id), ROLES.PATIENT]]);
+
+  console.log('🔍 Queries en caché:', queryClient.getQueryCache());
+
+  const handleAddObservation = useCallback(async () => {
+    try {
+      setLoadingForm(true);
+
+      const validateForm = await formObservation.validateFields();
+
+      if (validateForm.errorFields) {
+        return;
+      }
+
+      const values = formObservation.getFieldsValue();
+
+      const res = await AddObservationToPatientService(
+        patient.id,
+        values.description,
+      );
+
+      if (res.error && res.statusCode !== 201) {
+        if (
+          res.validationErrors &&
+          Object.keys(res.validationErrors).length > 0
+        ) {
+          applyErrorsAddObservation(
+            res.validationErrors as FormAddObservationErrors,
+          );
+        }
+        setLoadingForm(false);
+        return;
+      }
+
+      await queryClient.setQueryData(
+        [QueryKeys.User.FindByRole, [String(patient.id), ROLES.PATIENT]],
+        (oldData: API_RESPONSE<DetailPatient>) => {
+          if (!oldData?.data) return oldData;
+
+          return {
+            ...oldData,
+            data: {
+              ...oldData?.data,
+              observations: [
+                res.data as Observation,
+                ...(oldData?.data.observations || []),
+              ],
+            },
+          };
+        },
+      );
+
+      openNotification.success({
+        description: res.message,
+      });
+
+      setLoadingForm(false);
+      setOpenAddObservation(false);
+      formObservation.resetFields();
+    } catch (error) {
+      setLoadingForm(false);
+    }
+  }, [
+    applyErrorsAddObservation,
+    formObservation,
+    openNotification,
+    patient.id,
+    queryClient,
+  ]);
 
   return (
     <>
@@ -128,12 +222,12 @@ const PatientActions = ({
       {/* next phase modal */}
       <HModal
         open={openNextPhase}
-        loading={loading}
+        loading={loadingForm}
         onOpen={setOpenNextPhase}
         okText={t('Patient.actions.next_phase.modal.ok_text')}
         okButtonProps={{
           type: 'default',
-          loading: loading,
+          loading: loadingForm,
           className: styles.footer_btn_confirm,
         }}
         title={t('Patient.actions.next_phase.modal.title')}
@@ -159,12 +253,13 @@ const PatientActions = ({
       {/* add new observation modal */}
       <HModal
         open={openAddObservation}
-        loading={loading}
+        loading={loadingForm}
         onOpen={setOpenAddObservation}
         okText={t('Patient.actions.add_observation.modal.ok_text')}
         okButtonProps={{
           type: 'primary',
-          loading: loading,
+          onClick: handleAddObservation,
+          loading: loadingForm,
           className: styles.footer_btn_confirm,
         }}
         title={t('Patient.actions.add_observation.modal.title')}
@@ -173,10 +268,12 @@ const PatientActions = ({
           name="add_observation"
           id="create_user_form_antd"
           layout="vertical"
+          form={formObservation}
         >
           <Form.Item
-            name="observations"
+            name="description"
             label={t('User.fields.observations.label')}
+            rules={UserRules.user.observations}
           >
             <TextArea
               rows={4}
@@ -189,13 +286,13 @@ const PatientActions = ({
       {/* assign achievement to patient modal */}
       <HModal
         open={openAddAchievement}
-        loading={loading}
+        loading={loadingForm}
         onOpen={setOpenAddAchievement}
         okText={t('Patient.actions.add_achievement.modal.ok_text')}
         okButtonProps={{
           type: 'primary',
           onClick: handleDelete,
-          loading: loading,
+          loading: loadingForm,
           className: styles.footer_btn_confirm,
         }}
         title={t('Patient.actions.add_achievement.modal.title')}
