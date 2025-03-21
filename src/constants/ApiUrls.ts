@@ -11,6 +11,7 @@ export const API = {
   },
   Patient: {
     Index: '/patient',
+    AddObservation: '/observation/id-patient',
   },
   Tutor: {
     Index: '/tutor',

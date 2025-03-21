@@ -22,7 +22,7 @@ interface Props {
 
 const PhaseActions = ({ phase, actions = ['edit'], classWrapper }: Props) => {
   const { t } = useTranslation();
-  const [invalidateQueries] = useInvalidateQueries();
+  const { invalidateQueries } = useInvalidateQueries();
   const { openNotification } = useOpenNotification();
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
@@ -82,7 +82,7 @@ const PhaseActions = ({ phase, actions = ['edit'], classWrapper }: Props) => {
     } catch (error) {
       setLoading(false);
     }
-  }, [applyErrors, form, openNotification, phase.id]);
+  }, [applyErrors, form, invalidateQueries, openNotification, phase.id]);
 
   const validateIfFormHasChanged = useCallback(() => {
     let values = form.getFieldsValue();

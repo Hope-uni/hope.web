@@ -35,7 +35,7 @@ const PictogramActions = ({
   renderMode = 'popup',
 }: Props) => {
   const { t } = useTranslation();
-  const [invalidateQueries] = useInvalidateQueries();
+  const { invalidateQueries } = useInvalidateQueries();
   const { openNotification } = useOpenNotification();
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
@@ -115,7 +115,14 @@ const PictogramActions = ({
     } catch (error) {
       setLoading(false);
     }
-  }, [form, isEdit, pictogram, openNotification, applyErrors]);
+  }, [
+    form,
+    isEdit,
+    pictogram,
+    invalidateQueries,
+    openNotification,
+    applyErrors,
+  ]);
 
   const validateIfFormHasChanged = useCallback(() => {
     if (pictogram) {

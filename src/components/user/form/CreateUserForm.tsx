@@ -23,7 +23,7 @@ const { Text, Title } = Typography;
 
 export default function CreateUserForm() {
   const { t } = useTranslation();
-  const [invalidateQueries] = useInvalidateQueries();
+  const { invalidateQueries } = useInvalidateQueries();
   const { openNotification } = useOpenNotification();
   const [loadingForm, setLoadingForm] = useState(false);
 
@@ -107,6 +107,7 @@ export default function CreateUserForm() {
       cleanForm,
       applyErrors,
       openNotification,
+      invalidateQueries,
     ],
   );
 

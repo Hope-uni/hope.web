@@ -36,7 +36,7 @@ const ActivityActions = ({
   renderMode = 'popup',
 }: Props) => {
   const { t } = useTranslation();
-  const [invalidateQueries] = useInvalidateQueries();
+  const { invalidateQueries } = useInvalidateQueries();
   const { openNotification } = useOpenNotification();
   const router = useRouter();
   const [form] = Form.useForm();
@@ -101,7 +101,7 @@ const ActivityActions = ({
     } catch (error) {
       setLoadingForm(false);
     }
-  }, [form, applyErrors, openNotification]);
+  }, [form, invalidateQueries, openNotification, applyErrors]);
 
   const handleDelete = useCallback(async () => {
     return await DeleteActivityService(String(activity?.id));

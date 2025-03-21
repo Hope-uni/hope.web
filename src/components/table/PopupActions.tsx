@@ -47,7 +47,7 @@ export const PopupActions = ({
 }: Props) => {
   const { t } = useTranslation();
   const screens = useBreakpoint();
-  const [invalidateQueries] = useInvalidateQueries();
+  const { invalidateQueries } = useInvalidateQueries();
   const { openNotification } = useOpenNotification();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -132,7 +132,7 @@ export const PopupActions = ({
         description: (error as Error).message,
       });
     }
-  }, [onDelete, openNotification, queryKey]);
+  }, [invalidateQueries, onDelete, openNotification, queryKey]);
 
   const handleSelectAction = (action: ActionType) => {
     if (action in HandlesActions) {
