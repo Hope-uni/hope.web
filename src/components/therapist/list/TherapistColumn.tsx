@@ -28,7 +28,6 @@ export const useTherapistColumns = () => {
       title: t('Therapist.index.columns.phone'),
       dataIndex: 'phoneNumber',
       align: 'center',
-      width: '280px',
     },
     {
       title: t('Therapist.index.columns.patientsInCharge'),
@@ -48,6 +47,8 @@ export const useTherapistColumns = () => {
       dataIndex: 'id',
       align: 'center',
       width: '60px',
+      fixed: 'right',
+      className: 'td-actions',
       render: (_, therapist) => {
         return <TherapistActions therapist={therapist} />;
       },

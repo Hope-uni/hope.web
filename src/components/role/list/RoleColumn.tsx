@@ -13,11 +13,12 @@ export const useRoleColumns = () => {
       title: t('Role.index.columns.name'),
       dataIndex: 'name',
       align: 'left',
-      width: '300px',
+      width: '80px',
     },
     {
       title: t('Role.index.columns.permission'),
       dataIndex: 'id',
+      width: '300px',
       render: (_, { permissions }) => {
         if (permissions?.length === 0) {
           return <UnassignedTag />;

@@ -15,12 +15,12 @@ import { z } from 'zod';
 
 export const SinglePatientSchema = z.object({
   id: z.number(),
-  userId: z.string(),
+  userId: z.number(),
   fullName: z.string(),
   age: z.number(),
   teaDegree: TEAGradeSchema,
   currentPhase: TEAPhaseSchema,
-  achievementCount: z.number(),
+  achievementCount: z.number().optional(),
   image: z.string().optional().nullable(),
 });
 export type SinglePatient = z.infer<typeof SinglePatientSchema>;
@@ -44,6 +44,11 @@ export const UpdatePatientResponseSchema = PayloadPatientSchema.extend({
 });
 export type UpdatePatientResponse = z.infer<typeof UpdatePatientResponseSchema>;
 
+export const ProgressPECSSchema = z.object({
+  generalProgress: z.string(),
+  phaseProgress: z.string(),
+});
+
 export const DetailPatientSchema = z.object({
   ...PersonSchema.shape,
   id: z.number(),
@@ -53,6 +58,7 @@ export const DetailPatientSchema = z.object({
   age: z.number(),
   teaDegree: TEAGradeSchema,
   currentPhase: TEAPhaseSchema,
+  progress: ProgressPECSSchema,
   phaseProgress: z.string(),
   telephone: z.any().optional(),
   observations: z.array(ObservationSchema).nullable(),

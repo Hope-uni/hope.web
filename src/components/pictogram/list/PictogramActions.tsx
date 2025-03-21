@@ -2,8 +2,10 @@ import HModal from '@/components/common/Modals';
 import PictogramForm from '@/components/pictogram/form';
 import { Show } from '@/components/Show';
 import { RenderModeActionTypes } from '@/components/table/helpers';
-import PopupActions from '@/components/table/PopupActions';
+import { PopupActions } from '@/components/table/PopupActions';
+import { QueryKeys } from '@/constants';
 import { useOpenNotification } from '@/context/Notification/NotificationProvider';
+import useInvalidateQueries from '@/hooks/useInvalidateQueries';
 import { FormPictogramErrors, SinglePictogram } from '@/models/schema';
 import { ActionType } from '@/models/types';
 import {
@@ -33,6 +35,7 @@ const PictogramActions = ({
   renderMode = 'popup',
 }: Props) => {
   const { t } = useTranslation();
+  const { invalidateQueries } = useInvalidateQueries();
   const { openNotification } = useOpenNotification();
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
@@ -100,16 +103,26 @@ const PictogramActions = ({
         return;
       }
 
+      await invalidateQueries([QueryKeys.Pictogram.ListPictogram]);
+
       openNotification.success({
         description: res.message,
       });
+
       setLoading(false);
       setOpenForm(false);
       form.resetFields();
     } catch (error) {
       setLoading(false);
     }
-  }, [form, isEdit, pictogram, openNotification, applyErrors]);
+  }, [
+    form,
+    isEdit,
+    pictogram,
+    invalidateQueries,
+    openNotification,
+    applyErrors,
+  ]);
 
   const validateIfFormHasChanged = useCallback(() => {
     if (pictogram) {

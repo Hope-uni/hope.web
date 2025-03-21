@@ -1,8 +1,10 @@
 import HModal from '@/components/common/Modals';
 import PhaseForm from '@/components/phase/form';
-import PopupActions from '@/components/table/PopupActions';
+import { PopupActions } from '@/components/table/PopupActions';
+import { QueryKeys } from '@/constants';
 import { useOpenNotification } from '@/context/Notification/NotificationProvider';
-import { FormPhaseErrors, TEAPhase } from '@/models/schema';
+import useInvalidateQueries from '@/hooks/useInvalidateQueries';
+import { FormPhaseErrors, SingleTEAPhase, TEAPhase } from '@/models/schema';
 import { ActionType } from '@/models/types';
 import { EditPhaseService } from '@/services/PECS/pecs.service';
 import { ParseToErrorAntd } from '@/services/user/helpers';
@@ -13,13 +15,14 @@ import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 interface Props {
-  phase: TEAPhase;
+  phase: SingleTEAPhase;
   actions?: Array<ActionType>;
   classWrapper?: string;
 }
 
 const PhaseActions = ({ phase, actions = ['edit'], classWrapper }: Props) => {
   const { t } = useTranslation();
+  const { invalidateQueries } = useInvalidateQueries();
   const { openNotification } = useOpenNotification();
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
@@ -68,15 +71,18 @@ const PhaseActions = ({ phase, actions = ['edit'], classWrapper }: Props) => {
         return;
       }
 
+      await invalidateQueries([QueryKeys.Phase.ListPhase]);
+
       openNotification.success({
         description: res.message,
       });
+
       setLoading(false);
       setOpenEdit(false);
     } catch (error) {
       setLoading(false);
     }
-  }, [applyErrors, form, openNotification, phase.id]);
+  }, [applyErrors, form, invalidateQueries, openNotification, phase.id]);
 
   const validateIfFormHasChanged = useCallback(() => {
     let values = form.getFieldsValue();

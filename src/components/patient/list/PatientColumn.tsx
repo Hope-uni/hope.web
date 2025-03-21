@@ -66,6 +66,7 @@ export const usePatientColumns = () => {
       dataIndex: 'id',
       align: 'center',
       width: '60px',
+      fixed: 'right',
       className: 'td-actions',
       render: (_, patient) => {
         return <PatientActions patient={patient} />;

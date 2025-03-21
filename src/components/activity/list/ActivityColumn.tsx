@@ -13,18 +13,19 @@ export const useActivityColumns = () => {
       title: t('Activity.index.columns.name'),
       dataIndex: 'name',
       align: 'left',
-      width: '200px',
+      width: '250px',
     },
     {
       title: t('Activity.index.columns.description'),
       dataIndex: 'description',
       align: 'left',
+      width: '350px',
     },
     {
       title: t('Activity.index.columns.assignments'),
       dataIndex: 'assignments',
       align: 'center',
-      width: '130px',
+      width: '150px',
       render: (_, { assignments }) => {
         return <span>{assignments?.length || 0}</span>;
       },
@@ -33,12 +34,13 @@ export const useActivityColumns = () => {
       title: t('Activity.index.columns.points'),
       dataIndex: 'satisfactoryPoints',
       align: 'center',
-      width: '100px',
+      width: '150px',
     },
     {
       title: t('Activity.index.columns.phase'),
       dataIndex: 'phase',
       align: 'center',
+      width: '250px',
       render: (_, { phase }) => {
         return <span>{phase.name}</span>;
       },
@@ -49,6 +51,7 @@ export const useActivityColumns = () => {
       align: 'center',
       width: '60px',
       className: 'td-actions',
+      fixed: 'right',
       render: (_, activity) => {
         return <ActivityActions activity={activity} />;
       },

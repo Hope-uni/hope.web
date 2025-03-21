@@ -28,6 +28,8 @@ export const useCategoryColumns = () => {
       dataIndex: 'id',
       align: 'center',
       width: '60px',
+      fixed: 'right',
+      className: 'td-actions',
       render: (_, category) => {
         return <CategoryActions category={category} />;
       },

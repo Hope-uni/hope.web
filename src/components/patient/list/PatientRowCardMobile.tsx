@@ -46,7 +46,7 @@ const PatientRowCardMobile = ({ patient }: Props) => {
               })}
             </Descriptions.Item>
             <Descriptions.Item label={t('Patient.index.columns.achievements')}>
-              {patient.achievementCount || 0}
+              {patient?.achievementCount || 0}
             </Descriptions.Item>
           </Descriptions>
         </Flex>

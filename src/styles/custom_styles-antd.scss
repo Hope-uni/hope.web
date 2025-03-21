@@ -576,9 +576,6 @@ label.ant-form-item-required {
                 padding-top: 12px;
                 padding-bottom: 12px;
             }
-            .ant-table-cell.td-actions{
-                padding: 5px;
-            }
         }
     }
 
@@ -619,6 +616,28 @@ label.ant-form-item-required {
             }
         }
     }
+
+    &.table-stripped{
+        tr td {
+            background-color: $white;
+        }
+
+        tr:nth-child(2n) td {
+            background-color: #f3f3f3;
+        }
+    }
+
+    &.table-row-clickable{
+        .ant-table-tbody{
+            .ant-table-row{
+                cursor: pointer;
+
+                .ant-table-cell-row-hover{
+                    color: $primary-color;
+                }
+            }
+        }
+    }
 }
 
 /*
@@ -653,6 +672,40 @@ label.ant-form-item-required {
     }
 }
 
+.table-popup-actions{
+    .item-popup-action{
+        cursor: pointer;
+        color: $primary-color;
+
+        svg{
+            font-size: 16px;
+        }
+
+        &.text-color-link{
+            svg, .ant-dropdown-menu-title-content{
+                color: $primary-color;
+            }
+        }
+
+        &.text-color-error{
+            svg, .ant-dropdown-menu-title-content{
+                color: $error;
+            }
+        }
+
+        &.text-color-grey{
+            svg, .ant-dropdown-menu-title-content{
+                color: $grey-dark;
+            }
+        }
+    }
+}
+
+.popup-actions-list-container{
+    @extend .row-center;
+    list-style: none;
+}
+
 /*
 ** DROPDOWN */
 .ant-dropdown{
@@ -664,38 +717,20 @@ label.ant-form-item-required {
 
         .ant-dropdown-menu-item{
             padding: 5px 12px;
-            color: $primary-color;
 
             svg{
-                font-size: 16px;
                 margin-right: 10px;
             }
+
             .ant-dropdown-menu-title-content{
                 @extend .text_primary-blue;
                 font-weight: 500;
                 font-size: 16px;
             }
-
-            &.text-color-link{
-                svg, .ant-dropdown-menu-title-content{
-                    color: $primary-color;
-                }
-            }
-
-            &.text-color-error{
-                svg, .ant-dropdown-menu-title-content{
-                    color: $error;
-                }
-            }
-
-            &.text-color-grey{
-                svg, .ant-dropdown-menu-title-content{
-                    color: $grey-dark;
-                }
-            }
         }
     }
 }
+
 
 /*
 ** SELECT */

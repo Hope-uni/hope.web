@@ -38,6 +38,7 @@ export default function PhaseIndex() {
           loading={isLoading}
           fetching={isRefetching}
           pagination={false}
+          scroll
         />
       </Space>
     </>

@@ -1,7 +1,10 @@
 'use client';
 
 import { Show } from '@/components/Show';
+import { QueryKeys } from '@/constants';
+import { ROLES } from '@/constants/Role';
 import { useOpenNotification } from '@/context/Notification/NotificationProvider';
+import useInvalidateQueries from '@/hooks/useInvalidateQueries';
 import useStepFormUser from '@/hooks/useStepFormUser';
 import { useFormCreateUserStore } from '@/lib/store/forms/formCreateUser';
 import {
@@ -11,6 +14,7 @@ import {
 } from '@/models/schema';
 import { CreateUserHelper, CurrentRoleType } from '@/services/user/helpers';
 import styles from '@/styles/modules/user.module.scss';
+import { validateRole } from '@/utils/session';
 import { Alert, Button, Divider, Flex, Steps, Typography } from 'antd';
 import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -19,8 +23,10 @@ const { Text, Title } = Typography;
 
 export default function CreateUserForm() {
   const { t } = useTranslation();
+  const { invalidateQueries } = useInvalidateQueries();
   const { openNotification } = useOpenNotification();
   const [loadingForm, setLoadingForm] = useState(false);
+
   const {
     fields,
     currentRoleSelected,
@@ -69,6 +75,23 @@ export default function CreateUserForm() {
         }
 
         cleanForm();
+
+        let queriesKeyToInvalidate = [QueryKeys.User.ListUser];
+
+        if (validateRole(currentRoleSelected.name, ROLES.PATIENT)) {
+          queriesKeyToInvalidate.push(QueryKeys.User.ListPatient);
+        }
+
+        if (validateRole(currentRoleSelected.name, ROLES.THERAPIST)) {
+          queriesKeyToInvalidate.push(QueryKeys.User.ListTherapist);
+        }
+
+        if (validateRole(currentRoleSelected.name, ROLES.TUTOR)) {
+          queriesKeyToInvalidate.push(QueryKeys.User.ListTutor);
+        }
+
+        await invalidateQueries(queriesKeyToInvalidate);
+
         openNotification.success({
           description: res.message,
         });
@@ -84,6 +107,7 @@ export default function CreateUserForm() {
       cleanForm,
       applyErrors,
       openNotification,
+      invalidateQueries,
     ],
   );
 
