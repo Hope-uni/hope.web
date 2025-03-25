@@ -879,6 +879,7 @@ const es = {
       },
       error: {
         messageDefault: '¡Algo salió mal!',
+        messageErrorServer: '¡Error del servidor!',
       },
     },
   },
