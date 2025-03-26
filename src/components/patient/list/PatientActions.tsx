@@ -8,8 +8,9 @@ import { UserRules } from '@/constants/rules';
 import { useOpenNotification } from '@/context/Notification/NotificationProvider';
 import useInvalidateQueries from '@/hooks/useInvalidateQueries';
 import { DetailPatient, Observation, SinglePatient } from '@/models/schema';
-import { ActionType, API_RESPONSE } from '@/models/types';
+import { ActionType, API_RESPONSE, NotificationContent } from '@/models/types';
 import { AddObservationToPatientService } from '@/services';
+import { PhaseShiftService } from '@/services/PECS/pecs.service';
 import {
   CurrentRoleTypeDeleteUser,
   DeleteUserByIdHelper,
@@ -155,6 +156,38 @@ const PatientActions = ({
     queryClient,
   ]);
 
+  const handlePhaseShift = useCallback(async () => {
+    try {
+      setLoadingForm(true);
+
+      const res = await PhaseShiftService(patient.id);
+
+      if (res.error && res.statusCode !== 201) {
+        let optionsNotification: NotificationContent = {
+          description: res.message,
+        };
+
+        if (res.statusCode === 500) {
+          optionsNotification = {
+            ...optionsNotification,
+            message: t('feedback.notification.error.messageErrorServer'),
+          };
+        }
+
+        openNotification.error(optionsNotification);
+      } else {
+        openNotification.success({
+          description: res.message,
+        });
+      }
+
+      setLoadingForm(false);
+      setOpenNextPhase(false);
+    } catch (error) {
+      setLoadingForm(false);
+    }
+  }, [openNotification, patient.id, t]);
+
   return (
     <>
       <Show>
@@ -215,7 +248,7 @@ const PatientActions = ({
         </Show.When>
       </Show>
 
-      {/* next phase modal */}
+      {/* phase shift modal */}
       <HModal
         open={openNextPhase}
         loading={loadingForm}
@@ -223,6 +256,7 @@ const PatientActions = ({
         okText={t('Patient.actions.next_phase.modal.ok_text')}
         okButtonProps={{
           type: 'default',
+          onClick: handlePhaseShift,
           loading: loadingForm,
           className: styles.footer_btn_confirm,
         }}

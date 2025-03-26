@@ -27,7 +27,7 @@ export default function MethodologyProgress({ patient }: Props) {
         <Flex>
           <Progress
             type="circle"
-            percent={Number(patient?.phaseProgress)}
+            percent={Number(patient?.progress.generalProgress)}
             strokeColor={COLORS.secondaryColor}
             size={67}
             strokeWidth={8}

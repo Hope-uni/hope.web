@@ -22,6 +22,7 @@ export const API = {
   PECS: {
     Phase: {
       index: '/phase',
+      PhaseShift: '/phase/phase-shift',
     },
     Degree: {
       index: '/teaDegree',

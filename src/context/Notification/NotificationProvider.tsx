@@ -1,3 +1,4 @@
+import { NotificationContent } from '@/models/types';
 import { notification, NotificationArgsProps } from 'antd';
 import { createContext, ReactNode, useContext, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -13,15 +14,10 @@ interface Props {
   children: ReactNode;
 }
 
-interface NotificationContent {
-  message?: string;
-  description: string;
-}
-
 const ConfigNotification = {
   className: 'primary-notification',
   placement: 'topRight' as const,
-  duration: 3,
+  duration: 5,
   closeIcon: <BsXLg />,
 };
 
