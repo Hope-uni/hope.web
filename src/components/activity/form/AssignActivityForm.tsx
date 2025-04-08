@@ -1,76 +1,37 @@
+import {
+  SearchableList,
+  useAssignablePatients,
+} from '@/components/common/Inputs/SearchableList';
 import PatientListView from '@/components/patient/list/PatientListView';
 import { ActivityRules } from '@/constants/rules';
 import { SinglePatient } from '@/models/schema';
 import style from '@/styles/modules/patient.module.scss';
-import { Empty, Flex, Form, FormInstance, Input, Select } from 'antd';
-import { useCallback, useEffect, useState } from 'react';
+import { Empty, Flex, Form, FormInstance, Input } from 'antd';
+import { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { BsSearch, BsTrash2Fill } from 'react-icons/bs';
+import { BsTrash2Fill } from 'react-icons/bs';
 
 interface Props {
   form: FormInstance;
   initialPatients: SinglePatient[];
-  assignedPatients?: SinglePatient[];
 }
 
-export default function AssignActivityForm({
-  form,
-  initialPatients,
-  assignedPatients = [],
-}: Props) {
+export default function AssignActivityForm({ form, initialPatients }: Props) {
   const { t } = useTranslation();
-  const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
-
-  const [availablePatients, setAvailablePatients] =
-    useState<SinglePatient[]>(initialPatients);
-  const [selectedPatients, setSelectedPatients] =
-    useState<SinglePatient[]>(assignedPatients);
+  const { availableItems, selectedItems, handleChange, handleDeleteSelected } =
+    useAssignablePatients<SinglePatient>(initialPatients, 'id');
 
   useEffect(() => {
-    const patientIds = selectedPatients.map((patient) => patient.id);
+    const patientIds = selectedItems.map((patient) => patient.id);
     form.setFieldValue('patients', patientIds);
-  }, [form, selectedPatients]);
+  }, [form, selectedItems]);
 
-  const handleChange = useCallback(
-    (idPatientSelected: number) => {
-      const patientToRemove = initialPatients.find(
-        (patient) => patient.id === idPatientSelected,
-      );
-
-      if (!patientToRemove) return;
-
-      setSelectedPatients((prev) => [...prev, patientToRemove]);
-
-      setAvailablePatients((prev) =>
-        prev.filter((patient) => patient.id !== patientToRemove.id),
-      );
-
-      setDropdownOpen(false);
+  const handleChangeSearchableList = useCallback(
+    (itemSelected: SinglePatient) => {
+      handleChange(itemSelected);
       form.resetFields(['patientSelected']);
     },
-    [form, initialPatients],
-  );
-
-  const handleDeleteSelected = useCallback(
-    (idPatientSelected: number) => {
-      const patientToRemove = selectedPatients.find(
-        (patient) => patient.id === idPatientSelected,
-      );
-
-      if (!patientToRemove) return;
-
-      setSelectedPatients((prev) =>
-        prev.filter((patient) => patient.id !== idPatientSelected),
-      );
-
-      setAvailablePatients((prev) => {
-        if (!prev.some((patient) => patient.id === idPatientSelected)) {
-          return [...prev, patientToRemove];
-        }
-        return prev;
-      });
-    },
-    [selectedPatients],
+    [form, handleChange],
   );
 
   return (
@@ -89,36 +50,17 @@ export default function AssignActivityForm({
           >
             <Form.Item
               name="patientSelected"
-              label={t('Therapist.fields.assign_patients.placeholder')}
+              label={t('Activity.fields.patientsToAssign.placeholder')}
               style={{
                 marginBottom: 0,
               }}
             >
-              <Select
-                className="primary custom-assign-patient"
-                showSearch
-                allowClear
-                autoClearSearchValue={false}
-                onChange={handleChange}
-                open={dropdownOpen}
-                tagRender={() => <></>}
-                suffixIcon={<></>}
-                prefix={<BsSearch />}
-                maxTagCount={0}
-                onDropdownVisibleChange={(open) => setDropdownOpen(open)}
-                filterOption={(input, option) =>
-                  (option?.children as unknown as string)
-                    .toLowerCase()
-                    .includes(input.toLowerCase())
-                }
-                disabled={availablePatients.length === 0}
-              >
-                {availablePatients.map((item) => (
-                  <Select.Option key={item.id} value={item.id}>
-                    {item.fullName}
-                  </Select.Option>
-                ))}
-              </Select>
+              <SearchableList<SinglePatient>
+                list={availableItems}
+                keyValue="id"
+                keyLabel="fullName"
+                onChange={handleChangeSearchableList}
+              />
             </Form.Item>
 
             <Form.Item
@@ -137,7 +79,7 @@ export default function AssignActivityForm({
               }}
             >
               {t(
-                'Therapist.actions.assign_patients.modal.title_patient_selected',
+                'Activity.actions.assign_activity.modal.title_patient_selected',
               )}
             </h3>
             <div
@@ -147,11 +89,11 @@ export default function AssignActivityForm({
               }}
             >
               <PatientListView
-                listPatient={selectedPatients}
+                listPatient={selectedItems}
                 actions={[
                   {
                     label: t(
-                      'Therapist.actions.assign_patients.button_deselected',
+                      'Activity.actions.assign_activity.button_deselected',
                     ),
                     labelMobile: <BsTrash2Fill />,
                     actionCallback: handleDeleteSelected,

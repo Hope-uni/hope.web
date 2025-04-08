@@ -36,10 +36,11 @@ const PatientListView = ({ listPatient, actions = [] }: Props) => {
   const handleAction = useCallback(
     async (id: number, callback: (args: any) => void | Promise<void>) => {
       setCurrentIdLoading(id);
-      await callback(id);
+      const patientToRemove = listPatient.find((item) => item.id === id);
+      await callback(patientToRemove);
       setCurrentIdLoading(undefined);
     },
-    [],
+    [listPatient],
   );
 
   const getActions = useCallback(
