@@ -622,11 +622,40 @@ const es = {
           max: 'La solución no debe contener más de {{limit}} pictogramas',
         },
       },
+      patientsToAssign: {
+        label: 'Pacientes',
+        placeholder: 'Lista de pacientes disponibles',
+        rules: {
+          min: 'Seleccione al menos a un paciente para asignar esta actividad',
+        },
+      },
     },
     actions: {
       detail: {
         modal: {
           title: 'Detalle actividad',
+        },
+      },
+      assign_activity: {
+        modal: {
+          title: 'Asignar actividad a pacientes',
+          title_patient_selected: 'Pacientes seleccionados',
+          ok_text: 'Asignar',
+        },
+        button_deselected: 'Eliminar',
+        feedback: {
+          no_available:
+            '¡No encontramos pacientes disponibles para asignar en esta actividad!',
+        },
+      },
+      unassign_activity: {
+        modal: {
+          title: 'Desasignar actividad a pacientes',
+          title_patient_assigned: 'Pacientes asginado a la actividad',
+        },
+        button_unassign: 'Desasignar',
+        feedback: {
+          no_assignments: '¡La actividad no tiene pacientes asignados!',
         },
       },
       delete: {
@@ -776,6 +805,15 @@ const es = {
       },
       assign_patients: {
         label: 'Asignar pacientes',
+      },
+      unassign_patients: {
+        label: 'Desasignar pacientes',
+      },
+      assign_activity: {
+        label: 'Asignar actividad',
+      },
+      unassign_activity: {
+        label: 'Desasignar actividad',
       },
       ediAssigments: {
         label: 'Editar asignaciones',
