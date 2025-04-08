@@ -11,6 +11,8 @@ export const API = {
   },
   Patient: {
     Index: '/patient',
+    WithoutTherapist: '/patient/patients-therapist',
+    AvailableForActivity: '/patient/availableForActivity',
     AddObservation: '/observation/id-patient',
   },
   Tutor: {
@@ -30,6 +32,8 @@ export const API = {
   },
   Activity: {
     Index: 'activity',
+    Assign: '/activity/assign',
+    Unassign: '/activity/unassign',
   },
   Pictogram: {
     Index: 'pictogram',

@@ -25,14 +25,7 @@ export const ActivitySchema = BaseActivitySchema.extend({
 export type Activity = z.infer<typeof ActivitySchema>;
 
 export const SingleActivitySchema = ActivitySchema.extend({
-  assignments: z
-    .array(
-      z.object({
-        id: z.number(),
-      }),
-    )
-    .nullable()
-    .optional(),
+  assignments: z.array(z.number()).nullable().optional(),
   user: UserActivitySchema.optional(),
 });
 export type SingleActivity = z.infer<typeof SingleActivitySchema>;
@@ -58,3 +51,9 @@ export type FormActivityErrors = Record<
   keyof z.infer<typeof PayloadActivitySchema>,
   string
 >;
+
+export const PayloadAssignActivitySchema = z.object({
+  patients: z.array(z.number()),
+  activityId: z.number(),
+});
+export type PayloadAssignActivity = z.infer<typeof PayloadAssignActivitySchema>;

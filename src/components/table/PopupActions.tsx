@@ -2,17 +2,16 @@ import HModal from '@/components/common/Modals';
 import { Show } from '@/components/Show';
 import { HopeTable } from '@/constants/config';
 import { useOpenNotification } from '@/context/Notification/NotificationProvider';
+import useInvalidateQueries from '@/hooks/useInvalidateQueries';
 import { API_SINGLE_RESPONSE } from '@/models/types';
 import { ActionTableOptionsType, ActionType } from '@/models/types/Table';
 import styles from '@/styles/modules/partials.module.scss';
-import { useQueryClient } from '@tanstack/react-query';
 import { Button, Dropdown, Flex, Grid, Tooltip } from 'antd';
 import { useRouter } from 'next/navigation';
 import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import { RenderModeActionTypes } from './helpers';
-import useInvalidateQueries from '@/hooks/useInvalidateQueries';
 
 const { useBreakpoint } = Grid;
 
@@ -28,6 +27,8 @@ interface Props {
   displayOutsidePopup?: boolean;
   onShow?: () => void;
   onEdit?: () => void;
+  onAssign?: () => void;
+  onUnassign?: () => void;
   onDelete?: () => Promise<API_SINGLE_RESPONSE>;
 }
 
@@ -43,6 +44,8 @@ export const PopupActions = ({
   displayOutsidePopup = false,
   onShow,
   onEdit,
+  onAssign,
+  onUnassign,
   onDelete,
 }: Props) => {
   const { t } = useTranslation();
@@ -62,35 +65,48 @@ export const PopupActions = ({
     [actions],
   );
 
+  const handleCallback = useCallback((callback?: () => void) => {
+    if (callback) {
+      callback();
+      return true;
+    }
+    return false;
+  }, []);
+
+  const handleRoute = useCallback(
+    (path: string) => {
+      if (route && id) {
+        router.push(`/admin/${route}${path}`);
+      }
+    },
+    [id, route, router],
+  );
+
   const HandlesActions = {
     show: () => {
-      if (onShow) {
-        onShow();
-        return;
-      }
-
-      if (route) {
-        router.push(`/admin/${route}/${id}`);
+      if (!handleCallback(onShow)) {
+        handleRoute(`/${id}`);
       }
     },
     edit: () => {
-      if (onEdit) {
-        onEdit();
-        return;
-      }
-
-      if (route) {
-        router.push(`/admin/${route}/edit/${id}`);
+      if (!handleCallback(onEdit)) {
+        handleRoute(`/edit/${id}`);
       }
     },
     assign_patient: () => {
-      //TODO do something
+      handleCallback(onAssign);
+    },
+    unassign_patient: () => {
+      handleCallback(onUnassign);
+    },
+    assign_activity: () => {
+      handleCallback(onAssign);
+    },
+    unassign_activity: () => {
+      handleCallback(onUnassign);
     },
     assign: () => {
-      if (onEdit) {
-        onEdit();
-        return;
-      }
+      handleCallback(onAssign);
     },
     delete: () => {
       setOpenModalDelete(true);
@@ -172,7 +188,7 @@ export const PopupActions = ({
   };
 
   return (
-    <>
+    <div onClick={(event) => event.stopPropagation()}>
       <Show>
         <Show.When isTrue={renderMode === 'popup'}>
           <>
@@ -184,7 +200,10 @@ export const PopupActions = ({
                   <Tooltip key={item?.key} title={item.label}>
                     <span
                       className={`item-popup-action ${item.colorClassName}`}
-                      onClick={() => handleSelectAction(item.actionType)}
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        handleSelectAction(item.actionType);
+                      }}
                     >
                       <item.icon />
                     </span>
@@ -246,6 +265,6 @@ export const PopupActions = ({
           </p>
         </div>
       </HModal>
-    </>
+    </div>
   );
 };

@@ -105,6 +105,9 @@ export type ActionType =
   | 'show'
   | 'edit'
   | 'assign_patient'
+  | 'unassign_patient'
+  | 'assign_activity'
+  | 'unassign_activity'
   | 'assign'
   | 'delete';
 

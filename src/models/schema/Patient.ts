@@ -38,6 +38,12 @@ export const PayloadPatientSchema = CreateUserPayloadSchema.merge(
 });
 export type PayloadPatient = z.infer<typeof PayloadPatientSchema>;
 
+export const FiltersPatientSchema = z.object({
+  activityId: z.number().optional(),
+  hasActiveActivity: z.boolean().optional(),
+});
+export type FiltersPatient = z.infer<typeof FiltersPatientSchema>;
+
 export const UpdatePatientResponseSchema = PayloadPatientSchema.extend({
   id: z.number(),
   birthday: z.string(),

@@ -5,6 +5,7 @@ import {
   DetailPatient,
   DetailTherapist,
   DetailTutor,
+  FiltersPatient,
   ListRoleResponse,
   Observation,
   PayloadPatient,
@@ -117,11 +118,48 @@ export const DeleteUserService = async (id: string) => {
  */
 export const ListPatientService = async (
   payload: API_PAYLOAD = defaultPayload,
+  filters?: FiltersPatient,
 ) => {
   try {
     const response = await API_HOPE_PROTECTED.get<
       API_RESPONSE<SinglePatient[]>
     >(API.Patient.Index, {
+      params: {
+        ...payload.paginate,
+        ...filters,
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    throw axiosErrorHandler(error);
+  }
+};
+
+export const ListPatientWithoutTherapistService = async (
+  payload: API_PAYLOAD = defaultPayload,
+) => {
+  try {
+    const response = await API_HOPE_PROTECTED.get<
+      API_RESPONSE<SinglePatient[]>
+    >(API.Patient.WithoutTherapist, {
+      params: payload.paginate,
+    });
+
+    return response.data;
+  } catch (error) {
+    throw axiosErrorHandler(error);
+  }
+};
+
+export const ListPatientAvailableForActivityService = async (
+  id?: number,
+  payload: API_PAYLOAD = defaultPayload,
+) => {
+  try {
+    const response = await API_HOPE_PROTECTED.get<
+      API_RESPONSE<SinglePatient[]>
+    >(`${API.Patient.AvailableForActivity}/${id}`, {
       params: payload.paginate,
     });
 

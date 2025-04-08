@@ -82,4 +82,19 @@ export const ActivityRules = {
       },
     },
   ] as Rule[],
+  patientsToAssign: [
+    {
+      validator: async (_, value) => {
+        if (!value) {
+          return Promise.resolve();
+        }
+
+        if (value.length === 0) {
+          return Promise.reject(
+            i18next.t('Activity.fields.patientsToAssign.rules.min'),
+          );
+        }
+      },
+    },
+  ] as Rule[],
 } as const;

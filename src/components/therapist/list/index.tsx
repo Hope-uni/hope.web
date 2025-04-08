@@ -42,7 +42,7 @@ export default function TherapistIndex() {
       <Space direction="vertical" size={10} className="main-wrapper-table">
         <WrapperTable
           cols={columns}
-          data={data?.data}
+          data={data}
           searchable={false}
           searchProps={{
             onSearch: handleSearch,
