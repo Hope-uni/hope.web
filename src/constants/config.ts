@@ -39,9 +39,11 @@ const ActionTableOptions: Omit<ActionTableOptionsType, 'key'>[] = [
     colorClassName: 'text-color-link',
   },
   {
-    label: i18next.t('components.popupActions.unassign_patients.label'),
+    label: i18next.t(
+      'components.popupActions.change_therapist_to_patient.label',
+    ),
     icon: FaUserPlus,
-    actionType: 'unassign_patient',
+    actionType: 'change_therapist_to_patient',
     colorClassName: 'text-color-link',
   },
   {

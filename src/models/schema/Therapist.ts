@@ -19,3 +19,11 @@ export const DetailTherapistSchema = z.object({
   activities: z.array(ActivitySchema).nullable().optional(),
 });
 export type DetailTherapist = z.infer<typeof DetailTherapistSchema>;
+
+export const PayloadAssignTherapistSchema = z.object({
+  patients: z.array(z.number()),
+  therapistId: z.number(),
+});
+export type PayloadAssignTherapist = z.infer<
+  typeof PayloadAssignTherapistSchema
+>;

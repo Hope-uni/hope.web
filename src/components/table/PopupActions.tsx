@@ -29,6 +29,7 @@ interface Props {
   onEdit?: () => void;
   onAssign?: () => void;
   onUnassign?: () => void;
+  onChangeAssignment?: () => void;
   onDelete?: () => Promise<API_SINGLE_RESPONSE>;
 }
 
@@ -46,6 +47,7 @@ export const PopupActions = ({
   onEdit,
   onAssign,
   onUnassign,
+  onChangeAssignment,
   onDelete,
 }: Props) => {
   const { t } = useTranslation();
@@ -96,8 +98,8 @@ export const PopupActions = ({
     assign_patient: () => {
       handleCallback(onAssign);
     },
-    unassign_patient: () => {
-      handleCallback(onUnassign);
+    change_therapist_to_patient: () => {
+      handleCallback(onChangeAssignment);
     },
     assign_activity: () => {
       handleCallback(onAssign);

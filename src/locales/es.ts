@@ -343,6 +343,14 @@ const es = {
           ok_text: 'Guardar',
         },
       },
+      change_therapist: {
+        button_add: 'Guardar',
+        button_add_mobile: 'Guardar',
+        modal: {
+          title: 'Cambiar de terapeuta asignado',
+          ok_text: 'Guardar',
+        },
+      },
     },
     fields: {
       assign_achievements: {
@@ -350,6 +358,13 @@ const es = {
         placeholder: 'Lista de logros',
         rules: {
           required: 'Logro es requerido',
+        },
+      },
+      change_therapist: {
+        label: 'Terapeutas',
+        placeholder: 'Listado de terapeutas disponibles',
+        rules: {
+          required: 'Terapeuta es requerido',
         },
       },
     },
@@ -440,7 +455,23 @@ const es = {
         button_add: 'Asignar pacientes',
         modal: {
           title: 'Asignar paciente',
+          title_patient_selected: 'Pacientes seleccionados',
           ok_text: 'Guardar',
+        },
+        button_deselected: 'Eliminar',
+        feedback: {
+          no_selected: 'Ningún paciente seleccionado.',
+        },
+      },
+      unassign_patients: {
+        modal: {
+          title: 'Desasignar paciente',
+          title_patient_assigned: 'Pacientes asignados',
+          ok_text: 'Guardar',
+        },
+        button_unassign: 'Desasignar',
+        feedback: {
+          no_assign: 'Ningún paciente asignado.',
         },
       },
     },
@@ -806,8 +837,8 @@ const es = {
       assign_patients: {
         label: 'Asignar pacientes',
       },
-      unassign_patients: {
-        label: 'Desasignar pacientes',
+      change_therapist_to_patient: {
+        label: 'Cambiar de terapeuta',
       },
       assign_activity: {
         label: 'Asignar actividad',

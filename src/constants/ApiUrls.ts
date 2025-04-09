@@ -14,12 +14,14 @@ export const API = {
     WithoutTherapist: '/patient/patients-therapist',
     AvailableForActivity: '/patient/availableForActivity',
     AddObservation: '/observation/id-patient',
+    ChangeTherapist: '/patient/change-therapist/',
   },
   Tutor: {
     Index: '/tutor',
   },
   Therapist: {
     Index: '/therapist',
+    Assign: 'therapist/assignPatient/',
   },
   PECS: {
     Phase: {

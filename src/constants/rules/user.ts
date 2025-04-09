@@ -150,5 +150,11 @@ export const UserRules = {
       },
       ...CommonRules.email,
     ] as Rule[],
+    therapistInCharge: [
+      {
+        required: true,
+        message: i18next.t('Patient.fields.change_therapist.rules.required'),
+      },
+    ] as Rule[],
   },
 } as const;

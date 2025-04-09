@@ -127,10 +127,14 @@ export const useFetchListTutorQuery = (payload?: API_PAYLOAD) => {
   });
 };
 
-export const useFetchListTherapistQuery = (payload?: API_PAYLOAD) => {
+export const useFetchListTherapistQuery = (
+  payload?: API_PAYLOAD,
+  shouldLoad: boolean = true,
+) => {
   return useQuery({
     queryKey: [QueryKeys.User.ListTherapist, payload],
     queryFn: () => ListTherapistService(payload),
     placeholderData: keepPreviousData,
+    enabled: shouldLoad,
   });
 };
