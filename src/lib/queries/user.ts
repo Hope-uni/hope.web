@@ -1,8 +1,11 @@
 import { QueryKeys } from '@/constants';
+import { FiltersPatient } from '@/models/schema';
 import { API_PAYLOAD, API_RESPONSE } from '@/models/types';
 import {
   FindUserByIdService,
+  ListPatientAvailableForActivityService,
   ListPatientService,
+  ListPatientWithoutTherapistService,
   ListRolesService,
   ListTherapistService,
   ListTutorService,
@@ -65,6 +68,7 @@ export const useFetchFindUserByIdQuery = (id: string | undefined) => {
 export const useFetchFindUserByRoleQuery = <T = unknown>(
   role: string,
   id: string | undefined,
+  shouldLoad: boolean = true,
 ) => {
   return useQuery<API_RESPONSE<T>>({
     queryKey: [QueryKeys.User.FindByRole, [id, role]],
@@ -72,16 +76,46 @@ export const useFetchFindUserByRoleQuery = <T = unknown>(
       FindUserByIdHelper(role as CurrentRoleTypeFindUser, id) as Promise<
         API_RESPONSE<T>
       >,
-    enabled: !!role && !!id,
     placeholderData: keepPreviousData,
+    enabled: shouldLoad && !!role && !!id,
   });
 };
 
-export const useFetchListPatientQuery = (payload?: API_PAYLOAD) => {
+export const useFetchListPatientQuery = (
+  payload?: API_PAYLOAD,
+  filters?: FiltersPatient,
+  shouldLoad: boolean = true,
+) => {
   return useQuery({
-    queryKey: [QueryKeys.User.ListPatient, payload],
-    queryFn: () => ListPatientService(payload),
+    queryKey: [QueryKeys.User.ListPatient, [payload, filters]],
+    queryFn: () => ListPatientService(payload, filters),
     placeholderData: keepPreviousData,
+    enabled: shouldLoad,
+  });
+};
+
+export const useFetchListPatientWithoutTherapistQuery = (
+  payload?: API_PAYLOAD,
+  shouldLoad: boolean = true,
+) => {
+  return useQuery({
+    queryKey: [QueryKeys.User.ListPatientWithoutTherapist, payload],
+    queryFn: () => ListPatientWithoutTherapistService(payload),
+    placeholderData: keepPreviousData,
+    enabled: shouldLoad,
+  });
+};
+
+export const useFetchListPatientAvailableForActivityQuery = (
+  id?: number,
+  payload?: API_PAYLOAD,
+  shouldLoad: boolean = true,
+) => {
+  return useQuery({
+    queryKey: [QueryKeys.User.ListPatientWithoutActivity, [id, payload]],
+    queryFn: () => ListPatientAvailableForActivityService(id, payload),
+    placeholderData: keepPreviousData,
+    enabled: shouldLoad && !!id,
   });
 };
 
@@ -93,10 +127,14 @@ export const useFetchListTutorQuery = (payload?: API_PAYLOAD) => {
   });
 };
 
-export const useFetchListTherapistQuery = (payload?: API_PAYLOAD) => {
+export const useFetchListTherapistQuery = (
+  payload?: API_PAYLOAD,
+  shouldLoad: boolean = true,
+) => {
   return useQuery({
     queryKey: [QueryKeys.User.ListTherapist, payload],
     queryFn: () => ListTherapistService(payload),
     placeholderData: keepPreviousData,
+    enabled: shouldLoad,
   });
 };

@@ -7,6 +7,8 @@ export const QueryKeys = {
     Profile: 'profile',
     ListUser: 'list-user',
     ListPatient: 'list-patient',
+    ListPatientWithoutTherapist: 'list-patient-without-therapist',
+    ListPatientWithoutActivity: 'list-patient-without-activity',
     ListTutor: 'list-tutor',
     CatalogTutor: 'list-catalog-tutor',
     ListTherapist: 'list-therapist',

@@ -331,6 +331,8 @@ label.ant-form-item-required {
     }
 
     .ant-form-item.input-hidden{
+        display: contents;
+
         .ant-form-item-control-input{
             min-height: unset;
         }
@@ -672,7 +674,8 @@ label.ant-form-item-required {
     }
 }
 
-.table-popup-actions{
+.table-popup-actions, 
+.popup-actions-dropdown.table-popup-actions{
     .item-popup-action{
         cursor: pointer;
         color: $primary-color;
@@ -753,6 +756,26 @@ label.ant-form-item-required {
                 }
             }
         }
+    }
+}
+.ant-select.custom-assign-patient{
+
+    .ant-select-prefix{
+        height: 16px;
+        margin-inline-end: 10px;
+
+        svg{
+            font-size: 16px;
+            color: $grey-4;
+        }
+    }
+
+    &.ant-select-single .ant-select-selection-item{
+        display: none;
+    }
+
+    &.ant-select-multiple .ant-select-selection-overflow-item+.ant-select-selection-overflow-item .ant-select-selection-search {
+        margin-inline-start: 8px;
     }
 }
 

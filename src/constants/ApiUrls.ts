@@ -11,13 +11,17 @@ export const API = {
   },
   Patient: {
     Index: '/patient',
+    WithoutTherapist: '/patient/patients-therapist',
+    AvailableForActivity: '/patient/availableForActivity',
     AddObservation: '/observation/id-patient',
+    ChangeTherapist: '/patient/change-therapist/',
   },
   Tutor: {
     Index: '/tutor',
   },
   Therapist: {
     Index: '/therapist',
+    Assign: 'therapist/assignPatient/',
   },
   PECS: {
     Phase: {
@@ -30,6 +34,8 @@ export const API = {
   },
   Activity: {
     Index: 'activity',
+    Assign: '/activity/assign',
+    Unassign: '/activity/unassign',
   },
   Pictogram: {
     Index: 'pictogram',

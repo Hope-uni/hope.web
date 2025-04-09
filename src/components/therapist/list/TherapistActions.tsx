@@ -2,19 +2,24 @@ import HModal from '@/components/common/Modals';
 import { Show } from '@/components/Show';
 import { RenderModeActionTypes } from '@/components/table/helpers';
 import { PopupActions } from '@/components/table/PopupActions';
+import AssignPatientForm from '@/components/therapist/form/AssignPatientForm';
 import { ROLES } from '@/constants/Role';
+import { useOpenNotification } from '@/context/Notification/NotificationProvider';
+import useTherapistForm from '@/hooks/useTherapistForm';
+import { useOverlayStore } from '@/lib/store';
 import { SingleTutorTherapist } from '@/models/schema';
 import { ActionType } from '@/models/types';
+import { AssignPatientToTherapistService } from '@/services';
 import {
   CurrentRoleTypeDeleteUser,
   DeleteUserByIdHelper,
 } from '@/services/user/helpers';
 import styles from '@/styles/modules/partials.module.scss';
-import { achievements } from '__mocks__/achievements';
-import { Button, Form, Select } from 'antd';
+import { Button, Form } from 'antd';
 import { useRouter } from 'next/navigation';
-import { useCallback, useState } from 'react';
+import { memo, useCallback, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
+import { useShallow } from 'zustand/react/shallow';
 
 interface Props {
   therapist: SingleTutorTherapist;
@@ -25,14 +30,23 @@ interface Props {
 
 const TherapistActions = ({
   therapist,
-  actions = ['show', 'edit', 'delete'],
+  actions = ['show', 'edit', 'assign_patient', 'delete'],
   classWrapper,
   renderMode = 'popup',
 }: Props) => {
   const { t } = useTranslation();
+  const { openNotification } = useOpenNotification();
   const router = useRouter();
-  const [loading, setLoading] = useState(false);
+  const [assignForm] = Form.useForm();
+  const setLoading = useOverlayStore(useShallow((state) => state.setLoading));
+  const [loadingForm, setLoadingForm] = useState(false);
   const [openAssignPatient, setOpenAssignPatient] = useState(false);
+
+  const {
+    availableForTherapistList,
+    getAvailableForTherapist,
+    updateQueriesAfterAssign,
+  } = useTherapistForm();
 
   const handleEdit = useCallback(() => {
     router.push(`/admin/users/edit/${therapist.userId}`);
@@ -45,9 +59,54 @@ const TherapistActions = ({
     );
   }, [therapist.id]);
 
-  const handleOpenAssignPatient = useCallback(() => {
+  const handleAssign = useCallback(async () => {
+    try {
+      if (!therapist?.id) {
+        return;
+      }
+
+      setLoadingForm(true);
+
+      const validateFormAssign = await assignForm.validateFields();
+
+      if (validateFormAssign.errorFields) {
+        return;
+      }
+
+      const values = assignForm.getFieldsValue();
+
+      const res = await AssignPatientToTherapistService({
+        therapistId: therapist?.id,
+        patients: [...values.patients],
+      });
+
+      if (res.error && res.statusCode !== 201) {
+        openNotification.error({
+          description: res.message,
+        });
+        setLoadingForm(false);
+        return;
+      }
+
+      await updateQueriesAfterAssign([...values.patients], therapist.id);
+
+      openNotification.success({
+        description: res.message,
+      });
+
+      setLoadingForm(false);
+      setOpenAssignPatient(false);
+      assignForm.resetFields();
+    } catch (error) {
+      setLoadingForm(false);
+    }
+  }, [assignForm, openNotification, therapist.id, updateQueriesAfterAssign]);
+
+  const handleOpenAssignPatient = useCallback(async () => {
+    await getAvailableForTherapist();
     setOpenAssignPatient(true);
-  }, []);
+    setLoading(false);
+  }, [getAvailableForTherapist, setLoading]);
 
   return (
     <>
@@ -59,6 +118,7 @@ const TherapistActions = ({
         renderMode={renderMode}
         onEdit={handleEdit}
         onDelete={handleDelete}
+        onAssign={handleOpenAssignPatient}
         modalDeleteTitle={t('Therapist.actions.delete.modal.title')}
         modalDeleteDescription={
           <Trans
@@ -78,43 +138,25 @@ const TherapistActions = ({
       {/* assign patients to patient modal */}
       <HModal
         open={openAssignPatient}
-        loading={loading}
+        width={600}
+        loading={loadingForm}
         onOpen={setOpenAssignPatient}
         okText={t('Therapist.actions.assign_patients.modal.ok_text')}
         okButtonProps={{
           type: 'primary',
-          onClick: handleDelete,
-          loading: loading,
+          onClick: handleAssign,
+          loading: loadingForm,
           className: styles.footer_btn_confirm,
         }}
         title={t('Therapist.actions.assign_patients.modal.title')}
       >
-        <Form
-          name="add_observation"
-          id="create_user_form_antd"
-          layout="vertical"
-        >
-          <Form.Item
-            name="roles"
-            label={t('Therapist.fields.assign_patients.label')}
-          >
-            <Select
-              placeholder={t('Therapist.fields.assign_patients.placeholder')}
-              mode="multiple"
-              className="primary"
-            >
-              {/* TODO This list is for testing purposes */}
-              {achievements.map((item) => (
-                <Select.Option key={item.id} value={item.id}>
-                  {item.name}
-                </Select.Option>
-              ))}
-            </Select>
-          </Form.Item>
-        </Form>
+        <AssignPatientForm
+          form={assignForm}
+          initialPatients={availableForTherapistList}
+        />
       </HModal>
     </>
   );
 };
 
-export default TherapistActions;
+export default memo(TherapistActions);

@@ -1,15 +1,16 @@
-import {
-  BsPencilFill,
-  BsTrash2Fill,
-  BsFillPersonCheckFill,
-} from 'react-icons/bs';
-import { FaEye, FaUserPlus } from 'react-icons/fa';
+import placeholderImage from '@/assets/img/placeholderImage_bn.svg';
 import i18next from '@/i18n';
 import {
+  ActionTableOptionsType,
   I_HopeTableConfig,
   SizeChangerOptionsType,
 } from '@/models/types/Table';
-import placeholderImage from '@/assets/img/placeholderImage_bn.svg';
+import {
+  BsFillPersonCheckFill,
+  BsPencilFill,
+  BsTrash2Fill,
+} from 'react-icons/bs';
+import { FaEye, FaMinus, FaPlus, FaUserPlus } from 'react-icons/fa';
 
 export const HopeLocales = {
   languages: ['es', 'en'],
@@ -17,6 +18,59 @@ export const HopeLocales = {
 };
 
 const sizeChanger = ['1', '5', '10', '25', '50', '100'];
+
+const ActionTableOptions: Omit<ActionTableOptionsType, 'key'>[] = [
+  {
+    label: i18next.t('components.popupActions.show.label'),
+    icon: FaEye,
+    actionType: 'show',
+    colorClassName: 'text-color-link',
+  },
+  {
+    label: i18next.t('components.popupActions.edit.label'),
+    icon: BsPencilFill,
+    actionType: 'edit',
+    colorClassName: 'text-color-link',
+  },
+  {
+    label: i18next.t('components.popupActions.assign_patients.label'),
+    icon: FaUserPlus,
+    actionType: 'assign_patient',
+    colorClassName: 'text-color-link',
+  },
+  {
+    label: i18next.t(
+      'components.popupActions.change_therapist_to_patient.label',
+    ),
+    icon: FaUserPlus,
+    actionType: 'change_therapist_to_patient',
+    colorClassName: 'text-color-link',
+  },
+  {
+    label: i18next.t('components.popupActions.assign_activity.label'),
+    icon: FaPlus,
+    actionType: 'assign_activity',
+    colorClassName: 'text-color-link',
+  },
+  {
+    label: i18next.t('components.popupActions.unassign_activity.label'),
+    icon: FaMinus,
+    actionType: 'unassign_activity',
+    colorClassName: 'text-color-link',
+  },
+  {
+    label: i18next.t('components.popupActions.ediAssigments.label'),
+    icon: BsFillPersonCheckFill,
+    actionType: 'assign',
+    colorClassName: 'text-color-link',
+  },
+  {
+    label: i18next.t('components.popupActions.delete.label'),
+    icon: BsTrash2Fill,
+    actionType: 'delete',
+    colorClassName: 'text-color-error',
+  },
+];
 
 export const HopeTable: I_HopeTableConfig = {
   sizeChangerOptions: sizeChanger.reduce(
@@ -29,43 +83,10 @@ export const HopeTable: I_HopeTableConfig = {
     ],
     [],
   ),
-  actionTableOptions: [
-    {
-      label: i18next.t('components.popupActions.show.label'),
-      icon: FaEye,
-      key: '1',
-      actionType: 'show',
-      colorClassName: 'text-color-link',
-    },
-    {
-      label: i18next.t('components.popupActions.edit.label'),
-      icon: BsPencilFill,
-      key: '2',
-      actionType: 'edit',
-      colorClassName: 'text-color-link',
-    },
-    {
-      label: i18next.t('components.popupActions.assign_patients.label'),
-      icon: FaUserPlus,
-      key: '3',
-      actionType: 'assign_patient',
-      colorClassName: 'text-color-link',
-    },
-    {
-      label: i18next.t('components.popupActions.ediAssigments.label'),
-      icon: BsFillPersonCheckFill,
-      key: '4',
-      actionType: 'assign',
-      colorClassName: 'text-color-link',
-    },
-    {
-      label: i18next.t('components.popupActions.delete.label'),
-      icon: BsTrash2Fill,
-      key: '5',
-      actionType: 'delete',
-      colorClassName: 'text-color-error',
-    },
-  ],
+  actionTableOptions: ActionTableOptions.map((item, index) => ({
+    ...item,
+    key: String(index + 1),
+  })) as ActionTableOptionsType[],
 };
 
 export const ImageConfig = {

@@ -5,8 +5,10 @@ import {
   DetailPatient,
   DetailTherapist,
   DetailTutor,
+  FiltersPatient,
   ListRoleResponse,
   Observation,
+  PayloadAssignTherapist,
   PayloadPatient,
   PayloadTutorTherapist,
   SinglePatient,
@@ -117,11 +119,48 @@ export const DeleteUserService = async (id: string) => {
  */
 export const ListPatientService = async (
   payload: API_PAYLOAD = defaultPayload,
+  filters?: FiltersPatient,
 ) => {
   try {
     const response = await API_HOPE_PROTECTED.get<
       API_RESPONSE<SinglePatient[]>
     >(API.Patient.Index, {
+      params: {
+        ...payload.paginate,
+        ...filters,
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    throw axiosErrorHandler(error);
+  }
+};
+
+export const ListPatientWithoutTherapistService = async (
+  payload: API_PAYLOAD = defaultPayload,
+) => {
+  try {
+    const response = await API_HOPE_PROTECTED.get<
+      API_RESPONSE<SinglePatient[]>
+    >(API.Patient.WithoutTherapist, {
+      params: payload.paginate,
+    });
+
+    return response.data;
+  } catch (error) {
+    throw axiosErrorHandler(error);
+  }
+};
+
+export const ListPatientAvailableForActivityService = async (
+  id?: number,
+  payload: API_PAYLOAD = defaultPayload,
+) => {
+  try {
+    const response = await API_HOPE_PROTECTED.get<
+      API_RESPONSE<SinglePatient[]>
+    >(`${API.Patient.AvailableForActivity}/${id}`, {
       params: payload.paginate,
     });
 
@@ -204,6 +243,24 @@ export const AddObservationToPatientService = async (
     return response.data;
   } catch (error) {
     throw axiosErrorHandler(error);
+  }
+};
+
+export const ChangeTherapistService = async (
+  patientId: number,
+  therapistId: string,
+) => {
+  try {
+    const response = await API_HOPE_PROTECTED.patch<API_SINGLE_RESPONSE>(
+      `${API.Patient.ChangeTherapist}${patientId}`,
+      {
+        therapistId,
+      },
+    );
+
+    return response.data;
+  } catch (error) {
+    return axiosErrorHandler(error);
   }
 };
 
@@ -351,6 +408,23 @@ export const DeleteTherapistService = async (id: string) => {
   try {
     const response = await API_HOPE_PROTECTED.delete<API_SINGLE_RESPONSE>(
       `${API.Therapist.Index}/${id}`,
+    );
+
+    return response.data;
+  } catch (error) {
+    throw axiosErrorHandler(error);
+  }
+};
+
+export const AssignPatientToTherapistService = async (
+  payload: PayloadAssignTherapist,
+) => {
+  try {
+    const response = await API_HOPE_PROTECTED.post<API_SINGLE_RESPONSE>(
+      `${API.Therapist.Assign}`,
+      {
+        ...payload,
+      },
     );
 
     return response.data;

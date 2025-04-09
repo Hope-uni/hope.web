@@ -343,6 +343,14 @@ const es = {
           ok_text: 'Guardar',
         },
       },
+      change_therapist: {
+        button_add: 'Guardar',
+        button_add_mobile: 'Guardar',
+        modal: {
+          title: 'Cambiar de terapeuta asignado',
+          ok_text: 'Guardar',
+        },
+      },
     },
     fields: {
       assign_achievements: {
@@ -350,6 +358,13 @@ const es = {
         placeholder: 'Lista de logros',
         rules: {
           required: 'Logro es requerido',
+        },
+      },
+      change_therapist: {
+        label: 'Terapeutas',
+        placeholder: 'Listado de terapeutas disponibles',
+        rules: {
+          required: 'Terapeuta es requerido',
         },
       },
     },
@@ -440,7 +455,23 @@ const es = {
         button_add: 'Asignar pacientes',
         modal: {
           title: 'Asignar paciente',
+          title_patient_selected: 'Pacientes seleccionados',
           ok_text: 'Guardar',
+        },
+        button_deselected: 'Eliminar',
+        feedback: {
+          no_selected: 'Ningún paciente seleccionado.',
+        },
+      },
+      unassign_patients: {
+        modal: {
+          title: 'Desasignar paciente',
+          title_patient_assigned: 'Pacientes asignados',
+          ok_text: 'Guardar',
+        },
+        button_unassign: 'Desasignar',
+        feedback: {
+          no_assign: 'Ningún paciente asignado.',
         },
       },
     },
@@ -622,11 +653,40 @@ const es = {
           max: 'La solución no debe contener más de {{limit}} pictogramas',
         },
       },
+      patientsToAssign: {
+        label: 'Pacientes',
+        placeholder: 'Lista de pacientes disponibles',
+        rules: {
+          min: 'Seleccione al menos a un paciente para asignar esta actividad',
+        },
+      },
     },
     actions: {
       detail: {
         modal: {
           title: 'Detalle actividad',
+        },
+      },
+      assign_activity: {
+        modal: {
+          title: 'Asignar actividad a pacientes',
+          title_patient_selected: 'Pacientes seleccionados',
+          ok_text: 'Asignar',
+        },
+        button_deselected: 'Eliminar',
+        feedback: {
+          no_available:
+            '¡No encontramos pacientes disponibles para asignar en esta actividad!',
+        },
+      },
+      unassign_activity: {
+        modal: {
+          title: 'Desasignar actividad a pacientes',
+          title_patient_assigned: 'Pacientes asginado a la actividad',
+        },
+        button_unassign: 'Desasignar',
+        feedback: {
+          no_assignments: '¡La actividad no tiene pacientes asignados!',
         },
       },
       delete: {
@@ -776,6 +836,15 @@ const es = {
       },
       assign_patients: {
         label: 'Asignar pacientes',
+      },
+      change_therapist_to_patient: {
+        label: 'Cambiar de terapeuta',
+      },
+      assign_activity: {
+        label: 'Asignar actividad',
+      },
+      unassign_activity: {
+        label: 'Desasignar actividad',
       },
       ediAssigments: {
         label: 'Editar asignaciones',

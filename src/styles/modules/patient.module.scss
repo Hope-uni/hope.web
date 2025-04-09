@@ -163,6 +163,31 @@
     }
 }
 
+/*
+* PATIENT LIST VIEW
+*/
+.patientSelectedWrapper{
+    .patientSelected_title{
+        color: $grey-dark;
+        font-size: 16px;
+        font-weight: 400;
+        margin: 0 0 10px 0;
+    }
+
+    .patientSelected_scroll{
+        overflow-y: auto;
+    }
+
+    .patientSelected_btnDelete{
+        color: $error;
+        font-size: 16px;
+        cursor: pointer;
+        margin-top: 5px;
+        border: none;
+        background-color: transparent;
+    }
+}
+
 @media only screen and (max-width: $breakpointMobile) {
     .observation_list{
         .observation_list_title{
