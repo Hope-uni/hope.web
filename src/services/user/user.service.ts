@@ -8,6 +8,7 @@ import {
   FiltersPatient,
   ListRoleResponse,
   Observation,
+  PayloadAssignTherapist,
   PayloadPatient,
   PayloadTutorTherapist,
   SinglePatient,
@@ -245,6 +246,24 @@ export const AddObservationToPatientService = async (
   }
 };
 
+export const ChangeTherapistService = async (
+  patientId: number,
+  therapistId: string,
+) => {
+  try {
+    const response = await API_HOPE_PROTECTED.patch<API_SINGLE_RESPONSE>(
+      `${API.Patient.ChangeTherapist}${patientId}`,
+      {
+        therapistId,
+      },
+    );
+
+    return response.data;
+  } catch (error) {
+    return axiosErrorHandler(error);
+  }
+};
+
 /*
  * Tutor Services
  */
@@ -389,6 +408,23 @@ export const DeleteTherapistService = async (id: string) => {
   try {
     const response = await API_HOPE_PROTECTED.delete<API_SINGLE_RESPONSE>(
       `${API.Therapist.Index}/${id}`,
+    );
+
+    return response.data;
+  } catch (error) {
+    throw axiosErrorHandler(error);
+  }
+};
+
+export const AssignPatientToTherapistService = async (
+  payload: PayloadAssignTherapist,
+) => {
+  try {
+    const response = await API_HOPE_PROTECTED.post<API_SINGLE_RESPONSE>(
+      `${API.Therapist.Assign}`,
+      {
+        ...payload,
+      },
     );
 
     return response.data;

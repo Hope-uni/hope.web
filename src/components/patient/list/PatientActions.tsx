@@ -2,14 +2,17 @@ import HModal from '@/components/common/Modals';
 import { Show } from '@/components/Show';
 import { RenderModeActionTypes } from '@/components/table/helpers';
 import { PopupActions } from '@/components/table/PopupActions';
-import { QueryKeys } from '@/constants';
 import { ROLES } from '@/constants/Role';
 import { UserRules } from '@/constants/rules';
 import { useOpenNotification } from '@/context/Notification/NotificationProvider';
-import useInvalidateQueries from '@/hooks/useInvalidateQueries';
-import { DetailPatient, Observation, SinglePatient } from '@/models/schema';
-import { ActionType, API_RESPONSE, NotificationContent } from '@/models/types';
-import { AddObservationToPatientService } from '@/services';
+import usePatientForm from '@/hooks/usePatientForm';
+import { useOverlayStore } from '@/lib/store';
+import { Observation, SinglePatient } from '@/models/schema';
+import { ActionType, NotificationContent } from '@/models/types';
+import {
+  AddObservationToPatientService,
+  ChangeTherapistService,
+} from '@/services';
 import { PhaseShiftService } from '@/services/PECS/pecs.service';
 import {
   CurrentRoleTypeDeleteUser,
@@ -25,6 +28,7 @@ import { useRouter } from 'next/navigation';
 import { useCallback, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { BsChevronDoubleUp } from 'react-icons/bs';
+import { useShallow } from 'zustand/react/shallow';
 
 const { useBreakpoint } = Grid;
 
@@ -41,21 +45,30 @@ interface Props {
 
 const PatientActions = ({
   patient,
-  actions = ['show', 'edit', 'delete'],
+  actions = ['show', 'edit', 'change_therapist_to_patient', 'delete'],
   classWrapper,
   renderMode = 'popup',
 }: Props) => {
   const screens = useBreakpoint();
   const { t } = useTranslation();
-  const { queryClient } = useInvalidateQueries();
   const { openNotification } = useOpenNotification();
   const router = useRouter();
+  const setLoading = useOverlayStore(useShallow((state) => state.setLoading));
   const [loadingForm, setLoadingForm] = useState(false);
   const [openNextPhase, setOpenNextPhase] = useState(false);
   const [openAddObservation, setOpenAddObservation] = useState(false);
   const [openAddAchievement, setOpenAddAchievement] = useState(false);
+  const [openChangeTherapist, setOpenChangeTherapist] = useState(false);
+
+  const {
+    availableTherapistList,
+    getAvailableTherapistForPatient,
+    updateQueriesAfterChangeTherapist,
+    updateQueriesAfterAddObservation,
+  } = usePatientForm();
 
   const [formObservation] = Form.useForm();
+  const [formChangeTherapist] = Form.useForm();
 
   const handleOpenNextPhase = useCallback(() => {
     setOpenNextPhase(true);
@@ -68,6 +81,12 @@ const PatientActions = ({
   const handleOpenAddAchievement = useCallback(() => {
     setOpenAddAchievement(true);
   }, []);
+
+  const handleOpenChangeTherapist = useCallback(async () => {
+    await getAvailableTherapistForPatient();
+    setOpenChangeTherapist(true);
+    setLoading(false);
+  }, [getAvailableTherapistForPatient, setLoading]);
 
   const applyErrorsAddObservation = useCallback(
     (validationErrors: FormAddObservationErrors) => {
@@ -120,22 +139,9 @@ const PatientActions = ({
         return;
       }
 
-      await queryClient.setQueryData(
-        [QueryKeys.User.FindByRole, [String(patient.id), ROLES.PATIENT]],
-        (oldData: API_RESPONSE<DetailPatient>) => {
-          if (!oldData?.data) return oldData;
-
-          return {
-            ...oldData,
-            data: {
-              ...oldData?.data,
-              observations: [
-                res.data as Observation,
-                ...(oldData?.data.observations || []),
-              ],
-            },
-          };
-        },
+      await updateQueriesAfterAddObservation(
+        patient.id,
+        res.data as Observation,
       );
 
       openNotification.success({
@@ -153,7 +159,48 @@ const PatientActions = ({
     formObservation,
     openNotification,
     patient.id,
-    queryClient,
+    updateQueriesAfterAddObservation,
+  ]);
+
+  const handleChangeTherapist = useCallback(async () => {
+    try {
+      setLoadingForm(true);
+
+      const validateForm = await formChangeTherapist.validateFields();
+
+      if (validateForm.errorFields) {
+        return;
+      }
+
+      const values = formChangeTherapist.getFieldsValue();
+
+      const res = await ChangeTherapistService(patient.id, values.therapist);
+
+      if (res.error && res.statusCode !== 201) {
+        openNotification.error({
+          description: res.message,
+        });
+        setLoadingForm(false);
+        return;
+      }
+
+      await updateQueriesAfterChangeTherapist();
+
+      openNotification.success({
+        description: res.message,
+      });
+
+      setLoadingForm(false);
+      setOpenChangeTherapist(false);
+      formChangeTherapist.resetFields();
+    } catch (error) {
+      setLoadingForm(false);
+    }
+  }, [
+    formChangeTherapist,
+    openNotification,
+    patient.id,
+    updateQueriesAfterChangeTherapist,
   ]);
 
   const handlePhaseShift = useCallback(async () => {
@@ -200,6 +247,7 @@ const PatientActions = ({
             renderMode={renderMode}
             onEdit={handleEdit}
             onDelete={handleDelete}
+            onChangeAssignment={handleOpenChangeTherapist}
             modalDeleteTitle={t('Patient.actions.delete.modal.title')}
             modalDeleteDescription={
               <Trans
@@ -344,6 +392,45 @@ const PatientActions = ({
               {achievements.map((item) => (
                 <Select.Option key={item.id} value={item.id}>
                   {item.name}
+                </Select.Option>
+              ))}
+            </Select>
+          </Form.Item>
+        </Form>
+      </HModal>
+
+      {/* change therapist assigned to patient modal */}
+      <HModal
+        open={openChangeTherapist}
+        loading={loadingForm}
+        onOpen={setOpenChangeTherapist}
+        okText={t('Patient.actions.change_therapist.modal.ok_text')}
+        okButtonProps={{
+          type: 'primary',
+          onClick: handleChangeTherapist,
+          loading: loadingForm,
+          className: styles.footer_btn_confirm,
+        }}
+        title={t('Patient.actions.change_therapist.modal.title')}
+      >
+        <Form
+          name="change_therapist"
+          id="change_therapist_form_antd"
+          layout="vertical"
+          form={formChangeTherapist}
+        >
+          <Form.Item
+            name="therapist"
+            label={t('Patient.fields.change_therapist.label')}
+            rules={UserRules.user.therapistInCharge}
+          >
+            <Select
+              placeholder={t('Patient.fields.change_therapist.placeholder')}
+              className="primary"
+            >
+              {availableTherapistList.map((item) => (
+                <Select.Option key={item.id} value={item.id}>
+                  {item.fullName}
                 </Select.Option>
               ))}
             </Select>
