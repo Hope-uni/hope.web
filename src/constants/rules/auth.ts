@@ -47,4 +47,34 @@ export const AuthRules = {
       message: i18next.t('Auth.fields.password.rules.min'),
     },
   ] as Rule[],
+  currentPassword: [
+    {
+      required: true,
+      message: i18next.t('Auth.fields.current_password.rules.required'),
+    },
+    {
+      min: 3,
+      message: i18next.t('Auth.fields.current_password.rules.min'),
+    },
+  ] as Rule[],
+  newPassword: [
+    {
+      required: true,
+      message: i18next.t('Auth.fields.new_password.rules.required'),
+    },
+    {
+      min: 3,
+      message: i18next.t('Auth.fields.new_password.rules.min'),
+    },
+  ] as Rule[],
+  confirmNewPassword: [
+    {
+      required: true,
+      message: i18next.t('Auth.fields.confirm_new_password.rules.required'),
+    },
+    {
+      min: 3,
+      message: i18next.t('Auth.fields.confirm_new_password.rules.min'),
+    },
+  ] as Rule[],
 } as const;

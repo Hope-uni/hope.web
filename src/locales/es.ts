@@ -18,9 +18,12 @@ const es = {
       },
       forgot_password_link: '¿Olvidó su contraseña?',
       login_link: 'Iniciar sesión',
+      exit: 'Salir',
       go_back_to: 'Regresa a ',
       submit: 'Entrar',
       send: 'Enviar',
+      redirectToLogin: 'Redirigiendo al login...',
+      logout_overlay_text: 'Cerrando sesión...',
     },
     fields: {
       email_or_username: {
@@ -44,6 +47,30 @@ const es = {
         placeholder: 'Confirmar contraseña',
         rules: {
           required: 'Por favor ingrese su Contraseña',
+        },
+      },
+      current_password: {
+        label: 'Contraseña actual',
+        placeholder: 'Ingrese su contraseña actual',
+        rules: {
+          required: 'Por favor ingrese su contraseña actual',
+          min: 'La contraseña debe tener al menos 8 caracteres',
+        },
+      },
+      new_password: {
+        label: 'Nueva contraseña',
+        placeholder: 'Ingrese su nueva contraseña',
+        rules: {
+          required: 'Por favor ingrese su nueva contraseña',
+          min: 'La contraseña debe tener al menos 8 caracteres',
+        },
+      },
+      confirm_new_password: {
+        label: 'Confirmar nueva contraseña',
+        placeholder: 'Ingrese su nueva contraseña para confirmarla',
+        rules: {
+          required: 'Por favor introduzca la nueva contraseñá para confirmarla',
+          min: 'La contraseña debe tener al menos 8 caracteres',
         },
       },
     },

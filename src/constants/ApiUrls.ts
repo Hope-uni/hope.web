@@ -1,8 +1,11 @@
 export const API = {
-  Login: 'auth/login',
-  Me: 'auth/me',
-  Forgot_Password: 'auth/forgot-password',
-  Reset_Password: 'auth/reset-password',
+  Auth: {
+    Login: 'auth/login',
+    Me: 'auth/me',
+    Forgot_Password: 'auth/forgot-password',
+    Reset_Password: 'auth/reset-password',
+    Change_Password: 'auth/change-password',
+  },
   User: {
     Index: '/user',
     Role: {

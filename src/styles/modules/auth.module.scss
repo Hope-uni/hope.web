@@ -39,6 +39,7 @@
         @extend .col-center;
         width: 50%;
         align-self: stretch;
+        padding-block: 2rem;
     }
 }
 
@@ -109,6 +110,19 @@
         text-align: center;
         width: 95%;
         margin-bottom: 30px
+    }
+}
+
+.row_footer_buttons{
+    @extend .col-center;
+    
+    gap: 1rem;
+    .auth_change_password_button_outlined{
+        width: 100%;
+        background-color: transparent;
+        border-color: $primary-color;
+        color: $primary-color;
+        box-shadow: none;
     }
 }
 
