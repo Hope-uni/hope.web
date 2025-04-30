@@ -7,9 +7,7 @@ import styles from '@/styles/modules/layouts.module.scss';
 import { Divider, Flex, Layout, Menu, MenuProps } from 'antd';
 import Image from 'next/image';
 import { useCallback, useEffect, useState } from 'react';
-import { signOut } from 'next-auth/react';
-import { useOverlayStore } from '@/lib/store';
-
+import useLogout from '@/hooks/useLogout';
 const { Sider } = Layout;
 
 type MenuItem = Required<MenuProps>['items'][number];
@@ -19,7 +17,7 @@ export default function Sidebar() {
   const router = useRouter();
   const [selectedKey, setSelectedKey] = useState(pathname);
   const [selectedOpenKeys, setSelectedOpenKeys] = useState<string[]>([]);
-  const { setOverlayBlocking, setMessageOverlay } = useOverlayStore();
+  const { logout } = useLogout();
 
   useEffect(() => {
     const open = SidebarMenuItems.top
@@ -52,9 +50,7 @@ export default function Sidebar() {
 
   const handleLogut: MenuProps['onClick'] = async (e) => {
     if (e.key === 'logout') {
-      setMessageOverlay('Cerrando sesión...');
-      setOverlayBlocking(true);
-      await signOut();
+      await logout();
     }
   };
 
