@@ -176,7 +176,10 @@ export const PopupActions = ({
               className={`ant-dropdown-menu-item item-popup-action ${item.colorClassName}`}
               role="menuitem"
               key={item?.key}
-              onClick={() => handleSelectAction(item.actionType)}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleSelectAction(item.actionType);
+              }}
             >
               <item.icon />
               <span className="ant-dropdown-menu-title-content">
@@ -190,7 +193,7 @@ export const PopupActions = ({
   };
 
   return (
-    <div onClick={(event) => event.stopPropagation()}>
+    <div>
       <Show>
         <Show.When isTrue={renderMode === 'popup'}>
           <>
@@ -202,10 +205,7 @@ export const PopupActions = ({
                   <Tooltip key={item?.key} title={item.label}>
                     <span
                       className={`item-popup-action ${item.colorClassName}`}
-                      onClick={(event) => {
-                        event.stopPropagation();
-                        handleSelectAction(item.actionType);
-                      }}
+                      onClick={() => handleSelectAction(item.actionType)}
                     >
                       <item.icon />
                     </span>
@@ -224,7 +224,10 @@ export const PopupActions = ({
                   >
                     <BsThreeDotsVertical
                       size={'12px'}
-                      onClick={() => handleVisibilityMenu(true)}
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        handleVisibilityMenu(!openMenu);
+                      }}
                     />
                   </Dropdown>
                 </Flex>

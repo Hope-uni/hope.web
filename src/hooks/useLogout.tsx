@@ -10,6 +10,7 @@ export default function useLogout() {
     setMessageOverlay(t('Auth.form.logout_overlay_text'));
     setOverlayBlocking(true);
     await signOut();
+    setOverlayBlocking(false);
   };
 
   return {

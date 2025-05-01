@@ -620,11 +620,11 @@ label.ant-form-item-required {
     }
 
     &.table-stripped{
-        tr td {
+        tr td.ant-table-cell {
             background-color: $white;
         }
 
-        tr:nth-child(2n) td {
+        tr:nth-child(2n) td.ant-table-cell {
             background-color: #f3f3f3;
         }
     }

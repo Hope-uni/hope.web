@@ -30,7 +30,7 @@ const RoleRowCardMobile = ({ role }: Props) => {
               <Flex gap={8} wrap>
                 {role.permissions.map((item) => (
                   <Tag key={item.id} className="tag-permission">
-                    {item.description}
+                    {item.name}
                   </Tag>
                 ))}
               </Flex>

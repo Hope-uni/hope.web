@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 export const PermissionSchema = z.object({
   id: z.number(),
-  description: z.string(),
+  name: z.string(),
   status: z.boolean(),
 });
 

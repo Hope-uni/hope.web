@@ -1,6 +1,10 @@
 import PhaseActions from '@/components/phase/list/PhaseActions';
 import { SingleTEAPhase } from '@/models/schema';
-import { addResponsiveProperty } from '@/utils/table';
+import {
+  addResponsiveProperty,
+  createActionColumn,
+  createRowCardMobileColumn,
+} from '@/utils/table';
 import { TableProps } from 'antd';
 import { useTranslation } from 'react-i18next';
 import PhaseRowCardMobile from '@/components/phase/list/PhaseRowCardMobile';
@@ -28,25 +32,12 @@ export const usePhaseColumns = () => {
       width: '280px',
       className: 'table-cell-center',
     },
-    {
-      title: '',
-      dataIndex: 'id',
-      align: 'center',
-      width: '60px',
-      fixed: 'right',
-      className: 'td-actions',
-      render: (_, phase) => {
-        return <PhaseActions phase={phase} />;
-      },
-    },
-    {
-      title: 'rowCardMobile',
-      dataIndex: 'mobile',
-      className: 'table-col-mobile',
-      render: (_, phase) => {
-        return <PhaseRowCardMobile phase={phase} />;
-      },
-    },
+    createActionColumn({
+      customRender: (record) => <PhaseActions phase={record} />,
+    }),
+    createRowCardMobileColumn({
+      customRender: (record) => <PhaseRowCardMobile phase={record} />,
+    }),
   ];
 
   return [addResponsiveProperty(columns)];

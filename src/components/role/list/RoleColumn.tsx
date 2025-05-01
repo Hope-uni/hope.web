@@ -1,7 +1,10 @@
 import { UnassignedTag } from '@/components/common';
 import RoleRowCardMobile from '@/components/role/list/RoleRowCardMobile';
 import { ListRoleResponse } from '@/models/schema';
-import { addResponsiveProperty } from '@/utils/table';
+import {
+  addResponsiveProperty,
+  createRowCardMobileColumn,
+} from '@/utils/table';
 import { Flex, TableProps, Tag } from 'antd';
 import { useTranslation } from 'react-i18next';
 
@@ -28,21 +31,16 @@ export const useRoleColumns = () => {
           <Flex gap={10} wrap>
             {permissions.map((item) => (
               <Tag key={item.id} className="tag-permission">
-                {item.description}
+                {item.name}
               </Tag>
             ))}
           </Flex>
         );
       },
     },
-    {
-      title: 'rowCardMobile',
-      dataIndex: 'mobile',
-      className: 'table-col-mobile',
-      render: (_, role) => {
-        return <RoleRowCardMobile role={role} />;
-      },
-    },
+    createRowCardMobileColumn({
+      customRender: (record) => <RoleRowCardMobile role={record} />,
+    }),
   ];
 
   return [addResponsiveProperty(columns)];

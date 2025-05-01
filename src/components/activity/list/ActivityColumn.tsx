@@ -1,5 +1,9 @@
 import { SingleActivity } from '@/models/schema';
-import { addResponsiveProperty } from '@/utils/table';
+import {
+  addResponsiveProperty,
+  createActionColumn,
+  createRowCardMobileColumn,
+} from '@/utils/table';
 import { TableProps } from 'antd';
 import { useTranslation } from 'react-i18next';
 import ActivityRowCardMobile from './ActivityRowCardMobile';
@@ -45,25 +49,12 @@ export const useActivityColumns = () => {
         return <span>{phase.name}</span>;
       },
     },
-    {
-      title: '',
-      dataIndex: 'id',
-      align: 'center',
-      width: '60px',
-      className: 'td-actions',
-      fixed: 'right',
-      render: (_, activity) => {
-        return <ActivityActions activity={activity} />;
-      },
-    },
-    {
-      title: 'rowCardMobile',
-      dataIndex: 'mobile',
-      className: 'table-col-mobile',
-      render: (_, activity) => {
-        return <ActivityRowCardMobile activity={activity} />;
-      },
-    },
+    createActionColumn({
+      customRender: (record) => <ActivityActions activity={record} />,
+    }),
+    createRowCardMobileColumn({
+      customRender: (record) => <ActivityRowCardMobile activity={record} />,
+    }),
   ];
 
   return [addResponsiveProperty(columns)];
