@@ -30,4 +30,7 @@ export const QueryKeys = {
   Degree: {
     CatalogDegree: 'list-catalog-degree',
   },
+  Achievement: {
+    ListAchievement: 'list-achievements',
+  },
 };

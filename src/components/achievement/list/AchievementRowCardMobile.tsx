@@ -1,0 +1,34 @@
+import { Achievement } from '@/models/schema';
+import styles from '@/styles/modules/user.module.scss';
+import { Flex, Image } from 'antd';
+import AchievementActions from '@/components/achievement/list/AchievementActions';
+
+interface Props {
+  achievement: Achievement;
+}
+
+const AchievementRowCardMobile = ({ achievement }: Props) => {
+  return (
+    <div className={styles.user_row_card_mobile}>
+      <div style={{ flex: 1 }}>
+        <Flex vertical gap="10px" align="center">
+          <Image
+            src={String(achievement.imageUrl)}
+            width={60}
+            height={60}
+            alt={achievement.name}
+          />
+          <span>{achievement.name}</span>
+        </Flex>
+      </div>
+
+      <div>
+        <div className="popup_actions_primary_vertical">
+          <AchievementActions achievement={achievement} />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default AchievementRowCardMobile;
