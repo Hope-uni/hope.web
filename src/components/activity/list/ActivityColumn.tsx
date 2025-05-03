@@ -6,7 +6,7 @@ import {
 } from '@/utils/table';
 import { TableProps } from 'antd';
 import { useTranslation } from 'react-i18next';
-import ActivityRowCardMobile from './ActivityRowCardMobile';
+import ActivityRowCardMobile from '@/components/activity/list/ActivityRowCardMobile';
 import ActivityActions from '@/components/activity/list/ActivityActions';
 
 export const useActivityColumns = () => {

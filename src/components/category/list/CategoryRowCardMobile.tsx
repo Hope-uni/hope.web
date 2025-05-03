@@ -2,15 +2,12 @@ import CategoryActions from '@/components/category/list/CategoryActions';
 import { CategoryPictogram } from '@/models/schema';
 import styles from '@/styles/modules/user.module.scss';
 import { Flex, Image } from 'antd';
-import { useTranslation } from 'react-i18next';
 
 interface Props {
   category: CategoryPictogram;
 }
 
 const CategoryRowCardMobile = ({ category }: Props) => {
-  const { t } = useTranslation();
-
   return (
     <div className={styles.user_row_card_mobile}>
       <div style={{ flex: 1 }}>

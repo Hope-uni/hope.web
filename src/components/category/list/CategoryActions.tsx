@@ -16,7 +16,6 @@ import {
 import { ParseToErrorAntd } from '@/services/user/helpers';
 import styles from '@/styles/modules/partials.module.scss';
 import { deepEqual, removeKeysFromObject } from '@/utils/objects';
-import { useQueryClient } from '@tanstack/react-query';
 import { Button, Form } from 'antd';
 import { useCallback, useEffect, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
