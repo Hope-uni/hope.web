@@ -22,9 +22,9 @@ export default function UnassignedActivityForm({
   const { openNotification } = useOpenNotification();
 
   const handleUnassign = useCallback(
-    async (patientId: number) => {
+    async (patient: SinglePatient) => {
       try {
-        const res = await UnassignActivityService(patientId);
+        const res = await UnassignActivityService(patient.id);
 
         if (res.error && res.statusCode !== 201) {
           openNotification.error({
@@ -33,7 +33,7 @@ export default function UnassignedActivityForm({
           return;
         }
 
-        await updateQueriesAfterUnassign([patientId]);
+        await updateQueriesAfterUnassign([patient.id]);
 
         openNotification.success({
           description: res.message,

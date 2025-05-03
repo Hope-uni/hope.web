@@ -1,7 +1,11 @@
 import CategoryActions from '@/components/category/list/CategoryActions';
 import CategoryRowCardMobile from '@/components/category/list/CategoryRowCardMobile';
 import { CategoryPictogram } from '@/models/schema';
-import { addResponsiveProperty } from '@/utils/table';
+import {
+  addResponsiveProperty,
+  createActionColumn,
+  createRowCardMobileColumn,
+} from '@/utils/table';
 import { Image, TableProps } from 'antd';
 import { useTranslation } from 'react-i18next';
 
@@ -23,25 +27,12 @@ export const useCategoryColumns = () => {
       dataIndex: 'name',
       align: 'center',
     },
-    {
-      title: '',
-      dataIndex: 'id',
-      align: 'center',
-      width: '60px',
-      fixed: 'right',
-      className: 'td-actions',
-      render: (_, category) => {
-        return <CategoryActions category={category} />;
-      },
-    },
-    {
-      title: 'rowCardMobile',
-      dataIndex: 'mobile',
-      className: 'table-col-mobile',
-      render: (_, category) => {
-        return <CategoryRowCardMobile category={category} />;
-      },
-    },
+    createActionColumn({
+      customRender: (record) => <CategoryActions category={record} />,
+    }),
+    createRowCardMobileColumn({
+      customRender: (record) => <CategoryRowCardMobile category={record} />,
+    }),
   ];
 
   return [addResponsiveProperty(columns)];

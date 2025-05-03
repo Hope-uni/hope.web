@@ -2,7 +2,11 @@ import { UnassignedTag } from '@/components/common';
 import TherapistActions from '@/components/therapist/list/TherapistActions';
 import TherapistRowCardMobile from '@/components/therapist/list/TherapistRowCardMobile';
 import { SingleTutorTherapist } from '@/models/schema';
-import { addResponsiveProperty } from '@/utils/table';
+import {
+  addResponsiveProperty,
+  createActionColumn,
+  createRowCardMobileColumn,
+} from '@/utils/table';
 import { TableProps } from 'antd';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -44,25 +48,12 @@ export const useTherapistColumns = () => {
           return <UnassignedTag />;
         },
       },
-      {
-        title: '',
-        dataIndex: 'id',
-        align: 'center',
-        width: '60px',
-        fixed: 'right',
-        className: 'td-actions',
-        render: (_, therapist) => {
-          return <TherapistActions therapist={therapist} />;
-        },
-      },
-      {
-        title: 'rowCardMobile',
-        dataIndex: 'mobile',
-        className: 'table-col-mobile',
-        render: (_, therapist) => {
-          return <TherapistRowCardMobile therapist={therapist} />;
-        },
-      },
+      createActionColumn({
+        customRender: (record) => <TherapistActions therapist={record} />,
+      }),
+      createRowCardMobileColumn({
+        customRender: (record) => <TherapistRowCardMobile therapist={record} />,
+      }),
     ],
     [t],
   );
