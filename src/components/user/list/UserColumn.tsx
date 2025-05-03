@@ -4,7 +4,11 @@ import UserRowCardMobile from '@/components/user/list/UserRowCardMobile';
 import { ROLES } from '@/constants/Role';
 import { SingleUser, Role } from '@/models/schema';
 import { validateRole } from '@/utils/session';
-import { addResponsiveProperty } from '@/utils/table';
+import {
+  addResponsiveProperty,
+  createActionColumn,
+  createRowCardMobileColumn,
+} from '@/utils/table';
 import { StarFilled } from '@ant-design/icons';
 import { TableProps, Tag } from 'antd';
 import { useTranslation } from 'react-i18next';
@@ -51,25 +55,12 @@ export const useUserColumns = () => {
         return <Tag className="tag-role">{roleData.name}</Tag>;
       },
     },
-    {
-      title: '',
-      dataIndex: 'id',
-      align: 'center',
-      width: '60px',
-      fixed: 'right',
-      className: 'td-actions',
-      render: (_, user) => {
-        return <UserActions user={user} />;
-      },
-    },
-    {
-      title: 'rowCardMobile',
-      dataIndex: 'mobile',
-      className: 'table-col-mobile',
-      render: (_, user) => {
-        return <UserRowCardMobile user={user} />;
-      },
-    },
+    createActionColumn({
+      customRender: (record) => <UserActions user={record} />,
+    }),
+    createRowCardMobileColumn({
+      customRender: (record) => <UserRowCardMobile user={record} />,
+    }),
   ];
 
   return [addResponsiveProperty(columns)];

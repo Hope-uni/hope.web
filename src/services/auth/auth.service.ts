@@ -1,6 +1,7 @@
-import { API_HOPE_PUBLIC } from '@/config';
+import { API_HOPE_PROTECTED, API_HOPE_PUBLIC } from '@/config';
 import { API } from '@/constants/ApiUrls';
 import {
+  ChangePasswordPayload,
   ForgotPasswordPayload,
   LoginPayload,
   LoginResponse,
@@ -14,7 +15,7 @@ import { axiosErrorHandler } from '@/utils/axios';
 export const LoginService = async (loginPayload: LoginPayload) => {
   try {
     const response = await API_HOPE_PUBLIC.post<API_RESPONSE<LoginResponse>>(
-      API.Login,
+      API.Auth.Login,
       loginPayload,
     );
 
@@ -27,7 +28,7 @@ export const LoginService = async (loginPayload: LoginPayload) => {
 export const serviceMe = async (MePayload: MePayload) => {
   try {
     const response = await API_HOPE_PUBLIC.get<API_RESPONSE<MeResponse>>(
-      API.Me,
+      API.Auth.Me,
       {
         headers: {
           Authorization: `bearer ${MePayload.accessToken}`,
@@ -45,7 +46,7 @@ export const ForgotPasswordService = async (
 ) => {
   try {
     const response = await API_HOPE_PUBLIC.post<API_SINGLE_RESPONSE>(
-      API.Forgot_Password,
+      API.Auth.Forgot_Password,
       resetPasswordPayload,
     );
 
@@ -60,8 +61,23 @@ export const ResetPasswordService = async (
 ) => {
   try {
     const response = await API_HOPE_PUBLIC.post<API_SINGLE_RESPONSE>(
-      API.Reset_Password,
+      API.Auth.Reset_Password,
       resetPasswordPayload,
+    );
+
+    return response.data;
+  } catch (error) {
+    return axiosErrorHandler(error);
+  }
+};
+
+export const ChangePasswordService = async (
+  changePasswordPayload: ChangePasswordPayload,
+) => {
+  try {
+    const response = await API_HOPE_PROTECTED.post<API_SINGLE_RESPONSE>(
+      API.Auth.Change_Password,
+      changePasswordPayload,
     );
 
     return response.data;

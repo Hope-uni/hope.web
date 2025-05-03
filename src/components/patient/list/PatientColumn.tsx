@@ -2,7 +2,11 @@ import { UnassignedTag } from '@/components/common';
 import PatientActions from '@/components/patient/list/PatientActions';
 import PatientRowCardMobile from '@/components/patient/list/PatientRowCardMobile';
 import { SinglePatient } from '@/models/schema';
-import { addResponsiveProperty } from '@/utils/table';
+import {
+  addResponsiveProperty,
+  createActionColumn,
+  createRowCardMobileColumn,
+} from '@/utils/table';
 import { TableProps, Tag } from 'antd';
 import { useTranslation } from 'react-i18next';
 
@@ -61,25 +65,12 @@ export const usePatientColumns = () => {
         return <span>{achievementCount || 0}</span>;
       },
     },
-    {
-      title: '',
-      dataIndex: 'id',
-      align: 'center',
-      width: '60px',
-      fixed: 'right',
-      className: 'td-actions',
-      render: (_, patient) => {
-        return <PatientActions patient={patient} />;
-      },
-    },
-    {
-      title: 'rowCardMobile',
-      dataIndex: 'mobile',
-      className: 'table-col-mobile',
-      render: (_, patient) => {
-        return <PatientRowCardMobile patient={patient} />;
-      },
-    },
+    createActionColumn({
+      customRender: (record) => <PatientActions patient={record} />,
+    }),
+    createRowCardMobileColumn({
+      customRender: (record) => <PatientRowCardMobile patient={record} />,
+    }),
   ];
 
   return [addResponsiveProperty(columns)];

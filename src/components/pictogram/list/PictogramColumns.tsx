@@ -1,6 +1,10 @@
 import { UnassignedTag } from '@/components/common';
 import { SinglePictogram } from '@/models/schema';
-import { addResponsiveProperty } from '@/utils/table';
+import {
+  addResponsiveProperty,
+  createActionColumn,
+  createRowCardMobileColumn,
+} from '@/utils/table';
 import { Image, TableProps, Tag } from 'antd';
 import { useTranslation } from 'react-i18next';
 import PictogramActions from './PictogramActions';
@@ -38,25 +42,12 @@ export const usePictogramColumns = () => {
         return <Tag className="tag-role">{category.name}</Tag>;
       },
     },
-    {
-      title: '',
-      dataIndex: 'id',
-      align: 'center',
-      width: '60px',
-      fixed: 'right',
-      className: 'td-actions',
-      render: (_, pictogram) => {
-        return <PictogramActions pictogram={pictogram} />;
-      },
-    },
-    {
-      title: 'rowCardMobile',
-      dataIndex: 'mobile',
-      className: 'table-col-mobile',
-      render: (_, pictogram) => {
-        return <PictogramRowCardMobile pictogram={pictogram} />;
-      },
-    },
+    createActionColumn({
+      customRender: (record) => <PictogramActions pictogram={record} />,
+    }),
+    createRowCardMobileColumn({
+      customRender: (record) => <PictogramRowCardMobile pictogram={record} />,
+    }),
   ];
 
   return [addResponsiveProperty(columns)];

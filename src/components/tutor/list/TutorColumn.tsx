@@ -4,7 +4,11 @@ import { UnassignedTag } from '@/components/common';
 import TutorActions from '@/components/tutor/list/TutorActions';
 import TutorRowCardMobile from '@/components/tutor/list/TutorRowCardMobile';
 import { SingleTutorTherapist } from '@/models/schema/index';
-import { addResponsiveProperty } from '@/utils/table';
+import {
+  addResponsiveProperty,
+  createActionColumn,
+  createRowCardMobileColumn,
+} from '@/utils/table';
 import { TableProps } from 'antd';
 import { useTranslation } from 'react-i18next';
 
@@ -42,25 +46,12 @@ export const useTutorColumns = () => {
         return <UnassignedTag />;
       },
     },
-    {
-      title: '',
-      dataIndex: 'id',
-      align: 'center',
-      width: '60px',
-      fixed: 'right',
-      className: 'td-actions',
-      render: (_, tutor) => {
-        return <TutorActions tutor={tutor} />;
-      },
-    },
-    {
-      title: 'rowCardMobile',
-      dataIndex: 'mobile',
-      className: 'table-col-mobile',
-      render: (_, tutor) => {
-        return <TutorRowCardMobile tutor={tutor} />;
-      },
-    },
+    createActionColumn({
+      customRender: (record) => <TutorActions tutor={record} />,
+    }),
+    createRowCardMobileColumn({
+      customRender: (record) => <TutorRowCardMobile tutor={record} />,
+    }),
   ];
 
   return [addResponsiveProperty(columns)];

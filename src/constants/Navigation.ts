@@ -8,6 +8,9 @@ export const RoutesName = {
   resetPassword: {
     index: '/reset-password',
   },
+  changeTemporaryPassword: {
+    index: '/change-temporary-password',
+  },
   dashboard: {
     index: '/admin',
   },
@@ -56,7 +59,7 @@ export const RoutesName = {
   },
 };
 
-export const ProtectedRoutes = ['/admin/*'];
+export const ProtectedRoutes = ['/admin/*', '/change-temporary-password'];
 
 export const AuthRoutes = [
   RoutesName.login.index,
@@ -64,5 +67,12 @@ export const AuthRoutes = [
   RoutesName.resetPassword.index,
 ];
 
+export const RedirectIfVerifiedRoutes = [
+  ...AuthRoutes,
+  RoutesName.changeTemporaryPassword.index,
+];
+
 export const DEFAULT_REDIRECT_LOGIN_URL = RoutesName.login.index;
 export const DEFAULT_REDIRECT_HOME_URL = RoutesName.dashboard.index;
+export const DEFAULT_REDIRECT_TO_CHANGE_PASSWORD_URL =
+  RoutesName.changeTemporaryPassword.index;

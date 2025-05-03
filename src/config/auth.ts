@@ -1,8 +1,50 @@
 import type { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import { LoginPayloadSchema } from '@/models/schema';
+import {
+  LoginPayloadSchema,
+  MeResponse,
+  userNotVerifiedResponse,
+} from '@/models/schema';
 import { LoginService, serviceMe } from '@/services/auth/auth.service';
 import { UserSession } from '@/models/types/auth';
+import { AxiosError } from 'axios';
+
+const MESSAGE_USER_NOT_VERIFIED = 'Usuario no verificado';
+
+type GetDataMeSuccess = {
+  success: boolean;
+  data: unknown;
+};
+
+const getDataMe = async (accessToken: string): Promise<GetDataMeSuccess> => {
+  try {
+    const resMe = await serviceMe({ accessToken });
+
+    if (resMe.message === MESSAGE_USER_NOT_VERIFIED) {
+      return {
+        success: false,
+        data: resMe.data,
+      };
+    }
+
+    return {
+      success: true,
+      data: resMe.data,
+    };
+  } catch (error) {
+    if (
+      error instanceof AxiosError &&
+      error.response?.status === 401 &&
+      error.response?.data?.message === MESSAGE_USER_NOT_VERIFIED
+    ) {
+      return {
+        success: true,
+        data: error.response.data,
+      };
+    }
+    throw error as Error;
+  }
+};
 
 export const AuthConfig = {
   pages: {
@@ -24,18 +66,28 @@ export const AuthConfig = {
 
           const { accessToken, refreshToken } = response.data;
 
-          const resMe = await serviceMe({ accessToken });
+          const serviceMe = await getDataMe(accessToken);
 
-          if (!resMe?.data || resMe?.error) {
-            throw new Error(resMe?.message);
+          if (!serviceMe.success) {
+            const resUserNotVerified =
+              serviceMe.data as userNotVerifiedResponse;
+            return {
+              id: resUserNotVerified?.id,
+              email: validateCredentials.email_username,
+              userVerified: false,
+              accessToken,
+              refreshToken,
+            };
           }
 
+          const resMe = serviceMe.data as MeResponse;
+
           const userData = {
-            id: resMe?.data.id,
-            email: resMe?.data.email,
+            id: resMe?.id,
+            email: resMe?.email,
           };
 
-          if (!resMe.data.superAdmin && !resMe.data.admin) {
+          if (!resMe.superAdmin && !resMe.admin) {
             return {
               ...userData,
               error: 'unauthorized',
@@ -44,11 +96,15 @@ export const AuthConfig = {
 
           return {
             ...userData,
+            userVerified: resMe.userVerified,
             accessToken,
             refreshToken,
           };
         } catch (error) {
-          return null;
+          if (error instanceof AxiosError) {
+            throw new Error(error.response?.data?.message);
+          }
+          throw new Error((error as Error).message);
         }
       },
     }),
@@ -62,8 +118,9 @@ export const AuthConfig = {
     },
     async session({ session, token }) {
       session.user = token.user as UserSession;
+      const user = session.user as UserSession;
 
-      if (token?.user) {
+      if (token?.user && user.userVerified) {
         const resMe = await serviceMe({
           accessToken: session.user.accessToken,
         });

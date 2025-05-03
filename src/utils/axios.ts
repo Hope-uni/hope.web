@@ -5,6 +5,7 @@ export interface CustomError extends Error {
   statusCode?: number;
   error?: any;
   validationErrors?: I_VALIDATION_ERRORS;
+  data?: any;
 }
 
 export const axiosErrorHandler = (
@@ -20,6 +21,7 @@ export const axiosErrorHandler = (
       statusCode: err?.response?.data.statusCode,
       error: err?.response?.data.error,
       validationErrors: err?.response?.data.validationErrors,
+      data: err?.response?.data.data,
     };
   }
 
