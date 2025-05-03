@@ -15,12 +15,15 @@ export default function PatientIndex() {
   const [columns] = useAchievementColumns();
   const { searching, paginationTable, dispatch } = useTableStore();
 
-  const { data, isLoading, isRefetching } = useFetchListAchievementsQuery({
-    paginate: {
-      page: paginationTable?.page,
-      size: paginationTable?.size,
+  const { data, isLoading, isRefetching } = useFetchListAchievementsQuery(
+    {
+      paginate: {
+        page: paginationTable?.page,
+        size: paginationTable?.size,
+      },
     },
-  });
+    undefined,
+  );
 
   const handleSearch = () => {
     dispatch({ type: E_ActionKeyTable.CLEAR_SELECTED });
