@@ -4,8 +4,10 @@ import AchievementItem from '@/components/achievement/AchievementItem';
 import PatientActions from '@/components/patient/list/PatientActions';
 import { DetailPatient, SinglePatientSchema } from '@/models/schema';
 import styles from '@/styles/modules/patient.module.scss';
-import { Empty, Flex, Typography } from 'antd';
+import { Empty, Flex, Grid, Typography } from 'antd';
 import { useTranslation } from 'react-i18next';
+
+const { useBreakpoint } = Grid;
 
 interface Props {
   patient: DetailPatient;
@@ -13,6 +15,7 @@ interface Props {
 
 export default function AchievementTab({ patient }: Props) {
   const { t } = useTranslation();
+  const screens = useBreakpoint();
 
   return (
     <Flex vertical className={styles.achievement_list} gap={30}>
@@ -22,10 +25,28 @@ export default function AchievementTab({ patient }: Props) {
             <Typography.Title className={styles.title_content_tab}>
               {t('Patient.detail.title_achieved_achievements')}
             </Typography.Title>
-            <PatientActions
-              patient={SinglePatientSchema.parse(patient)}
-              renderMode="assign_achievement"
-            />
+            {screens.sm ? (
+              <Flex gap={10}>
+                <PatientActions
+                  patient={SinglePatientSchema.parse(patient)}
+                  renderMode="assign_achievement"
+                />
+                {patient.achievements.length > 0 && (
+                  <PatientActions
+                    patient={SinglePatientSchema.parse(patient)}
+                    renderMode="unassign_achievement"
+                    achievementsAssigned={patient.achievements}
+                  />
+                )}
+              </Flex>
+            ) : (
+              <PatientActions
+                patient={SinglePatientSchema.parse(patient)}
+                renderMode="popup"
+                actions={['assign_achievement', 'unassign_achievement']}
+                achievementsAssigned={patient.achievements}
+              />
+            )}
           </Flex>
           <Flex
             className={styles.achievement_list_wrapper}

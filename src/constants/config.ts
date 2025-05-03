@@ -9,6 +9,8 @@ import {
   BsFillPersonCheckFill,
   BsPencilFill,
   BsTrash2Fill,
+  BsFillPatchPlusFill,
+  BsPatchMinusFill,
 } from 'react-icons/bs';
 import { FaEye, FaMinus, FaPlus, FaUserPlus } from 'react-icons/fa';
 
@@ -69,6 +71,18 @@ const ActionTableOptions: Omit<ActionTableOptionsType, 'key'>[] = [
     icon: BsTrash2Fill,
     actionType: 'delete',
     colorClassName: 'text-color-error',
+  },
+  {
+    label: i18next.t('components.popupActions.assign_achievement.label'),
+    icon: BsFillPatchPlusFill,
+    actionType: 'assign_achievement',
+    colorClassName: 'text-color-link',
+  },
+  {
+    label: i18next.t('components.popupActions.unassign_achievement.label'),
+    icon: BsPatchMinusFill,
+    actionType: 'unassign_achievement',
+    colorClassName: 'text-color-link',
   },
 ];
 

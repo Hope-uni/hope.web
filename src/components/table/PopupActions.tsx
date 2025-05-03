@@ -16,7 +16,7 @@ import { RenderModeActionTypes } from './helpers';
 const { useBreakpoint } = Grid;
 
 interface Props {
-  id: number | string;
+  id: number;
   actions: Array<ActionType>;
   route?: string;
   modalDeleteTitle?: string | JSX.Element;
@@ -30,7 +30,7 @@ interface Props {
   onAssign?: () => void;
   onUnassign?: () => void;
   onChangeAssignment?: () => void;
-  onDelete?: () => Promise<API_SINGLE_RESPONSE>;
+  onDelete?: (id: number) => Promise<API_SINGLE_RESPONSE>;
 }
 
 export const PopupActions = ({
@@ -107,8 +107,17 @@ export const PopupActions = ({
     unassign_activity: () => {
       handleCallback(onUnassign);
     },
+    assign_achievement: () => {
+      handleCallback(onAssign);
+    },
+    unassign_achievement: () => {
+      handleCallback(onUnassign);
+    },
     assign: () => {
       handleCallback(onAssign);
+    },
+    unassign: () => {
+      handleCallback(onUnassign);
     },
     delete: () => {
       setOpenModalDelete(true);
@@ -123,7 +132,7 @@ export const PopupActions = ({
 
       setLoading(true);
 
-      const res = await onDelete();
+      const res = await onDelete(id);
 
       if (res.error) {
         openNotification.error({
@@ -150,7 +159,7 @@ export const PopupActions = ({
         description: (error as Error).message,
       });
     }
-  }, [invalidateQueries, onDelete, openNotification, queryKey]);
+  }, [id, invalidateQueries, onDelete, openNotification, queryKey]);
 
   const handleSelectAction = (action: ActionType) => {
     if (action in HandlesActions) {
