@@ -71,7 +71,7 @@ const UserActions = ({
 
   return (
     <PopupActions
-      id={user.id}
+      id={Number(user.id)}
       actions={actionsFiltered}
       route="users"
       classWrapper={classWrapper}
