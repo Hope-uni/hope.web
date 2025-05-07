@@ -8,6 +8,7 @@ import {
   PayloadTutorTherapistSchema,
   DetailTherapist,
   DetailTutor,
+  PayloadCreatePatientSchema,
 } from '@/models/schema';
 import {
   API_RESPONSE,
@@ -49,6 +50,7 @@ const CreateUserServicesByRole = {
     const userAdminPayload = CreateUserPayloadSchema.parse({
       username: values.username,
       email: values.email,
+      imageFile: values.imageFile,
     });
 
     if (update) {
@@ -65,11 +67,10 @@ const CreateUserServicesByRole = {
     return await CreateUserService(userAdminPayload);
   },
   Paciente: async (values: FormCreateUser, update: boolean, id?: string) => {
-    const userPatientPayload = PayloadPatientSchema.parse(values);
-
     if (update) {
       if (id) {
-        return await EditPatientService(userPatientPayload, id);
+        const editUerPatientPayload = PayloadPatientSchema.parse(values);
+        return await EditPatientService(editUerPatientPayload, id);
       } else {
         return {
           error: true,
@@ -78,7 +79,8 @@ const CreateUserServicesByRole = {
       }
     }
 
-    return await CreatePatientService(userPatientPayload);
+    const createUserPatientPayload = PayloadCreatePatientSchema.parse(values);
+    return await CreatePatientService(createUserPatientPayload);
   },
   Tutor: async (values: FormCreateUser, update: boolean, id?: string) => {
     const userTutorPayload = PayloadTutorTherapistSchema.parse(values);
