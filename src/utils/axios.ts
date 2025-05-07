@@ -2,6 +2,8 @@ import { API_RESPONSE, I_VALIDATION_ERRORS } from '@/models/types';
 import { UploadFile } from 'antd';
 import axios, { AxiosError } from 'axios';
 
+const INPUT_FILE_KEY = 'imageFile';
+
 export interface CustomError extends Error {
   statusCode?: number;
   error?: any;
@@ -38,7 +40,7 @@ export const ParseToFormData = (payload: Record<string, unknown>): FormData => {
         return;
       }
 
-      if (key === 'imageFile') {
+      if (key === INPUT_FILE_KEY) {
         const fileList = value as UploadFile[];
         const firstFile = fileList[0];
         if (firstFile?.originFileObj) {

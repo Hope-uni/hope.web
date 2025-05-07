@@ -8,8 +8,11 @@ import ImgCrop, { ImgCropProps } from 'antd-img-crop';
 import { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { BsCloudDownloadFill } from 'react-icons/bs';
-import { OptimizedImageShapeType } from '../../OptimizedImage/OptimizedImageHelpers';
-import { PreviewPlacementType } from './DraggerImageHerlpers';
+import { OptimizedImageShapeType } from '@/components/common/OptimizedImage/OptimizedImageHelpers';
+import {
+  PREVIEW_PLACEMENT,
+  PreviewPlacementType,
+} from '@/components/common/Inputs/InputFile/DraggerImageHerlpers';
 
 const { useBreakpoint } = Grid;
 const { Dragger } = Upload;
@@ -31,7 +34,7 @@ const DraggerImage = ({
   placeholderImage = IMAGE_PLACEHOLDER.DEFAULT,
   id,
   value,
-  previewPlacement = 'inside',
+  previewPlacement = PREVIEW_PLACEMENT.INSIDE,
   imgCropProps,
   shape,
   initialImage,
@@ -91,7 +94,7 @@ const DraggerImage = ({
   return (
     <div id={id} className="ant-upload-wrapper">
       <Flex gap={30} className="flex_upload_dragger">
-        {previewPlacement === 'outside' && (
+        {previewPlacement === PREVIEW_PLACEMENT.OUTSIDE && (
           <OptimizedImage
             srcImage={currentPreviewImage}
             size="80px"
@@ -111,7 +114,7 @@ const DraggerImage = ({
             onRemove={handleOnRemove}
           >
             <Flex gap={30} align="center" vertical={screens.xs}>
-              {previewPlacement === 'inside' && (
+              {previewPlacement === PREVIEW_PLACEMENT.INSIDE && (
                 <OptimizedImage
                   srcImage={currentPreviewImage}
                   size="80px"

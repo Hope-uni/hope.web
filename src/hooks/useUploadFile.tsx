@@ -1,3 +1,4 @@
+import { UPLOAD_FILE_STATUS } from '@/constants/Upload';
 import { useOpenNotification } from '@/context/Notification/NotificationProvider';
 import { GetProp, Upload, UploadFile, UploadProps } from 'antd';
 import { useCallback, useState } from 'react';
@@ -55,11 +56,11 @@ export default function useUploadFile() {
       let newFileList = [...info.fileList];
       newFileList = newFileList.slice(-1);
 
-      if (info.file.status === 'removed') {
+      if (info.file.status === UPLOAD_FILE_STATUS.REMOVED) {
         return;
       }
 
-      if (info.file.status === 'uploading') {
+      if (info.file.status === UPLOAD_FILE_STATUS.UPLOADING) {
         return;
       }
 

@@ -2,8 +2,8 @@ import DraggerImage from '@/components/common/Inputs/InputFile/DraggerImage';
 import useUploadFile from '@/hooks/useUploadFile';
 import { Form, FormItemProps } from 'antd';
 import { ImgCropProps } from 'antd-img-crop';
-import { OptimizedImageShapeType } from '../../OptimizedImage/OptimizedImageHelpers';
-import { PreviewPlacementType } from '../InputFile/DraggerImageHerlpers';
+import { OptimizedImageShapeType } from '@/components/common/OptimizedImage/OptimizedImageHelpers';
+import { PreviewPlacementType } from '@/components/common/Inputs/InputFile/DraggerImageHerlpers';
 
 type ImgCropWithoutChildren = Omit<ImgCropProps, 'children'>;
 
