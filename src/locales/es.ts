@@ -905,7 +905,19 @@ const es = {
     dragger: {
       title_bold: 'Haz clic para subir',
       title_regular: 'o arrastra y suelta',
-      caption: 'SVG, PNG or JPG (máx. 800x400px)',
+      caption: 'SVG, PNG, JPG, JPEG or WEBP',
+      errors: {
+        title: 'Error en la Carga de Archivos',
+        invalid_type:
+          'Solo se permiten archivos de imagen en los siguientes formatos: JPG, JPEG, PNG, SVG y WEBP.',
+        max_weight: 'El peso máximo permitido es de 5mb.',
+        valid_image: 'Por favor, selecciona un archivo de imagen.',
+      },
+      modal_crop: {
+        title: 'Cargar imagen',
+        ok_text: 'Subir',
+        cancel_text: 'Cancelar',
+      },
     },
     table: {
       page: 'página',
