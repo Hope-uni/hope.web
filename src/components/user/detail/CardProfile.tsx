@@ -1,21 +1,12 @@
 /* eslint-disable react/display-name */
 'use client';
 
+import OptimizedImage from '@/components/common/OptimizedImage';
 import { Show } from '@/components/Show';
-import { colorList } from '@/constants/Avatar';
 import { UserProfileCard } from '@/models/schema';
 import styles from '@/styles/modules/user.module.scss';
-import {
-  Avatar,
-  Descriptions,
-  Divider,
-  Empty,
-  Flex,
-  Grid,
-  Typography,
-} from 'antd';
+import { Descriptions, Divider, Empty, Flex, Grid, Typography } from 'antd';
 import { DescriptionsProps } from 'antd/lib';
-import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 const { Title, Text } = Typography;
@@ -28,29 +19,6 @@ interface Props {
   showUser?: boolean;
   menuAction?: JSX.Element;
 }
-
-interface AvatarProfileProps {
-  imageProfile?: string | null;
-  userId: number;
-  size: number;
-}
-
-const AvatarProfile = memo(
-  ({ imageProfile, userId, size }: AvatarProfileProps) => {
-    const avatarSrc =
-      imageProfile || `https://api.dicebear.com/7.x/miniavs/svg?seed=${userId}`;
-
-    return (
-      <Avatar
-        src={avatarSrc}
-        size={size}
-        style={{
-          backgroundColor: colorList.s,
-        }}
-      />
-    );
-  },
-);
 
 export default function CardProfile({
   user,
@@ -77,10 +45,10 @@ export default function CardProfile({
             {screens.sm && (
               <>
                 <Flex vertical align="center" justify="flex-start" gap={10}>
-                  <AvatarProfile
-                    imageProfile={user.image}
-                    userId={user.id}
+                  <OptimizedImage
+                    srcImage={user.imageUrl}
                     size={60}
+                    shape="circle"
                   />
                   <Flex vertical gap={3} align="center">
                     <Title
@@ -132,7 +100,11 @@ export default function CardProfile({
     <>
       {user ? (
         <div className={styles.card_profile_row}>
-          <AvatarProfile userId={user.id} size={screens.xs ? 120 : 85} />
+          <OptimizedImage
+            srcImage={user.imageUrl}
+            size={screens.xs ? 120 : 85}
+            shape="circle"
+          />
           <Flex vertical>
             <Title
               level={3}
