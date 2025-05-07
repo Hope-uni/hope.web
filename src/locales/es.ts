@@ -370,6 +370,20 @@ const es = {
           ok_text: 'Guardar',
         },
       },
+      unassign_achievement: {
+        button_add: 'Desasignar logro',
+        button_add_mobile: 'Desasignar',
+        modal: {
+          title: 'Desasignar logros',
+          ok_text: 'Guardar',
+          title_achievement_assigned: 'logros asignados',
+        },
+        button_unassign: 'Desasignar',
+        feedback: {
+          no_assignments:
+            '¡No encontramos logros disponibles asignados a este paciente!',
+        },
+      },
       change_therapist: {
         button_add: 'Guardar',
         button_add_mobile: 'Guardar',
@@ -737,6 +751,50 @@ const es = {
     index: {
       title: 'Logros',
       caption: 'Listado de todos los logros.',
+      createButton: 'Crear logro',
+      searchPlaceholder: 'Buscar logro...',
+      columns: {
+        image: 'Imagen',
+        name: 'Nombre',
+      },
+    },
+    fields: {
+      name: {
+        label: 'Nombre',
+        placeholder: 'Nombre del logro',
+        rules: {
+          required: 'Nombre es requerido',
+        },
+      },
+      image: {
+        label: 'Imagen',
+        placeholder: 'Imagen del logro',
+        rules: {
+          required: 'Imagen es requerida',
+        },
+      },
+      assign_achievements: {
+        rules: {
+          required: 'Seleccione el logro a asignar',
+        },
+      },
+    },
+    actions: {
+      delete: {
+        modal: {
+          title: 'Eliminar logro',
+          description:
+            '¿Estás seguro/a de que deseas deshabilitar el logro <StrongValue />?',
+        },
+      },
+      form: {
+        modal: {
+          title_create: 'Crear logro',
+          ok_text_create: 'Guardar',
+          title_edit: 'Editar logro',
+          ok_text_edit: 'Editar',
+        },
+      },
     },
   },
   Role: {
@@ -847,7 +905,19 @@ const es = {
     dragger: {
       title_bold: 'Haz clic para subir',
       title_regular: 'o arrastra y suelta',
-      caption: 'SVG, PNG or JPG (máx. 800x400px)',
+      caption: 'SVG, PNG, JPG, JPEG or WEBP',
+      errors: {
+        title: 'Error en la Carga de Archivos',
+        invalid_type:
+          'Solo se permiten archivos de imagen en los siguientes formatos: JPG, JPEG, PNG, SVG y WEBP.',
+        max_weight: 'El peso máximo permitido es de 5mb.',
+        valid_image: 'Por favor, selecciona un archivo de imagen.',
+      },
+      modal_crop: {
+        title: 'Cargar imagen',
+        ok_text: 'Subir',
+        cancel_text: 'Cancelar',
+      },
     },
     table: {
       page: 'página',
@@ -872,6 +942,12 @@ const es = {
       },
       unassign_activity: {
         label: 'Desasignar actividad',
+      },
+      assign_achievement: {
+        label: 'Asignar logro',
+      },
+      unassign_achievement: {
+        label: 'Desasignar logro',
       },
       ediAssigments: {
         label: 'Editar asignaciones',

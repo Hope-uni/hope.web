@@ -49,6 +49,9 @@ export default function SearchableList<T>({
             .includes(input.toLowerCase())
         }
         disabled={list.length === 0}
+        style={{
+          width: '100%',
+        }}
       >
         {list.map((item) => (
           <Select.Option key={String(item[keyValue])} value={item[keyValue]}>

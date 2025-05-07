@@ -47,6 +47,7 @@ const PictogramActions = ({
       form?.setFieldsValue({
         ...pictogram,
         categoryId: pictogram?.category.id,
+        imageFile: pictogram?.imageUrl,
       });
     }
   }, [form, openForm, pictogram, isEdit]);

@@ -6,7 +6,7 @@ import dayjs, { type Dayjs } from 'dayjs';
 export const SingleTutorTherapistSchema = z.object({
   id: z.number(),
   userId: z.number(),
-  image: z.string().nullable(),
+  imageUrl: z.string().nullable(),
   fullName: z.string(),
   email: z.string(),
   username: z.string(),

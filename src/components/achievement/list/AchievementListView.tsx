@@ -1,16 +1,7 @@
-import { Achievement, SinglePatient } from '@/models/schema';
+import OptimizedImage from '@/components/common/OptimizedImage';
+import { Achievement } from '@/models/schema';
 import style from '@/styles/modules/patient.module.scss';
-import {
-  Avatar,
-  Button,
-  ButtonProps,
-  Empty,
-  Flex,
-  Grid,
-  List,
-  Spin,
-  Tag,
-} from 'antd';
+import { Button, ButtonProps, Empty, Flex, Grid, List, Spin } from 'antd';
 import { ReactNode, useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -85,7 +76,7 @@ const AchievementListView = ({ listAchievement, actions = [] }: Props) => {
     (item: Achievement) => (
       <List.Item actions={getActions(item.id)}>
         <List.Item.Meta
-          avatar={<Avatar src={item.imageUrl} size={45} />}
+          avatar={<OptimizedImage srcImage={item.imageUrl} size="45px" />}
           title={item.name}
         />
       </List.Item>
