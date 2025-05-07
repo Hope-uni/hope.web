@@ -108,7 +108,10 @@ export type ActionType =
   | 'change_therapist_to_patient'
   | 'assign_activity'
   | 'unassign_activity'
+  | 'assign_achievement'
+  | 'unassign_achievement'
   | 'assign'
+  | 'unassign'
   | 'delete';
 
 export interface ActionTableOptionsType {

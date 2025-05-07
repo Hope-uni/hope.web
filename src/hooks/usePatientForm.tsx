@@ -1,9 +1,11 @@
 import { QueryKeys } from '@/constants';
 import { ROLES } from '@/constants/Role';
+import { useFetchListAchievementsQuery } from '@/lib/queries/achievement';
 import { useFetchListTherapistQuery } from '@/lib/queries/user';
 import { useOverlayStore } from '@/lib/store';
 import { useTableStore } from '@/lib/store/table';
 import {
+  Achievement,
   DetailPatient,
   Observation,
   SingleTutorTherapist,
@@ -13,17 +15,26 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useCallback, useMemo, useState } from 'react';
 import { useShallow } from 'zustand/react/shallow';
 
-const usePatientForm = () => {
+const usePatientForm = (id: number | undefined) => {
   const { paginationTable } = useTableStore();
   const setLoading = useOverlayStore(useShallow((state) => state.setLoading));
   const [availableTherapistList, setAvailableTherapistList] = useState<
     SingleTutorTherapist[]
   >([]);
+  const [achievementList, setAchievementList] = useState<Achievement[]>([]);
 
   const queryClient = useQueryClient();
 
   const availableTherapistForPatientQuery = useFetchListTherapistQuery(
     undefined,
+    false,
+  );
+
+  const listAchievementsQuery = useFetchListAchievementsQuery(
+    undefined,
+    {
+      patientId: id,
+    },
     false,
   );
 
@@ -39,9 +50,41 @@ const usePatientForm = () => {
           },
         },
       ],
+      ListAchievements: [
+        QueryKeys.Achievement.ListAchievement,
+        [
+          undefined,
+          {
+            patientId: id,
+          },
+        ],
+      ],
     }),
-    [paginationTable?.page, paginationTable?.size],
+    [id, paginationTable?.page, paginationTable?.size],
   );
+
+  const getListAchievements = useCallback(async () => {
+    const cacheData = queryClient.getQueryData<API_RESPONSE<Achievement[]>>(
+      LocalQueryKeys.ListAchievements,
+    );
+
+    if (cacheData) {
+      setAchievementList(cacheData?.data || []);
+      return;
+    }
+
+    setLoading(true);
+    const { data, error } = await listAchievementsQuery.refetch();
+
+    setAchievementList(!error && data ? data.data || [] : []);
+    setLoading(false);
+    return;
+  }, [
+    queryClient,
+    LocalQueryKeys.ListAchievements,
+    setLoading,
+    listAchievementsQuery,
+  ]);
 
   const getAvailableTherapistForPatient = useCallback(async () => {
     const cacheData = queryClient.getQueryData<
@@ -101,12 +144,74 @@ const usePatientForm = () => {
     [queryClient],
   );
 
+  const updateListAchievements = useCallback(async () => {
+    queryClient.removeQueries({
+      queryKey: LocalQueryKeys.ListAchievements,
+    });
+  }, [LocalQueryKeys.ListAchievements, queryClient]);
+
+  const updateQueriesAfterUpdateAssignment = useCallback(
+    async (patientId: number, achievement: Achievement) => {
+      await queryClient.setQueryData(
+        [QueryKeys.User.FindByRole, [String(patientId), ROLES.PATIENT]],
+        (oldData: API_RESPONSE<DetailPatient>) => {
+          if (!oldData?.data) return oldData;
+
+          return {
+            ...oldData,
+            data: {
+              ...oldData?.data,
+              achievements: [
+                ...(oldData?.data.achievements || []),
+                achievement,
+              ],
+            },
+          };
+        },
+      );
+
+      await updateListAchievements();
+    },
+    [queryClient, updateListAchievements],
+  );
+
+  const updateQueriesAfterUnassignAssignment = useCallback(
+    async (patientId: number, achievementId: number) => {
+      await queryClient.setQueryData(
+        [QueryKeys.User.FindByRole, [String(patientId), ROLES.PATIENT]],
+        (oldData: API_RESPONSE<DetailPatient>) => {
+          if (!oldData?.data) return oldData;
+
+          const currentAchievements = oldData?.data.achievements || [];
+          let updatedAchievements = currentAchievements.filter(
+            (item) => item.id !== achievementId,
+          );
+
+          return {
+            ...oldData,
+            data: {
+              ...oldData?.data,
+              achievements: updatedAchievements,
+            },
+          };
+        },
+      );
+
+      await updateListAchievements();
+    },
+    [queryClient, updateListAchievements],
+  );
+
   return {
     availableTherapistList,
+    achievementList,
     setAvailableTherapistList,
     getAvailableTherapistForPatient,
+    getListAchievements,
     updateQueriesAfterChangeTherapist,
     updateQueriesAfterAddObservation,
+    updateQueriesAfterUpdateAssignment,
+    updateQueriesAfterUnassignAssignment,
   };
 };
 

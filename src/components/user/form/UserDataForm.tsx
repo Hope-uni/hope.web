@@ -1,30 +1,11 @@
-import { Show } from '@/components/Show';
+import FormItemDragger from '@/components/common/Inputs/FormItemDragger';
+import { IMAGE_PLACEHOLDER } from '@/constants/OptimizedImage';
 import { UserRules } from '@/constants/rules';
 import { useFormCreateUserStore } from '@/lib/store/forms/formCreateUser';
 import styles from '@/styles/modules/user.module.scss';
-import { UserOutlined } from '@ant-design/icons';
-import {
-  Avatar,
-  Col,
-  Flex,
-  Form,
-  FormInstance,
-  Input,
-  Row,
-  Upload,
-} from 'antd';
+import { Col, Form, FormInstance, Input, Row, Upload } from 'antd';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { BsCloudDownloadFill } from 'react-icons/bs';
-
-const { Dragger } = Upload;
-
-const normFile = (e: any) => {
-  if (Array.isArray(e)) {
-    return e;
-  }
-  return e?.fileList;
-};
 
 interface Props {
   form?: FormInstance;
@@ -38,7 +19,7 @@ export default function UserDataForm({
   spanCol = 24,
 }: Props) {
   const { t } = useTranslation();
-  const { isAdminRoleSelected, isEdit, fields } = useFormCreateUserStore();
+  const { isEdit, fields } = useFormCreateUserStore();
 
   useEffect(() => {
     if (isEdit) {
@@ -54,17 +35,19 @@ export default function UserDataForm({
       className={styles.wrapper_form_create_user}
       form={form}
     >
-      <Show>
-        <Show.When isTrue={!isAdminRoleSelected}>
-          <Row gutter={gutterRow}>
-            <Col>
-              <Form.Item name="image" label={t('User.fields.image_url.label')}>
-                <Input placeholder={t('User.fields.image_url.placeholder')} />
-              </Form.Item>
-            </Col>
-          </Row>
-        </Show.When>
-      </Show>
+      <Form.Item>
+        <FormItemDragger
+          label={t('User.fields.image_url.label')}
+          name="imageFile"
+          placeholderImage={IMAGE_PLACEHOLDER.USER}
+          previewPlacement="outside"
+          imgCropProps={{
+            cropShape: 'round',
+          }}
+          shape="circle"
+          initialImage={form?.getFieldValue('imageFile')}
+        />
+      </Form.Item>
 
       <Row gutter={gutterRow}>
         <Col sm={{ span: spanCol }} xs={{ span: 24 }}>

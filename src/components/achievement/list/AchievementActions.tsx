@@ -6,6 +6,7 @@ import { PopupActions } from '@/components/table/PopupActions';
 import { QueryKeys } from '@/constants';
 import { useOpenNotification } from '@/context/Notification/NotificationProvider';
 import useInvalidateQueries from '@/hooks/useInvalidateQueries';
+import { useTableStore } from '@/lib/store/table';
 import { Achievement, FormAchievementErrors } from '@/models/schema';
 import { ActionType } from '@/models/types';
 import {
@@ -35,6 +36,7 @@ const AchievementActions = ({
   renderMode = 'popup',
 }: Props) => {
   const { t } = useTranslation();
+  const { paginationTable } = useTableStore();
   const { invalidateQueries, removeQueries } = useInvalidateQueries();
   const { openNotification } = useOpenNotification();
   const [form] = Form.useForm();
@@ -44,7 +46,10 @@ const AchievementActions = ({
 
   useEffect(() => {
     if (openForm && isEdit) {
-      form?.setFieldsValue(achievement);
+      form?.setFieldsValue({
+        ...achievement,
+        imageFile: achievement?.imageUrl,
+      });
     }
   }, [form, openForm, achievement, isEdit]);
 
@@ -100,7 +105,20 @@ const AchievementActions = ({
         return;
       }
 
-      await removeQueries([QueryKeys.Achievement.ListAchievement]);
+      await removeQueries([
+        [
+          QueryKeys.Achievement.ListAchievement,
+          [
+            {
+              paginate: {
+                page: paginationTable?.page,
+                size: paginationTable?.size,
+              },
+            },
+            undefined,
+          ],
+        ].toString(),
+      ]);
 
       if (isEdit) {
         await invalidateQueries([QueryKeys.User.FindByRole]);
@@ -120,6 +138,8 @@ const AchievementActions = ({
     isEdit,
     achievement,
     removeQueries,
+    paginationTable?.page,
+    paginationTable?.size,
     openNotification,
     applyErrors,
     invalidateQueries,

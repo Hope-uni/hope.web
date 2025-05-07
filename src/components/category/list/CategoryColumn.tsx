@@ -1,12 +1,13 @@
 import CategoryActions from '@/components/category/list/CategoryActions';
 import CategoryRowCardMobile from '@/components/category/list/CategoryRowCardMobile';
+import OptimizedImage from '@/components/common/OptimizedImage';
 import { CategoryPictogram } from '@/models/schema';
 import {
   addResponsiveProperty,
   createActionColumn,
   createRowCardMobileColumn,
 } from '@/utils/table';
-import { Image, TableProps } from 'antd';
+import { TableProps } from 'antd';
 import { useTranslation } from 'react-i18next';
 
 export const useCategoryColumns = () => {
@@ -19,7 +20,7 @@ export const useCategoryColumns = () => {
       align: 'left',
       width: '150px',
       render: (_, { name, icon }) => (
-        <Image src={String(icon)} width={60} height={60} alt={name} />
+        <OptimizedImage srcImage={icon} size={60} alt={name} />
       ),
     },
     {

@@ -1,4 +1,7 @@
 import HModal from '@/components/common/Modals';
+import AssignAchievementForm from '@/components/patient/form/AssignAchievementForm';
+import ChangeTherapistForm from '@/components/patient/form/ChangeTherapistForm';
+import UnassignAchievementForm from '@/components/patient/form/UnassignAchievementForm';
 import { Show } from '@/components/Show';
 import { RenderModeActionTypes } from '@/components/table/helpers';
 import { PopupActions } from '@/components/table/PopupActions';
@@ -7,12 +10,13 @@ import { UserRules } from '@/constants/rules';
 import { useOpenNotification } from '@/context/Notification/NotificationProvider';
 import usePatientForm from '@/hooks/usePatientForm';
 import { useOverlayStore } from '@/lib/store';
-import { Observation, SinglePatient } from '@/models/schema';
+import { Achievement, Observation, SinglePatient } from '@/models/schema';
 import { ActionType, NotificationContent } from '@/models/types';
 import {
   AddObservationToPatientService,
   ChangeTherapistService,
 } from '@/services';
+import { AssignAchievementService } from '@/services/achievements/achievements.service';
 import { PhaseShiftService } from '@/services/PECS/pecs.service';
 import {
   CurrentRoleTypeDeleteUser,
@@ -21,8 +25,7 @@ import {
 } from '@/services/user/helpers';
 import styles from '@/styles/modules/partials.module.scss';
 import stylesPatient from '@/styles/modules/patient.module.scss';
-import { achievements } from '__mocks__/achievements';
-import { Button, Flex, Form, Grid, Select, Typography } from 'antd';
+import { Button, Flex, Form, Grid, Typography } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import { useRouter } from 'next/navigation';
 import { useCallback, useState } from 'react';
@@ -38,6 +41,7 @@ interface FormAddObservationErrors {
 
 interface Props {
   patient: SinglePatient;
+  achievementsAssigned?: Achievement[];
   actions?: Array<ActionType>;
   classWrapper?: string;
   renderMode?: RenderModeActionTypes;
@@ -45,6 +49,7 @@ interface Props {
 
 const PatientActions = ({
   patient,
+  achievementsAssigned = [],
   actions = ['show', 'edit', 'change_therapist_to_patient', 'delete'],
   classWrapper,
   renderMode = 'popup',
@@ -58,16 +63,22 @@ const PatientActions = ({
   const [openNextPhase, setOpenNextPhase] = useState(false);
   const [openAddObservation, setOpenAddObservation] = useState(false);
   const [openAddAchievement, setOpenAddAchievement] = useState(false);
+  const [openUnassignAchievement, setOpenUnassignAchievement] = useState(false);
   const [openChangeTherapist, setOpenChangeTherapist] = useState(false);
 
   const {
     availableTherapistList,
+    achievementList,
     getAvailableTherapistForPatient,
+    getListAchievements,
     updateQueriesAfterChangeTherapist,
     updateQueriesAfterAddObservation,
-  } = usePatientForm();
+    updateQueriesAfterUpdateAssignment,
+    updateQueriesAfterUnassignAssignment,
+  } = usePatientForm(patient.id);
 
   const [formObservation] = Form.useForm();
+  const [formAddAchievement] = Form.useForm();
   const [formChangeTherapist] = Form.useForm();
 
   const handleOpenNextPhase = useCallback(() => {
@@ -78,8 +89,14 @@ const PatientActions = ({
     setOpenAddObservation(true);
   }, []);
 
-  const handleOpenAddAchievement = useCallback(() => {
+  const handleOpenAddAchievement = useCallback(async () => {
+    await getListAchievements();
     setOpenAddAchievement(true);
+    setLoading(false);
+  }, [getListAchievements, setLoading]);
+
+  const handleOpenUnassignAchievement = useCallback(async () => {
+    setOpenUnassignAchievement(true);
   }, []);
 
   const handleOpenChangeTherapist = useCallback(async () => {
@@ -203,6 +220,53 @@ const PatientActions = ({
     updateQueriesAfterChangeTherapist,
   ]);
 
+  const handleAssignAchievement = useCallback(async () => {
+    try {
+      setLoadingForm(true);
+
+      const validateForm = await formAddAchievement.validateFields();
+
+      if (validateForm.errorFields) {
+        return;
+      }
+
+      const values = formAddAchievement.getFieldsValue();
+
+      const res = await AssignAchievementService({
+        patientId: patient.id,
+        achievementId: values.achievementId,
+      });
+
+      if (res.error && res.statusCode !== 201) {
+        openNotification.error({
+          description: res.message,
+        });
+        setLoadingForm(false);
+        return;
+      }
+
+      await updateQueriesAfterUpdateAssignment(
+        patient.id,
+        res.data as Achievement,
+      );
+
+      openNotification.success({
+        description: res.message,
+      });
+
+      setLoadingForm(false);
+      setOpenAddAchievement(false);
+      formAddAchievement.resetFields();
+    } catch (error) {
+      setLoadingForm(false);
+    }
+  }, [
+    formAddAchievement,
+    openNotification,
+    patient.id,
+    updateQueriesAfterUpdateAssignment,
+  ]);
+
   const handlePhaseShift = useCallback(async () => {
     try {
       setLoadingForm(true);
@@ -248,6 +312,8 @@ const PatientActions = ({
             onEdit={handleEdit}
             onDelete={handleDelete}
             onChangeAssignment={handleOpenChangeTherapist}
+            onAssign={handleOpenAddAchievement}
+            onUnassign={handleOpenUnassignAchievement}
             modalDeleteTitle={t('Patient.actions.delete.modal.title')}
             modalDeleteDescription={
               <Trans
@@ -259,6 +325,7 @@ const PatientActions = ({
             }
           />
         </Show.When>
+
         <Show.When isTrue={renderMode === 'next_phase'}>
           <Flex
             className={stylesPatient.upgrade_phase}
@@ -293,6 +360,20 @@ const PatientActions = ({
               ? t('Patient.actions.add_achievement.button_add')
               : t('Patient.actions.add_achievement.button_add_mobile')}
           </Button>
+        </Show.When>
+
+        <Show.When isTrue={renderMode === 'unassign_achievement'}>
+          <span className={styles.action_unassign_achievement_btn_delete}>
+            <Button
+              type="default"
+              onClick={handleOpenUnassignAchievement}
+              className={styles.btn_delete}
+            >
+              {screens.sm
+                ? t('Patient.actions.unassign_achievement.button_add')
+                : t('Patient.actions.unassign_achievement.button_add_mobile')}
+            </Button>
+          </span>
         </Show.When>
       </Show>
 
@@ -369,34 +450,33 @@ const PatientActions = ({
         okText={t('Patient.actions.add_achievement.modal.ok_text')}
         okButtonProps={{
           type: 'primary',
-          onClick: handleDelete,
+          onClick: handleAssignAchievement,
           loading: loadingForm,
           className: styles.footer_btn_confirm,
         }}
         title={t('Patient.actions.add_achievement.modal.title')}
       >
-        <Form
-          name="add_achievement"
-          id="create_user_form_antd"
-          layout="vertical"
-        >
-          <Form.Item
-            name="roles"
-            label={t('Patient.fields.assign_achievements.label')}
-          >
-            <Select
-              placeholder={t('Patient.fields.assign_achievements.placeholder')}
-              mode="multiple"
-              className="primary"
-            >
-              {achievements.map((item) => (
-                <Select.Option key={item.id} value={item.id}>
-                  {item.name}
-                </Select.Option>
-              ))}
-            </Select>
-          </Form.Item>
-        </Form>
+        <AssignAchievementForm
+          form={formAddAchievement}
+          achievementList={achievementList}
+        />
+      </HModal>
+
+      {/* unassign achievement to patient modal */}
+      <HModal
+        open={openUnassignAchievement}
+        loading={loadingForm}
+        onOpen={setOpenUnassignAchievement}
+        footer={null}
+        title={t('Patient.actions.unassign_achievement.modal.title')}
+      >
+        <UnassignAchievementForm
+          achievementList={achievementsAssigned}
+          patientId={patient.id}
+          updateQueriesAfterUnassignAssignment={
+            updateQueriesAfterUnassignAssignment
+          }
+        />
       </HModal>
 
       {/* change therapist assigned to patient modal */}
@@ -413,29 +493,10 @@ const PatientActions = ({
         }}
         title={t('Patient.actions.change_therapist.modal.title')}
       >
-        <Form
-          name="change_therapist"
-          id="change_therapist_form_antd"
-          layout="vertical"
+        <ChangeTherapistForm
           form={formChangeTherapist}
-        >
-          <Form.Item
-            name="therapist"
-            label={t('Patient.fields.change_therapist.label')}
-            rules={UserRules.user.therapistInCharge}
-          >
-            <Select
-              placeholder={t('Patient.fields.change_therapist.placeholder')}
-              className="primary"
-            >
-              {availableTherapistList.map((item) => (
-                <Select.Option key={item.id} value={item.id}>
-                  {item.fullName}
-                </Select.Option>
-              ))}
-            </Select>
-          </Form.Item>
-        </Form>
+          availableTherapistList={availableTherapistList}
+        />
       </HModal>
     </>
   );

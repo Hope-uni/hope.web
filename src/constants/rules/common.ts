@@ -30,6 +30,7 @@ export const RegexRules = {
     whitespace: /^[A-Za-z]+(?: [A-Za-z]+)*$/,
     onlySpaces: /^\s+$/,
   },
+  imageAllowed: /^image\/(svg\+xml|jpe?g|png|webp)$/,
 };
 
 const validatorPhone = (value: any, type: 'mobile' | 'landline') => {

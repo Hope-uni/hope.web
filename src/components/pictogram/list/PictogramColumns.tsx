@@ -1,11 +1,12 @@
 import { UnassignedTag } from '@/components/common';
+import OptimizedImage from '@/components/common/OptimizedImage';
 import { SinglePictogram } from '@/models/schema';
 import {
   addResponsiveProperty,
   createActionColumn,
   createRowCardMobileColumn,
 } from '@/utils/table';
-import { Image, TableProps, Tag } from 'antd';
+import { TableProps, Tag } from 'antd';
 import { useTranslation } from 'react-i18next';
 import PictogramActions from './PictogramActions';
 import PictogramRowCardMobile from './PictogramRowCardMobile';
@@ -19,7 +20,7 @@ export const usePictogramColumns = () => {
       dataIndex: 'imageUrl',
       align: 'left',
       render: (_, { name, imageUrl }) => (
-        <Image src={String(imageUrl)} width={60} height={60} alt={name} />
+        <OptimizedImage srcImage={imageUrl} size={60} alt={name} />
       ),
     },
     {

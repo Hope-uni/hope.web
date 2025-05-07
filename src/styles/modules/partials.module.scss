@@ -71,6 +71,14 @@
     }
 }
 
+.action_unassign_achievement_btn_delete{
+    .btn_delete{
+        background-color: $error;
+        border-color: $error;
+        color: $main-grey;
+    }
+}
+
 
 @media only screen and (max-width: $breakpointMobile) {
     .wrapper_header_content{
