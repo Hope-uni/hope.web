@@ -44,7 +44,10 @@ const CategoryActions = ({
 
   useEffect(() => {
     if (openForm && isEdit) {
-      form?.setFieldsValue(category);
+      form?.setFieldsValue({
+        ...category,
+        imageFile: category?.icon,
+      });
     }
   }, [form, openForm, category, isEdit]);
 

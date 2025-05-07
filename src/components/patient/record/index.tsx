@@ -1,6 +1,7 @@
 'use client';
 
 import GoToBack from '@/components/GoToBack';
+import PatientActions from '@/components/patient/list/PatientActions';
 import Progress from '@/components/patient/record/MethodologyProgress';
 import useDataPatient from '@/components/patient/record/useDetailPatient';
 import TherapistActions from '@/components/therapist/list/TherapistActions';
@@ -13,12 +14,13 @@ import {
   UserProfileCardSchema,
 } from '@/models/schema';
 import styles from '@/styles/modules/patient.module.scss';
+import { validateOptional } from '@/utils/zod';
 import { Button, Col, Dropdown, Flex, Grid, Row, Switch, Tabs } from 'antd';
 import Link from 'next/link';
+import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { BsFillCaretDownFill } from 'react-icons/bs';
 import { HiCog6Tooth } from 'react-icons/hi2';
-import PatientActions from '@/components/patient/list/PatientActions';
 
 const { useBreakpoint } = Grid;
 
@@ -31,6 +33,11 @@ export default function PatientDetail({ patient }: Props) {
   const { t } = useTranslation();
   const { itemInfoTherapist, itemInfoTutor, itemsTab } =
     useDataPatient(patient);
+
+  const therapistValidatedSchema = useMemo(
+    () => validateOptional(SingleTutorTherapistSchema, patient.therapist),
+    [patient.therapist],
+  );
 
   const handleSwitchChange = (checked: boolean) => {
     // TODO implements api services
@@ -153,18 +160,18 @@ export default function PatientDetail({ patient }: Props) {
               </div>
               <div className={styles.white_card_layout}>
                 <CardProfile
-                  user={UserProfileCardSchema.parse(patient.therapist)}
+                  user={therapistValidatedSchema}
                   layout="vertical"
                   title={t('Patient.detail.title_info_therapist')}
                   infoDescription={itemInfoTherapist}
                   menuAction={
-                    <TherapistActions
-                      therapist={SingleTutorTherapistSchema.parse(
-                        patient.therapist,
-                      )}
-                      actions={['show']}
-                      classWrapper="popup_actions_primary_vertical"
-                    />
+                    therapistValidatedSchema ? (
+                      <TherapistActions
+                        therapist={therapistValidatedSchema}
+                        actions={['show']}
+                        classWrapper="popup_actions_primary_vertical"
+                      />
+                    ) : undefined
                   }
                 />
               </div>

@@ -18,7 +18,7 @@ import {
   UpdateTutorTherapistResponse,
 } from '@/models/schema';
 import { API_PAYLOAD, API_RESPONSE, API_SINGLE_RESPONSE } from '@/models/types';
-import { axiosErrorHandler } from '@/utils/axios';
+import { axiosErrorHandler, ParseToFormData } from '@/utils/axios';
 import { valuesWithData } from '@/utils/objects';
 
 /*
@@ -70,10 +70,13 @@ export const FindUserByIdService = async (id: string | undefined) => {
 
 export const CreateUserService = async (payload: CreateUserPayload) => {
   try {
+    const form = ParseToFormData(payload);
+
     const response = await API_HOPE_PROTECTED.post<API_RESPONSE<SingleUser>>(
       API.User.Index,
+      form,
       {
-        ...payload,
+        headers: { 'Content-Type': 'multipart/form-data' },
       },
     );
 
@@ -89,10 +92,12 @@ export const EditUserService = async (
 ) => {
   try {
     const validatePayload = valuesWithData(payload);
+    const form = ParseToFormData(validatePayload);
     const response = await API_HOPE_PROTECTED.put<API_RESPONSE<SingleUser>>(
       `${API.User.Index}/${id}`,
+      form,
       {
-        ...validatePayload,
+        headers: { 'Content-Type': 'multipart/form-data' },
       },
     );
 
@@ -184,10 +189,13 @@ export const FindPatientByIdService = async (id: string) => {
 
 export const CreatePatientService = async (payload: PayloadPatient) => {
   try {
+    const form = ParseToFormData(payload);
+
     const response = await API_HOPE_PROTECTED.post<API_RESPONSE<SinglePatient>>(
       API.Patient.Index,
+      form,
       {
-        ...payload,
+        headers: { 'Content-Type': 'multipart/form-data' },
       },
     );
 
@@ -203,10 +211,11 @@ export const EditPatientService = async (
 ) => {
   try {
     const validatePayload = valuesWithData(payload);
+    const form = ParseToFormData(validatePayload);
     const response = await API_HOPE_PROTECTED.put<
       API_RESPONSE<UpdatePatientResponse>
-    >(`${API.Patient.Index}/${id}`, {
-      ...validatePayload,
+    >(`${API.Patient.Index}/${id}`, form, {
+      headers: { 'Content-Type': 'multipart/form-data' },
     });
 
     return response.data;
@@ -297,10 +306,11 @@ export const FindTutorByIdService = async (id: string) => {
 
 export const CreateTutorService = async (payload: PayloadTutorTherapist) => {
   try {
+    const form = ParseToFormData(payload);
     const response = await API_HOPE_PROTECTED.post<
       API_RESPONSE<SingleTutorTherapist>
-    >(API.Tutor.Index, {
-      ...payload,
+    >(API.Tutor.Index, form, {
+      headers: { 'Content-Type': 'multipart/form-data' },
     });
 
     return response.data;
@@ -315,10 +325,11 @@ export const EditTutorService = async (
 ) => {
   try {
     const validatePayload = valuesWithData(payload);
+    const form = ParseToFormData(validatePayload);
     const response = await API_HOPE_PROTECTED.put<
       API_RESPONSE<UpdateTutorTherapistResponse>
-    >(`${API.Tutor.Index}/${id}`, {
-      ...validatePayload,
+    >(`${API.Tutor.Index}/${id}`, form, {
+      headers: { 'Content-Type': 'multipart/form-data' },
     });
 
     return response.data;
@@ -374,10 +385,12 @@ export const CreateTherapistService = async (
   payload: PayloadTutorTherapist,
 ) => {
   try {
+    const form = ParseToFormData(payload);
+
     const response = await API_HOPE_PROTECTED.post<
       API_RESPONSE<SingleTutorTherapist>
-    >(API.Therapist.Index, {
-      ...payload,
+    >(API.Therapist.Index, form, {
+      headers: { 'Content-Type': 'multipart/form-data' },
     });
 
     return response.data;
@@ -392,10 +405,11 @@ export const EditTherapistService = async (
 ) => {
   try {
     const validatePayload = valuesWithData(payload);
+    const form = ParseToFormData(validatePayload);
     const response = await API_HOPE_PROTECTED.put<
       API_RESPONSE<UpdateTutorTherapistResponse>
-    >(`${API.Therapist.Index}/${id}`, {
-      ...validatePayload,
+    >(`${API.Therapist.Index}/${id}`, form, {
+      headers: { 'Content-Type': 'multipart/form-data' },
     });
 
     return response.data;

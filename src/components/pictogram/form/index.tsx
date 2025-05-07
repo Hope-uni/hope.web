@@ -1,3 +1,5 @@
+import FormItemDragger from '@/components/common/Inputs/FormItemDragger';
+import { IMAGE_PLACEHOLDER } from '@/constants/OptimizedImage';
 import { PictogramRules } from '@/constants/rules/pictogram';
 import { useFormPictogramStore } from '@/lib/store/forms/formPictogram';
 import { Form, FormInstance, Input, Select } from 'antd';
@@ -40,12 +42,14 @@ export default function PictogramForm({ form }: Props) {
         </Select>
       </Form.Item>
 
-      <Form.Item
-        name="imageUrl"
-        label={t('Pictogram.fields.image.label')}
-        rules={PictogramRules.image}
-      >
-        <Input placeholder={t('Pictogram.fields.image.placeholder')} />
+      <Form.Item>
+        <FormItemDragger
+          label={t('Pictogram.fields.image.label')}
+          name="imageFile"
+          rules={PictogramRules.image}
+          initialImage={form.getFieldValue('imageFile')}
+          placeholderImage={IMAGE_PLACEHOLDER.PICTOGRAM}
+        />
       </Form.Item>
     </Form>
   );
