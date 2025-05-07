@@ -13,16 +13,7 @@ const useInvalidateQueries = () => {
     [queryClient],
   );
 
-  const removeQueries = useCallback(
-    async (queries: string[]) => {
-      await queryClient.removeQueries({
-        queryKey: queries,
-      });
-    },
-    [queryClient],
-  );
-
-  return { invalidateQueries, removeQueries, queryClient };
+  return { invalidateQueries, queryClient };
 };
 
 export default useInvalidateQueries;

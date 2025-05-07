@@ -4,4 +4,3 @@ export * from './user';
 export * from './phase';
 export * from './category';
 export * from './activity';
-export * from './achievement';
