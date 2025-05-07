@@ -1,8 +1,7 @@
 import path from 'path';
 
 // const bucketURL = process.env.NEXT_PUBLIC_HOSTNAME_AZURE_BUCKET;
-const bucketURL =
-  'api.dicebear.com,static.arasaac.org,img.freepik.com,plus.unsplash.com,encrypted-tbn0.gstatic.com,image.api.playstation.com,static.wikia.nocookie.net';
+const bucketURL = 'hopenicaragua.blob.core.windows.net';
 
 const remotePatternsArray = bucketURL?.split(',').map((url) => {
   return {

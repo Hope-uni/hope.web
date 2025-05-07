@@ -1,3 +1,4 @@
+import FormItemDragger from '@/components/common/Inputs/FormItemDragger';
 import { AchievementRules, CategoryRules } from '@/constants/rules';
 import { Form, FormInstance, Input } from 'antd';
 import { useTranslation } from 'react-i18next';
@@ -23,12 +24,13 @@ export default function AchievementForm({ form }: Props) {
       >
         <Input placeholder={t('Achievement.fields.name.placeholder')} />
       </Form.Item>
-      <Form.Item
-        name="imageUrl"
-        label={t('Achievement.fields.image.label')}
-        rules={AchievementRules.image}
-      >
-        <Input placeholder={t('Achievement.fields.image.placeholder')} />
+      <Form.Item>
+        <FormItemDragger
+          label={t('Achievement.fields.image.label')}
+          name="imageFile"
+          rules={AchievementRules.image}
+          initialImage={form.getFieldValue('imageFile')}
+        />
       </Form.Item>
     </Form>
   );

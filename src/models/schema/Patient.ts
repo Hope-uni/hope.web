@@ -31,12 +31,16 @@ export const PayloadPatientSchema = CreateUserPayloadSchema.merge(
   birthday: z
     .instanceof(dayjs as unknown as typeof Dayjs)
     .transform((val) => val.format('YYYY-MM-DD')),
-  teaDegreeId: z.union([z.number(), z.string()]),
-  phaseId: z.union([z.number(), z.string()]),
   tutorId: z.union([z.number(), z.string()]),
   observations: z.string().optional(),
 });
 export type PayloadPatient = z.infer<typeof PayloadPatientSchema>;
+
+export const PayloadCreatePatientSchema = PayloadPatientSchema.extend({
+  phaseId: z.union([z.number(), z.string()]),
+  teaDegreeId: z.union([z.number(), z.string()]),
+});
+export type PayloadCreatePatient = z.infer<typeof PayloadCreatePatientSchema>;
 
 export const FiltersPatientSchema = z.object({
   activityId: z.number().optional(),
@@ -47,6 +51,8 @@ export type FiltersPatient = z.infer<typeof FiltersPatientSchema>;
 export const UpdatePatientResponseSchema = PayloadPatientSchema.extend({
   id: z.number(),
   birthday: z.string(),
+  phaseId: z.union([z.number(), z.string()]),
+  teaDegreeId: z.union([z.number(), z.string()]),
 });
 export type UpdatePatientResponse = z.infer<typeof UpdatePatientResponseSchema>;
 

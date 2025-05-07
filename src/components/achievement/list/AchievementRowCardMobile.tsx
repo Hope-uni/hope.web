@@ -1,7 +1,8 @@
+import AchievementActions from '@/components/achievement/list/AchievementActions';
+import OptimizedImage from '@/components/common/OptimizedImage';
 import { Achievement } from '@/models/schema';
 import styles from '@/styles/modules/user.module.scss';
-import { Flex, Image } from 'antd';
-import AchievementActions from '@/components/achievement/list/AchievementActions';
+import { Flex } from 'antd';
 
 interface Props {
   achievement: Achievement;
@@ -12,10 +13,9 @@ const AchievementRowCardMobile = ({ achievement }: Props) => {
     <div className={styles.user_row_card_mobile}>
       <div style={{ flex: 1 }}>
         <Flex vertical gap="10px" align="center">
-          <Image
-            src={String(achievement.imageUrl)}
-            width={60}
-            height={60}
+          <OptimizedImage
+            srcImage={achievement.imageUrl}
+            size={60}
             alt={achievement.name}
           />
           <span>{achievement.name}</span>

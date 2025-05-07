@@ -365,6 +365,10 @@ label.ant-form-item-required {
             }
         }
     }
+
+    .uploadDragger{
+        width: 100%;
+    }
 }
 
 
@@ -1100,6 +1104,12 @@ body .ant-flex {
             }
         }
     }
+}
+
+/*
+** IMAGE */
+.ant-image {
+    line-height: normal;
 }
 
 @media only screen and (max-width: $breakpointMobile){

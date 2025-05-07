@@ -1,3 +1,4 @@
+export * from './common';
 export * from './Role';
 export * from './PECS';
 export * from './Activity';
