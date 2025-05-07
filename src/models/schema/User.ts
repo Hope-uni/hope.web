@@ -29,7 +29,7 @@ export type SingleUser = z.infer<typeof SingleUserSchema>;
 export const CreateUserPayloadSchema = z.object({
   username: z.string(),
   email: z.string().email(),
-  imageFile: UploadFileSchema,
+  imageFile: z.array(UploadFileSchema).optional(),
 });
 export type CreateUserPayload = z.infer<typeof CreateUserPayloadSchema>;
 

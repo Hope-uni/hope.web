@@ -26,7 +26,7 @@ export default function AvatarProfile() {
       className={styles.avatar}
     >
       <OptimizedImage
-        srcImage={currentUser.image}
+        srcImage={currentUser.imageUrl}
         size="50px"
         shape="circle"
         placeholderImage={IMAGE_PLACEHOLDER.USER}
