@@ -46,4 +46,9 @@ export const API = {
   CategoryPictogram: {
     Index: 'category',
   },
+  Achievement: {
+    Index: 'achievements',
+    Assign: '/achievements/assign-achievement',
+    Unassign: '/achievements/unassign-achievement',
+  },
 };
