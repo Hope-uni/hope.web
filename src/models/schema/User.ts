@@ -3,6 +3,7 @@ import {
   PersonSchema,
   RoleSchema,
   RoleWithPermissionsSchema,
+  UploadFileSchema,
 } from '@/models/schema';
 import dayjs, { type Dayjs } from 'dayjs';
 
@@ -28,6 +29,7 @@ export type SingleUser = z.infer<typeof SingleUserSchema>;
 export const CreateUserPayloadSchema = z.object({
   username: z.string(),
   email: z.string().email(),
+  imageFile: UploadFileSchema,
 });
 export type CreateUserPayload = z.infer<typeof CreateUserPayloadSchema>;
 
@@ -66,7 +68,7 @@ export const UserProfileCardSchema = z
     userId: z.number(),
     fullName: z.string(),
     username: z.string(),
-    image: z.string().nullable(),
+    imageUrl: z.string().nullable().optional(),
     age: z.number().optional(),
     gender: z.string().optional(),
   })

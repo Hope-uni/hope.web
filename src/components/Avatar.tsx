@@ -1,41 +1,20 @@
 'use client';
-import { colorList } from '@/constants/Avatar';
+import { IMAGE_PLACEHOLDER } from '@/constants/OptimizedImage';
 import { UserSession } from '@/models/types/auth';
 import styles from '@/styles/modules/layouts.module.scss';
 import { getCurrentUser } from '@/utils/session';
-import { Avatar, Flex, Typography } from 'antd';
+import { Flex, Typography } from 'antd';
 import { useSession } from 'next-auth/react';
-import { useEffect, useMemo, useState } from 'react';
-
-interface AvatarFallbackProps {
-  fullName: string;
-}
-
-const AvatarFallback = ({ fullName }: AvatarFallbackProps) => {
-  const backgroundColor = colorList[fullName.charAt(0).toLowerCase()] || '#ccc';
-
-  return (
-    <Avatar
-      className={styles.image}
-      style={{ backgroundColor, verticalAlign: 'middle' }}
-    >
-      {fullName.charAt(0)}
-    </Avatar>
-  );
-};
+import { useMemo } from 'react';
+import OptimizedImage from '@/components/common/OptimizedImage';
 
 export default function AvatarProfile() {
-  const [error, setError] = useState(false);
   const { data: session } = useSession();
 
   const currentUser = useMemo(
     () => getCurrentUser(session?.user as UserSession),
     [session],
   );
-
-  useEffect(() => {
-    setError(!currentUser.image);
-  }, [currentUser.image]);
 
   if (!session?.expires) return null;
 
@@ -46,18 +25,13 @@ export default function AvatarProfile() {
       gap="10px"
       className={styles.avatar}
     >
-      {!error && currentUser.image ? (
-        <Avatar
-          className={styles.image}
-          src={currentUser.image}
-          onError={() => {
-            setError(true);
-            return true;
-          }}
-        />
-      ) : (
-        <AvatarFallback fullName={currentUser.fullName} />
-      )}
+      <OptimizedImage
+        srcImage={currentUser.image}
+        size="50px"
+        shape="circle"
+        placeholderImage={IMAGE_PLACEHOLDER.USER}
+        mobileResponsive={{ width: '40px', height: '40px' }}
+      />
       <Flex vertical>
         <Typography.Title level={3} className={styles.full_name}>
           {currentUser.fullName}

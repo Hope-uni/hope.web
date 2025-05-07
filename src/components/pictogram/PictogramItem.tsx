@@ -1,19 +1,12 @@
 'use client';
 
-import { ImageConfig } from '@/constants';
+import OptimizedImage from '@/components/common/OptimizedImage';
+import HoldablePress from '@/components/HoldablePress';
+import { validateDeviceUserIsMobile } from '@/constants/rules';
 import { SinglePictogramWithOutCategory } from '@/models/schema/Pictogram';
 import styles from '@/styles/modules/pictogram.module.scss';
 import { Flex, Typography } from 'antd';
-import Image from 'next/image';
-import {
-  CSSProperties,
-  MouseEvent,
-  useCallback,
-  useEffect,
-  useState,
-} from 'react';
-import HoldablePress from '@/components/HoldablePress';
-import { validateDeviceUserIsMobile } from '@/constants/rules';
+import { CSSProperties, MouseEvent, useCallback, useState } from 'react';
 
 const { Text } = Typography;
 
@@ -37,11 +30,6 @@ export default function PictogramItem({
   onClick,
 }: Props) {
   const [showOverlay, setShowOverlay] = useState(false);
-  const [currentSrc, setCurrentSrc] = useState(pictogram.imageUrl);
-
-  useEffect(() => {
-    setCurrentSrc(pictogram.imageUrl);
-  }, [pictogram.imageUrl]);
 
   const handleThresholdReached = () => {
     setShowOverlay(true);
@@ -97,16 +85,11 @@ export default function PictogramItem({
           ...style,
         }}
       >
-        <Image
+        <OptimizedImage
           className={styles.pictogram_list_item_image}
-          src={currentSrc}
-          width={sizeImg}
-          height={sizeImg}
+          srcImage={pictogram.imageUrl}
+          size={sizeImg}
           alt={pictogram.name}
-          objectFit="fill"
-          onError={() => {
-            setCurrentSrc(ImageConfig.defaultPlaceholder);
-          }}
         />
 
         {showLabel && (

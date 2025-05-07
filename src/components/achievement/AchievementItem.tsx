@@ -1,9 +1,9 @@
 'use client';
 
+import OptimizedImage from '@/components/common/OptimizedImage';
 import { Achievement } from '@/models/schema/Achievement';
 import styles from '@/styles/modules/achievement.module.scss';
 import { Flex, Tooltip, Typography } from 'antd';
-import Image from 'next/image';
 
 const { Text } = Typography;
 
@@ -25,11 +25,9 @@ export default function AchievementItem({
         className={styles.achievement_list_item}
         gap={5}
       >
-        <Image
-          className={styles.achievement_list_item_image}
-          src={String(achievement.imageUrl)}
-          width={35}
-          height={35}
+        <OptimizedImage
+          srcImage={achievement.imageUrl}
+          size={35}
           alt={achievement.name}
         />
 

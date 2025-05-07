@@ -1,8 +1,8 @@
 import { API_HOPE_PROTECTED, defaultPayload } from '@/config';
 import { API } from '@/constants/ApiUrls';
-import { PayloadCategory, CategoryPictogram } from '@/models/schema';
+import { CategoryPictogram, PayloadCategory } from '@/models/schema';
 import { API_PAYLOAD, API_RESPONSE, API_SINGLE_RESPONSE } from '@/models/types';
-import { axiosErrorHandler } from '@/utils/axios';
+import { axiosErrorHandler, ParseToFormData } from '@/utils/axios';
 import { valuesWithData } from '@/utils/objects';
 
 export const ListCategoryPictogramService = async (
@@ -25,10 +25,12 @@ export const CreateCategoryPictogramService = async (
   payload: PayloadCategory,
 ) => {
   try {
+    const form = ParseToFormData(payload);
+
     const response = await API_HOPE_PROTECTED.post<
       API_RESPONSE<CategoryPictogram>
-    >(API.CategoryPictogram.Index, {
-      ...payload,
+    >(API.CategoryPictogram.Index, form, {
+      headers: { 'Content-Type': 'multipart/form-data' },
     });
 
     return response.data;
@@ -43,10 +45,12 @@ export const EditCategoryPictogramService = async (
 ) => {
   try {
     const validatePayload = valuesWithData(payload);
+    const form = ParseToFormData(validatePayload);
+
     const response = await API_HOPE_PROTECTED.put<
       API_RESPONSE<CategoryPictogram>
-    >(`${API.CategoryPictogram.Index}/${id}`, {
-      ...validatePayload,
+    >(`${API.CategoryPictogram.Index}/${id}`, form, {
+      headers: { 'Content-Type': 'multipart/form-data' },
     });
 
     return response.data;

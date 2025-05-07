@@ -5,7 +5,7 @@ export const PersonSchema = z.object({
   secondName: z.string().optional().nullable(),
   surname: z.string(),
   secondSurname: z.string().optional().nullable(),
-  image: z.string().nullable(),
+  imageUrl: z.string().nullable().optional(),
   address: z.string(),
   birthday: z.string(),
   gender: z.enum(['Masculino', 'Femenino', 'masculino', 'femenino']),
