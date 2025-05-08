@@ -77,7 +77,6 @@ export const useGetUserForEdit = (id?: string) => {
           ...valuesParsed,
           id: String(userData?.data?.id),
           birthday: dayjs(userData?.data?.birthday),
-          imageFile: userData?.data?.imageUrl,
         }),
       );
     } else {

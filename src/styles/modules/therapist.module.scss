@@ -7,3 +7,21 @@
         margin: 0;
     }
 }
+
+.therapist_row_card_mobile {
+    @extend .row-between-start;
+    border: $grey-dark solid 1px;
+    padding: 8px 12px;  
+    border-radius: 10px;  
+
+    .text_email, .text_username{
+        @extend .text-ellipse;
+        width: 200px;
+    }
+
+    .text_fullname{
+        color: $primary-color-text;
+        font-size: 14px;
+        font-weight: bold;
+    }
+}

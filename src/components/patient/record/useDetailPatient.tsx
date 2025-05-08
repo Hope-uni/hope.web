@@ -34,7 +34,7 @@ const useDataPatient = (patient: DetailPatient) => {
       {
         key: '2',
         label: t('Patient.detail.description_patient.telephone'),
-        children: patient.telephone,
+        children: patient.tutor.telephone,
       },
       {
         key: '3',
@@ -43,7 +43,7 @@ const useDataPatient = (patient: DetailPatient) => {
         children: patient.address,
       },
     ],
-    [patient.address, patient.birthday, patient.telephone, t],
+    [patient.address, patient.birthday, patient.tutor.telephone, t],
   );
 
   const itemInfoTutor: DescriptionsProps['items'] | null = useMemo(() => {

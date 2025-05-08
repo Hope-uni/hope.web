@@ -314,7 +314,7 @@ const es = {
       progress_with_percent: 'Progreso {{value}}%',
       grade: 'Grado {grade}',
       phase: 'Fase {{phase}}',
-      phase_2: 'Fase: {{phase}}',
+      phase_2: 'Fase {{id}}: {{phase}}',
       card_profile: {
         info_descriptions: {
           email: 'Correo',

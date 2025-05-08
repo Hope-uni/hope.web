@@ -1,5 +1,5 @@
 import { ThemeConfig } from 'antd';
-import COLORS from '@/styles/modules/variablesExport.module.scss';
+import { COLORS } from '@/constants/Theme';
 
 export const theme: ThemeConfig = {
   token: {
