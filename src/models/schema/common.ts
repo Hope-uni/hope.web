@@ -5,5 +5,5 @@ export const UploadFileSchema = z.object({
   name: z.string(),
   url: z.string().optional(),
   status: z.string().optional(),
-  originFileObj: z.instanceof(File).optional(),
+  originFileObj: z.any().optional(),
 });
