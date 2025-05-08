@@ -273,6 +273,18 @@ export const ChangeTherapistService = async (
   }
 };
 
+export const ChangeMonochromeService = async (idPatient: number) => {
+  try {
+    const response = await API_HOPE_PROTECTED.patch<API_SINGLE_RESPONSE>(
+      `${API.HealthRecord.ChangeMonochrome}/${idPatient}`,
+    );
+
+    return response.data;
+  } catch (error) {
+    return axiosErrorHandler(error);
+  }
+};
+
 /*
  * Tutor Services
  */
