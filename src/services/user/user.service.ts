@@ -18,7 +18,7 @@ import {
   UpdateTutorTherapistResponse,
 } from '@/models/schema';
 import { API_PAYLOAD, API_RESPONSE, API_SINGLE_RESPONSE } from '@/models/types';
-import { axiosErrorHandler, ParseToFormData } from '@/utils/axios';
+import { axiosErrorHandler, ParseToFormData } from '@/utils';
 import { valuesWithData } from '@/utils/objects';
 
 /*
