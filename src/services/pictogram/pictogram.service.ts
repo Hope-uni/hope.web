@@ -2,7 +2,7 @@ import { API_HOPE_PROTECTED, defaultPayload } from '@/config';
 import { API } from '@/constants/ApiUrls';
 import { PayloadPictogram, SinglePictogram } from '@/models/schema';
 import { API_PAYLOAD, API_RESPONSE, API_SINGLE_RESPONSE } from '@/models/types';
-import { axiosErrorHandler, ParseToFormData } from '@/utils/axios';
+import { axiosErrorHandler, ParseToFormData } from '@/utils';
 import { valuesWithData } from '@/utils/objects';
 
 export const ListPictogramsService = async (
