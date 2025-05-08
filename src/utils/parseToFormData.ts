@@ -27,7 +27,7 @@ export const ParseToFormData = (payload: Record<string, unknown>): FormData => {
         return;
       }
 
-      if (value instanceof Blob || value instanceof File) {
+      if (value instanceof Blob) {
         form.append(String(key), value);
         return;
       }
