@@ -11,7 +11,13 @@ import { useTranslation } from 'react-i18next';
 import PictogramActions from './PictogramActions';
 import PictogramRowCardMobile from './PictogramRowCardMobile';
 
-export const usePictogramColumns = () => {
+interface OptionsArgs {
+  showActions?: boolean;
+}
+
+export const usePictogramColumns = (options?: OptionsArgs) => {
+  const { showActions = true } = options ?? {};
+
   const { t } = useTranslation();
 
   const columns: TableProps<SinglePictogram>['columns'] = [
@@ -43,13 +49,23 @@ export const usePictogramColumns = () => {
         return <Tag className="tag-role">{category.name}</Tag>;
       },
     },
-    createActionColumn({
-      customRender: (record) => <PictogramActions pictogram={record} />,
-    }),
-    createRowCardMobileColumn({
-      customRender: (record) => <PictogramRowCardMobile pictogram={record} />,
-    }),
   ];
+
+  if (showActions) {
+    columns.push(
+      createActionColumn({
+        customRender: (record) => <PictogramActions pictogram={record} />,
+      }),
+    );
+  }
+
+  columns.push(
+    createRowCardMobileColumn({
+      customRender: (record) => (
+        <PictogramRowCardMobile pictogram={record} showActions={showActions} />
+      ),
+    }),
+  );
 
   return [addResponsiveProperty(columns)];
 };

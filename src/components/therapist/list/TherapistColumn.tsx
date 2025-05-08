@@ -11,11 +11,17 @@ import { TableProps } from 'antd';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-export const useTherapistColumns = () => {
+interface OptionsArgs {
+  showActions?: boolean;
+}
+
+export const useTherapistColumns = (options?: OptionsArgs) => {
+  const { showActions = true } = options ?? {};
+
   const { t } = useTranslation();
 
-  const columns: TableProps<SingleTutorTherapist>['columns'] = useMemo(
-    () => [
+  const columns: TableProps<SingleTutorTherapist>['columns'] = useMemo(() => {
+    const cols: TableProps<SingleTutorTherapist>['columns'] = [
       {
         title: t('Therapist.index.columns.name'),
         dataIndex: 'fullName',
@@ -48,15 +54,29 @@ export const useTherapistColumns = () => {
           return <UnassignedTag />;
         },
       },
-      createActionColumn({
-        customRender: (record) => <TherapistActions therapist={record} />,
-      }),
+    ];
+
+    if (showActions) {
+      cols.push(
+        createActionColumn({
+          customRender: (record) => <TherapistActions therapist={record} />,
+        }),
+      );
+    }
+
+    cols.push(
       createRowCardMobileColumn({
-        customRender: (record) => <TherapistRowCardMobile therapist={record} />,
+        customRender: (record) => (
+          <TherapistRowCardMobile
+            therapist={record}
+            showActions={showActions}
+          />
+        ),
       }),
-    ],
-    [t],
-  );
+    );
+
+    return cols;
+  }, [showActions, t]);
 
   return [addResponsiveProperty(columns)];
 };

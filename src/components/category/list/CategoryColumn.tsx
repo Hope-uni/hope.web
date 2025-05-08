@@ -10,7 +10,13 @@ import {
 import { TableProps } from 'antd';
 import { useTranslation } from 'react-i18next';
 
-export const useCategoryColumns = () => {
+interface OptionsArgs {
+  showActions?: boolean;
+}
+
+export const useCategoryColumns = (options?: OptionsArgs) => {
+  const { showActions = true } = options ?? {};
+
   const { t } = useTranslation();
 
   const columns: TableProps<CategoryPictogram>['columns'] = [
@@ -28,13 +34,23 @@ export const useCategoryColumns = () => {
       dataIndex: 'name',
       align: 'center',
     },
-    createActionColumn({
-      customRender: (record) => <CategoryActions category={record} />,
-    }),
-    createRowCardMobileColumn({
-      customRender: (record) => <CategoryRowCardMobile category={record} />,
-    }),
   ];
+
+  if (showActions) {
+    columns.push(
+      createActionColumn({
+        customRender: (record) => <CategoryActions category={record} />,
+      }),
+    );
+  }
+
+  columns.push(
+    createRowCardMobileColumn({
+      customRender: (record) => (
+        <CategoryRowCardMobile category={record} showActions={showActions} />
+      ),
+    }),
+  );
 
   return [addResponsiveProperty(columns)];
 };

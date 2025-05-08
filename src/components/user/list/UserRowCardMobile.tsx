@@ -8,9 +8,10 @@ import { Flex, Tag } from 'antd';
 
 interface Props {
   user: SingleUser;
+  showActions?: boolean;
 }
 
-const UserRowCardMobile = ({ user }: Props) => {
+const UserRowCardMobile = ({ user, showActions }: Props) => {
   const roleData = user.roles?.length > 0 ? user.roles[0] : ({} as Role);
 
   return (
@@ -37,11 +38,13 @@ const UserRowCardMobile = ({ user }: Props) => {
           <span className={styles.text_username}>@{user.username}</span>
         </Flex>
       </Flex>
-      <div>
-        <div className="popup_actions_primary_vertical">
-          <UserActions user={user} />
+      {showActions && (
+        <div>
+          <div className="popup_actions_primary_vertical">
+            <UserActions user={user} />
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

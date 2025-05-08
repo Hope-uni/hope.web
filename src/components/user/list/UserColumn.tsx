@@ -13,7 +13,13 @@ import { StarFilled } from '@ant-design/icons';
 import { TableProps, Tag } from 'antd';
 import { useTranslation } from 'react-i18next';
 
-export const useUserColumns = () => {
+interface OptionsArgs {
+  showActions?: boolean;
+}
+
+export const useUserColumns = (options?: OptionsArgs) => {
+  const { showActions = true } = options ?? {};
+
   const { t } = useTranslation();
 
   const columns: TableProps<SingleUser>['columns'] = [
@@ -55,13 +61,23 @@ export const useUserColumns = () => {
         return <Tag className="tag-role">{roleData.name}</Tag>;
       },
     },
-    createActionColumn({
-      customRender: (record) => <UserActions user={record} />,
-    }),
-    createRowCardMobileColumn({
-      customRender: (record) => <UserRowCardMobile user={record} />,
-    }),
   ];
+
+  if (showActions) {
+    columns.push(
+      createActionColumn({
+        customRender: (record) => <UserActions user={record} />,
+      }),
+    );
+  }
+
+  columns.push(
+    createRowCardMobileColumn({
+      customRender: (record) => (
+        <UserRowCardMobile user={record} showActions={showActions} />
+      ),
+    }),
+  );
 
   return [addResponsiveProperty(columns)];
 };

@@ -8,9 +8,10 @@ import PictogramActions from '@/components/pictogram/list/PictogramActions';
 
 interface Props {
   pictogram: SinglePictogram;
+  showActions?: boolean;
 }
 
-const PictogramRowCardMobile = ({ pictogram }: Props) => {
+const PictogramRowCardMobile = ({ pictogram, showActions }: Props) => {
   const { t } = useTranslation();
 
   return (
@@ -26,12 +27,13 @@ const PictogramRowCardMobile = ({ pictogram }: Props) => {
           <PictogramItem pictogram={pictogram} />
         </Flex>
       </div>
-
-      <div>
-        <div className="popup_actions_primary_vertical">
-          <PictogramActions pictogram={pictogram} />
+      {showActions && (
+        <div>
+          <div className="popup_actions_primary_vertical">
+            <PictogramActions pictogram={pictogram} />
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

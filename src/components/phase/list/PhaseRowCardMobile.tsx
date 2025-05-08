@@ -6,9 +6,10 @@ import PhaseActions from '@/components/phase/list/PhaseActions';
 
 interface Props {
   phase: SingleTEAPhase;
+  showActions?: boolean;
 }
 
-const PhaseRowCardMobile = ({ phase }: Props) => {
+const PhaseRowCardMobile = ({ phase, showActions }: Props) => {
   const { t } = useTranslation();
   return (
     <div className={styles.phase_row_card_mobile}>
@@ -25,12 +26,14 @@ const PhaseRowCardMobile = ({ phase }: Props) => {
           </Descriptions>
         </Flex>
       </Flex>
-      <div>
-        <PhaseActions
-          phase={phase}
-          classWrapper="popup_actions_primary_vertical"
-        />
-      </div>
+      {showActions && (
+        <div>
+          <PhaseActions
+            phase={phase}
+            classWrapper="popup_actions_primary_vertical"
+          />
+        </div>
+      )}
     </div>
   );
 };

@@ -12,7 +12,13 @@ import {
 import { TableProps } from 'antd';
 import { useTranslation } from 'react-i18next';
 
-export const useTutorColumns = () => {
+interface OptionsArgs {
+  showActions?: boolean;
+}
+
+export const useTutorColumns = (options?: OptionsArgs) => {
+  const { showActions = true } = options ?? {};
+
   const { t } = useTranslation();
 
   const columns: TableProps<SingleTutorTherapist>['columns'] = [
@@ -46,13 +52,23 @@ export const useTutorColumns = () => {
         return <UnassignedTag />;
       },
     },
-    createActionColumn({
-      customRender: (record) => <TutorActions tutor={record} />,
-    }),
-    createRowCardMobileColumn({
-      customRender: (record) => <TutorRowCardMobile tutor={record} />,
-    }),
   ];
+
+  if (showActions) {
+    columns.push(
+      createActionColumn({
+        customRender: (record) => <TutorActions tutor={record} />,
+      }),
+    );
+  }
+
+  columns.push(
+    createRowCardMobileColumn({
+      customRender: (record) => (
+        <TutorRowCardMobile tutor={record} showActions={showActions} />
+      ),
+    }),
+  );
 
   return [addResponsiveProperty(columns)];
 };
