@@ -29,7 +29,11 @@ export default function ActivityItem({ activity, showIcon = true }: Props) {
           {showIcon && <BsCheckCircle size={14} />} {activity?.name}
         </Text>
         <Text className={styles.activity_list_phase}>
-          - {t('Patient.detail.phase_2', { phase: activity?.phase.name })}
+          -{' '}
+          {t('Patient.detail.phase_2', {
+            id: activity?.phase.id,
+            phase: activity?.phase.name,
+          })}
         </Text>
       </Flex>
 

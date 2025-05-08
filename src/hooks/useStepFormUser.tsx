@@ -20,14 +20,10 @@ const useStepFormUser = () => {
     currentRoleSelected,
     roleList,
     errors,
-    messageErrorForm,
-    messageErrorDetail,
     setCurrentRoleSelected,
     setIsAdminRoleSelected,
     setFields,
     setErrors,
-    setMessageErrorForm,
-    setMessageErrorDetail,
   } = useFormCreateUserStore();
 
   const [formGeneral] = Form.useForm();

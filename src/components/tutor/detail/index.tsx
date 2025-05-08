@@ -4,6 +4,7 @@ import GoToBack from '@/components/GoToBack';
 import useDetailTutor from '@/components/tutor/detail/useDetailTutor';
 import TutorActions from '@/components/tutor/list/TutorActions';
 import CardProfile from '@/components/user/detail/CardProfile';
+import { ROLES_KEYS } from '@/constants/Role';
 import {
   DetailTutor,
   SingleTutorTherapistSchema,
@@ -57,7 +58,11 @@ export default function TutorDetail({ tutor }: Props) {
           </Flex>
         </Flex>
 
-        <CardProfile user={UserProfileCardSchema.parse(tutor)} showUser />
+        <CardProfile
+          user={UserProfileCardSchema.parse(tutor)}
+          showUser
+          roleName={ROLES_KEYS.TUTOR}
+        />
 
         <Tabs className="record-tab" defaultActiveKey="1" items={itemsTab} />
       </Flex>

@@ -45,7 +45,7 @@ export default function UserDataForm({
             cropShape: 'round',
           }}
           shape="circle"
-          initialImage={form?.getFieldValue('imageFile')}
+          initialImage={form?.getFieldValue('imageUrl')}
         />
       </Form.Item>
 

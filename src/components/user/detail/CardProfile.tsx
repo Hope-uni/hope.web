@@ -3,9 +3,18 @@
 
 import OptimizedImage from '@/components/common/OptimizedImage';
 import { Show } from '@/components/Show';
+import { RoleKeyType, ROLES } from '@/constants/Role';
 import { UserProfileCard } from '@/models/schema';
 import styles from '@/styles/modules/user.module.scss';
-import { Descriptions, Divider, Empty, Flex, Grid, Typography } from 'antd';
+import {
+  Descriptions,
+  Divider,
+  Empty,
+  Flex,
+  Grid,
+  Tag,
+  Typography,
+} from 'antd';
 import { DescriptionsProps } from 'antd/lib';
 import { useTranslation } from 'react-i18next';
 
@@ -18,6 +27,7 @@ interface Props {
   infoDescription?: DescriptionsProps['items'] | null;
   showUser?: boolean;
   menuAction?: JSX.Element;
+  roleName?: RoleKeyType;
 }
 
 export default function CardProfile({
@@ -27,6 +37,7 @@ export default function CardProfile({
   infoDescription,
   showUser = false,
   menuAction,
+  roleName,
 }: Props) {
   const screens = useBreakpoint();
   const { t } = useTranslation();
@@ -105,25 +116,41 @@ export default function CardProfile({
             size={screens.xs ? 120 : 85}
             shape="circle"
           />
-          <Flex vertical>
-            <Title
-              level={3}
-              className={styles.full_name}
-              style={{
-                fontSize: '22px',
-              }}
+          <Flex vertical gap={screens.xs ? 8 : 0}>
+            <Flex
+              gap={screens.xs ? 5 : 16}
+              align="center"
+              vertical={screens.xs}
             >
-              {user.fullName}
-            </Title>
-            <Flex gap={8} justify={screens.xs ? 'center' : 'start'}>
-              <Text className={styles.caption}>
-                {user.age} {t('components.CardProfile.years_old')}
-              </Text>
-              |<Text className={styles.caption}>{user.gender}</Text>
+              <Title
+                level={3}
+                className={styles.full_name}
+                style={{
+                  fontSize: '22px',
+                }}
+              >
+                {user.fullName}
+              </Title>
+              {roleName && (
+                <Tag className="tag-role">
+                  <strong>{ROLES[roleName]}</strong>
+                </Tag>
+              )}
             </Flex>
-            {showUser && (
-              <Text className={styles.username}>@{user.username}</Text>
-            )}
+
+            <Flex vertical>
+              <Flex gap={8} justify={screens.xs ? 'center' : 'start'}>
+                <Text className={styles.caption}>
+                  {`${user.age} ${t('components.CardProfile.years_old')} | ${user.gender}`}
+                </Text>
+              </Flex>
+
+              {showUser && (
+                <Flex justify={screens.xs ? 'center' : 'start'}>
+                  <Text className={styles.username}>@{user.username}</Text>
+                </Flex>
+              )}
+            </Flex>
           </Flex>
         </div>
       ) : null}
