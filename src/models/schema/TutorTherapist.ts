@@ -13,6 +13,7 @@ export const SingleTutorTherapistSchema = z.object({
   phoneNumber: z.any().optional(),
   telephone: z.any().optional(),
   childrenInCharge: z.number().optional(),
+  isVerified: z.boolean().optional(),
 });
 export type SingleTutorTherapist = z.infer<typeof SingleTutorTherapistSchema>;
 

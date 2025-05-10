@@ -17,6 +17,7 @@ export const DetailTherapistSchema = z.object({
   phoneNumber: z.string().optional(),
   children: z.array(SinglePatientSchema).nullable().optional(),
   activities: z.array(ActivitySchema).nullable().optional(),
+  isVerified: z.boolean(),
 });
 export type DetailTherapist = z.infer<typeof DetailTherapistSchema>;
 
