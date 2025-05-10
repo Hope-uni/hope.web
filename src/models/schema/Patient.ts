@@ -21,7 +21,8 @@ export const SinglePatientSchema = z.object({
   teaDegree: TEAGradeSchema,
   currentPhase: TEAPhaseSchema,
   achievementCount: z.number().optional(),
-  image: z.string().optional().nullable(),
+  imageUrl: z.string().optional().nullable(),
+  isVerified: z.boolean(),
 });
 export type SinglePatient = z.infer<typeof SinglePatientSchema>;
 

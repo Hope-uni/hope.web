@@ -3,6 +3,7 @@
 import { UnassignedTag } from '@/components/common';
 import TutorActions from '@/components/tutor/list/TutorActions';
 import TutorRowCardMobile from '@/components/tutor/list/TutorRowCardMobile';
+import AvatarUserList from '@/components/user/list/AvatarUserList';
 import { SingleTutorTherapist } from '@/models/schema/index';
 import {
   addResponsiveProperty,
@@ -25,7 +26,15 @@ export const useTutorColumns = (options?: OptionsArgs) => {
     {
       title: t('Tutor.index.columns.name'),
       dataIndex: 'fullName',
-      align: 'left',
+      render: (_, { fullName, imageUrl, isVerified }) => (
+        <AvatarUserList
+          image={imageUrl}
+          description={fullName}
+          sizeImage={25}
+          isVerified={isVerified}
+          showTooltipVerified
+        />
+      ),
     },
     {
       title: t('Tutor.index.columns.phone'),

@@ -11,6 +11,12 @@ export const RoutesName = {
   changeTemporaryPassword: {
     index: '/change-temporary-password',
   },
+  unauthorized: {
+    index: 'unauthorized',
+  },
+  logout: {
+    index: 'logout',
+  },
   dashboard: {
     index: '/admin',
   },
@@ -76,3 +82,4 @@ export const DEFAULT_REDIRECT_LOGIN_URL = RoutesName.login.index;
 export const DEFAULT_REDIRECT_HOME_URL = RoutesName.dashboard.index;
 export const DEFAULT_REDIRECT_TO_CHANGE_PASSWORD_URL =
   RoutesName.changeTemporaryPassword.index;
+export const DEFAULT_REDIRECT_UNAUTHORIZED = RoutesName.unauthorized.index;

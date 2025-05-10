@@ -11,13 +11,14 @@ import { useRouter } from 'next/navigation';
 import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { BsThreeDotsVertical } from 'react-icons/bs';
-import { RenderModeActionTypes } from './helpers';
+import { RenderModeActionTypes } from '@/components/table/helpers';
 
 const { useBreakpoint } = Grid;
 
 interface Props {
   id: number;
   actions: Array<ActionType>;
+  actionsDisabled?: Array<ActionType>;
   route?: string;
   modalDeleteTitle?: string | JSX.Element;
   modalDeleteDescription?: string | JSX.Element;
@@ -25,6 +26,7 @@ interface Props {
   renderMode?: RenderModeActionTypes;
   queryKey?: string;
   displayOutsidePopup?: boolean;
+  disabled?: boolean;
   onShow?: () => void;
   onEdit?: () => void;
   onAssign?: () => void;
@@ -36,6 +38,7 @@ interface Props {
 export const PopupActions = ({
   id,
   actions,
+  actionsDisabled,
   route,
   modalDeleteTitle,
   modalDeleteDescription,
@@ -43,6 +46,7 @@ export const PopupActions = ({
   renderMode = 'popup',
   queryKey,
   displayOutsidePopup = false,
+  disabled = false,
   onShow,
   onEdit,
   onAssign,
@@ -179,24 +183,28 @@ export const PopupActions = ({
         role="menu"
         data-menu-list="true"
       >
-        {visibleActions?.map((item: ActionTableOptionsType) => (
-          <div key={item.key}>
-            <li
-              className={`ant-dropdown-menu-item item-popup-action ${item.colorClassName}`}
-              role="menuitem"
-              key={item?.key}
-              onClick={(e) => {
-                e.stopPropagation();
-                handleSelectAction(item.actionType);
-              }}
-            >
-              <item.icon />
-              <span className="ant-dropdown-menu-title-content">
-                {item?.label}
-              </span>
-            </li>
-          </div>
-        ))}
+        {visibleActions?.map((item: ActionTableOptionsType) => {
+          const isDisabled = actionsDisabled?.includes(item.actionType);
+          return (
+            <div key={item.key}>
+              <li
+                className={`ant-dropdown-menu-item item-popup-action ${item.colorClassName} ${isDisabled ? 'ant-dropdown-menu-item-disabled' : ''}`}
+                role="menuitem"
+                key={item?.key}
+                onClick={(e) => {
+                  if (isDisabled) return;
+                  e.stopPropagation();
+                  handleSelectAction(item.actionType);
+                }}
+              >
+                <item.icon />
+                <span className="ant-dropdown-menu-title-content">
+                  {item?.label}
+                </span>
+              </li>
+            </div>
+          );
+        })}
       </ul>
     );
   };
@@ -223,20 +231,37 @@ export const PopupActions = ({
               </div>
             ) : (
               <div className={classWrapper}>
-                <Flex align="center" justify="center">
+                <Flex
+                  align="center"
+                  justify="center"
+                  style={
+                    disabled ? { cursor: 'not-allowed', opacity: 0.5 } : {}
+                  }
+                >
                   <Dropdown
-                    className="popup-actions"
+                    className={`popup-actions ${disabled ? 'popup-actions-disabled' : ''}`}
                     trigger={['click']}
                     dropdownRender={renderItem}
-                    open={openMenu}
-                    onOpenChange={(flag) => handleVisibilityMenu(flag)}
+                    open={!disabled && openMenu}
+                    onOpenChange={(flag) => {
+                      if (disabled) return;
+                      handleVisibilityMenu(flag);
+                    }}
                   >
                     <BsThreeDotsVertical
                       size={'12px'}
                       onClick={(event) => {
+                        if (disabled) return;
                         event.stopPropagation();
                         handleVisibilityMenu(!openMenu);
                       }}
+                      style={
+                        disabled
+                          ? {
+                              color: 'grey',
+                            }
+                          : {}
+                      }
                     />
                   </Dropdown>
                 </Flex>

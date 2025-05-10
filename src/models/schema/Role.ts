@@ -3,7 +3,7 @@ import { z } from 'zod';
 export const PermissionSchema = z.object({
   id: z.number(),
   name: z.string(),
-  status: z.boolean(),
+  code: z.string(),
 });
 
 export const RoleSchema = z.object({

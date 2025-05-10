@@ -649,7 +649,7 @@ label.ant-form-item-required {
 /*
 ** POPUP ACTIONS */
 .popup_actions_primary_vertical{
-    background-color: rgba($color: $primary-color, $alpha: 0.2);
+    background-color: rgba($color: $primary-color, $alpha: 0.2);    
     border-radius: 100%;
 
     svg {
@@ -680,7 +680,7 @@ label.ant-form-item-required {
 
 .table-popup-actions, 
 .popup-actions-dropdown.table-popup-actions{
-    .item-popup-action{
+    .item-popup-action:not(.ant-dropdown-menu-item-disabled){
         cursor: pointer;
         color: $primary-color;
 
@@ -706,6 +706,14 @@ label.ant-form-item-required {
             }
         }
     }
+
+    .item-popup-action.ant-dropdown-menu-item-disabled {
+        svg, .ant-dropdown-menu-title-content{
+            color: $grey-dark;
+        }
+    }
+
+    
 }
 
 .popup-actions-list-container{
@@ -920,8 +928,28 @@ label.ant-form-item-required {
         font-weight: 500;
         margin: 0;
     }
+
+    &.tag-user-not-verified{
+        border-radius: 20px;
+        border: 1px solid  $error;
+        color: $error;
+        background-color: $error_op;
+        font-weight: 400;
+        font-size: 12px;
+        width: max-content;
+    }
+    &.tag-user-verified{
+        border-radius: 20px;
+        border: 1px solid  $success;
+        color: $success;
+        background-color: $success_op;
+        font-weight: 400;
+        font-size: 12px;
+        width: max-content;
+    }
     
 }
+
 
 /*
 ** ALERTS */
@@ -931,6 +959,15 @@ label.ant-form-item-required {
     .ant-alert-icon{
         margin-block-start: 4.5px !important;
     }
+
+    &.ant-alert-with-description{
+        .ant-alert-content{
+            .ant-alert-message{
+                margin-bottom: 0;
+            }
+        }
+    }
+    
 }
 
 /*
@@ -1110,6 +1147,15 @@ body .ant-flex {
 ** IMAGE */
 .ant-image {
     line-height: normal;
+}
+
+/*
+** ACTION DISABLED */
+.wrapper-action-disabled{
+    opacity: 0.5;
+    cursor: not-allowed !important;
+    user-select: none;
+    transition: opacity 0.2s ease;
 }
 
 @media only screen and (max-width: $breakpointMobile){
