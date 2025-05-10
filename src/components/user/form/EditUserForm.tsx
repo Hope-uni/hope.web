@@ -5,7 +5,7 @@ import PersonDataGeneralForm from '@/components/user/form/PersonDataGeneralForm'
 import PersonDataSpecificForm from '@/components/user/form/PersonDataSpecificForm';
 import UserDataForm from '@/components/user/form/UserDataForm';
 import { QueryKeys } from '@/constants';
-import { ROLES } from '@/constants/Role';
+import { ROLES } from '@/constants/guards';
 import { useOpenNotification } from '@/context/Notification/NotificationProvider';
 import useInvalidateQueries from '@/hooks/useInvalidateQueries';
 import useStepFormUser from '@/hooks/useStepFormUser';
