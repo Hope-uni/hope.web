@@ -17,5 +17,6 @@ export const DetailTutorSchema = z.object({
   phoneNumber: z.string().optional(),
   telephone: z.string().optional(),
   children: z.array(SinglePatientSchema),
+  isVerified: z.boolean(),
 });
 export type DetailTutor = z.infer<typeof DetailTutorSchema>;

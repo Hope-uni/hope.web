@@ -1,4 +1,4 @@
-import { MeResponse, Role } from '@/models/schema';
+import { MeResponse, Role, RoleWithPermissions } from '@/models/schema';
 import type { JWT as DefaultJWT } from 'next-auth/jwt';
 
 export interface UserSession extends Omit<MeResponse, 'roles'> {
@@ -8,6 +8,7 @@ export interface UserSession extends Omit<MeResponse, 'roles'> {
   accessToken: string;
   refreshToken: string;
   role: Role;
+  roles?: RoleWithPermissions[];
 }
 
 export interface UserTokenJWT extends DefaultJWT {

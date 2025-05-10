@@ -1,5 +1,5 @@
 import { Show } from '@/components/Show';
-import { UnassignedTag } from '@/components/common';
+import { UnassignedTag, UserVerifiedTag } from '@/components/common';
 import TherapistActions from '@/components/therapist/list/TherapistActions';
 import { SingleTutorTherapist } from '@/models/schema';
 import styles from '@/styles/modules/therapist.module.scss';
@@ -16,6 +16,7 @@ const TherapistRowCardMobile = ({ therapist, showActions }: Props) => {
   return (
     <div className={styles.therapist_row_card_mobile}>
       <Flex vertical gap="10px">
+        {!therapist.isVerified && <UserVerifiedTag isVerified={false} />}
         <Flex vertical>
           <span className={styles.text_fullname}>{therapist.fullName}</span>
         </Flex>

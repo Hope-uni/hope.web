@@ -23,6 +23,8 @@ export const ProfileSchema = PersonSchema.extend({
 export const SingleUserSchema = UserSchema.extend({
   profileId: z.string().optional(),
   roles: z.array(RoleSchema),
+  imageUrl: z.string().optional().nullable(),
+  isVerified: z.boolean().optional(),
 });
 export type SingleUser = z.infer<typeof SingleUserSchema>;
 

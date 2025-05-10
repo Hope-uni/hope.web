@@ -88,6 +88,7 @@ const es = {
       columns: {
         email: 'Correo electrónico',
         user: 'Usuario',
+        status: 'Estado',
         role: 'Rol',
       },
     },
@@ -278,6 +279,19 @@ const es = {
           description:
             '¿Estás seguro/a de que deseas deshabilitar al usuario <StrongValue />?',
         },
+      },
+    },
+    feedback: {
+      alerts: {
+        user_not_verified: {
+          title: '',
+          description:
+            'Este usuario no está verificado. Algunas acciones administrativas están deshabilitadas hasta que el usuario complete su verificación.',
+        },
+      },
+      tag: {
+        user_not_verified: 'Sin verificar',
+        user_verified: 'Verificado',
       },
     },
   },
@@ -1028,6 +1042,7 @@ const es = {
         btn_ok: 'Deshabilitar',
       },
     },
+    note: 'Nota:',
   },
   feedback: {
     common: {
