@@ -1,7 +1,7 @@
 'use client';
 
 import TherapistDetail from '@/components/therapist/detail';
-import { ROLES } from '@/constants/Role';
+import { ROLES } from '@/constants/guards';
 import { useFetchFindUserByRoleQuery } from '@/lib/queries/user';
 import { DetailTherapist } from '@/models/schema';
 import { LoadingOutlined } from '@ant-design/icons';

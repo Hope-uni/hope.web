@@ -1,6 +1,6 @@
 import { PopupActions } from '@/components/table/PopupActions';
 import { RoutesName } from '@/constants';
-import { ROLES } from '@/constants/Role';
+import { ROLES } from '@/constants/guards';
 import { SingleUser, Role } from '@/models/schema';
 import { ActionType } from '@/models/types';
 import {

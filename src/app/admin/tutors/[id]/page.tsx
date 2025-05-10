@@ -1,7 +1,7 @@
 'use client';
 
 import TutorDetail from '@/components/tutor/detail';
-import { ROLES } from '@/constants/Role';
+import { ROLES } from '@/constants/guards';
 import { useFetchFindUserByRoleQuery } from '@/lib/queries/user';
 import { DetailTutor } from '@/models/schema';
 import { LoadingOutlined } from '@ant-design/icons';
