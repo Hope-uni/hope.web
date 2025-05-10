@@ -1,75 +1,121 @@
+import { RoutesName } from '@/constants/index';
+import i18next from '@/i18n';
 import { ReactNode } from 'react';
+import { BiSolidDashboard } from 'react-icons/bi';
 import {
+  BsDoorOpenFill,
   BsGearFill,
   BsPeopleFill,
   BsPersonBadge,
-  BsDoorOpenFill,
 } from 'react-icons/bs';
-import { BiSolidDashboard } from 'react-icons/bi';
-import i18next from '@/i18n';
-import { RoutesName } from '@/constants/index';
+import { PermissionType, ROLES } from '@/constants/guards';
+import { RoleType } from '@/constants/guards/types';
+
+export const SIDEBAR_MENU = {
+  TOP: 'top',
+  MIDDLE: 'middle',
+  BOTTOM: 'bottom',
+} as const;
+export type SiderMenuType = (typeof SIDEBAR_MENU)[keyof typeof SIDEBAR_MENU];
 
 export type MenuItemType = {
   label: ReactNode;
   key: string;
   icon?: any;
+  guard?: PermissionType[] | RoleType[];
   children?: MenuItemType[];
 };
-interface I_SidebarMenuItems {
-  [key: string]: MenuItemType[];
-}
-
-const getItem = (
-  label: ReactNode,
-  key: string,
-  icon?: any,
-  children?: MenuItemType[],
-): MenuItemType => {
-  const item = {
-    icon,
-    label,
-    key,
-  };
-
-  return children ? { ...item, children } : item;
+type SidebarMenuItemsType = {
+  [k in SiderMenuType]: MenuItemType[];
 };
 
-export const SidebarMenuItems: I_SidebarMenuItems = {
+export const SidebarMenuItems: SidebarMenuItemsType = {
   top: [
-    getItem(
-      i18next.t('menu.routes.dashboard'),
-      RoutesName.dashboard.index,
-      BiSolidDashboard,
-    ),
+    {
+      label: i18next.t('menu.routes.dashboard'),
+      key: RoutesName.dashboard.index,
+      icon: BiSolidDashboard,
+      guard: [ROLES.SUPERADMIN, ROLES.ADMIN],
+    },
   ],
   middle: [
-    getItem(i18next.t('menu.routes.users'), 'users', BsPeopleFill, [
-      getItem(i18next.t('menu.routes.all'), RoutesName.user.index),
-      getItem(i18next.t('menu.routes.patients'), RoutesName.patient.index),
-      getItem(i18next.t('menu.routes.tutors'), RoutesName.tutor.index),
-      getItem(i18next.t('menu.routes.therapists'), RoutesName.therapist.index),
-    ]),
-    getItem(
-      i18next.t('menu.routes.methodology'),
-      'methodology',
-      BsPersonBadge,
-      [
-        getItem(
-          i18next.t('menu.routes.pictograms'),
-          RoutesName.pictogram.index,
-        ),
-        getItem(i18next.t('menu.routes.activities'), RoutesName.activity.index),
-        getItem(i18next.t('menu.routes.phases'), RoutesName.phase.index),
+    {
+      label: i18next.t('menu.routes.users'),
+      key: 'users',
+      icon: BsPeopleFill,
+      children: [
+        {
+          label: i18next.t('menu.routes.all'),
+          key: RoutesName.user.index,
+          guard: [ROLES.SUPERADMIN, ROLES.ADMIN],
+        },
+        {
+          label: i18next.t('menu.routes.patients'),
+          key: RoutesName.patient.index,
+          guard: [ROLES.SUPERADMIN, ROLES.PATIENT],
+        },
+        {
+          label: i18next.t('menu.routes.tutors'),
+          key: RoutesName.tutor.index,
+          guard: [ROLES.SUPERADMIN, ROLES.ADMIN],
+        },
+        {
+          label: i18next.t('menu.routes.therapists'),
+          key: RoutesName.therapist.index,
+          guard: [ROLES.SUPERADMIN, ROLES.ADMIN],
+        },
       ],
-    ),
-    getItem(i18next.t('menu.routes.setting'), 'setting', BsGearFill, [
-      getItem(i18next.t('menu.routes.categories'), RoutesName.category.index),
-      getItem(
-        i18next.t('menu.routes.achievements'),
-        RoutesName.achievement.index,
-      ),
-      getItem(i18next.t('menu.routes.roles'), RoutesName.role.index),
-    ]),
+    },
+    {
+      label: i18next.t('menu.routes.methodology'),
+      key: 'methodology',
+      icon: BsPersonBadge,
+      children: [
+        {
+          label: i18next.t('menu.routes.pictograms'),
+          key: RoutesName.pictogram.index,
+          guard: [ROLES.SUPERADMIN, ROLES.ADMIN],
+        },
+        {
+          label: i18next.t('menu.routes.activities'),
+          key: RoutesName.activity.index,
+          guard: [ROLES.SUPERADMIN, ROLES.ADMIN],
+        },
+        {
+          label: i18next.t('menu.routes.phases'),
+          key: RoutesName.phase.index,
+          guard: [ROLES.SUPERADMIN, ROLES.ADMIN],
+        },
+      ],
+    },
+    {
+      label: i18next.t('menu.routes.setting'),
+      key: 'setting',
+      icon: BsGearFill,
+      children: [
+        {
+          label: i18next.t('menu.routes.categories'),
+          key: RoutesName.category.index,
+          guard: [ROLES.SUPERADMIN, ROLES.ADMIN],
+        },
+        {
+          label: i18next.t('menu.routes.achievements'),
+          key: RoutesName.achievement.index,
+          guard: [ROLES.SUPERADMIN, ROLES.ADMIN],
+        },
+        {
+          label: i18next.t('menu.routes.roles'),
+          key: RoutesName.role.index,
+          guard: [ROLES.SUPERADMIN],
+        },
+      ],
+    },
   ],
-  bottom: [getItem('Cerrar sesión', 'logout', BsDoorOpenFill)],
+  bottom: [
+    {
+      label: i18next.t('menu.routes.logout'),
+      key: RoutesName.logout.index,
+      icon: BsDoorOpenFill,
+    },
+  ],
 };
