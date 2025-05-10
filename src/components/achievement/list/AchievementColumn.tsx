@@ -10,7 +10,13 @@ import {
 import { TableProps } from 'antd';
 import { useTranslation } from 'react-i18next';
 
-export const useAchievementColumns = () => {
+interface OptionsArgs {
+  showActions?: boolean;
+}
+
+export const useAchievementColumns = (options?: OptionsArgs) => {
+  const { showActions = true } = options ?? {};
+
   const { t } = useTranslation();
 
   const columns: TableProps<Achievement>['columns'] = [
@@ -28,15 +34,26 @@ export const useAchievementColumns = () => {
       dataIndex: 'name',
       align: 'left',
     },
-    createActionColumn({
-      customRender: (record) => <AchievementActions achievement={record} />,
-    }),
+  ];
+
+  if (showActions) {
+    columns.push(
+      createActionColumn({
+        customRender: (record) => <AchievementActions achievement={record} />,
+      }),
+    );
+  }
+
+  columns.push(
     createRowCardMobileColumn({
       customRender: (record) => (
-        <AchievementRowCardMobile achievement={record} />
+        <AchievementRowCardMobile
+          achievement={record}
+          showActions={showActions}
+        />
       ),
     }),
-  ];
+  );
 
   return [addResponsiveProperty(columns)];
 };

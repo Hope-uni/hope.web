@@ -6,9 +6,10 @@ import { useTranslation } from 'react-i18next';
 
 interface Props {
   activity: SingleActivity;
+  showActions?: boolean;
 }
 
-const ActivityRowCardMobile = ({ activity }: Props) => {
+const ActivityRowCardMobile = ({ activity, showActions }: Props) => {
   const { t } = useTranslation();
   return (
     <div className={styles.activity_row_card_mobile}>
@@ -31,12 +32,14 @@ const ActivityRowCardMobile = ({ activity }: Props) => {
           </Descriptions>
         </Flex>
       </Flex>
-      <div>
-        <ActivityActions
-          activity={activity}
-          classWrapper="popup_actions_primary_vertical"
-        />
-      </div>
+      {showActions && (
+        <div>
+          <ActivityActions
+            activity={activity}
+            classWrapper="popup_actions_primary_vertical"
+          />
+        </div>
+      )}
     </div>
   );
 };

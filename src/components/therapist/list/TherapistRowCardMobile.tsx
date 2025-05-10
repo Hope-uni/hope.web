@@ -2,18 +2,19 @@ import { Show } from '@/components/Show';
 import { UnassignedTag } from '@/components/common';
 import TherapistActions from '@/components/therapist/list/TherapistActions';
 import { SingleTutorTherapist } from '@/models/schema';
-import styles from '@/styles/modules/patient.module.scss';
+import styles from '@/styles/modules/therapist.module.scss';
 import { Descriptions, Flex } from 'antd';
 import { useTranslation } from 'react-i18next';
 
 interface Props {
   therapist: SingleTutorTherapist;
+  showActions?: boolean;
 }
 
-const TherapistRowCardMobile = ({ therapist }: Props) => {
+const TherapistRowCardMobile = ({ therapist, showActions }: Props) => {
   const { t } = useTranslation();
   return (
-    <div className={styles.patient_row_card_mobile}>
+    <div className={styles.therapist_row_card_mobile}>
       <Flex vertical gap="10px">
         <Flex vertical>
           <span className={styles.text_fullname}>{therapist.fullName}</span>
@@ -48,12 +49,14 @@ const TherapistRowCardMobile = ({ therapist }: Props) => {
           </Descriptions>
         </Flex>
       </Flex>
-      <div>
-        <TherapistActions
-          therapist={therapist}
-          classWrapper="popup_actions_primary_vertical"
-        />
-      </div>
+      {showActions && (
+        <div>
+          <TherapistActions
+            therapist={therapist}
+            classWrapper="popup_actions_primary_vertical"
+          />
+        </div>
+      )}
     </div>
   );
 };

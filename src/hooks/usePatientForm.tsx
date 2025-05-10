@@ -1,5 +1,5 @@
 import { QueryKeys } from '@/constants';
-import { ROLES } from '@/constants/Role';
+import { ROLES } from '@/constants/guards';
 import { useFetchListAchievementsQuery } from '@/lib/queries/achievement';
 import { useFetchListTherapistQuery } from '@/lib/queries/user';
 import { useOverlayStore } from '@/lib/store';
@@ -144,6 +144,26 @@ const usePatientForm = (id: number | undefined) => {
     [queryClient],
   );
 
+  const updateQueriesAfterChangeMonochrome = useCallback(
+    async (patientId: number, isMonochrome: boolean) => {
+      await queryClient.setQueryData(
+        [QueryKeys.User.FindByRole, [String(patientId), ROLES.PATIENT]],
+        (oldData: API_RESPONSE<DetailPatient>) => {
+          if (!oldData?.data) return oldData;
+
+          return {
+            ...oldData,
+            data: {
+              ...oldData?.data,
+              isMonochrome,
+            },
+          };
+        },
+      );
+    },
+    [queryClient],
+  );
+
   const updateListAchievements = useCallback(async () => {
     queryClient.removeQueries({
       queryKey: LocalQueryKeys.ListAchievements,
@@ -210,6 +230,7 @@ const usePatientForm = (id: number | undefined) => {
     getListAchievements,
     updateQueriesAfterChangeTherapist,
     updateQueriesAfterAddObservation,
+    updateQueriesAfterChangeMonochrome,
     updateQueriesAfterUpdateAssignment,
     updateQueriesAfterUnassignAssignment,
   };

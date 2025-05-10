@@ -10,7 +10,13 @@ import {
 import { TableProps, Tag } from 'antd';
 import { useTranslation } from 'react-i18next';
 
-export const usePatientColumns = () => {
+interface OptionsArgs {
+  showActions?: boolean;
+}
+
+export const usePatientColumns = (options?: OptionsArgs) => {
+  const { showActions = true } = options ?? {};
+
   const { t } = useTranslation();
 
   const columns: TableProps<SinglePatient>['columns'] = [
@@ -65,13 +71,23 @@ export const usePatientColumns = () => {
         return <span>{achievementCount || 0}</span>;
       },
     },
-    createActionColumn({
-      customRender: (record) => <PatientActions patient={record} />,
-    }),
-    createRowCardMobileColumn({
-      customRender: (record) => <PatientRowCardMobile patient={record} />,
-    }),
   ];
+
+  if (showActions) {
+    columns.push(
+      createActionColumn({
+        customRender: (record) => <PatientActions patient={record} />,
+      }),
+    );
+  }
+
+  columns.push(
+    createRowCardMobileColumn({
+      customRender: (record) => (
+        <PatientRowCardMobile patient={record} showActions={showActions} />
+      ),
+    }),
+  );
 
   return [addResponsiveProperty(columns)];
 };

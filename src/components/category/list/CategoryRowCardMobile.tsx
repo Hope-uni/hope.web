@@ -6,9 +6,10 @@ import { Flex } from 'antd';
 
 interface Props {
   category: CategoryPictogram;
+  showActions?: boolean;
 }
 
-const CategoryRowCardMobile = ({ category }: Props) => {
+const CategoryRowCardMobile = ({ category, showActions }: Props) => {
   return (
     <div className={styles.user_row_card_mobile}>
       <div style={{ flex: 1 }}>
@@ -21,12 +22,13 @@ const CategoryRowCardMobile = ({ category }: Props) => {
           <span>{category.name}</span>
         </Flex>
       </div>
-
-      <div>
-        <div className="popup_actions_primary_vertical">
-          <CategoryActions category={category} />
+      {showActions && (
+        <div>
+          <div className="popup_actions_primary_vertical">
+            <CategoryActions category={category} />
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

@@ -8,9 +8,10 @@ import { useTranslation } from 'react-i18next';
 
 interface Props {
   patient: SinglePatient;
+  showActions?: boolean;
 }
 
-const PatientRowCardMobile = ({ patient }: Props) => {
+const PatientRowCardMobile = ({ patient, showActions }: Props) => {
   const { t } = useTranslation();
   return (
     <div className={styles.patient_row_card_mobile}>
@@ -51,12 +52,14 @@ const PatientRowCardMobile = ({ patient }: Props) => {
           </Descriptions>
         </Flex>
       </Flex>
-      <div>
-        <PatientActions
-          patient={patient}
-          classWrapper="popup_actions_primary_vertical"
-        />
-      </div>
+      {showActions && (
+        <div>
+          <PatientActions
+            patient={patient}
+            classWrapper="popup_actions_primary_vertical"
+          />
+        </div>
+      )}
     </div>
   );
 };

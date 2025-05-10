@@ -19,6 +19,9 @@ export const API = {
     AddObservation: '/observation/id-patient',
     ChangeTherapist: '/patient/change-therapist/',
   },
+  HealthRecord: {
+    ChangeMonochrome: '/healthRecord/change-monochrome',
+  },
   Tutor: {
     Index: '/tutor',
   },

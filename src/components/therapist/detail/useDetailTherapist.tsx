@@ -11,6 +11,7 @@ import {
   Flex,
   Grid,
   Row,
+  Space,
   Typography,
 } from 'antd';
 import { TabsProps } from 'antd/lib';
@@ -18,35 +19,42 @@ import dayjs from 'dayjs';
 import 'dayjs/locale/es';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { BsPersonBadge } from 'react-icons/bs';
+import { BsPersonBadge, BsCardChecklist } from 'react-icons/bs';
 import { FaChildren } from 'react-icons/fa6';
 
 dayjs.locale('es');
 
-const { useBreakpoint } = Grid;
 const { Title } = Typography;
+const { useBreakpoint } = Grid;
 
 const useDetailTherapist = (therapist: DetailTherapist) => {
   const screens = useBreakpoint();
   const { t } = useTranslation();
-  const [patientColumns] = usePatientColumns();
-  const [activityColumns] = useActivityColumns();
+  const [patientColumns] = usePatientColumns({
+    showActions: false,
+  });
+  const [activityColumns] = useActivityColumns({
+    showActions: false,
+  });
 
   const itemsGeneralInfo: DescriptionsProps['items'] = useMemo(
     () => [
       {
         key: '1',
         label: t('Therapist.detail.description_labels.email'),
+        span: screens.xs ? 3 : 1,
         children: therapist.email,
       },
       {
         key: '2',
         label: t('Therapist.detail.description_labels.identification'),
+        span: screens.xs ? 3 : 1,
         children: therapist.identificationNumber,
       },
       {
         key: '3',
         label: t('Therapist.detail.description_labels.phone'),
+        span: screens.xs ? 3 : 1,
         children: therapist.phoneNumber,
       },
       {
@@ -57,6 +65,7 @@ const useDetailTherapist = (therapist: DetailTherapist) => {
       },
     ],
     [
+      screens.xs,
       t,
       therapist.address,
       therapist.email,
@@ -118,7 +127,7 @@ const useDetailTherapist = (therapist: DetailTherapist) => {
       {
         key: '3',
         label: t('Therapist.detail.tabs.activities_created'),
-        icon: <FaChildren size={20} />,
+        icon: <BsCardChecklist size={20} />,
         children: (
           <Flex vertical className={styles.pictogram_list} gap={30}>
             {therapist?.activities && therapist?.activities?.length > 0 ? (
@@ -126,12 +135,19 @@ const useDetailTherapist = (therapist: DetailTherapist) => {
                 <Title className={styles.title_content_tab}>
                   {t('Therapist.detail.title_activities_created')}
                 </Title>
-                <WrapperTable
-                  cols={activityColumns}
-                  data={therapist.activities}
-                  showTitle={false}
-                  pagination={false}
-                />
+                <Space
+                  direction="vertical"
+                  size={10}
+                  className="main-wrapper-table"
+                >
+                  <WrapperTable
+                    cols={activityColumns}
+                    data={therapist.activities}
+                    showTitle={false}
+                    scroll
+                    pagination={false}
+                  />
+                </Space>
               </>
             ) : (
               <Empty

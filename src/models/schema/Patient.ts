@@ -80,5 +80,7 @@ export const DetailPatientSchema = z.object({
   activities: z.array(SingleActivitySchema).nullable(),
   pictograms: z.array(SinglePictogramSchema).nullable(),
   achievements: z.array(AchievementSchema),
+  isVerified: z.boolean(),
+  isMonochrome: z.boolean(),
 });
 export type DetailPatient = z.infer<typeof DetailPatientSchema>;

@@ -9,7 +9,13 @@ import { TableProps } from 'antd';
 import { useTranslation } from 'react-i18next';
 import PhaseRowCardMobile from '@/components/phase/list/PhaseRowCardMobile';
 
-export const usePhaseColumns = () => {
+interface OptionsArgs {
+  showActions?: boolean;
+}
+
+export const usePhaseColumns = (options?: OptionsArgs) => {
+  const { showActions = true } = options ?? {};
+
   const { t } = useTranslation();
 
   const columns: TableProps<SingleTEAPhase>['columns'] = [
@@ -32,13 +38,23 @@ export const usePhaseColumns = () => {
       width: '280px',
       className: 'table-cell-center',
     },
-    createActionColumn({
-      customRender: (record) => <PhaseActions phase={record} />,
-    }),
-    createRowCardMobileColumn({
-      customRender: (record) => <PhaseRowCardMobile phase={record} />,
-    }),
   ];
+
+  if (showActions) {
+    columns.push(
+      createActionColumn({
+        customRender: (record) => <PhaseActions phase={record} />,
+      }),
+    );
+  }
+
+  columns.push(
+    createRowCardMobileColumn({
+      customRender: (record) => (
+        <PhaseRowCardMobile phase={record} showActions={showActions} />
+      ),
+    }),
+  );
 
   return [addResponsiveProperty(columns)];
 };

@@ -9,7 +9,13 @@ import { useTranslation } from 'react-i18next';
 import ActivityRowCardMobile from '@/components/activity/list/ActivityRowCardMobile';
 import ActivityActions from '@/components/activity/list/ActivityActions';
 
-export const useActivityColumns = () => {
+interface OptionsArgs {
+  showActions?: boolean;
+}
+
+export const useActivityColumns = (options?: OptionsArgs) => {
+  const { showActions = true } = options ?? {};
+
   const { t } = useTranslation();
 
   const columns: TableProps<SingleActivity>['columns'] = [
@@ -49,13 +55,23 @@ export const useActivityColumns = () => {
         return <span>{phase.name}</span>;
       },
     },
-    createActionColumn({
-      customRender: (record) => <ActivityActions activity={record} />,
-    }),
-    createRowCardMobileColumn({
-      customRender: (record) => <ActivityRowCardMobile activity={record} />,
-    }),
   ];
+
+  if (showActions) {
+    columns.push(
+      createActionColumn({
+        customRender: (record) => <ActivityActions activity={record} />,
+      }),
+    );
+  }
+
+  columns.push(
+    createRowCardMobileColumn({
+      customRender: (record) => (
+        <ActivityRowCardMobile activity={record} showActions={showActions} />
+      ),
+    }),
+  );
 
   return [addResponsiveProperty(columns)];
 };

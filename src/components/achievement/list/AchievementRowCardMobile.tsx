@@ -6,9 +6,10 @@ import { Flex } from 'antd';
 
 interface Props {
   achievement: Achievement;
+  showActions?: boolean;
 }
 
-const AchievementRowCardMobile = ({ achievement }: Props) => {
+const AchievementRowCardMobile = ({ achievement, showActions }: Props) => {
   return (
     <div className={styles.user_row_card_mobile}>
       <div style={{ flex: 1 }}>
@@ -21,12 +22,13 @@ const AchievementRowCardMobile = ({ achievement }: Props) => {
           <span>{achievement.name}</span>
         </Flex>
       </div>
-
-      <div>
-        <div className="popup_actions_primary_vertical">
-          <AchievementActions achievement={achievement} />
+      {showActions && (
+        <div>
+          <div className="popup_actions_primary_vertical">
+            <AchievementActions achievement={achievement} />
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

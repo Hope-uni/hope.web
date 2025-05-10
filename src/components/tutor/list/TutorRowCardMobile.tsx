@@ -8,9 +8,10 @@ import { useTranslation } from 'react-i18next';
 
 interface Props {
   tutor: SingleTutorTherapist;
+  showActions?: boolean;
 }
 
-const TutorRowCardMobile = ({ tutor }: Props) => {
+const TutorRowCardMobile = ({ tutor, showActions }: Props) => {
   const { t } = useTranslation();
   return (
     <div className={styles.patient_row_card_mobile}>
@@ -45,12 +46,14 @@ const TutorRowCardMobile = ({ tutor }: Props) => {
           </Descriptions>
         </Flex>
       </Flex>
-      <div>
-        <TutorActions
-          tutor={tutor}
-          classWrapper="popup_actions_primary_vertical"
-        />
-      </div>
+      {showActions && (
+        <div>
+          <TutorActions
+            tutor={tutor}
+            classWrapper="popup_actions_primary_vertical"
+          />
+        </div>
+      )}
     </div>
   );
 };
