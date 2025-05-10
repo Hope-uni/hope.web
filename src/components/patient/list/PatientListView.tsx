@@ -85,7 +85,7 @@ const PatientListView = ({ listPatient, actions = [] }: Props) => {
     (item: SinglePatient) => (
       <List.Item actions={getActions(item.id)}>
         <List.Item.Meta
-          avatar={<Avatar src={item.image} size={45} />}
+          avatar={<Avatar src={item.imageUrl} size={45} />}
           title={item.fullName}
           description={
             <>

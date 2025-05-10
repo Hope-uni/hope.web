@@ -1,6 +1,6 @@
 import { RenderModeActionTypes } from '@/components/table/helpers';
 import { PopupActions } from '@/components/table/PopupActions';
-import { ROLES } from '@/constants/Role';
+import { ROLES } from '@/constants/guards';
 import { SingleTutorTherapist } from '@/models/schema';
 import { ActionType } from '@/models/types';
 import {
@@ -8,7 +8,7 @@ import {
   DeleteUserByIdHelper,
 } from '@/services/user/helpers';
 import { useRouter } from 'next/navigation';
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 
 interface Props {
@@ -27,6 +27,10 @@ const TutorActions = ({
   const { t } = useTranslation();
   const router = useRouter();
 
+  const actionsDisabled: Array<ActionType> = useMemo(() => {
+    return !tutor.isVerified ? ['edit'] : [];
+  }, [tutor.isVerified]);
+
   const handleEdit = useCallback(() => {
     router.push(`/admin/users/edit/${tutor.userId}`);
   }, [router, tutor.userId]);
@@ -42,6 +46,7 @@ const TutorActions = ({
     <PopupActions
       id={tutor.id}
       actions={actions}
+      actionsDisabled={actionsDisabled}
       route="tutors"
       classWrapper={classWrapper}
       renderMode={renderMode}

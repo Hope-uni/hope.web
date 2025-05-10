@@ -1,13 +1,15 @@
 'use client';
 
+import UserVerificationAlert from '@/components/common/Alerts/UserNotVerifiedAlert';
 import GoToBack from '@/components/GoToBack';
 import PatientActions from '@/components/patient/list/PatientActions';
 import Progress from '@/components/patient/record/MethodologyProgress';
 import useDataPatient from '@/components/patient/record/useDetailPatient';
+import { RENDER_MODE_ACTION } from '@/components/table/helpers';
 import TherapistActions from '@/components/therapist/list/TherapistActions';
 import TutorActions from '@/components/tutor/list/TutorActions';
 import CardProfile from '@/components/user/detail/CardProfile';
-import { ROLES_KEYS } from '@/constants/Role';
+import { ROLES_KEYS } from '@/constants/guards';
 import {
   DetailPatient,
   SinglePatientSchema,
@@ -16,7 +18,7 @@ import {
 } from '@/models/schema';
 import styles from '@/styles/modules/patient.module.scss';
 import { validateOptional } from '@/utils/zod';
-import { Button, Col, Dropdown, Flex, Grid, Row, Switch, Tabs } from 'antd';
+import { Button, Col, Dropdown, Flex, Grid, Row, Tabs } from 'antd';
 import Link from 'next/link';
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -68,6 +70,7 @@ export default function PatientDetail({ patient }: Props) {
 
   return (
     <>
+      <UserVerificationAlert isVerified={patient.isVerified} />
       <Row
         className={styles.wrapper_record}
         gutter={[30, 30]}
@@ -97,11 +100,13 @@ export default function PatientDetail({ patient }: Props) {
                 {screens.sm && (
                   <Flex gap={10}>
                     <Link href={`/admin/users/edit/${patient.userId}`}>
-                      <Button type="default">{t('Actions.edit')}</Button>
+                      <Button type="default" disabled={!patient.isVerified}>
+                        {t('Actions.edit')}
+                      </Button>
                     </Link>
                     <PatientActions
                       patient={SinglePatientSchema.parse(patient)}
-                      renderMode="delete"
+                      renderMode={RENDER_MODE_ACTION.DELETE}
                     />
                   </Flex>
                 )}

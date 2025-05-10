@@ -8,7 +8,7 @@ import {
   RenderModeActionTypes,
 } from '@/components/table/helpers';
 import { PopupActions } from '@/components/table/PopupActions';
-import { ROLES } from '@/constants/Role';
+import { ROLES } from '@/constants/guards';
 import { UserRules } from '@/constants/rules';
 import { useOpenNotification } from '@/context/Notification/NotificationProvider';
 import usePatientForm from '@/hooks/usePatientForm';
@@ -37,7 +37,7 @@ import stylesPatient from '@/styles/modules/patient.module.scss';
 import { Button, Flex, Form, Grid, Switch, Typography } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import { useRouter } from 'next/navigation';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { BsChevronDoubleUp } from 'react-icons/bs';
 import { useShallow } from 'zustand/react/shallow';
@@ -81,6 +81,10 @@ const PatientActions = ({
   const [openUnassignAchievement, setOpenUnassignAchievement] = useState(false);
   const [openChangeTherapist, setOpenChangeTherapist] = useState(false);
 
+  const actionsDisabled: Array<ActionType> = useMemo(() => {
+    return !patient.isVerified ? ['edit', 'change_therapist_to_patient'] : [];
+  }, [patient.isVerified]);
+
   useEffect(() => {
     if (patientDetail?.isMonochrome) {
       setCurrentIsMonochrome(patientDetail?.isMonochrome);
@@ -104,8 +108,9 @@ const PatientActions = ({
   const [formChangeTherapist] = Form.useForm();
 
   const handleOpenNextPhase = useCallback(() => {
+    if (!patient.isVerified) return;
     setOpenNextPhase(true);
-  }, []);
+  }, [patient.isVerified]);
 
   const handleOpenAddObservation = useCallback(() => {
     setOpenAddObservation(true);
@@ -364,10 +369,11 @@ const PatientActions = ({
   return (
     <>
       <Show>
-        <Show.When isTrue={renderMode !== 'next_phase'}>
+        <Show.When isTrue={renderMode !== RENDER_MODE_ACTION.NEXT_PHASE}>
           <PopupActions
             id={patient.id}
             actions={actions}
+            actionsDisabled={actionsDisabled}
             route="patients"
             classWrapper={classWrapper}
             renderMode={renderMode}
@@ -390,7 +396,7 @@ const PatientActions = ({
 
         <Show.When isTrue={renderMode === RENDER_MODE_ACTION.NEXT_PHASE}>
           <Flex
-            className={stylesPatient.upgrade_phase}
+            className={`${stylesPatient.upgrade_phase} ${!patient.isVerified ? 'wrapper-action-disabled' : ''}`}
             gap={4}
             onClick={handleOpenNextPhase}
           >
@@ -409,6 +415,7 @@ const PatientActions = ({
             type="default"
             className={styles.btn_add_observation}
             onClick={handleOpenAddObservation}
+            disabled={!patient.isVerified}
           >
             {screens.sm
               ? t('Patient.actions.add_observation.button_add')
@@ -419,7 +426,11 @@ const PatientActions = ({
         <Show.When
           isTrue={renderMode === RENDER_MODE_ACTION.ASSIGN_ACHIEVEMENT}
         >
-          <Button type="default" onClick={handleOpenAddAchievement}>
+          <Button
+            type="default"
+            onClick={handleOpenAddAchievement}
+            disabled={!patient.isVerified}
+          >
             {screens.sm
               ? t('Patient.actions.add_achievement.button_add')
               : t('Patient.actions.add_achievement.button_add_mobile')}
@@ -434,6 +445,7 @@ const PatientActions = ({
               type="default"
               onClick={handleOpenUnassignAchievement}
               className={styles.btn_delete}
+              disabled={!patient.isVerified}
             >
               {screens.sm
                 ? t('Patient.actions.unassign_achievement.button_add')
@@ -450,7 +462,7 @@ const PatientActions = ({
         >
           <Flex
             gap={30}
-            className={`ant-dropdown-menu-item text-color-grey`}
+            className={`ant-dropdown-menu-item text-color-grey ${!patient.isVerified ? 'wrapper-action-disabled' : ''}`}
             role="menuitem"
             key={'b/n-switch'}
           >
@@ -461,7 +473,7 @@ const PatientActions = ({
               value={currentIsMonochrome}
               onChange={handleChangeMonochrome}
               size="small"
-              disabled={overlay}
+              disabled={!patient.isVerified || overlay}
             />
           </Flex>
         </Show.When>

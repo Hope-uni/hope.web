@@ -3,7 +3,8 @@
 
 import OptimizedImage from '@/components/common/OptimizedImage';
 import { Show } from '@/components/Show';
-import { RoleKeyType, ROLES } from '@/constants/Role';
+import { ROLES } from '@/constants/guards';
+import { RoleKeyType } from '@/constants/guards/types';
 import { UserProfileCard } from '@/models/schema';
 import styles from '@/styles/modules/user.module.scss';
 import {
@@ -118,10 +119,21 @@ export default function CardProfile({
           />
           <Flex vertical gap={screens.xs ? 8 : 0}>
             <Flex
-              gap={screens.xs ? 5 : 16}
-              align="center"
-              vertical={screens.xs}
+              gap={5}
+              align={screens.xs ? 'center' : 'left'}
+              justify={screens.xs ? 'center' : 'left'}
+              vertical
             >
+              {roleName && (
+                <Tag
+                  className="tag-role"
+                  style={{
+                    width: 'max-content',
+                  }}
+                >
+                  <strong>{ROLES[roleName]}</strong>
+                </Tag>
+              )}
               <Title
                 level={3}
                 className={styles.full_name}
@@ -131,11 +143,6 @@ export default function CardProfile({
               >
                 {user.fullName}
               </Title>
-              {roleName && (
-                <Tag className="tag-role">
-                  <strong>{ROLES[roleName]}</strong>
-                </Tag>
-              )}
             </Flex>
 
             <Flex vertical>

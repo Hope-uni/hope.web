@@ -1,6 +1,7 @@
 import { UnassignedTag } from '@/components/common';
 import PatientActions from '@/components/patient/list/PatientActions';
 import PatientRowCardMobile from '@/components/patient/list/PatientRowCardMobile';
+import AvatarUserList from '@/components/user/list/AvatarUserList';
 import { SinglePatient } from '@/models/schema';
 import {
   addResponsiveProperty,
@@ -23,7 +24,15 @@ export const usePatientColumns = (options?: OptionsArgs) => {
     {
       title: t('Patient.index.columns.name'),
       dataIndex: 'fullName',
-      align: 'left',
+      render: (_, { fullName, imageUrl, isVerified }) => (
+        <AvatarUserList
+          image={imageUrl}
+          description={fullName}
+          sizeImage={25}
+          isVerified={isVerified}
+          showTooltipVerified
+        />
+      ),
     },
     {
       title: t('Patient.index.columns.age'),

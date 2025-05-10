@@ -1,10 +1,12 @@
 'use client';
 
+import UserVerificationAlert from '@/components/common/Alerts/UserNotVerifiedAlert';
 import GoToBack from '@/components/GoToBack';
+import { RENDER_MODE_ACTION } from '@/components/table/helpers';
 import useDetailTutor from '@/components/tutor/detail/useDetailTutor';
 import TutorActions from '@/components/tutor/list/TutorActions';
 import CardProfile from '@/components/user/detail/CardProfile';
-import { ROLES_KEYS } from '@/constants/Role';
+import { ROLES_KEYS } from '@/constants/guards';
 import {
   DetailTutor,
   SingleTutorTherapistSchema,
@@ -28,6 +30,7 @@ export default function TutorDetail({ tutor }: Props) {
 
   return (
     <>
+      <UserVerificationAlert isVerified={tutor.isVerified} />
       <Flex
         vertical
         justify="flex-start"
@@ -47,11 +50,13 @@ export default function TutorDetail({ tutor }: Props) {
             {screens.sm && (
               <Flex gap={10}>
                 <Link href={`/admin/users/edit/${tutor.userId}`}>
-                  <Button type="default">{t('Actions.edit')}</Button>
+                  <Button type="default" disabled={!tutor.isVerified}>
+                    {t('Actions.edit')}
+                  </Button>
                 </Link>
                 <TutorActions
                   tutor={SingleTutorTherapistSchema.parse(tutor)}
-                  renderMode="delete"
+                  renderMode={RENDER_MODE_ACTION.DELETE}
                 />
               </Flex>
             )}

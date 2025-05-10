@@ -1,10 +1,12 @@
 'use client';
 
+import UserVerificationAlert from '@/components/common/Alerts/UserNotVerifiedAlert';
 import GoToBack from '@/components/GoToBack';
+import { RENDER_MODE_ACTION } from '@/components/table/helpers';
 import useDetailTherapist from '@/components/therapist/detail/useDetailTherapist';
 import TherapistActions from '@/components/therapist/list/TherapistActions';
 import CardProfile from '@/components/user/detail/CardProfile';
-import { ROLES_KEYS } from '@/constants/Role';
+import { ROLES_KEYS } from '@/constants/guards';
 import {
   DetailTherapist,
   SingleTutorTherapistSchema,
@@ -28,6 +30,7 @@ export default function TherapistDetail({ therapist }: Props) {
 
   return (
     <>
+      <UserVerificationAlert isVerified={therapist.isVerified} />
       <Flex
         vertical
         justify="flex-start"
@@ -47,15 +50,17 @@ export default function TherapistDetail({ therapist }: Props) {
             {screens.sm && (
               <Flex gap={10}>
                 <Link href={`/admin/users/edit/${therapist.userId}`}>
-                  <Button type="default">{t('Actions.edit')}</Button>
+                  <Button type="default" disabled={!therapist.isVerified}>
+                    {t('Actions.edit')}
+                  </Button>
                 </Link>
                 <TherapistActions
                   therapist={SingleTutorTherapistSchema.parse(therapist)}
-                  renderMode="assign_patient"
+                  renderMode={RENDER_MODE_ACTION.ASSIGN_PATIENT}
                 />
                 <TherapistActions
                   therapist={SingleTutorTherapistSchema.parse(therapist)}
-                  renderMode="delete"
+                  renderMode={RENDER_MODE_ACTION.DELETE}
                 />
               </Flex>
             )}

@@ -1,9 +1,12 @@
 import HModal from '@/components/common/Modals';
 import { Show } from '@/components/Show';
-import { RenderModeActionTypes } from '@/components/table/helpers';
+import {
+  RENDER_MODE_ACTION,
+  RenderModeActionTypes,
+} from '@/components/table/helpers';
 import { PopupActions } from '@/components/table/PopupActions';
 import AssignPatientForm from '@/components/therapist/form/AssignPatientForm';
-import { ROLES } from '@/constants/Role';
+import { ROLES } from '@/constants/guards';
 import { useOpenNotification } from '@/context/Notification/NotificationProvider';
 import useTherapistForm from '@/hooks/useTherapistForm';
 import { useOverlayStore } from '@/lib/store';
@@ -17,7 +20,7 @@ import {
 import styles from '@/styles/modules/partials.module.scss';
 import { Button, Form } from 'antd';
 import { useRouter } from 'next/navigation';
-import { memo, useCallback, useState } from 'react';
+import { memo, useCallback, useMemo, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useShallow } from 'zustand/react/shallow';
 
@@ -32,7 +35,7 @@ const TherapistActions = ({
   therapist,
   actions = ['show', 'edit', 'assign_patient', 'delete'],
   classWrapper,
-  renderMode = 'popup',
+  renderMode = RENDER_MODE_ACTION.POPUP,
 }: Props) => {
   const { t } = useTranslation();
   const { openNotification } = useOpenNotification();
@@ -41,6 +44,10 @@ const TherapistActions = ({
   const setLoading = useOverlayStore(useShallow((state) => state.setLoading));
   const [loadingForm, setLoadingForm] = useState(false);
   const [openAssignPatient, setOpenAssignPatient] = useState(false);
+
+  const actionsDisabled: Array<ActionType> = useMemo(() => {
+    return !therapist.isVerified ? ['edit', 'assign_patient'] : [];
+  }, [therapist.isVerified]);
 
   const {
     availableForTherapistList,
@@ -113,6 +120,7 @@ const TherapistActions = ({
       <PopupActions
         id={therapist.id}
         actions={actions}
+        actionsDisabled={actionsDisabled}
         route="therapists"
         classWrapper={classWrapper}
         renderMode={renderMode}
@@ -129,8 +137,12 @@ const TherapistActions = ({
           />
         }
       />
-      <Show.When isTrue={renderMode === 'assign_patient'}>
-        <Button type="default" onClick={handleOpenAssignPatient}>
+      <Show.When isTrue={renderMode === RENDER_MODE_ACTION.ASSIGN_PATIENT}>
+        <Button
+          type="default"
+          onClick={handleOpenAssignPatient}
+          disabled={!therapist.isVerified}
+        >
           {t('Therapist.actions.assign_patients.button_add')}
         </Button>
       </Show.When>

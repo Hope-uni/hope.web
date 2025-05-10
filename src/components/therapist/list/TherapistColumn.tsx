@@ -1,6 +1,7 @@
 import { UnassignedTag } from '@/components/common';
 import TherapistActions from '@/components/therapist/list/TherapistActions';
 import TherapistRowCardMobile from '@/components/therapist/list/TherapistRowCardMobile';
+import AvatarUserList from '@/components/user/list/AvatarUserList';
 import { SingleTutorTherapist } from '@/models/schema';
 import {
   addResponsiveProperty,
@@ -25,10 +26,15 @@ export const useTherapistColumns = (options?: OptionsArgs) => {
       {
         title: t('Therapist.index.columns.name'),
         dataIndex: 'fullName',
-        align: 'left',
-        sorter: (a: SingleTutorTherapist, b: SingleTutorTherapist) =>
-          a.fullName.localeCompare(b.fullName),
-        sortDirections: ['descend', 'ascend'],
+        render: (_, { fullName, imageUrl, isVerified }) => (
+          <AvatarUserList
+            image={imageUrl}
+            description={fullName}
+            sizeImage={25}
+            isVerified={isVerified}
+            showTooltipVerified
+          />
+        ),
       },
       {
         title: t('Therapist.index.columns.email'),

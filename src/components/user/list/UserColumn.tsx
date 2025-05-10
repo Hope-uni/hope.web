@@ -1,8 +1,8 @@
-import { UnassignedTag } from '@/components/common';
+import { UnassignedTag, UserVerifiedTag } from '@/components/common';
 import UserActions from '@/components/user/list/UserActions';
 import UserRowCardMobile from '@/components/user/list/UserRowCardMobile';
-import { ROLES } from '@/constants/Role';
-import { SingleUser, Role } from '@/models/schema';
+import { ROLES } from '@/constants/guards';
+import { Role, SingleUser } from '@/models/schema';
 import { validateRole } from '@/utils/session';
 import {
   addResponsiveProperty,
@@ -12,6 +12,7 @@ import {
 import { StarFilled } from '@ant-design/icons';
 import { TableProps, Tag } from 'antd';
 import { useTranslation } from 'react-i18next';
+import AvatarUserList from '@/components/user/list/AvatarUserList';
 
 interface OptionsArgs {
   showActions?: boolean;
@@ -24,16 +25,19 @@ export const useUserColumns = (options?: OptionsArgs) => {
 
   const columns: TableProps<SingleUser>['columns'] = [
     {
-      title: t('User.index.columns.email'),
+      title: t('User.index.columns.user'),
       dataIndex: 'email',
-      align: 'left',
+      render: (_, { email, imageUrl, username }) => (
+        <AvatarUserList image={imageUrl} title={username} description={email} />
+      ),
     },
     {
-      title: t('User.index.columns.user'),
+      title: t('User.index.columns.status'),
       dataIndex: 'username',
       align: 'center',
-      width: '280px',
-      render: (_, { username }) => <span>@{username}</span>,
+      render: (_, { isVerified }) => (
+        <UserVerifiedTag isVerified={isVerified} />
+      ),
     },
     {
       title: t('User.index.columns.role'),
