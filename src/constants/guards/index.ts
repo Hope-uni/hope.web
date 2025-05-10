@@ -3,7 +3,7 @@ import {
   permissionsMatrix,
   RolesGuardMap,
   SUBJECT_GUARD_KEYS,
-} from './source';
+} from '@/constants/guards/source';
 import { ActionGuardType, PermissionKey, subjectGuardType } from './types';
 
 export const ROLES = RolesGuardMap;

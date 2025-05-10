@@ -1,4 +1,8 @@
-import { ACTION_GUARD_KEYS, SUBJECT_GUARD_KEYS, RolesGuardMap } from './source';
+import {
+  ACTION_GUARD_KEYS,
+  SUBJECT_GUARD_KEYS,
+  RolesGuardMap,
+} from '@/constants/guards/source';
 
 export type RoleKeyType = keyof typeof RolesGuardMap;
 export type RoleType = (typeof RolesGuardMap)[keyof typeof RolesGuardMap];

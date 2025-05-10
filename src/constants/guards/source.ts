@@ -1,4 +1,4 @@
-import { ItemPermissionsMatrix } from './types';
+import { ItemPermissionsMatrix } from '@/constants/guards/types';
 
 export const RolesGuardMap = {
   SUPERADMIN: 'Superadmin',
