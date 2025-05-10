@@ -30,17 +30,14 @@ export default function Can({
     }
 
     if (allowed.length > 0) {
-      console.log('allowed');
       isAuthorized = can(allowed, MethodGuardValidation.PERMISSION);
     }
 
     if (denied.length > 0) {
-      console.log('denied');
       isAuthorized = !can(denied, MethodGuardValidation.PERMISSION);
     }
 
     if (rolAllowed.length > 0) {
-      console.log('rol allowed');
       isAuthorized = can(rolAllowed, MethodGuardValidation.ROLE);
     }
 
@@ -48,8 +45,6 @@ export default function Can({
   };
 
   const isAuthorized = canAccess();
-
-  console.log(rolAllowed, isAuthorized);
 
   return <>{isAuthorized ? children : returnDenied ? <Denied /> : null}</>;
 }

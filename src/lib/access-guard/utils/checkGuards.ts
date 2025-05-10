@@ -30,7 +30,5 @@ export const checkRole = (
     return true;
   }
 
-  console.log(rolesToCheck, userRole);
-
   return rolesToCheck.some((role) => userRole.includes(role));
 };
