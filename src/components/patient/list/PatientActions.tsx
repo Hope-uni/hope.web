@@ -3,17 +3,26 @@ import AssignAchievementForm from '@/components/patient/form/AssignAchievementFo
 import ChangeTherapistForm from '@/components/patient/form/ChangeTherapistForm';
 import UnassignAchievementForm from '@/components/patient/form/UnassignAchievementForm';
 import { Show } from '@/components/Show';
-import { RenderModeActionTypes } from '@/components/table/helpers';
+import {
+  RENDER_MODE_ACTION,
+  RenderModeActionTypes,
+} from '@/components/table/helpers';
 import { PopupActions } from '@/components/table/PopupActions';
 import { ROLES } from '@/constants/Role';
 import { UserRules } from '@/constants/rules';
 import { useOpenNotification } from '@/context/Notification/NotificationProvider';
 import usePatientForm from '@/hooks/usePatientForm';
 import { useOverlayStore } from '@/lib/store';
-import { Achievement, Observation, SinglePatient } from '@/models/schema';
+import {
+  Achievement,
+  DetailPatient,
+  Observation,
+  SinglePatient,
+} from '@/models/schema';
 import { ActionType, NotificationContent } from '@/models/types';
 import {
   AddObservationToPatientService,
+  ChangeMonochromeService,
   ChangeTherapistService,
 } from '@/services';
 import { AssignAchievementService } from '@/services/achievements/achievements.service';
@@ -25,10 +34,10 @@ import {
 } from '@/services/user/helpers';
 import styles from '@/styles/modules/partials.module.scss';
 import stylesPatient from '@/styles/modules/patient.module.scss';
-import { Button, Flex, Form, Grid, Typography } from 'antd';
+import { Button, Flex, Form, Grid, Switch, Typography } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import { useRouter } from 'next/navigation';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { BsChevronDoubleUp } from 'react-icons/bs';
 import { useShallow } from 'zustand/react/shallow';
@@ -41,30 +50,42 @@ interface FormAddObservationErrors {
 
 interface Props {
   patient: SinglePatient;
+  patientDetail?: DetailPatient;
   achievementsAssigned?: Achievement[];
   actions?: Array<ActionType>;
   classWrapper?: string;
   renderMode?: RenderModeActionTypes;
+  onAfterActionFinish?: () => void;
 }
 
 const PatientActions = ({
   patient,
+  patientDetail,
   achievementsAssigned = [],
   actions = ['show', 'edit', 'change_therapist_to_patient', 'delete'],
   classWrapper,
   renderMode = 'popup',
+  onAfterActionFinish,
 }: Props) => {
   const screens = useBreakpoint();
   const { t } = useTranslation();
   const { openNotification } = useOpenNotification();
   const router = useRouter();
   const setLoading = useOverlayStore(useShallow((state) => state.setLoading));
+  const overlay = useOverlayStore(useShallow((state) => state.overlay));
   const [loadingForm, setLoadingForm] = useState(false);
+  const [currentIsMonochrome, setCurrentIsMonochrome] = useState(false);
   const [openNextPhase, setOpenNextPhase] = useState(false);
   const [openAddObservation, setOpenAddObservation] = useState(false);
   const [openAddAchievement, setOpenAddAchievement] = useState(false);
   const [openUnassignAchievement, setOpenUnassignAchievement] = useState(false);
   const [openChangeTherapist, setOpenChangeTherapist] = useState(false);
+
+  useEffect(() => {
+    if (patientDetail?.isMonochrome) {
+      setCurrentIsMonochrome(patientDetail?.isMonochrome);
+    }
+  }, [patientDetail?.isMonochrome]);
 
   const {
     availableTherapistList,
@@ -73,6 +94,7 @@ const PatientActions = ({
     getListAchievements,
     updateQueriesAfterChangeTherapist,
     updateQueriesAfterAddObservation,
+    updateQueriesAfterChangeMonochrome,
     updateQueriesAfterUpdateAssignment,
     updateQueriesAfterUnassignAssignment,
   } = usePatientForm(patient.id);
@@ -299,6 +321,46 @@ const PatientActions = ({
     }
   }, [openNotification, patient.id, t]);
 
+  const handleChangeMonochrome = useCallback(
+    async (checked: boolean) => {
+      try {
+        setLoading(true);
+        setCurrentIsMonochrome(checked);
+
+        const res = await ChangeMonochromeService(patient.id);
+
+        if (res.error && res.statusCode !== 201) {
+          let optionsNotification: NotificationContent = {
+            description: res.message,
+          };
+
+          setLoading(false);
+          openNotification.error(optionsNotification);
+          return;
+        }
+        await updateQueriesAfterChangeMonochrome(patient.id, checked);
+
+        openNotification.success({
+          description: res.message,
+        });
+
+        if (onAfterActionFinish) {
+          onAfterActionFinish();
+        }
+        setLoading(false);
+      } catch (error) {
+        setLoading(false);
+      }
+    },
+    [
+      onAfterActionFinish,
+      openNotification,
+      patient.id,
+      setLoading,
+      updateQueriesAfterChangeMonochrome,
+    ],
+  );
+
   return (
     <>
       <Show>
@@ -326,7 +388,7 @@ const PatientActions = ({
           />
         </Show.When>
 
-        <Show.When isTrue={renderMode === 'next_phase'}>
+        <Show.When isTrue={renderMode === RENDER_MODE_ACTION.NEXT_PHASE}>
           <Flex
             className={stylesPatient.upgrade_phase}
             gap={4}
@@ -342,7 +404,7 @@ const PatientActions = ({
           </Flex>
         </Show.When>
 
-        <Show.When isTrue={renderMode === 'add_observation'}>
+        <Show.When isTrue={renderMode === RENDER_MODE_ACTION.ADD_OBSERVATION}>
           <Button
             type="default"
             className={styles.btn_add_observation}
@@ -354,7 +416,9 @@ const PatientActions = ({
           </Button>
         </Show.When>
 
-        <Show.When isTrue={renderMode === 'assign_achievement'}>
+        <Show.When
+          isTrue={renderMode === RENDER_MODE_ACTION.ASSIGN_ACHIEVEMENT}
+        >
           <Button type="default" onClick={handleOpenAddAchievement}>
             {screens.sm
               ? t('Patient.actions.add_achievement.button_add')
@@ -362,7 +426,9 @@ const PatientActions = ({
           </Button>
         </Show.When>
 
-        <Show.When isTrue={renderMode === 'unassign_achievement'}>
+        <Show.When
+          isTrue={renderMode === RENDER_MODE_ACTION.UNASSIGN_ACHIEVEMENT}
+        >
           <span className={styles.action_unassign_achievement_btn_delete}>
             <Button
               type="default"
@@ -374,6 +440,30 @@ const PatientActions = ({
                 : t('Patient.actions.unassign_achievement.button_add_mobile')}
             </Button>
           </span>
+        </Show.When>
+
+        <Show.When
+          isTrue={
+            renderMode === RENDER_MODE_ACTION.CHANGE_MONOCHROME &&
+            !!patientDetail
+          }
+        >
+          <Flex
+            gap={30}
+            className={`ant-dropdown-menu-item text-color-grey`}
+            role="menuitem"
+            key={'b/n-switch'}
+          >
+            <span className="ant-dropdown-menu-title-content">
+              {t('Actions.modebn')}
+            </span>
+            <Switch
+              value={currentIsMonochrome}
+              onChange={handleChangeMonochrome}
+              size="small"
+              disabled={overlay}
+            />
+          </Flex>
         </Show.When>
       </Show>
 

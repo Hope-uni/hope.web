@@ -1,7 +1,7 @@
 'use client';
 
 import PatientDetail from '@/components/patient/record';
-import { ROLES } from '@/constants/Role';
+import { ROLES } from '@/constants/guards';
 import { useFetchFindUserByRoleQuery } from '@/lib/queries/user';
 import { DetailPatient } from '@/models/schema';
 import { LoadingOutlined } from '@ant-design/icons';

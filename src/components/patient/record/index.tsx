@@ -7,6 +7,7 @@ import useDataPatient from '@/components/patient/record/useDetailPatient';
 import TherapistActions from '@/components/therapist/list/TherapistActions';
 import TutorActions from '@/components/tutor/list/TutorActions';
 import CardProfile from '@/components/user/detail/CardProfile';
+import { ROLES_KEYS } from '@/constants/Role';
 import {
   DetailPatient,
   SinglePatientSchema,
@@ -17,7 +18,7 @@ import styles from '@/styles/modules/patient.module.scss';
 import { validateOptional } from '@/utils/zod';
 import { Button, Col, Dropdown, Flex, Grid, Row, Switch, Tabs } from 'antd';
 import Link from 'next/link';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { BsFillCaretDownFill } from 'react-icons/bs';
 import { HiCog6Tooth } from 'react-icons/hi2';
@@ -31,6 +32,7 @@ interface Props {
 export default function PatientDetail({ patient }: Props) {
   const screens = useBreakpoint();
   const { t } = useTranslation();
+  const [openMenuConfig, setOpenMenuConfig] = useState(false);
   const { itemInfoTherapist, itemInfoTutor, itemsTab } =
     useDataPatient(patient);
 
@@ -39,8 +41,12 @@ export default function PatientDetail({ patient }: Props) {
     [patient.therapist],
   );
 
-  const handleSwitchChange = (checked: boolean) => {
-    // TODO implements api services
+  const handleVisibilityMenuConfig = (flag: boolean) => {
+    setOpenMenuConfig(flag);
+  };
+
+  const handleCloseMenuConfig = () => {
+    setOpenMenuConfig(false);
   };
 
   const renderItem = () => {
@@ -50,17 +56,12 @@ export default function PatientDetail({ patient }: Props) {
         role="menu"
         data-menu-list="true"
       >
-        <Flex
-          gap={30}
-          className={`ant-dropdown-menu-item text-color-grey`}
-          role="menuitem"
-          key={'b/n-switch'}
-        >
-          <span className="ant-dropdown-menu-title-content">
-            {t('Actions.modebn')}
-          </span>
-          <Switch onChange={handleSwitchChange} size="small" />
-        </Flex>
+        <PatientActions
+          patient={SinglePatientSchema.parse(patient)}
+          patientDetail={patient}
+          renderMode="change_monochrome"
+          onAfterActionFinish={handleCloseMenuConfig}
+        />
       </Flex>
     );
   };
@@ -104,7 +105,12 @@ export default function PatientDetail({ patient }: Props) {
                     />
                   </Flex>
                 )}
-                <Dropdown trigger={['click']} dropdownRender={renderItem}>
+                <Dropdown
+                  trigger={['click']}
+                  dropdownRender={renderItem}
+                  open={openMenuConfig}
+                  onOpenChange={(flag) => handleVisibilityMenuConfig(flag)}
+                >
                   <Flex gap={2} align="center">
                     <HiCog6Tooth size={'24px'} />
                     <BsFillCaretDownFill color="#626262" size={'16px'} />
@@ -119,7 +125,10 @@ export default function PatientDetail({ patient }: Props) {
               style={{ width: '100%' }}
             >
               <Col>
-                <CardProfile user={UserProfileCardSchema.parse(patient)} />
+                <CardProfile
+                  user={UserProfileCardSchema.parse(patient)}
+                  roleName={ROLES_KEYS.PATIENT}
+                />
               </Col>
               {screens.sm && (
                 <Col>
