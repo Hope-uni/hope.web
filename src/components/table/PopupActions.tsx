@@ -24,7 +24,7 @@ interface Props {
   modalDeleteDescription?: string | JSX.Element;
   classWrapper?: string;
   renderMode?: RenderModeActionTypes;
-  queryKey?: string;
+  queryKey?: string[];
   displayOutsidePopup?: boolean;
   disabled?: boolean;
   onShow?: () => void;
@@ -147,8 +147,8 @@ export const PopupActions = ({
         return;
       }
 
-      if (queryKey) {
-        await invalidateQueries([queryKey]);
+      if (queryKey && queryKey?.length > 0) {
+        await Promise.all(queryKey.map((key) => invalidateQueries([key])));
       }
 
       setLoading(false);

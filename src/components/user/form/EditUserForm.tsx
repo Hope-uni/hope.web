@@ -93,21 +93,19 @@ export default function EditUserForm() {
         }),
       );
 
-      let queriesKeyToInvalidate = [QueryKeys.User.ListUser];
+      await invalidateQueries([QueryKeys.User.ListUser]);
 
       if (validateRole(currentRoleSelected.name, ROLES.PATIENT)) {
-        queriesKeyToInvalidate.push(QueryKeys.User.ListPatient);
+        await invalidateQueries([QueryKeys.User.ListPatient]);
       }
 
       if (validateRole(currentRoleSelected.name, ROLES.THERAPIST)) {
-        queriesKeyToInvalidate.push(QueryKeys.User.ListTherapist);
+        await invalidateQueries([QueryKeys.User.ListTherapist]);
       }
 
       if (validateRole(currentRoleSelected.name, ROLES.TUTOR)) {
-        queriesKeyToInvalidate.push(QueryKeys.User.ListTutor);
+        await invalidateQueries([QueryKeys.User.ListTutor]);
       }
-
-      await invalidateQueries(queriesKeyToInvalidate);
 
       openNotification.success({
         description: res.message,

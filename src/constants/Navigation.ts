@@ -1,4 +1,5 @@
 export const RoutesName = {
+  index: '/',
   login: {
     index: '/login',
   },
@@ -12,7 +13,7 @@ export const RoutesName = {
     index: '/change-temporary-password',
   },
   unauthorized: {
-    index: 'unauthorized',
+    index: '/admin/unauthorized',
   },
   logout: {
     index: 'logout',
@@ -50,7 +51,7 @@ export const RoutesName = {
   },
   activity: {
     index: '/admin/activities',
-    create: '/admin/activities/create',
+    create: '/admin/activity/create',
   },
   achievement: {
     index: '/admin/achievements',

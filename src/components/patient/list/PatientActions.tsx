@@ -8,6 +8,7 @@ import {
   RenderModeActionTypes,
 } from '@/components/table/helpers';
 import { PopupActions } from '@/components/table/PopupActions';
+import { QueryKeys } from '@/constants';
 import { ROLES } from '@/constants/guards';
 import { UserRules } from '@/constants/rules';
 import { useOpenNotification } from '@/context/Notification/NotificationProvider';
@@ -377,6 +378,7 @@ const PatientActions = ({
             route="patients"
             classWrapper={classWrapper}
             renderMode={renderMode}
+            queryKey={[QueryKeys.User.ListUser, QueryKeys.User.ListPatient]}
             onEdit={handleEdit}
             onDelete={handleDelete}
             onChangeAssignment={handleOpenChangeTherapist}

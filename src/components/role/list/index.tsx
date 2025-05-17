@@ -27,6 +27,7 @@ export default function RoleIndex() {
     <>
       <Space direction="vertical" size={10} className="main-wrapper-table">
         <WrapperTable
+          id="role-table"
           cols={columns}
           data={data}
           searchable={false}

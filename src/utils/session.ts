@@ -1,5 +1,7 @@
 import { Role } from '@/models/schema';
 import { UserSession } from '@/models/types/auth';
+import { getToken } from 'next-auth/jwt';
+import { NextRequest } from 'next/server';
 
 export const getCurrentUser = (session: UserSession) => {
   const defaultUser = {
@@ -39,4 +41,13 @@ export const validateRole = (
 
 export const getFirstRole = (roles: Role[]) => {
   return roles?.length > 0 ? roles[0] : null;
+};
+
+export const getTokenUSer = async (req: NextRequest) => {
+  const token = await getToken({
+    req,
+    secret: process.env.NEXTAUTH_SECRET,
+  });
+
+  return token;
 };

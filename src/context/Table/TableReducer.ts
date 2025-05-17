@@ -10,6 +10,7 @@ export const initialState: I_TableState = {
   searching: false,
   searchResult: [],
   totalResults: '',
+  lastIdMounted: null,
   paginationTable: {
     totalPages: 0,
     currentPage: undefined,
@@ -107,6 +108,13 @@ export const TableReducer = (state = initialState, action: I_ActionTable) => {
         ...state,
         searching: false,
         searchResult: [],
+      };
+    }
+
+    case E_ActionKeyTable.SET_LAST_ID_MOUNTED: {
+      return {
+        ...state,
+        lastIdMounted: action.payload,
       };
     }
 

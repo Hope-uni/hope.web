@@ -1,3 +1,4 @@
+import { setOverlayBlockingEdge } from '@/lib/store';
 import { API_PAYLOAD } from '@/models/types';
 import axios from 'axios';
 
@@ -45,9 +46,23 @@ API_HOPE_PROTECTED.interceptors.response.use(
   async (response) => {
     return response;
   },
-  (error) => {
+  async (error) => {
     if (axios.isAxiosError(error) && error.response?.data.statusCode === 401) {
-      // TODO implements signOut and redirect to login.
+      setOverlayBlockingEdge(true);
+      await signOut();
+    }
+    return Promise.reject(error);
+  },
+);
+
+API_HOPE_PUBLIC.interceptors.response.use(
+  async (response) => {
+    return response;
+  },
+  async (error) => {
+    if (axios.isAxiosError(error) && error.response?.data.statusCode === 401) {
+      setOverlayBlockingEdge(true);
+      await signOut();
     }
     return Promise.reject(error);
   },

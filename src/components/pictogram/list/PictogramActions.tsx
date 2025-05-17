@@ -161,6 +161,7 @@ const PictogramActions = ({
               actions={actions}
               route="pictograms"
               classWrapper={classWrapper}
+              queryKey={[QueryKeys.Pictogram.ListPictogram]}
               onEdit={handleOpenEdit}
               onDelete={handleDelete}
               modalDeleteTitle={t('Pictogram.actions.delete.modal.title')}

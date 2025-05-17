@@ -1,13 +1,14 @@
-import type { NextAuthOptions } from 'next-auth';
-import CredentialsProvider from 'next-auth/providers/credentials';
 import {
   LoginPayloadSchema,
   MeResponse,
   userNotVerifiedResponse,
 } from '@/models/schema';
-import { LoginService, serviceMe } from '@/services/auth/auth.service';
 import { UserSession } from '@/models/types/auth';
+import { LoginService, serviceMe } from '@/services/auth/auth.service';
 import { AxiosError } from 'axios';
+import type { NextAuthOptions } from 'next-auth';
+import CredentialsProvider from 'next-auth/providers/credentials';
+import { signOut } from 'next-auth/react';
 
 const MESSAGE_USER_NOT_VERIFIED = 'Usuario no verificado';
 
@@ -96,6 +97,7 @@ export const AuthConfig = {
 
           return {
             ...userData,
+            roles: resMe.roles.map((role) => role.name),
             userVerified: resMe.userVerified,
             accessToken,
             refreshToken,
@@ -126,6 +128,10 @@ export const AuthConfig = {
         });
 
         if (!resMe?.data || resMe?.error) {
+          if (resMe?.statusCode === 401) {
+            await signOut();
+          }
+
           throw new Error(resMe?.message);
         }
 

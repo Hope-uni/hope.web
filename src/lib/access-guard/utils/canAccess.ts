@@ -7,8 +7,6 @@ export const getPermission = async () => {
   const session = await getSession();
   const UserSession = session?.user as UserSession;
 
-  console.log(UserSession, 'UserSession');
-
   const roles: RoleType[] = [];
   const permissions: PermissionType[] = [];
 

@@ -1,14 +1,12 @@
+import FormItemDatePicker from '@/components/common/Inputs/FormItemDatePicker';
 import { Show } from '@/components/Show';
 import { UserRules } from '@/constants/rules';
 import { useFormCreateUserStore } from '@/lib/store/forms/formCreateUser';
 import styles from '@/styles/modules/user.module.scss';
-import { Col, DatePicker, Form, FormInstance, Input, Row, Select } from 'antd';
+import { Col, Form, FormInstance, Input, Row, Select } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
-import { useTranslation } from 'react-i18next';
-import dayjs from 'dayjs';
 import { useEffect } from 'react';
-
-const { Option } = Select;
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   form?: FormInstance;
@@ -29,8 +27,6 @@ const inputVisibleByRole = {
 };
 
 const spanColFullWidth = 24;
-const ThreeYearsAgo = dayjs(new Date()).subtract(3, 'years');
-const SixteenYearsAgo = dayjs(new Date()).subtract(16, 'years');
 
 export default function PersonDataSpecificForm({
   form,
@@ -54,14 +50,6 @@ export default function PersonDataSpecificForm({
     }
   }, [fields, form, isEdit]);
 
-  const disabledFutureDate = (current: any) => {
-    if (currentRoleSelected.name === 'Paciente') {
-      return current && current.valueOf() >= ThreeYearsAgo;
-    }
-
-    return current && current.valueOf() >= SixteenYearsAgo;
-  };
-
   return (
     <Form
       name="create_login_specific"
@@ -81,18 +69,12 @@ export default function PersonDataSpecificForm({
               sm={{ span: spanColFullWidth }}
               xs={{ span: spanColFullWidth }}
             >
-              <Form.Item
+              <FormItemDatePicker
                 name="birthday"
                 label={t('User.fields.birthday.label')}
-                rules={UserRules.user.birthday}
-              >
-                <DatePicker
-                  placeholder={t('User.fields.birthday.placeholder')}
-                  defaultPickerValue={ThreeYearsAgo}
-                  disabledDate={disabledFutureDate}
-                  style={{ width: '100%' }}
-                />
-              </Form.Item>
+                placeholder={t('User.fields.birthday.placeholder')}
+                currentRoleSelected={currentRoleSelected}
+              />
             </Col>
           </Row>
         </Show.When>

@@ -1,6 +1,6 @@
 'use client';
 
-import hopeLogo from '@/assets/img/hope_logo.svg';
+import HopeLogo from '@/components/common/hopeLogo';
 import {
   MenuItemType,
   SIDEBAR_MENU,
@@ -11,7 +11,7 @@ import useLogout from '@/hooks/useLogout';
 import { useCan } from '@/lib/access-guard';
 import { MethodGuardValidation } from '@/lib/access-guard/helpers';
 import styles from '@/styles/modules/layouts.module.scss';
-import { Divider, Flex, Grid, Image, Layout, Menu, MenuProps } from 'antd';
+import { Divider, Flex, Grid, Layout, Menu, MenuProps } from 'antd';
 import { CollapseType } from 'antd/lib/layout/Sider';
 import { usePathname, useRouter } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
@@ -117,7 +117,7 @@ export default function Sidebar() {
       onCollapse={handleCollapsed}
     >
       <div className={styles.sidebar_logo}>
-        <Image src={hopeLogo} alt="hope_admin" width={120} height={90} />
+        <HopeLogo width={120} height={90} />
       </div>
       <Flex className={styles.flex_menu} vertical justify="space-between">
         <Flex vertical>

@@ -18,6 +18,11 @@ export const SIDEBAR_MENU = {
 } as const;
 export type SiderMenuType = (typeof SIDEBAR_MENU)[keyof typeof SIDEBAR_MENU];
 
+export type MenuItemBaseType = {
+  key: string;
+  guard?: string[];
+};
+
 export type MenuItemType = {
   label: ReactNode;
   key: string;
@@ -52,7 +57,7 @@ export const SidebarMenuItems: SidebarMenuItemsType = {
         {
           label: i18next.t('menu.routes.patients'),
           key: RoutesName.patient.index,
-          guard: [ROLES.SUPERADMIN, ROLES.PATIENT],
+          guard: [ROLES.SUPERADMIN, ROLES.ADMIN],
         },
         {
           label: i18next.t('menu.routes.tutors'),
@@ -119,3 +124,24 @@ export const SidebarMenuItems: SidebarMenuItemsType = {
     },
   ],
 };
+
+const extractGuardsFromMenu = (menu: SidebarMenuItemsType) => {
+  const guards: MenuItemBaseType[] = [];
+
+  function traverse(items: MenuItemType[]) {
+    for (const item of items) {
+      if (item.key && Array.isArray(item.guard)) {
+        guards.push({ key: item.key, guard: item.guard });
+      }
+      if (Array.isArray(item.children)) {
+        traverse(item.children);
+      }
+    }
+  }
+
+  Object.values(menu).forEach((section) => traverse(section));
+  return guards;
+};
+
+export const RouterGuards: MenuItemBaseType[] =
+  extractGuardsFromMenu(SidebarMenuItems);
