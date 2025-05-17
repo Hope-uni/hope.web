@@ -43,3 +43,9 @@ export const SinglePictogramWithOutCategorySchema = PictogramSchema.extend({
 export type SinglePictogramWithOutCategory = z.infer<
   typeof SinglePictogramWithOutCategorySchema
 >;
+
+export const FiltersPictogramSchema = z.object({
+  categoryId: z.number().optional(),
+  pictogramName: z.string().optional(),
+});
+export type FiltersPictogram = z.infer<typeof FiltersPictogramSchema>;

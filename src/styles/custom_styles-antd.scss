@@ -947,6 +947,17 @@ label.ant-form-item-required {
         font-size: 12px;
         width: max-content;
     }
+
+    &.tag-filter-selected{
+        border-radius: 20px;
+        border: 1px solid  $primary-color;
+        color: $primary-color;
+        background-color: $white;
+        font-weight: 400;
+        font-size: 14px;
+        width: max-content;
+        padding: 4px 8px;
+    }
     
 }
 
@@ -1158,6 +1169,17 @@ body .ant-flex {
     transition: opacity 0.2s ease;
 }
 
+/*
+** FILTERS */
+.filter-compact-search-select {
+    .ant-select.ant-select-compact-item, .ant-select.ant-select-single{
+        height: 45px;
+    }
+    .ant-select.ant-select-in-form-item{
+        width: 500px;
+    }
+}
+
 @media only screen and (max-width: $breakpointMobile){
 
    /*
@@ -1342,8 +1364,27 @@ body .ant-flex {
     }
 
     /*
+    ** TAGS */
+    .ant-tag{ 
+        &.tag-filter-selected{
+            padding: 2px 4px;
+        }
+        
+    }
+
+    /*
     ** MODAL DELETE */
     .ant-modal-wrap.primary{
         padding: 0;
+    }
+
+    /*
+    ** FILTERS */
+    .filter-compact-search-select {
+        
+        .ant-select.ant-select-compact-item, .ant-select.ant-select-single{
+            margin-top: 10px;
+            width: 100%;
+        }
     }
 }
