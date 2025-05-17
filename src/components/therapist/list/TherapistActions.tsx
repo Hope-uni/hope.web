@@ -6,6 +6,7 @@ import {
 } from '@/components/table/helpers';
 import { PopupActions } from '@/components/table/PopupActions';
 import AssignPatientForm from '@/components/therapist/form/AssignPatientForm';
+import { QueryKeys } from '@/constants';
 import { ROLES } from '@/constants/guards';
 import { useOpenNotification } from '@/context/Notification/NotificationProvider';
 import useTherapistForm from '@/hooks/useTherapistForm';
@@ -124,6 +125,7 @@ const TherapistActions = ({
         route="therapists"
         classWrapper={classWrapper}
         renderMode={renderMode}
+        queryKey={[QueryKeys.User.ListUser, QueryKeys.User.ListTherapist]}
         onEdit={handleEdit}
         onDelete={handleDelete}
         onAssign={handleOpenAssignPatient}

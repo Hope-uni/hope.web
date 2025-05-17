@@ -29,23 +29,32 @@ function WrapperTable({
   onRowClick,
 }: TablePropsType) {
   const screens = useBreakpoint();
-  const { paginationTable, dispatch } = useTableStore();
+  const { paginationTable, lastIdMounted, dispatch } = useTableStore();
 
   const paginationFromAPI = useMemo(() => {
     return data?.paginate && data?.paginate?.total;
   }, [data?.paginate]);
 
   useEffect(() => {
+    dispatch({ type: E_ActionKeyTable.SET_LAST_ID_MOUNTED, payload: id });
+  }, [id]);
+
+  useEffect(() => {
     dispatch({ type: E_ActionKeyTable.SET_SEARCH_RESULT, payload: [] });
     dispatch({ type: E_ActionKeyTable.SET_SEARCHING, payload: false });
 
     return () => {
-      dispatch({ type: E_ActionKeyTable.RESET_PAGINATION });
       dispatch({ type: E_ActionKeyTable.CLEAR_SELECTED });
       dispatch({ type: E_ActionKeyTable.CLEAR_MESSAGE });
       dispatch({ type: E_ActionKeyTable.RESET_SEARCH });
     };
   }, []);
+
+  useEffect(() => {
+    if (lastIdMounted !== id) {
+      dispatch({ type: E_ActionKeyTable.RESET_PAGINATION });
+    }
+  }, [id]);
 
   useEffect(() => {
     const totalResults = paginationFromAPI

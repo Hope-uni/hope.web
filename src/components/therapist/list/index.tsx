@@ -41,6 +41,7 @@ export default function TherapistIndex() {
     <>
       <Space direction="vertical" size={10} className="main-wrapper-table">
         <WrapperTable
+          id="therapist-table"
           cols={columns}
           data={data}
           searchable={false}
