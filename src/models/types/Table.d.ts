@@ -16,6 +16,7 @@ export enum E_ActionKeyTable {
   SET_TOTAL_RESULTS = 'SET_TOTAL_RESULTS',
   RESET_SEARCH = 'RESET_SEARCH',
   SET_PAGINATION = 'SET_PAGINATION',
+  SET_LAST_ID_MOUNTED = 'SET_LAST_ID_MOUNTED',
   RESET_PAGINATION = 'RESET_PAGINATION',
 }
 
@@ -38,6 +39,7 @@ export interface I_TableState<> {
   searching: boolean;
   searchResult: any;
   totalResults: string;
+  lastIdMounted: string | null;
   paginationTable: I_TablePagination;
 }
 

@@ -5,6 +5,7 @@ export const theme: ThemeConfig = {
   token: {
     // Seed Token
     colorPrimary: COLORS.primaryColor,
+    colorLink: COLORS.primaryColor,
     colorError: COLORS.error,
     fontFamily: 'poppins-regular',
     borderRadius: 10,
