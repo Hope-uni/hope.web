@@ -1,5 +1,6 @@
 import { RenderModeActionTypes } from '@/components/table/helpers';
 import { PopupActions } from '@/components/table/PopupActions';
+import { QueryKeys } from '@/constants';
 import { ROLES } from '@/constants/guards';
 import { SingleTutorTherapist } from '@/models/schema';
 import { ActionType } from '@/models/types';
@@ -50,6 +51,7 @@ const TutorActions = ({
       route="tutors"
       classWrapper={classWrapper}
       renderMode={renderMode}
+      queryKey={[QueryKeys.User.ListUser, QueryKeys.User.ListTutor]}
       onEdit={handleEdit}
       onDelete={handleDelete}
       modalDeleteTitle={t('Tutor.actions.delete.modal.title')}

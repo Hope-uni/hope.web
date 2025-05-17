@@ -36,6 +36,7 @@ export default function PatientIndex() {
     <>
       <Space direction="vertical" size={10} className="main-wrapper-table">
         <WrapperTable
+          id="achievement-table"
           cols={columns}
           data={data}
           searchable={false}

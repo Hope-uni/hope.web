@@ -30,7 +30,7 @@ export default function GoToBack({ onGoToBack }: Props) {
         onClick={handleGoToBack}
       >
         <BsChevronLeft size="16px" />
-        {t('partials.go_back_to_list')}
+        {t('partials.go_back')}
       </Button>
     </Flex>
   );

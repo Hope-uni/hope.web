@@ -1,10 +1,12 @@
-import OrderableList from '@/components/common/OrderableList';
+import { FilterPictograms } from '@/components/activity/form/PictogramSentenceField/FilterPictograms';
+import { PreviewSolution } from '@/components/activity/form/PictogramSentenceField/PreviewSolution';
 import PictogramItem from '@/components/pictogram/PictogramItem';
+import { PictogramSplide } from '@/config/splide';
 import { useFormActivityStore } from '@/lib/store/forms/formActivity';
 import { SinglePictogram } from '@/models/schema';
 import style from '@/styles/modules/activity.module.scss';
 import { Splide, SplideSlide, SplideTrack } from '@splidejs/react-splide';
-import { Grid, Input, Typography } from 'antd';
+import { Empty, Grid, Input, Spin, Typography } from 'antd';
 import { useCallback, useEffect, useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import {
@@ -15,13 +17,6 @@ import {
 } from 'react-icons/fa6';
 
 const { useBreakpoint } = Grid;
-
-const PictogramSplide = {
-  rewind: true,
-  gap: '10px',
-  autoWidth: true,
-  pagination: false,
-};
 
 const styleSelectedPictogram = {
   borderColor: '#4CAF50',
@@ -41,6 +36,7 @@ const PictogramSentenceField = () => {
     pictogramList,
     solutionSentenceList,
     solutionSentenceText,
+    isRefetchingPictograms,
     setSolutionSentenceText,
     setSolutionSentenceList,
   } = useFormActivityStore();
@@ -64,7 +60,6 @@ const PictogramSentenceField = () => {
     (pictogram: SinglePictogram) => {
       if (solutionSentenceList && solutionSentenceList.length === 0) {
         setSolutionSentenceList([pictogram]);
-
         return;
       }
 
@@ -100,13 +95,6 @@ const PictogramSentenceField = () => {
     [setSolutionSentenceList, solutionSentenceList],
   );
 
-  const handleChangeOrder = useCallback(
-    (newItemsOrdered: SinglePictogram[]) => {
-      setSolutionSentenceList(newItemsOrdered);
-    },
-    [setSolutionSentenceList],
-  );
-
   const isSelectedPictogram = useCallback(
     (id: number) => {
       return solutionSentenceList?.some((item) => item.id === id);
@@ -116,11 +104,7 @@ const PictogramSentenceField = () => {
 
   return (
     <div ref={containerRef} className={style.pictogram_sentence_wrapper}>
-      {/* TODO implements search pictograms by name and category */}
-      {/* <Search
-        placeholder={t('Activity.fields.pictogramSentence.placeholderSearch')}
-        allowClear
-      /> */}
+      <FilterPictograms />
       <div className={style.pictograms_slider}>
         <div className={style.caption_select_pictogram}>
           <FaCircleInfo />
@@ -131,49 +115,65 @@ const PictogramSentenceField = () => {
             />
           </Typography.Text>
         </div>
-
-        <Splide
-          id="splide-pictograms"
-          aria-label="pictograms_list"
-          options={PictogramSplide}
-          hasTrack={false}
-        >
-          <SplideTrack>
-            {pictogramList.map((pictogram) => (
-              <SplideSlide key={pictogram.id}>
-                <div className={style.container_selected_pictogram}>
-                  <PictogramItem
-                    key={pictogram.id}
-                    pictogram={pictogram}
-                    style={
-                      isSelectedPictogram(pictogram.id)
-                        ? styleSelectedPictogram
-                        : styleSelectedPictogramDefault
-                    }
-                    onClick={() => handleSelectPictogram(pictogram)}
-                  />
-                  {isSelectedPictogram(pictogram.id) && (
-                    <button
-                      type="button"
-                      className={style.btn_unselect_pictogram}
-                      onClick={() => handleUnSelectPictogram(pictogram)}
-                    >
-                      <FaTrashCan size="12px" />
-                    </button>
-                  )}
-                </div>
-              </SplideSlide>
-            ))}
-          </SplideTrack>
-          <div className="splide__arrows">
-            <button type="button" className="splide__arrow splide__arrow--prev">
-              <FaCaretLeft size="24px" />
-            </button>
-            <button type="button" className="splide__arrow splide__arrow--next">
-              <FaCaretRight size="24px" />
-            </button>
-          </div>
-        </Splide>
+        {pictogramList.length > 0 ? (
+          <>
+            <Splide
+              id="splide-pictograms"
+              aria-label="pictograms_list"
+              options={PictogramSplide}
+              hasTrack={false}
+            >
+              <SplideTrack>
+                {pictogramList.map((pictogram) => (
+                  <SplideSlide key={pictogram.id}>
+                    <div className={style.container_selected_pictogram}>
+                      <PictogramItem
+                        key={pictogram.id}
+                        pictogram={pictogram}
+                        style={
+                          isSelectedPictogram(pictogram.id)
+                            ? styleSelectedPictogram
+                            : styleSelectedPictogramDefault
+                        }
+                        onClick={() => handleSelectPictogram(pictogram)}
+                      />
+                      {isSelectedPictogram(pictogram.id) && (
+                        <button
+                          type="button"
+                          className={style.btn_unselect_pictogram}
+                          onClick={() => handleUnSelectPictogram(pictogram)}
+                        >
+                          <FaTrashCan size="12px" />
+                        </button>
+                      )}
+                    </div>
+                  </SplideSlide>
+                ))}
+              </SplideTrack>
+              <div className="splide__arrows">
+                <button
+                  type="button"
+                  className="splide__arrow splide__arrow--prev"
+                >
+                  <FaCaretLeft size="24px" />
+                </button>
+                <button
+                  type="button"
+                  className="splide__arrow splide__arrow--next"
+                >
+                  <FaCaretRight size="24px" />
+                </button>
+              </div>
+            </Splide>
+          </>
+        ) : (
+          <Empty
+            description={t(
+              'Therapist.actions.assign_patients.feedback.no_selected',
+            )}
+            style={{ marginBlock: 30 }}
+          />
+        )}
 
         <Typography.Text className={style.caption_overlay_pictogram}>
           {screens.sm
@@ -184,36 +184,17 @@ const PictogramSentenceField = () => {
                 'Activity.fields.pictogramSentence.captionOverlayPictogramMobile',
               )}
         </Typography.Text>
-      </div>
-      <div className={style.solution_preview}>
-        <Typography.Title className={style.solution_preview_label}>
-          {t('Activity.fields.pictogramSentence.labelPreviewSentence')}
-        </Typography.Title>
-        <Typography.Text className={style.solution_preview_caption}>
-          {t('Activity.fields.pictogramSentence.captionPreviewSentence')}
-        </Typography.Text>
-        <div>
-          <div className={style.solution_preview_pictograms}>
-            <OrderableList<SinglePictogram>
-              dataSource={solutionSentenceList}
-              onChangeOrder={handleChangeOrder}
-              onDeleteFromList={handleUnSelectPictogram}
-              renderItemInner={(pictogram) => (
-                <div className={style.container_selected_pictogram}>
-                  <PictogramItem
-                    key={pictogram.id}
-                    pictogram={pictogram}
-                    sizeContainer={100}
-                    sizeImg={80}
-                    showLabel={false}
-                    onClick={() => handleSelectPictogram(pictogram)}
-                  />
-                </div>
-              )}
-            />
+
+        {isRefetchingPictograms && (
+          <div className={style.loading_pictograms_filtering}>
+            <Spin />
           </div>
-        </div>
+        )}
       </div>
+      <PreviewSolution
+        onClickItemList={handleSelectPictogram}
+        onDeleteFromList={handleUnSelectPictogram}
+      />
       <Input
         readOnly
         value={solutionSentenceText}
