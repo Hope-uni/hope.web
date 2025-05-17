@@ -5,6 +5,7 @@ import i18next from '@/i18n';
 import { RQ_Conf } from '@/config/reactQuery';
 import { NotificationProvider } from '@/context/Notification/NotificationProvider';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { AuthProvider } from '@/context/Auth/AuthProvider';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -18,10 +19,12 @@ const queryClient = new QueryClient({
 
 export function AppProviderClient({ children }: { children: React.ReactNode }) {
   return (
-    <QueryClientProvider client={queryClient}>
-      <I18nextProvider i18n={i18next}>
-        <NotificationProvider>{children}</NotificationProvider>
-      </I18nextProvider>
-    </QueryClientProvider>
+    <AuthProvider>
+      <QueryClientProvider client={queryClient}>
+        <I18nextProvider i18n={i18next}>
+          <NotificationProvider>{children}</NotificationProvider>
+        </I18nextProvider>
+      </QueryClientProvider>
+    </AuthProvider>
   );
 }
