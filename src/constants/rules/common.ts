@@ -1,5 +1,6 @@
 import { Rule } from 'antd/es/form';
 import i18next from 'i18next';
+import dayjs from 'dayjs';
 
 export const CharacterLimit = {
   max: {
@@ -10,11 +11,30 @@ export const CharacterLimit = {
     name: 3,
     descriptions: 6,
   },
+  username: {
+    min: 3,
+    max: 16,
+  },
+};
+
+export const AgeLimit = {
+  default: {
+    min: 18,
+    max: 100,
+  },
+  patient: {
+    min: 3,
+    max: 100,
+  },
 };
 
 export const RegexRules = {
   emailRegex: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-  usernameRegex: /^[a-zA-Z0-9]{3,16}$/,
+  usernameRegex: {
+    base: /^[a-zA-Z0-9]{3,16}$/,
+    len: /^\d{3,16}$/,
+    alphanumeric: /^[a-zA-Z0-9]+$/,
+  },
   identificationRegex:
     /^[0-9]{3}-(0[1-9]|[12][0-9]|3[01])(0[1-9]|1[012])([0-9]{2})-[0-9]{4}[^iIñÑzZ]+$/,
   phoneRegex: {
@@ -97,13 +117,22 @@ export const CommonRules = {
       validator: async (_, value) => {
         if (!value) return Promise.resolve();
 
-        if (RegexRules.usernameRegex.test(value)) {
-          return Promise.resolve();
+        if (
+          value.length < CharacterLimit.username.min ||
+          value.length > CharacterLimit.username.max
+        ) {
+          return Promise.reject(
+            i18next.t('common.form.fields.username.rules.len'),
+          );
         }
 
-        return Promise.reject(
-          i18next.t('common.form.fields.username.rules.pattern'),
-        );
+        if (!RegexRules.usernameRegex.alphanumeric.test(value)) {
+          return Promise.reject(
+            i18next.t('common.form.fields.username.rules.alphanumeric'),
+          );
+        }
+
+        return Promise.resolve();
       },
     },
   ] as Rule[],
@@ -206,4 +235,45 @@ export const TextWhiteSpaceAndLenRule = ({
 
 export const validateDeviceUserIsMobile = () => {
   return RegexRules.isMobile.test(navigator.userAgent);
+};
+
+type MaxMinAgeRuleType = {
+  maxAge?: number;
+  minAge?: number;
+  field?: string;
+};
+export const MaxMinAgeRule = ({
+  maxAge = AgeLimit.default.max,
+  minAge = AgeLimit.default.min,
+  field = i18next.t('common.form.fields.general_user.label').toLowerCase(),
+}: MaxMinAgeRuleType) => {
+  return [
+    {
+      validator: async (_, value) => {
+        if (!value) return Promise.resolve();
+
+        const age = dayjs().diff(value, 'year');
+
+        if (age < minAge) {
+          return Promise.reject(
+            i18next.t('common.form.rules.min_age', {
+              user: field,
+              min_age: minAge,
+            }),
+          );
+        }
+
+        if (age < maxAge) {
+          return Promise.reject(
+            i18next.t('common.form.rules.max_age', {
+              user: field,
+              max_age: maxAge,
+            }),
+          );
+        }
+
+        return Promise.resolve();
+      },
+    },
+  ] as Rule[];
 };

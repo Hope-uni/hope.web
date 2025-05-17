@@ -8,6 +8,8 @@ import { ActionGuardType, PermissionKey, subjectGuardType } from './types';
 
 export const ROLES = RolesGuardMap;
 
+export const AdminRoles = [String(ROLES.ADMIN), String(ROLES.SUPERADMIN)];
+
 export const PERMISSIONS = Object.fromEntries(
   permissionsMatrix.flatMap((item) =>
     item.actions.map((action) => {

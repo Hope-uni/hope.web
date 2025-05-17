@@ -11,7 +11,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useCallback, useMemo, useState } from 'react';
 import { useShallow } from 'zustand/react/shallow';
 
-const useActivityForm = (id: number | undefined) => {
+const useActivityForm = (id?: number | undefined) => {
   const { paginationTable } = useTableStore();
   const setLoading = useOverlayStore(useShallow((state) => state.setLoading));
   const [availableForActivityList, setAvailableForActivityList] = useState<

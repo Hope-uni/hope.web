@@ -1,7 +1,7 @@
 import { PopupActions } from '@/components/table/PopupActions';
-import { RoutesName } from '@/constants';
+import { QueryKeys, RoutesName } from '@/constants';
 import { ROLES } from '@/constants/guards';
-import { SingleUser, Role } from '@/models/schema';
+import { Role, SingleUser } from '@/models/schema';
 import { ActionType } from '@/models/types';
 import {
   CurrentRoleTypeDeleteUser,
@@ -25,6 +25,10 @@ const UserActions = ({
 }: Props) => {
   const { t } = useTranslation();
   const router = useRouter();
+
+  const actionsDisabled: Array<ActionType> = useMemo(() => {
+    return !user.isVerified ? ['edit'] : [];
+  }, [user.isVerified]);
 
   const actionsFiltered = useMemo(() => {
     const roleUser = getFirstRole(user.roles);
@@ -69,12 +73,35 @@ const UserActions = ({
     );
   }, [user.id, user.profileId, user.roles]);
 
+  const getQueryKeys = useMemo(() => {
+    const queries = [QueryKeys.User.ListUser];
+    const currentRole = user.roles.length > 0 ? user.roles[0] : null;
+
+    if (currentRole) {
+      if (validateRole(currentRole.name, ROLES.PATIENT)) {
+        queries.push(QueryKeys.User.ListPatient);
+      }
+
+      if (validateRole(currentRole.name, ROLES.THERAPIST)) {
+        queries.push(QueryKeys.User.ListTherapist);
+      }
+
+      if (validateRole(currentRole.name, ROLES.TUTOR)) {
+        queries.push(QueryKeys.User.ListTutor);
+      }
+    }
+
+    return queries;
+  }, [user.roles]);
+
   return (
     <PopupActions
       id={Number(user.id)}
       actions={actionsFiltered}
+      actionsDisabled={actionsDisabled}
       route="users"
       classWrapper={classWrapper}
+      queryKey={getQueryKeys}
       onEdit={handleEdit}
       onDelete={handleDelete}
       onShow={handleShowDetail}

@@ -693,6 +693,10 @@ const es = {
       pictogramSentence: {
         label: 'Solución de la actividad',
         placeholderSearch: 'Buscar pictogramas por nombre...',
+        placeholderSearchMobile: 'Buscar por nombre...',
+        placeholderCategoryFilter: 'Filtrar por categoría...',
+        placeholderPreviewSentence:
+          'Aquí aparecerá tu oración con los pictogramas seleccionados.',
         labelPreviewSentence: 'Oración solución',
         captionSelectPictograms:
           '<bold>Selecciona</bold> los pictogramas haciendo <bold>clic</bold> en ellos para construir la <bold>solución</bold>. La oración aparecerá en la parte <bold>inferior</bold>.',
@@ -706,6 +710,12 @@ const es = {
           required: 'Solución es requerido',
           min: 'Debe seleccionar al menos un pictograma',
           max: 'La solución no debe contener más de {{limit}} pictogramas',
+        },
+        feedback: {
+          showResult: 'Mostrando {{count}} resultados',
+        },
+        action: {
+          showAll: 'Mostrar todo',
         },
       },
       patientsToAssign: {
@@ -913,7 +923,7 @@ const es = {
     assign_patient: 'Asignar paciente',
   },
   partials: {
-    go_back_to_list: 'Volver a la lista',
+    go_back: 'Volver',
   },
   components: {
     dragger: {
@@ -988,9 +998,14 @@ const es = {
         general_field: {
           label: 'Este campo',
         },
+        general_user: {
+          label: 'Usuario',
+        },
         username: {
           rules: {
-            pattern: 'El usuario debe contener entre 3 y 16 carácteres',
+            len: 'El nombre de usuario debe contener entre 3 y 16 carácteres',
+            alphanumeric:
+              'El nombre de usuario solo puede contener letras sin acentos y números, sin espacios ni caracteres especiales.',
           },
         },
         email: {
@@ -1026,6 +1041,10 @@ const es = {
         max_len: '{{field}} debe tener como máximo {{limit}} caracteres',
         min_len: '{{field}} debe tener como mínimo {{limit}} caracteres',
         max_min_len: '{{field}} debe tener entre {{min}} y {{max}} caracteres',
+        max_age: 'La edad del {{user}} no debe superar {{max_age}} años',
+        min_age: 'La edad del {{user}} debe ser al menos {{min_age}} años',
+        max_min_age:
+          'La edad del {{user}} debe estar entre {{min_age}} y {{max_age}} años',
         whitespace: 'No se permiten espacios en blancos',
         only_spaces_between_words: 'Solo se permite un espacio entre palabras',
       },
@@ -1068,6 +1087,10 @@ const es = {
         messageDefault: '¡Algo salió mal!',
         messageErrorServer: '¡Error del servidor!',
       },
+    },
+    result: {
+      user_unauthorized:
+        'Parece que tu cuenta no tiene los permisos requeridos para ingresar. Si necesitas acceso, por favor contacta al administrador.',
     },
   },
 } as const;

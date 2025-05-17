@@ -11,6 +11,16 @@ export interface UserSession extends Omit<MeResponse, 'roles'> {
   roles?: RoleWithPermissions[];
 }
 
+export interface UserToken extends Omit<UserSession, 'roles'> {
+  id: string;
+  email: string;
+  userVerified: boolean;
+  accessToken: string;
+  refreshToken: string;
+  role: Role;
+  roles?: string[];
+}
+
 export interface UserTokenJWT extends DefaultJWT {
-  user: UserSession;
+  user: UserToken;
 }

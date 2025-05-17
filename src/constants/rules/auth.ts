@@ -1,6 +1,6 @@
 import i18next from '@/i18n';
 import { Rule } from 'antd/lib/form';
-import { RegexRules } from './common';
+import { CharacterLimit, RegexRules } from './common';
 
 export const AuthRules = {
   emailOrUsername: [
@@ -16,7 +16,7 @@ export const AuthRules = {
 
         if (
           RegexRules.emailRegex.test(value) ||
-          RegexRules.usernameRegex.test(value)
+          value.length > CharacterLimit.username.min
         ) {
           return Promise.resolve();
         }

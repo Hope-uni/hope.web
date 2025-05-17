@@ -1,10 +1,10 @@
-import i18next from '@/i18n';
-import { Rule } from 'antd/lib/form';
 import {
   CharacterLimit,
   CommonRules,
   TextWhiteSpaceAndLenRule,
 } from '@/constants/rules';
+import i18next from '@/i18n';
+import { Rule } from 'antd/lib/form';
 
 export const UserRules = {
   user: {
