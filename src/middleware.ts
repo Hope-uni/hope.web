@@ -1,53 +1,57 @@
 import {
-  AuthRoutes,
   DEFAULT_REDIRECT_HOME_URL,
   DEFAULT_REDIRECT_LOGIN_URL,
   DEFAULT_REDIRECT_TO_CHANGE_PASSWORD_URL,
-  RedirectIfVerifiedRoutes,
+  DEFAULT_REDIRECT_UNAUTHORIZED,
 } from '@/constants';
-import { getToken } from 'next-auth/jwt';
+import {
+  createAbsoluteUrl,
+  middlewareGuards,
+} from '@/lib/middleware-guard/utils';
+import { UserTokenJWT } from '@/types/auth';
+import { getTokenUSer } from '@/utils/session';
 import { NextURL } from 'next/dist/server/web/next-url';
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
-import { UserTokenJWT } from '@/types/auth';
 
 export { default } from 'next-auth/middleware';
 
 export async function middleware(req: NextRequest) {
   const { pathname, origin } = req.nextUrl;
 
-  const token = (await getToken({
-    req,
-    secret: process.env.NEXTAUTH_SECRET,
-  })) as UserTokenJWT;
+  const token = (await getTokenUSer(req)) as UserTokenJWT;
+  const guards = middlewareGuards(token, pathname);
 
-  const homeUrl = `${req.nextUrl.origin}${DEFAULT_REDIRECT_HOME_URL}`;
-  const changePasswordUrl = `${req.nextUrl.origin}${DEFAULT_REDIRECT_TO_CHANGE_PASSWORD_URL}`;
+  const homeUrl = createAbsoluteUrl(origin, DEFAULT_REDIRECT_HOME_URL);
 
-  if (pathname === '/') {
+  if (guards.isIndexRoute()) {
     return NextResponse.redirect(homeUrl);
   }
 
-  if (!token && !AuthRoutes.some((route) => pathname.startsWith(route))) {
+  if (guards.shouldRedirectToLogin()) {
     const loginUrl = new NextURL(DEFAULT_REDIRECT_LOGIN_URL, origin);
     loginUrl.searchParams.set('callbackUrl', req.url);
     return NextResponse.redirect(loginUrl);
   }
 
-  if (
-    token &&
-    RedirectIfVerifiedRoutes.some((route) => pathname.startsWith(route)) &&
-    token.user?.userVerified
-  ) {
+  if (guards.shouldRedirectToHome()) {
     return NextResponse.redirect(homeUrl);
   }
 
-  if (
-    token &&
-    !token.user?.userVerified &&
-    !pathname.startsWith(DEFAULT_REDIRECT_TO_CHANGE_PASSWORD_URL)
-  ) {
+  if (guards.shouldRedirectToChangePassword()) {
+    const changePasswordUrl = createAbsoluteUrl(
+      origin,
+      DEFAULT_REDIRECT_TO_CHANGE_PASSWORD_URL,
+    );
     return NextResponse.redirect(changePasswordUrl);
+  }
+
+  if (token && guards.shouldRedirectToUnauthorized()) {
+    const unauthorizedUrl = createAbsoluteUrl(
+      origin,
+      DEFAULT_REDIRECT_UNAUTHORIZED,
+    );
+    return NextResponse.redirect(unauthorizedUrl);
   }
 
   return NextResponse.next();

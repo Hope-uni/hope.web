@@ -1,11 +1,11 @@
-import type { Metadata } from 'next';
+import { AppProviderClient } from '@/context/AppProviderClient';
+import SessionProviderClient from '@/context/Auth/SessionProviderClient';
+import '@/styles/main.scss';
 import { theme } from '@/theme/index';
 import { AntdRegistry } from '@ant-design/nextjs-registry';
-import '@/styles/main.scss';
 import { App, ConfigProvider } from 'antd';
+import type { Metadata } from 'next';
 import { getServerSession } from 'next-auth';
-import SessionProviderClient from '@/context/Auth/SessionProviderClient';
-import { AppProviderClient } from '@/context/AppProviderClient';
 
 import '@splidejs/splide/css/core';
 
