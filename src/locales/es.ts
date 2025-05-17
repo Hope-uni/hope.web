@@ -1003,7 +1003,7 @@ const es = {
         },
         username: {
           rules: {
-            len: 'El numbre de usuario debe contener entre 3 y 16 carácteres',
+            len: 'El nombre de usuario debe contener entre 3 y 16 carácteres',
             alphanumeric:
               'El nombre de usuario solo puede contener letras sin acentos y números, sin espacios ni caracteres especiales.',
           },
