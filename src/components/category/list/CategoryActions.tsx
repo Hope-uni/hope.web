@@ -125,13 +125,19 @@ const CategoryActions = ({
 
   const validateIfFormHasChanged = useCallback(() => {
     if (category) {
-      let values = form.getFieldsValue();
-      let fieldsFiltered = undefined;
-      let keyToDelete: (keyof typeof category)[] = ['id'];
+      let currentFormValues = form.getFieldsValue();
 
-      fieldsFiltered = removeKeysFromObject(category, keyToDelete);
+      const initialValues = {
+        name: category?.name,
+        imageFile: category?.icon,
+      };
 
-      if (deepEqual(values, fieldsFiltered)) {
+      let valuesToCompare = {
+        name: currentFormValues?.name,
+        imageFile: currentFormValues?.imageFile,
+      };
+
+      if (deepEqual(initialValues, valuesToCompare)) {
         openNotification.warning({
           description: t('feedback.common.not_changed_detect'),
         });

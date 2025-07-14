@@ -27,6 +27,8 @@ export const useUserColumns = (options?: OptionsArgs) => {
     {
       title: t('User.index.columns.user'),
       dataIndex: 'email',
+      align: 'left',
+      width: 350,
       render: (_, { email, imageUrl, username }) => (
         <AvatarUserList image={imageUrl} title={username} description={email} />
       ),
@@ -35,6 +37,7 @@ export const useUserColumns = (options?: OptionsArgs) => {
       title: t('User.index.columns.status'),
       dataIndex: 'username',
       align: 'center',
+      width: 220,
       render: (_, { isVerified }) => (
         <UserVerifiedTag isVerified={isVerified} />
       ),
@@ -43,7 +46,7 @@ export const useUserColumns = (options?: OptionsArgs) => {
       title: t('User.index.columns.role'),
       dataIndex: 'role',
       align: 'center',
-      width: '280px',
+      width: 220,
       className: 'table-cell-center',
       render: (_, { roles }) => {
         const roleData = roles?.length > 0 ? roles[0] : ({} as Role);

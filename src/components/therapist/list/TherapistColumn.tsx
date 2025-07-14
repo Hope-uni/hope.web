@@ -26,6 +26,7 @@ export const useTherapistColumns = (options?: OptionsArgs) => {
       {
         title: t('Therapist.index.columns.name'),
         dataIndex: 'fullName',
+        width: 350,
         render: (_, { fullName, imageUrl, isVerified }) => (
           <AvatarUserList
             image={imageUrl}
@@ -39,19 +40,20 @@ export const useTherapistColumns = (options?: OptionsArgs) => {
       {
         title: t('Therapist.index.columns.email'),
         dataIndex: 'email',
-        align: 'center',
-        width: '280px',
+        align: 'left',
+        width: 300,
       },
       {
         title: t('Therapist.index.columns.phone'),
         dataIndex: 'phoneNumber',
-        align: 'center',
+        align: 'left',
+        width: 150,
       },
       {
         title: t('Therapist.index.columns.patientsInCharge'),
         dataIndex: 'patientsInCharge',
         align: 'center',
-        width: '250px',
+        width: 250,
         render: (_, { childrenInCharge }) => {
           if (!!(childrenInCharge && childrenInCharge > 0)) {
             return <span>{childrenInCharge}</span>;

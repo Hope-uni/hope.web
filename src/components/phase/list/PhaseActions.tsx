@@ -87,7 +87,7 @@ const PhaseActions = ({ phase, actions = ['edit'], classWrapper }: Props) => {
   const validateIfFormHasChanged = useCallback(() => {
     let values = form.getFieldsValue();
     let fieldsFiltered = undefined;
-    let keyToDelete: (keyof typeof phase)[] = ['id'];
+    let keyToDelete: (keyof typeof phase)[] = ['id', 'level', 'achievementId'];
 
     fieldsFiltered = removeKeysFromObject(phase, keyToDelete);
 

@@ -26,6 +26,7 @@ export const useTutorColumns = (options?: OptionsArgs) => {
     {
       title: t('Tutor.index.columns.name'),
       dataIndex: 'fullName',
+      width: 350,
       render: (_, { fullName, imageUrl, isVerified }) => (
         <AvatarUserList
           image={imageUrl}
@@ -39,20 +40,20 @@ export const useTutorColumns = (options?: OptionsArgs) => {
     {
       title: t('Tutor.index.columns.phone'),
       dataIndex: 'phoneNumber',
-      align: 'center',
-      width: '200px',
+      align: 'left',
+      width: 150,
     },
     {
       title: t('Tutor.index.columns.telephone'),
       dataIndex: 'telephone',
-      align: 'center',
-      width: '200px',
+      align: 'left',
+      width: 150,
     },
     {
       title: t('Tutor.index.columns.patientsInCharge'),
       dataIndex: 'patientsInCharge',
       align: 'center',
-      width: '150px',
+      width: 150,
       render: (_, { childrenInCharge }) => {
         if (!!(childrenInCharge && childrenInCharge > 0)) {
           return <span>{childrenInCharge}</span>;

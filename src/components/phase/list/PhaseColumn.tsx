@@ -28,7 +28,7 @@ export const usePhaseColumns = (options?: OptionsArgs) => {
     {
       title: t('Phase.index.columns.description'),
       dataIndex: 'description',
-      align: 'center',
+      align: 'left',
       width: '350px',
     },
     {
