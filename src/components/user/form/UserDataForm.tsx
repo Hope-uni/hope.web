@@ -19,13 +19,26 @@ export default function UserDataForm({
   spanCol = 24,
 }: Props) {
   const { t } = useTranslation();
-  const { isEdit, fields } = useFormCreateUserStore();
+  const { isEdit, fields, errors, setErrors } = useFormCreateUserStore();
 
   useEffect(() => {
     if (isEdit) {
-      form?.setFieldsValue(fields);
+      form?.setFieldsValue({
+        ...fields,
+        imageFile: fields?.imageUrl,
+      });
     }
   }, [fields, form, isEdit]);
+
+  useEffect(() => {
+    if (errors?.user && errors?.user?.length > 0) {
+      form?.setFields(errors?.user);
+      setErrors({
+        ...errors,
+        user: undefined,
+      });
+    }
+  }, [errors, form, setErrors]);
 
   return (
     <Form

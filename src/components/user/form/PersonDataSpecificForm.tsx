@@ -5,7 +5,7 @@ import { useFormCreateUserStore } from '@/lib/store/forms/formCreateUser';
 import styles from '@/styles/modules/user.module.scss';
 import { Col, Form, FormInstance, Input, Row, Select } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 interface Props {
@@ -42,13 +42,35 @@ export default function PersonDataSpecificForm({
     tutorList,
     fields,
     isEdit,
+    errors,
+    setErrors,
   } = useFormCreateUserStore();
+
+  const tutorVerifiedList = useMemo(() => {
+    const currentTutorId = fields?.tutorId;
+
+    return tutorList.filter((tutor) =>
+      !isEdit
+        ? tutor.isVerified
+        : tutor.isVerified || tutor.id === currentTutorId,
+    );
+  }, [fields?.tutorId, isEdit, tutorList]);
 
   useEffect(() => {
     if (isEdit) {
       form?.setFieldsValue(fields);
     }
   }, [fields, form, isEdit]);
+
+  useEffect(() => {
+    if (errors?.specific && errors?.specific?.length > 0) {
+      form?.setFields(errors?.specific);
+      setErrors({
+        ...errors,
+        specific: undefined,
+      });
+    }
+  }, [errors, form, setErrors]);
 
   return (
     <Form
@@ -134,7 +156,7 @@ export default function PersonDataSpecificForm({
                   <Select
                     placeholder={t('User.fields.tutor_in_charge.placeholder')}
                   >
-                    {tutorList.map((item) => (
+                    {tutorVerifiedList.map((item) => (
                       <Select.Option key={item.id} value={item.id}>
                         {item.fullName}
                       </Select.Option>
@@ -151,6 +173,7 @@ export default function PersonDataSpecificForm({
                     <Form.Item
                       name="observations"
                       label={t('User.fields.observations.label')}
+                      rules={UserRules.user.observations}
                     >
                       <TextArea
                         rows={4}

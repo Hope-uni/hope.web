@@ -11,9 +11,14 @@ const { Text } = Typography;
 interface HeaderTableProps {
   searchProps?: SearchPropsType;
   searchable?: boolean;
+  showSizeChanger?: boolean;
 }
 
-const HeaderTable = ({ searchable = false, searchProps }: HeaderTableProps) => {
+const HeaderTable = ({
+  searchable = false,
+  showSizeChanger = true,
+  searchProps,
+}: HeaderTableProps) => {
   const { t } = useTranslation();
   const { paginationTable, dispatch } = useTableStore();
 
@@ -46,12 +51,14 @@ const HeaderTable = ({ searchable = false, searchProps }: HeaderTableProps) => {
             total: paginationTable.totalData,
           })}
         </Text>
-        <Select
-          className="select-size-changer"
-          value={paginationTable?.size?.toString()}
-          onChange={handleSizeChanger}
-          options={HopeTable.sizeChangerOptions}
-        />
+        {showSizeChanger && (
+          <Select
+            className="select-size-changer"
+            value={paginationTable?.size?.toString()}
+            onChange={handleSizeChanger}
+            options={HopeTable.sizeChangerOptions}
+          />
+        )}
       </Flex>
     </Flex>
   );

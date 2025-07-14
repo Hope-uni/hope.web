@@ -15,6 +15,11 @@ import { Divider, Flex, Grid, Layout, Menu, MenuProps } from 'antd';
 import { CollapseType } from 'antd/lib/layout/Sider';
 import { usePathname, useRouter } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
+import {
+  TbLayoutSidebarLeftCollapseFilled,
+  TbLayoutSidebarRightCollapseFilled,
+} from 'react-icons/tb';
+
 const { Sider } = Layout;
 
 const { useBreakpoint } = Grid;
@@ -77,6 +82,7 @@ export default function Sidebar() {
             key: item.key,
             icon: <item.icon />,
             label: item.label,
+            popupClassName: 'hidden',
             children: item.children,
           };
         },
@@ -94,10 +100,11 @@ export default function Sidebar() {
   };
 
   const handleOpenChange = (openKeys: string[]) => {
-    setSelectedOpenKeys(openKeys);
+    const lastItemOpen = openKeys[openKeys.length - 1];
+    setSelectedOpenKeys([lastItemOpen]);
   };
 
-  const handleLogut: MenuProps['onClick'] = async (e) => {
+  const handleLogout: MenuProps['onClick'] = async (e) => {
     if (e.key === 'logout') {
       await logout();
     }
@@ -109,48 +116,67 @@ export default function Sidebar() {
 
   return (
     <Sider
+      id="hope_sidebar"
       collapsed={collapsed}
+      collapsible={!screen.xxl}
       className={styles.wrapper_sidebar}
       width={300}
-      breakpoint="lg"
+      breakpoint="xl"
       collapsedWidth="0"
       onCollapse={handleCollapsed}
+      trigger={
+        collapsed ? (
+          <TbLayoutSidebarRightCollapseFilled />
+        ) : (
+          <TbLayoutSidebarLeftCollapseFilled />
+        )
+      }
     >
-      <div className={styles.sidebar_logo}>
-        <HopeLogo width={120} height={90} />
+      <div className={styles.wrapper_sidebar_scroll}>
+        <div className={styles.sidebar_logo_wrapper}>
+          <div className={styles.sidebar_logo}>
+            <HopeLogo width={120} height={90} />
+            {!screen.xxl && screen.lg && (
+              <TbLayoutSidebarLeftCollapseFilled
+                className={styles.sidebar_toggle}
+                onClick={() => setCollapsed(true)}
+              />
+            )}
+          </div>
+        </div>
+        <Flex className={styles.flex_menu} vertical justify="space-between">
+          <Flex vertical>
+            <Menu
+              id="hope_sidebar_menu"
+              mode="inline"
+              onClick={handleNavigateToRoute}
+              onOpenChange={handleOpenChange}
+              selectedKeys={[selectedKey]}
+              openKeys={selectedOpenKeys}
+              items={menuItemsFormatted(SIDEBAR_MENU.TOP)}
+            />
+            <Divider style={{ marginTop: 0, marginBottom: '20px' }} />
+            <Menu
+              id="hope_sidebar_menu"
+              mode="inline"
+              onClick={handleNavigateToRoute}
+              onOpenChange={handleOpenChange}
+              selectedKeys={[selectedKey]}
+              openKeys={selectedOpenKeys}
+              items={menuItemsFormatted(SIDEBAR_MENU.MIDDLE)}
+            />
+          </Flex>
+          <Flex vertical>
+            <Divider style={{ marginTop: 0, marginBottom: '20px' }} />
+            <Menu
+              id="hope_sidebar_menu"
+              mode="inline"
+              onClick={handleLogout}
+              items={menuItemsFormatted(SIDEBAR_MENU.BOTTOM)}
+            />
+          </Flex>
+        </Flex>
       </div>
-      <Flex className={styles.flex_menu} vertical justify="space-between">
-        <Flex vertical>
-          <Menu
-            id="hope_sidebar_menu"
-            mode="inline"
-            onClick={handleNavigateToRoute}
-            onOpenChange={handleOpenChange}
-            selectedKeys={[selectedKey]}
-            openKeys={selectedOpenKeys}
-            items={menuItemsFormatted(SIDEBAR_MENU.TOP)}
-          />
-          <Divider style={{ marginTop: 0, marginBottom: '20px' }} />
-          <Menu
-            id="hope_sidebar_menu"
-            mode="inline"
-            onClick={handleNavigateToRoute}
-            onOpenChange={handleOpenChange}
-            selectedKeys={[selectedKey]}
-            openKeys={selectedOpenKeys}
-            items={menuItemsFormatted(SIDEBAR_MENU.MIDDLE)}
-          />
-        </Flex>
-        <Flex vertical>
-          <Divider style={{ marginTop: 0, marginBottom: '20px' }} />
-          <Menu
-            id="hope_sidebar_menu"
-            mode="inline"
-            onClick={handleLogut}
-            items={menuItemsFormatted(SIDEBAR_MENU.BOTTOM)}
-          />
-        </Flex>
-      </Flex>
     </Sider>
   );
 }

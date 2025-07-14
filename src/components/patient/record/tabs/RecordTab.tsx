@@ -42,9 +42,9 @@ export default function RecordTab({
   const { t } = useTranslation();
   return (
     <>
-      {screens.xs && (
+      {!screens.lg && (
         <>
-          <Flex justify={screens.xs ? 'flex-start' : 'flex-end'}>
+          <Flex justify={!screens.lg ? 'flex-start' : 'flex-end'}>
             <Flex vertical={screens.sm} align="center" justify="center">
               <Progress patient={patient} />
             </Flex>
@@ -96,45 +96,6 @@ export default function RecordTab({
           </div>
         )}
       </Flex>
-      {screens.xs && (
-        <div>
-          <Divider
-            dashed={true}
-            style={{
-              borderColor: '#626262',
-              borderStyle: 'dashed',
-              borderWidth: '2px 0 0',
-              margin: '15px 0 30px 0',
-            }}
-          />
-          <CardProfile
-            user={UserProfileCardSchema.parse(patient.tutor)}
-            layout="vertical"
-            title={t('Patient.detail.title_info_tutor')}
-            infoDescription={itemInfoTutor}
-            menuAction={
-              <TutorActions
-                tutor={patient.tutor}
-                actions={['show']}
-                classWrapper="popup_actions_primary_vertical"
-              />
-            }
-          />
-          <CardProfile
-            user={UserProfileCardSchema.parse(patient.therapist)}
-            layout="vertical"
-            title={t('Patient.detail.title_info_therapist')}
-            infoDescription={itemInfoTherapist}
-            menuAction={
-              <TherapistActions
-                therapist={patient.therapist}
-                actions={['show']}
-                classWrapper="popup_actions_primary_vertical"
-              />
-            }
-          />
-        </div>
-      )}
     </>
   );
 }
