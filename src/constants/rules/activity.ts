@@ -1,12 +1,7 @@
 import i18next from '@/i18n';
 import { Rule } from 'antd/lib/form';
-import {
-  CharacterLimit,
-  CommonRules,
-  TextWhiteSpaceAndLenRule,
-} from '@/constants/rules';
+import { CharacterLimit, TextWhiteSpaceAndLenRule } from '@/constants/rules';
 
-const Pictogram_Name_Max_Len = 30;
 const Pictogram_Satisfactory_Points_Max = 20;
 const Pictogram_Sentence_Max = 15;
 
@@ -17,8 +12,8 @@ export const ActivityRules = {
       message: i18next.t('Activity.fields.name.rules.required'),
     },
     ...TextWhiteSpaceAndLenRule({
-      minLen: CharacterLimit.min.name,
-      maxLen: Pictogram_Name_Max_Len,
+      minLen: CharacterLimit.min.default,
+      maxLen: CharacterLimit.max.activityName,
       field: i18next.t('Activity.fields.name.label'),
     }),
   ] as Rule[],

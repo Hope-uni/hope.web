@@ -3,6 +3,11 @@ import { Rule } from 'antd/lib/form';
 import { RegexRules } from '@/constants/rules';
 import { CharacterLimit, TextWhiteSpaceAndLenRule } from '@/constants/rules';
 
+const limitScoreActivities = {
+  min: 10,
+  max: 20,
+};
+
 export const PhaseRules = {
   name: [
     {
@@ -10,8 +15,8 @@ export const PhaseRules = {
       message: i18next.t('Phase.fields.name.rules.required'),
     },
     ...TextWhiteSpaceAndLenRule({
-      minLen: CharacterLimit.min.name,
-      maxLen: CharacterLimit.max.name,
+      minLen: CharacterLimit.min.default,
+      maxLen: CharacterLimit.max.default,
       field: i18next.t('Phase.fields.name.label'),
     }),
   ] as Rule[],
@@ -35,13 +40,25 @@ export const PhaseRules = {
       validator: async (_, value) => {
         if (!value) return Promise.resolve();
 
-        if (RegexRules.positiveInteger.test(value)) {
-          return Promise.resolve();
+        if (
+          value < limitScoreActivities.min ||
+          value > limitScoreActivities.max
+        ) {
+          return Promise.reject(
+            i18next.t('Phase.fields.scoreActivities.rules.max_min_score', {
+              min: limitScoreActivities.min,
+              max: limitScoreActivities.max,
+            }),
+          );
         }
 
-        return Promise.reject(
-          i18next.t('Phase.fields.scoreActivities.rules.integer'),
-        );
+        if (!RegexRules.positiveInteger.test(value)) {
+          return Promise.reject(
+            i18next.t('Phase.fields.scoreActivities.rules.integer'),
+          );
+        }
+
+        return Promise.resolve();
       },
     },
   ] as Rule[],

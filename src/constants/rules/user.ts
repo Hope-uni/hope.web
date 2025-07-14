@@ -1,6 +1,7 @@
 import {
   CharacterLimit,
   CommonRules,
+  OnlyLettersRule,
   TextWhiteSpaceAndLenRule,
 } from '@/constants/rules';
 import i18next from '@/i18n';
@@ -19,17 +20,13 @@ export const UserRules = {
         required: true,
         message: i18next.t('User.fields.first_name.rules.required'),
       },
-      ...TextWhiteSpaceAndLenRule({
+      ...OnlyLettersRule({
         maxLen: CharacterLimit.max.name,
         field: i18next.t('User.fields.first_name.label'),
       }),
     ] as Rule[],
     second_name: [
-      {
-        required: true,
-        message: i18next.t('User.fields.second_name.rules.required'),
-      },
-      ...TextWhiteSpaceAndLenRule({
+      ...OnlyLettersRule({
         maxLen: CharacterLimit.max.name,
         field: i18next.t('User.fields.second_name.label'),
       }),
@@ -39,17 +36,13 @@ export const UserRules = {
         required: true,
         message: i18next.t('User.fields.first_surname.rules.required'),
       },
-      ...TextWhiteSpaceAndLenRule({
+      ...OnlyLettersRule({
         maxLen: CharacterLimit.max.name,
         field: i18next.t('User.fields.first_surname.label'),
       }),
     ] as Rule[],
     second_surname: [
-      {
-        required: true,
-        message: i18next.t('User.fields.second_surname.rules.required'),
-      },
-      ...TextWhiteSpaceAndLenRule({
+      ...OnlyLettersRule({
         maxLen: CharacterLimit.max.name,
         field: i18next.t('User.fields.second_surname.label'),
       }),
@@ -99,10 +92,6 @@ export const UserRules = {
       },
     ] as Rule[],
     observations: [
-      {
-        required: true,
-        message: i18next.t('User.fields.observations.rules.required'),
-      },
       ...TextWhiteSpaceAndLenRule({
         minLen: CharacterLimit.min.descriptions,
         maxLen: CharacterLimit.max.descriptions,

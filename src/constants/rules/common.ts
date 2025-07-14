@@ -4,16 +4,17 @@ import dayjs from 'dayjs';
 
 export const CharacterLimit = {
   max: {
-    name: 100,
+    default: 100,
+    name: 15,
     descriptions: 255,
+    username: 16,
+    activityName: 30,
+    pictogram: 30,
+    achievement: 20,
   },
   min: {
-    name: 3,
+    default: 3,
     descriptions: 6,
-  },
-  username: {
-    min: 3,
-    max: 16,
   },
 };
 
@@ -24,11 +25,12 @@ export const AgeLimit = {
   },
   patient: {
     min: 3,
-    max: 100,
+    max: 18,
   },
 };
 
 export const RegexRules = {
+  onlyLetters: /^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]*$/,
   emailRegex: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
   usernameRegex: {
     base: /^[a-zA-Z0-9]{3,16}$/,
@@ -49,6 +51,7 @@ export const RegexRules = {
     noDoubleSpaces: /^(?!.*\s{2}).*$/,
     whitespace: /^[A-Za-z]+(?: [A-Za-z]+)*$/,
     onlySpaces: /^\s+$/,
+    noTrailingSpace: /^.*[^\s]$/,
   },
   imageAllowed: /^image\/(svg\+xml|jpe?g|png|webp)$/,
 };
@@ -108,18 +111,35 @@ const validatorWhiteSpaces = (value: any) => {
     );
   }
 
+  if (!RegexRules.textSpaces.noTrailingSpace.test(value)) {
+    return Promise.reject(i18next.t('common.form.rules.no_trailing_space'));
+  }
+
   return Promise.resolve();
 };
 
 export const CommonRules = {
+  onlyLetters: [
+    {
+      validator: async (_, value) => {
+        if (!value) return Promise.resolve();
+
+        if (!RegexRules.onlyLetters.test(value)) {
+          return Promise.reject(i18next.t('common.form.rules.onlyLetters'));
+        }
+
+        return Promise.resolve();
+      },
+    },
+  ] as Rule[],
   username: [
     {
       validator: async (_, value) => {
         if (!value) return Promise.resolve();
 
         if (
-          value.length < CharacterLimit.username.min ||
-          value.length > CharacterLimit.username.max
+          value.length < CharacterLimit.min.default ||
+          value.length > CharacterLimit.max.username
         ) {
           return Promise.reject(
             i18next.t('common.form.fields.username.rules.len'),
@@ -193,7 +213,7 @@ export const CommonRules = {
   ] as Rule[],
 };
 
-type TextWhiteSpaceAndLenRuleType = {
+type TextLenRuleType = {
   maxLen?: number;
   minLen?: number;
   field?: string;
@@ -201,13 +221,51 @@ type TextWhiteSpaceAndLenRuleType = {
 
 export const TextWhiteSpaceAndLenRule = ({
   maxLen = CharacterLimit.max.descriptions,
-  minLen = CharacterLimit.min.name,
+  minLen = CharacterLimit.min.default,
   field = i18next.t('common.form.fields.general_field.label'),
-}: TextWhiteSpaceAndLenRuleType) => {
+}: TextLenRuleType) => {
   return [
     {
       validator: async (_, value) => {
         if (!value) return Promise.resolve();
+
+        if (value.length < minLen) {
+          return Promise.reject(
+            i18next.t('common.form.rules.min_len', {
+              field: field,
+              limit: minLen,
+            }),
+          );
+        }
+
+        if (value.length > maxLen) {
+          return Promise.reject(
+            i18next.t('common.form.rules.max_len', {
+              field: field,
+              limit: maxLen,
+            }),
+          );
+        }
+
+        return validatorWhiteSpaces(value);
+      },
+    },
+  ] as Rule[];
+};
+
+export const OnlyLettersRule = ({
+  maxLen = CharacterLimit.max.descriptions,
+  minLen = CharacterLimit.min.default,
+  field = i18next.t('common.form.fields.general_field.label'),
+}: TextLenRuleType) => {
+  return [
+    {
+      validator: async (_, value) => {
+        if (!value) return Promise.resolve();
+
+        if (!RegexRules.onlyLetters.test(value)) {
+          return Promise.reject(i18next.t('common.form.rules.onlyLetters'));
+        }
 
         if (value.length < minLen) {
           return Promise.reject(
@@ -263,7 +321,7 @@ export const MaxMinAgeRule = ({
           );
         }
 
-        if (age < maxAge) {
+        if (age > maxAge) {
           return Promise.reject(
             i18next.t('common.form.rules.max_age', {
               user: field,

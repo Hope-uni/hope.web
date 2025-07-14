@@ -32,11 +32,24 @@
 }
 
 .wrapper_sidebar{
-    padding: 30px;
     z-index: 999;
+    
+    .wrapper_sidebar_scroll{
+        height: 100%;
+    }
 
-    .sidebar_logo{
+    .sidebar_logo_wrapper{
         margin-bottom: 30px;
+        
+        .sidebar_logo{
+            @extend .row-between;
+
+            .sidebar_toggle{
+                font-size: 35px;
+                color: $primary-color;
+                cursor: pointer;
+            }
+        }
     }
 
     .flex_menu{
