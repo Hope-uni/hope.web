@@ -31,6 +31,8 @@ export type FormPhaseErrors = Record<
  */
 export const SingleTEAPhaseSchema = PayloadPhaseSchema.extend({
   id: z.number(),
+  level: z.number().optional(),
+  achievementId: z.number().optional(),
 });
 export type SingleTEAPhase = z.infer<typeof SingleTEAPhaseSchema>;
 

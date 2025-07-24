@@ -9,8 +9,8 @@ export const CategoryRules = {
       message: i18next.t('Category.fields.name.rules.required'),
     },
     ...TextWhiteSpaceAndLenRule({
-      minLen: CharacterLimit.min.name,
-      maxLen: CharacterLimit.max.name,
+      minLen: CharacterLimit.min.default,
+      maxLen: CharacterLimit.max.default,
       field: i18next.t('Category.fields.name.label'),
     }),
   ] as Rule[],

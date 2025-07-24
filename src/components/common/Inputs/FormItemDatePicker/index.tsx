@@ -3,12 +3,22 @@ import { AgeLimit, MaxMinAgeRule, UserRules } from '@/constants/rules';
 import { Role } from '@/models/schema';
 import { validateRole } from '@/utils/session';
 import { DatePicker, Form, FormItemProps } from 'antd';
-import dayjs from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-const ThreeYearsAgo = dayjs(new Date()).subtract(3, 'years');
-const EighteenYearsAgo = dayjs(new Date()).subtract(18, 'years');
+const today = dayjs();
+const ThreeYearsAgo = today.clone().subtract(3, 'years');
+const EighteenYearsAgo = today.clone().subtract(18, 'years');
+const OneHundredYearsAgo = today.clone().subtract(100, 'years');
+
+const disabledDate = (current: Dayjs, min: Dayjs, max: Dayjs) => {
+  if (!current) {
+    return false;
+  }
+
+  return current.isBefore(min, 'day') || current.isAfter(max, 'day');
+};
 
 interface Props extends FormItemProps {
   currentRoleSelected: Role;
@@ -28,11 +38,13 @@ const FormItemDatePicker = ({
         defaultPickerValue: ThreeYearsAgo,
         rule: {
           minAge: AgeLimit.patient.min,
-          maxAge: AgeLimit.patient.min,
+          maxAge: AgeLimit.patient.max,
           field: t('Role.catalog.patient'),
         },
-        disabledDate: (current: any) =>
-          current && current.valueOf() >= ThreeYearsAgo,
+        minDate: EighteenYearsAgo,
+        maxDate: ThreeYearsAgo,
+        disabledDate: (current: Dayjs) =>
+          disabledDate(current, EighteenYearsAgo, ThreeYearsAgo),
       };
     }
 
@@ -40,11 +52,13 @@ const FormItemDatePicker = ({
       defaultPickerValue: EighteenYearsAgo,
       rule: {
         minAge: AgeLimit.default.min,
-        maxAge: AgeLimit.default.min,
+        maxAge: AgeLimit.default.max,
         field: currentRoleSelected.name,
       },
-      disabledDate: (current: any) =>
-        current && current.valueOf() >= EighteenYearsAgo,
+      minDate: OneHundredYearsAgo,
+      maxDate: EighteenYearsAgo,
+      disabledDate: (current: Dayjs) =>
+        disabledDate(current, OneHundredYearsAgo, EighteenYearsAgo),
     };
   }, [currentRoleSelected.name, t]);
 
@@ -60,6 +74,8 @@ const FormItemDatePicker = ({
         placeholder={placeholder}
         defaultPickerValue={optionsDatePicker.defaultPickerValue}
         disabledDate={optionsDatePicker.disabledDate}
+        minDate={optionsDatePicker.minDate}
+        maxDate={optionsDatePicker.maxDate}
         style={{ width: '100%' }}
       />
     </Form.Item>

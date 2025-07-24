@@ -54,7 +54,7 @@ export default function CardProfile({
         </div>
         {user && infoDescription ? (
           <>
-            {screens.sm && (
+            {
               <>
                 <Flex vertical align="center" justify="flex-start" gap={10}>
                   <OptimizedImage
@@ -86,7 +86,7 @@ export default function CardProfile({
                   }}
                 />
               </>
-            )}
+            }
             {infoDescription && infoDescription?.length > 0 && (
               <Descriptions
                 items={infoDescription}

@@ -17,7 +17,7 @@ import styles from '@/styles/modules/user.module.scss';
 import { deepEqual, removeKeysFromObject } from '@/utils/objects';
 import { validateRole } from '@/utils/session';
 import { Alert, Button, Divider, Flex, Typography } from 'antd';
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 const { Title } = Typography;
@@ -44,11 +44,15 @@ export default function EditUserForm() {
     formGeneral,
     formSpecific,
     formUser,
-
     applyErrors,
     validateForm,
     getCurrentValues,
   } = useStepFormUser();
+
+  useEffect(() => {
+    setMessageErrorForm(undefined);
+    setMessageErrorDetail(undefined);
+  }, [setMessageErrorDetail, setMessageErrorForm]);
 
   const handleSubmit = useCallback(async () => {
     try {
@@ -130,9 +134,14 @@ export default function EditUserForm() {
   const validateIfFormHasChanged = useCallback(() => {
     let values = getCurrentValues();
     let fieldsFiltered = undefined;
-    let keyToDelete: (keyof typeof fields)[] = ['id'];
+    let keyToDelete: (keyof typeof fields)[] = ['id', 'imageUrl'];
 
     fieldsFiltered = removeKeysFromObject(fields, keyToDelete);
+
+    fieldsFiltered = {
+      ...fieldsFiltered,
+      imageFile: values.imageFile,
+    };
 
     if (deepEqual(values, fieldsFiltered)) {
       openNotification.warning({

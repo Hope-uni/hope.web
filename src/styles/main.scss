@@ -27,6 +27,10 @@
   src: url('../assets/fonts/poppins/Poppins-Black.ttf');
 }
 
+html {
+  overflow: hidden;
+}
+
 html,
 body {
   font-family: 'poppins-regular', sans-serif;

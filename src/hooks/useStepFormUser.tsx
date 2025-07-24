@@ -1,11 +1,11 @@
 import PersonDataGeneralForm from '@/components/user/form/PersonDataGeneralForm';
 import PersonDataSpecificForm from '@/components/user/form/PersonDataSpecificForm';
 import UserDataForm from '@/components/user/form/UserDataForm';
+import { getErrorsAntdByStep } from '@/components/user/helpers';
 import { StepFormInterface } from '@/constants/Forms';
 import { ROLES } from '@/constants/guards';
 import { useFormCreateUserStore } from '@/lib/store/forms/formCreateUser';
 import { FormCreateUser, FormCreateUserError } from '@/models/schema';
-import { ParseToErrorAntd } from '@/services/user/helpers';
 import { getStepsForm } from '@/utils/createUserForm';
 import { validateRole } from '@/utils/session';
 import { Form } from 'antd';
@@ -19,7 +19,6 @@ const useStepFormUser = () => {
     isAdminRoleSelected,
     currentRoleSelected,
     roleList,
-    errors,
     setCurrentRoleSelected,
     setIsAdminRoleSelected,
     setFields,
@@ -31,11 +30,6 @@ const useStepFormUser = () => {
   const [formUser] = Form.useForm();
 
   const roleSelected = Form.useWatch('roles', formGeneral);
-  const identificationNumber = Form.useWatch(
-    'identificationNumber',
-    formSpecific,
-  );
-  const username = Form.useWatch('username', formUser);
 
   const forms = useMemo(
     () => ({
@@ -79,23 +73,6 @@ const useStepFormUser = () => {
     setCurrent(stepsForm.items[currentIndex]);
   }, [stepsForm.items, currentIndex]);
 
-  useEffect(() => {
-    if (errors?.person && errors?.person?.length > 0 && identificationNumber) {
-      formSpecific.setFields(errors?.person);
-    }
-
-    if (errors?.user && errors?.user?.length > 0 && username) {
-      formUser.setFields(errors?.user);
-    }
-  }, [
-    currentIndex,
-    errors,
-    formSpecific,
-    formUser,
-    identificationNumber,
-    username,
-  ]);
-
   const cleanForm = useCallback(() => {
     formGeneral.resetFields();
     formSpecific.resetFields();
@@ -113,23 +90,27 @@ const useStepFormUser = () => {
 
   const applyErrors = useCallback(
     (validationErrors: FormCreateUserError) => {
-      const { username, email, ...userSpecificErrors } = validationErrors;
+      const formErrorsGrouped = getErrorsAntdByStep(validationErrors);
+      setErrors(formErrorsGrouped);
 
-      const errorsFormSpecific = ParseToErrorAntd(userSpecificErrors);
-      const errorsFormUser = ParseToErrorAntd({ username, email });
+      const errosGeneralAndSpecific = [
+        ...formErrorsGrouped.general,
+        ...formErrorsGrouped.specific,
+      ];
 
-      setErrors({
-        person: errorsFormSpecific,
-        user: errorsFormUser,
-      });
+      if (errosGeneralAndSpecific.length > 0) {
+        if (formErrorsGrouped.general.length > 0) {
+          setCurrentIndex(0);
+        }
 
-      if (errorsFormSpecific.length > 0) {
-        setCurrentIndex(1);
+        if (formErrorsGrouped.specific.length > 0) {
+          setCurrentIndex(1);
+        }
       } else {
         setCurrentIndex(stepsForm.items.length - 1);
       }
     },
-    [setCurrentIndex, setErrors, stepsForm.items.length],
+    [setErrors, stepsForm.items],
   );
 
   const validateForm = useCallback(async () => {

@@ -38,3 +38,26 @@ export const Genders = [
     value: 'Femenino',
   },
 ];
+
+export const UserFormFieldNames = {
+  general: [
+    'roles',
+    'firstName',
+    'secondName',
+    'surname',
+    'secondSurname',
+    'gender',
+    'address',
+  ],
+  specific: [
+    'birthday',
+    'teaDegreeId',
+    'phaseId',
+    'tutorId',
+    'observations',
+    'identificationNumber',
+    'phoneNumber',
+    'telephone',
+  ],
+  user: ['imageFile', 'username', 'email'],
+};

@@ -25,6 +25,7 @@ export default function PersonDataGeneralForm({
     roleList,
     isEdit,
     fields,
+    errors,
     setErrors,
     setMessageErrorForm,
     setMessageErrorDetail,
@@ -35,6 +36,16 @@ export default function PersonDataGeneralForm({
       form?.setFieldsValue(fields);
     }
   }, [fields, form, isEdit]);
+
+  useEffect(() => {
+    if (errors?.general && errors?.general?.length > 0) {
+      form?.setFields(errors?.general);
+      setErrors({
+        ...errors,
+        general: undefined,
+      });
+    }
+  }, [errors, form, setErrors]);
 
   const handleOnChangeSelectRole = () => {
     setErrors(undefined);
@@ -88,6 +99,7 @@ export default function PersonDataGeneralForm({
               <Form.Item
                 name="secondName"
                 label={t('User.fields.second_name.label')}
+                rules={UserRules.user.second_name}
               >
                 <Input placeholder={t('User.fields.second_name.placeholder')} />
               </Form.Item>
@@ -110,6 +122,7 @@ export default function PersonDataGeneralForm({
               <Form.Item
                 name="secondSurname"
                 label={t('User.fields.second_surname.label')}
+                rules={UserRules.user.second_surname}
               >
                 <Input
                   placeholder={t('User.fields.second_surname.placeholder')}

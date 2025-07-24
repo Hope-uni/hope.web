@@ -1,5 +1,6 @@
 export const RoutesName = {
   index: '/',
+  indexAdmin: '/admin',
   login: {
     index: '/login',
   },

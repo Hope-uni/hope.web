@@ -16,7 +16,7 @@ export const useRoleColumns = () => {
       title: t('Role.index.columns.name'),
       dataIndex: 'name',
       align: 'left',
-      width: '80px',
+      width: '150px',
     },
     {
       title: t('Role.index.columns.permission'),

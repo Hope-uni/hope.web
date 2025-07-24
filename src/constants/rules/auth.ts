@@ -16,7 +16,7 @@ export const AuthRules = {
 
         if (
           RegexRules.emailRegex.test(value) ||
-          value.length > CharacterLimit.username.min
+          value.length > CharacterLimit.min.default
         ) {
           return Promise.resolve();
         }

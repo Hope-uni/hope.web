@@ -9,8 +9,8 @@ export const AchievementRules = {
       message: i18next.t('Achievement.fields.name.rules.required'),
     },
     ...TextWhiteSpaceAndLenRule({
-      minLen: CharacterLimit.min.name,
-      maxLen: CharacterLimit.max.name,
+      minLen: CharacterLimit.min.default,
+      maxLen: CharacterLimit.max.default,
       field: i18next.t('Achievement.fields.name.label'),
     }),
   ] as Rule[],

@@ -2,14 +2,45 @@
 /*
 ** SIDER */
 .ant-layout {
+    #hope_sidebar {
+        &.ant-layout-sider{
+            overflow: unset;
+        }
+        &.ant-layout-sider .ant-layout-sider-children{
+            padding: 30px;
+            padding-top: 30px;
+            overflow: auto;
+        }
+
+        &.ant-layout-sider-collapsed .ant-layout-sider-children{
+            padding: 30px 0;
+        }
+    }
+}
+
+.ant-layout {
     height: 100vh;
     .ant-layout-sider{
         overflow: auto;
-        height: 100vh;    
+        height: 100vh;
+        left: 0;
+        top: 0;
+        bottom: 0;
         
         .ant-layout-sider-zero-width-trigger{
-            top: 60px;
+            top: 65px;
             background-color: $primary-color;
+            font-size: 25px;
+
+            &:hover::after{
+                background-color: transparent;
+            }
+        }
+
+        &:not(.ant-layout-sider-collapsed){
+            .ant-layout-sider-zero-width-trigger{
+                display: none;
+            }
         }
     }
 
@@ -1010,7 +1041,7 @@ label.ant-form-item-required {
                 color: $primary-color;
                 font-weight: 600;
                 font-size: 18px;
-                line-height: 40px;
+                line-height: auto;
                 margin: 0;
             }
         }
@@ -1180,23 +1211,76 @@ body .ant-flex {
     }
 }
 
-@media only screen and (max-width: $breakpointMobile){
+/*
+** DATE PICKER */
+.ant-picker-dropdown{
+    .ant-picker-content{
+        .ant-picker-cell{
+            .ant-picker-cell-inner{
+                color: $grey-dark;
+            }
 
-   /*
+            &.ant-picker-cell-in-view:not(.ant-picker-cell-disabled){
+                .ant-picker-cell-inner{
+                    color: $primary-color;
+                }
+
+                &.ant-picker-cell-selected{
+                    .ant-picker-cell-inner{
+                        color: $white;
+                    } 
+                }
+
+                &:hover:not(.ant-picker-cell-selected){
+                    .ant-picker-cell-inner{
+                        color: $secondary-color;
+                    } 
+                }
+            }
+
+            &.ant-picker-cell-disabled{
+                .ant-picker-cell-inner{
+                    color: $error;
+                    opacity: 0.4;
+                }
+            }
+        }
+
+        
+    }
+}
+
+@media only screen and (max-width: $lg){
+    /*
     ** SIDER */
-    .ant-layout{
-        .ant-layout-sider{
-            position: fixed !important;
-            overflow: unset !important;
-            left: 0;
-            top: 0;
-            bottom: 0;
-
-            &.ant-layout-sider-collapsed{
+    .ant-layout {
+        #hope_sidebar {
+            &.ant-layout-sider{
+                position: fixed !important;
+                overflow: unset !important;
+            }
+            &.ant-layout-sider-collapsed .ant-layout-sider-children{
                 padding: 30px 0;
             }
         }
     }
+
+    .ant-layout{
+        .ant-layout-sider{
+            left: 0;
+            top: 0;
+            bottom: 0;
+
+            &:not(.ant-layout-sider-collapsed){
+            .ant-layout-sider-zero-width-trigger{
+                display: flex;
+            }
+        }
+        }
+    }
+}
+
+@media only screen and (max-width: $breakpointMobile){
 
     /*
     ** STEPS */

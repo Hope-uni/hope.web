@@ -127,17 +127,21 @@ const PictogramActions = ({
 
   const validateIfFormHasChanged = useCallback(() => {
     if (pictogram) {
-      let values = form.getFieldsValue();
-      let fieldsFiltered = undefined;
-      let keyToDelete: (keyof typeof pictogram)[] = ['id', 'category'];
+      let currentFormValues = form.getFieldsValue();
 
-      fieldsFiltered = removeKeysFromObject(pictogram, keyToDelete);
-      fieldsFiltered = {
-        ...fieldsFiltered,
+      const initialValues = {
         categoryId: pictogram.category.id,
+        name: pictogram?.name,
+        imageFile: pictogram?.imageUrl,
       };
 
-      if (deepEqual(values, fieldsFiltered)) {
+      let valuesToCompare = {
+        categoryId: currentFormValues.categoryId,
+        name: currentFormValues?.name,
+        imageFile: currentFormValues?.imageFile,
+      };
+
+      if (deepEqual(initialValues, valuesToCompare)) {
         openNotification.warning({
           description: t('feedback.common.not_changed_detect'),
         });

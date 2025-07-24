@@ -2,7 +2,7 @@ const es = {
   Auth: {
     form: {
       login: {
-        title: 'Inicio de sesión',
+        title: 'Iniciar sesión',
       },
       forgot_password: {
         title: 'Restablecer contraseña',
@@ -20,8 +20,9 @@ const es = {
       login_link: 'Iniciar sesión',
       exit: 'Salir',
       go_back_to: 'Regresa a ',
-      submit: 'Entrar',
-      send: 'Enviar',
+      submit: 'Iniciar sesión',
+      send: 'Enviar correo',
+      update_password: 'Actualizar contraseña',
       redirectToLogin: 'Redirigiendo al login...',
       logout_overlay_text: 'Cerrando sesión...',
     },
@@ -275,9 +276,9 @@ const es = {
     actions: {
       delete: {
         modal: {
-          title: 'Deshabilitar usuario',
+          title: 'Eliminar usuario',
           description:
-            '¿Estás seguro/a de que deseas deshabilitar al usuario <StrongValue />?',
+            '¿Estás seguro/a de que deseas eliminar al usuario <StrongValue />?',
         },
       },
     },
@@ -355,9 +356,9 @@ const es = {
     actions: {
       delete: {
         modal: {
-          title: 'Deshabilitar paciente',
+          title: 'Eliminar paciente',
           description:
-            '¿Estás seguro/a de que deseas deshabilitar al paciente <StrongValue />?',
+            '¿Estás seguro/a de que deseas eliminar al paciente <StrongValue />?',
         },
       },
       next_phase: {
@@ -457,9 +458,9 @@ const es = {
     actions: {
       delete: {
         modal: {
-          title: 'Deshabilitar tutor',
+          title: 'Eliminar tutor',
           description:
-            '¿Estás seguro/a de que deseas deshabilitar al tutor <StrongValue />?',
+            '¿Estás seguro/a de que deseas eliminar al tutor <StrongValue />?',
         },
       },
     },
@@ -501,9 +502,9 @@ const es = {
     actions: {
       delete: {
         modal: {
-          title: 'Deshabilitar terapeuta',
+          title: 'Eliminar terapeuta',
           description:
-            '¿Estás seguro/a de que deseas deshabilitar al terapeuta <StrongValue />?',
+            '¿Estás seguro/a de que deseas eliminar al terapeuta <StrongValue />?',
         },
       },
       assign_patients: {
@@ -589,7 +590,7 @@ const es = {
         modal: {
           title: 'Eliminar pictograma',
           description:
-            '¿Estás seguro/a de que deseas deshabilitar el pictograma <StrongValue />?',
+            '¿Estás seguro/a de que deseas eliminar el pictograma <StrongValue />?',
         },
       },
     },
@@ -626,7 +627,7 @@ const es = {
         modal: {
           title: 'Eliminar categoría',
           description:
-            '¿Estás seguro/a de que deseas deshabilitar la categoría <StrongValue />?',
+            '¿Estás seguro/a de que deseas eliminar la categoría <StrongValue />?',
         },
       },
       form: {
@@ -654,6 +655,9 @@ const es = {
       },
     },
     form: {
+      create: {
+        title: 'Crear actividad',
+      },
       feedback: {
         activity_not_found:
           'La actividad solicitada no existe o no está registrada.',
@@ -808,7 +812,7 @@ const es = {
         modal: {
           title: 'Eliminar logro',
           description:
-            '¿Estás seguro/a de que deseas deshabilitar el logro <StrongValue />?',
+            '¿Estás seguro/a de que deseas eliminar el logro <StrongValue />?',
         },
       },
       form: {
@@ -884,6 +888,8 @@ const es = {
         rules: {
           required: 'Act. requeridas es requerido',
           integer: 'Act. requeridas debe ser un entero positivo',
+          max_min_score:
+            'La cantidad de actividades requeridas debe estar entre {{min}} y {{max}}',
         },
       },
     },
@@ -902,7 +908,7 @@ const es = {
       all: 'Todos',
       patients: 'Pacientes',
       tutors: 'Tutores',
-      therapists: 'Tepeutas',
+      therapists: 'Terapeutas',
       methodology: 'Metodología',
       pictograms: 'Pictogramas',
       activities: 'Actividades',
@@ -916,7 +922,7 @@ const es = {
   },
   Actions: {
     edit: 'Editar',
-    delete: 'Deshabilitar',
+    delete: 'Eliminar',
     modebn: 'Modo B/N',
     Upload_phase: 'Avanzar de fase',
     view_detail: 'Ver detalle',
@@ -977,7 +983,7 @@ const es = {
         label: 'Editar asignaciones',
       },
       delete: {
-        label: 'Deshabilitar',
+        label: 'Eliminar',
       },
     },
     CardProfile: {
@@ -1047,18 +1053,20 @@ const es = {
           'La edad del {{user}} debe estar entre {{min_age}} y {{max_age}} años',
         whitespace: 'No se permiten espacios en blancos',
         only_spaces_between_words: 'Solo se permite un espacio entre palabras',
+        no_trailing_space: 'El campo no puede contener espacios finales',
+        onlyLetters: 'Solo se permiten letras',
       },
     },
     not_asignment: 'Sin asignar',
     uncategorized: 'Sin categoría',
     modals: {
       delete: {
-        title: 'Deshabilitar {{entity}}',
+        title: 'Eliminar {{entity}}',
         description:
-          '¿Estás seguro/a de que deseas deshabilitar al {{entity}} {{value}}?',
+          '¿Estás seguro/a de que deseas eliminar al {{entity}} {{value}}?',
         caption: 'Por favor, confirma tu decisión para continuar',
         btn_cancel: 'Cancelar',
-        btn_ok: 'Deshabilitar',
+        btn_ok: 'Eliminar',
       },
     },
     note: 'Nota:',
