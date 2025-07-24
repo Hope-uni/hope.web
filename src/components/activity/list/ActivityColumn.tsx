@@ -49,7 +49,7 @@ export const useActivityColumns = (options?: OptionsArgs) => {
     {
       title: t('Activity.index.columns.phase'),
       dataIndex: 'phase',
-      align: 'center',
+      align: 'left',
       width: '250px',
       render: (_, { phase }) => {
         return <span>{phase.name}</span>;

@@ -71,10 +71,7 @@ export default function CreatePatientPage() {
         <>
           <Space direction="vertical" size={10}>
             <GoToBack />
-            <HeaderContent
-              title={t('User.form.create.title')}
-              caption={t('User.form.create.caption')}
-            />
+            <HeaderContent title={t('Activity.form.create.title')} />
             <ActivityForm />
           </Space>
         </>

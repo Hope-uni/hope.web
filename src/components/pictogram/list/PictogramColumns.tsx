@@ -25,21 +25,23 @@ export const usePictogramColumns = (options?: OptionsArgs) => {
       title: t('Pictogram.index.columns.image'),
       dataIndex: 'imageUrl',
       align: 'left',
+      width: 170,
       render: (_, { name, imageUrl }) => (
-        <OptimizedImage srcImage={imageUrl} size={60} alt={name} />
+        <OptimizedImage srcImage={imageUrl} size={60} alt={name} preview />
       ),
     },
     {
       title: t('Pictogram.index.columns.name'),
       dataIndex: 'username',
-      align: 'center',
+      align: 'left',
+      width: 280,
       render: (_, { name }) => <span>{name}</span>,
     },
     {
       title: t('Pictogram.index.columns.category'),
       dataIndex: 'category',
       align: 'center',
-      width: '280px',
+      width: 300,
       className: 'table-cell-center',
       render: (_, { category }) => {
         if (!category?.name) {

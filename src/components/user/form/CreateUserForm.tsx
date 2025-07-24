@@ -16,7 +16,7 @@ import { CreateUserHelper, CurrentRoleType } from '@/services/user/helpers';
 import styles from '@/styles/modules/user.module.scss';
 import { validateRole } from '@/utils/session';
 import { Alert, Button, Divider, Flex, Steps, Typography } from 'antd';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 const { Text, Title } = Typography;
@@ -47,6 +47,11 @@ export default function CreateUserForm() {
     getCurrentInstanceForm,
     applyErrors,
   } = useStepFormUser();
+
+  useEffect(() => {
+    setMessageErrorForm(undefined);
+    setMessageErrorDetail(undefined);
+  }, [setMessageErrorDetail, setMessageErrorForm]);
 
   const handleSubmit = useCallback(
     async (values: FormCreateUser) => {

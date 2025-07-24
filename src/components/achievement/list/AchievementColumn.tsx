@@ -24,7 +24,7 @@ export const useAchievementColumns = (options?: OptionsArgs) => {
       title: t('Achievement.index.columns.image'),
       dataIndex: 'imageUrl',
       align: 'left',
-      width: '250px',
+      width: '150px',
       render: (_, { name, imageUrl }) => (
         <OptimizedImage srcImage={imageUrl} size={60} alt={name} />
       ),

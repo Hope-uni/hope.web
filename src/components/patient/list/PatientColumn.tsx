@@ -24,6 +24,7 @@ export const usePatientColumns = (options?: OptionsArgs) => {
     {
       title: t('Patient.index.columns.name'),
       dataIndex: 'fullName',
+      width: 400,
       render: (_, { fullName, imageUrl, isVerified }) => (
         <AvatarUserList
           image={imageUrl}
@@ -38,7 +39,7 @@ export const usePatientColumns = (options?: OptionsArgs) => {
       title: t('Patient.index.columns.age'),
       dataIndex: 'age',
       align: 'center',
-      width: '100px',
+      width: 100,
       render: (_, { age }) => (
         <span>
           {t('Patient.index.columns.years_old', {
@@ -51,7 +52,7 @@ export const usePatientColumns = (options?: OptionsArgs) => {
       title: t('Patient.index.columns.grade'),
       dataIndex: 'teaDegree',
       align: 'center',
-      width: '150px',
+      width: 150,
       render: (_, { teaDegree }) => {
         if (!teaDegree?.id) {
           return <UnassignedTag />;
@@ -62,8 +63,8 @@ export const usePatientColumns = (options?: OptionsArgs) => {
     {
       title: t('Patient.index.columns.phase'),
       dataIndex: 'phase',
-      align: 'center',
-      width: '350px',
+      align: 'left',
+      width: 300,
       render: (_, { currentPhase }) => {
         if (!currentPhase.id) {
           return <UnassignedTag />;
@@ -75,7 +76,7 @@ export const usePatientColumns = (options?: OptionsArgs) => {
       title: t('Patient.index.columns.achievements'),
       dataIndex: 'achievementCount',
       align: 'center',
-      width: '80px',
+      width: 80,
       render: (_, { achievementCount }) => {
         return <span>{achievementCount || 0}</span>;
       },

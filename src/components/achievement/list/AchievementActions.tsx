@@ -36,8 +36,7 @@ const AchievementActions = ({
   renderMode = 'popup',
 }: Props) => {
   const { t } = useTranslation();
-  const { paginationTable } = useTableStore();
-  const { invalidateQueries, removeQueries } = useInvalidateQueries();
+  const { invalidateQueries } = useInvalidateQueries();
   const { openNotification } = useOpenNotification();
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
@@ -100,25 +99,16 @@ const AchievementActions = ({
           Object.keys(res.validationErrors).length > 0
         ) {
           applyErrors(res.validationErrors as FormAchievementErrors);
+        } else {
+          openNotification.error({
+            description: res.message,
+          });
         }
         setLoading(false);
         return;
       }
 
-      await removeQueries([
-        [
-          QueryKeys.Achievement.ListAchievement,
-          [
-            {
-              paginate: {
-                page: paginationTable?.page,
-                size: paginationTable?.size,
-              },
-            },
-            undefined,
-          ],
-        ].toString(),
-      ]);
+      await invalidateQueries([QueryKeys.Achievement.ListAchievement]);
 
       if (isEdit) {
         await invalidateQueries([QueryKeys.User.FindByRole]);
@@ -137,23 +127,26 @@ const AchievementActions = ({
     form,
     isEdit,
     achievement,
-    removeQueries,
-    paginationTable?.page,
-    paginationTable?.size,
+    invalidateQueries,
     openNotification,
     applyErrors,
-    invalidateQueries,
   ]);
 
   const validateIfFormHasChanged = useCallback(() => {
     if (achievement) {
-      let values = form.getFieldsValue();
-      let fieldsFiltered = undefined;
-      let keyToDelete: (keyof typeof achievement)[] = ['id'];
+      let currentFormValues = form.getFieldsValue();
 
-      fieldsFiltered = removeKeysFromObject(achievement, keyToDelete);
+      let valuesToCompare = {
+        name: currentFormValues?.name,
+        imageFile: currentFormValues?.imageFile,
+      };
 
-      if (deepEqual(values, fieldsFiltered)) {
+      const initialValues = {
+        name: achievement?.name,
+        imageFile: achievement?.imageUrl,
+      };
+
+      if (deepEqual(initialValues, valuesToCompare)) {
         openNotification.warning({
           description: t('feedback.common.not_changed_detect'),
         });

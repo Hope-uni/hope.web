@@ -18,7 +18,7 @@ export default function MethodologyProgress({ patient }: Props) {
   const { t } = useTranslation();
   return (
     <Flex vertical gap={10}>
-      {screens.xs && (
+      {!screens.lg && (
         <Typography.Title className={styles.title_content_tab}>
           {t('Patient.detail.progress')}
         </Typography.Title>

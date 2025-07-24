@@ -2,7 +2,7 @@ const es = {
   Auth: {
     form: {
       login: {
-        title: 'Inicio de sesión',
+        title: 'Iniciar sesión',
       },
       forgot_password: {
         title: 'Restablecer contraseña',
@@ -20,8 +20,9 @@ const es = {
       login_link: 'Iniciar sesión',
       exit: 'Salir',
       go_back_to: 'Regresa a ',
-      submit: 'Entrar',
-      send: 'Enviar',
+      submit: 'Iniciar sesión',
+      send: 'Enviar correo',
+      update_password: 'Actualizar contraseña',
       redirectToLogin: 'Redirigiendo al login...',
       logout_overlay_text: 'Cerrando sesión...',
     },
@@ -654,6 +655,9 @@ const es = {
       },
     },
     form: {
+      create: {
+        title: 'Crear actividad',
+      },
       feedback: {
         activity_not_found:
           'La actividad solicitada no existe o no está registrada.',
@@ -904,7 +908,7 @@ const es = {
       all: 'Todos',
       patients: 'Pacientes',
       tutors: 'Tutores',
-      therapists: 'Tepeutas',
+      therapists: 'Terapeutas',
       methodology: 'Metodología',
       pictograms: 'Pictogramas',
       activities: 'Actividades',

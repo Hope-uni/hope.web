@@ -147,6 +147,7 @@ function WrapperTable({
                 <HeaderTable
                   searchProps={searchProps}
                   searchable={searchable}
+                  showSizeChanger={pagination}
                 />
               ) : null
             }

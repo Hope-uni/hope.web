@@ -78,7 +78,7 @@ export default function PatientDetail({ patient }: Props) {
           height: '100%',
         }}
       >
-        <Col sm={17} xs={24}>
+        <Col md={17} xs={24} sm={24}>
           <div
             className={styles.white_card_layout_vertical}
             style={{ gap: 30 }}
@@ -135,7 +135,7 @@ export default function PatientDetail({ patient }: Props) {
                   roleName={ROLES_KEYS.PATIENT}
                 />
               </Col>
-              {screens.sm && (
+              {screens.lg && (
                 <Col>
                   <Flex justify="flex-end">
                     <Flex vertical align="center" justify="center">
@@ -154,8 +154,8 @@ export default function PatientDetail({ patient }: Props) {
             />
           </div>
         </Col>
-        {screens.sm && (
-          <Col sm={7} xs={24}>
+        {
+          <Col md={7} xs={24} sm={24}>
             <Flex vertical gap={30}>
               <div className={styles.white_card_layout}>
                 <CardProfile
@@ -191,7 +191,7 @@ export default function PatientDetail({ patient }: Props) {
               </div>
             </Flex>
           </Col>
-        )}
+        }
       </Row>
     </>
   );
