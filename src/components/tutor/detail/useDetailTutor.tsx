@@ -28,7 +28,9 @@ const { Title } = Typography;
 const useDetailTutor = (tutor: DetailTutor) => {
   const screens = useBreakpoint();
   const { t } = useTranslation();
-  const [columns] = usePatientColumns();
+  const [columns] = usePatientColumns({
+    showActions: false,
+  });
 
   const itemsGeneralInfo: DescriptionsProps['items'] = useMemo(
     () => [
