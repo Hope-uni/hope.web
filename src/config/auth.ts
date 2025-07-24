@@ -106,7 +106,9 @@ export const AuthConfig = {
           if (error instanceof AxiosError) {
             throw new Error(error.response?.data?.message);
           }
-          throw new Error((error as Error).message);
+          throw new Error(
+            (error as Error).message || (error as any).errorMessage,
+          );
         }
       },
     }),

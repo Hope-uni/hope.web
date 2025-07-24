@@ -10,8 +10,9 @@ import { ErrorAntd } from '@/services/user/helpers';
 import { create } from 'zustand';
 
 interface ErrorsForm {
+  general: ErrorAntd[] | undefined;
+  specific: ErrorAntd[] | undefined;
   user: ErrorAntd[] | undefined;
-  person: ErrorAntd[] | undefined;
 }
 
 interface FormCreateUserState {

@@ -11,7 +11,6 @@ import { useFormPictogramStore } from '@/lib/store/forms/formPictogram';
 import { useTableStore } from '@/lib/store/table';
 import { E_ActionKeyTable } from '@/models/types/Table.d';
 import { Space } from 'antd';
-import { useRouter } from 'next/navigation';
 import { useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
