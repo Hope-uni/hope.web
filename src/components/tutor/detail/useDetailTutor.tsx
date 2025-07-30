@@ -101,7 +101,7 @@ const useDetailTutor = (tutor: DetailTutor) => {
               <WrapperTable
                 cols={columns}
                 data={{ data: tutor.children }}
-                pagination={false}
+                pagination={true}
                 showTitle={false}
               />
             ) : (
