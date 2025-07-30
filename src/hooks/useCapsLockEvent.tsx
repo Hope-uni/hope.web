@@ -5,7 +5,9 @@ const useCapsLockDetector = () => {
 
   useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent) => {
-      setCapsLockOn(event.getModifierState('CapsLock'));
+      if (event.key === 'CapsLock') {
+        setCapsLockOn(event.getModifierState('CapsLock'));
+      }
     };
 
     document.addEventListener('keydown', handleKeyPress);

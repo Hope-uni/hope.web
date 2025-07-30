@@ -322,7 +322,7 @@ const es = {
       title_current_activity: 'Actividad asignada',
       title_completed_activities: 'Actividades completdas',
       title_custom_pictograms: 'Pictogramas personalizados',
-      title_achieved_achievements: 'Logros conseguidos',
+      title_achieved_achievements: 'Logros obtenidos',
       title_info_tutor: 'Información del tutor',
       title_info_therapist: 'Terapeuta a cargo',
       progress: 'Progreso',
@@ -338,7 +338,7 @@ const es = {
       },
       description_patient: {
         birthday: 'Fecha de nacimiento',
-        telephone: 'Teléfono de casa',
+        telephone: 'Teléfono',
         address: 'Dirección',
       },
       feedback: {
@@ -378,7 +378,7 @@ const es = {
         },
       },
       add_achievement: {
-        button_add: 'Asignar logro',
+        button_add: 'Asignar',
         button_add_mobile: 'Asignar',
         modal: {
           title: 'Asignar logros',
@@ -386,7 +386,7 @@ const es = {
         },
       },
       unassign_achievement: {
-        button_add: 'Desasignar logro',
+        button_add: 'Desasignar',
         button_add_mobile: 'Desasignar',
         modal: {
           title: 'Desasignar logros',
