@@ -447,7 +447,7 @@ const es = {
       description_labels: {
         email: 'Correo electrónico',
         phone: 'Celular',
-        telephone: 'Teléfono de casa',
+        telephone: 'Teléfono',
         address: 'Dirección',
       },
       title_children_in_charge: 'Niños a cargo',
