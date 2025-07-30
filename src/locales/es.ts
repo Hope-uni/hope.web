@@ -952,7 +952,7 @@ const es = {
     table: {
       page: 'página',
       range_results: '{{rangeFrom}}-{{rangeTo}} de {{total}} elementos',
-      single_results: 'Mostrando {{total}} elementos',
+      single_results: '{{total}} registros en total',
     },
     popupActions: {
       show: {
