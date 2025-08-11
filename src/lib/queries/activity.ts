@@ -14,7 +14,7 @@ export const useFetchListActivitiesQuery = (payload?: API_PAYLOAD) => {
   });
 };
 
-export const useFetchFindActivityByIdQuery = (id: number | null) => {
+export const useFetchFindActivityByIdQuery = (id: number) => {
   return useQuery({
     queryKey: [QueryKeys.Activity.FindById, id],
     queryFn: () => FindActivityByIdService(id),
