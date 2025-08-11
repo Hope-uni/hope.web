@@ -46,7 +46,7 @@ export async function middleware(req: NextRequest) {
     return NextResponse.redirect(changePasswordUrl);
   }
 
-  if (token && guards.shouldRedirectToUnauthorized()) {
+  if (guards.shouldRedirectToUnauthorized()) {
     const unauthorizedUrl = createAbsoluteUrl(
       origin,
       DEFAULT_REDIRECT_UNAUTHORIZED,

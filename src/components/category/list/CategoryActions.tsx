@@ -98,6 +98,10 @@ const CategoryActions = ({
           Object.keys(res.validationErrors).length > 0
         ) {
           applyErrors(res.validationErrors as FormCategoryErrors);
+        } else if (res.message) {
+          openNotification.error({
+            description: res.message,
+          });
         }
         setLoading(false);
         return;
