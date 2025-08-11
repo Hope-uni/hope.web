@@ -110,7 +110,7 @@ const useDetailTherapist = (therapist: DetailTherapist) => {
                   cols={patientColumns}
                   data={therapist.children}
                   showTitle={false}
-                  pagination={false}
+                  pagination={true}
                 />
               </>
             ) : (
