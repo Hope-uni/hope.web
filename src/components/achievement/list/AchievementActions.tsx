@@ -99,7 +99,7 @@ const AchievementActions = ({
           Object.keys(res.validationErrors).length > 0
         ) {
           applyErrors(res.validationErrors as FormAchievementErrors);
-        } else {
+        } else if (res.message) {
           openNotification.error({
             description: res.message,
           });

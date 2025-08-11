@@ -26,6 +26,7 @@ export const LoginForm = () => {
   const [error, setError] = useState<AlertType>();
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
+  const usernameOrEmail = searchParams.get('usernameOrEmail');
 
   const handleOnFinish = async (values: LoginFormValues) => {
     try {
@@ -71,6 +72,9 @@ export const LoginForm = () => {
       id="auth_form_antd"
       className={styles.auth_form}
       onFinish={handleOnFinish}
+      initialValues={{
+        email_username: usernameOrEmail,
+      }}
     >
       <HeaderForm title={t('Auth.form.login.title')} />
       {error && <Alert message={message} type={error} showIcon />}

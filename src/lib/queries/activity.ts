@@ -14,10 +14,11 @@ export const useFetchListActivitiesQuery = (payload?: API_PAYLOAD) => {
   });
 };
 
-export const useFetchFindActivityByIdQuery = (id: number) => {
+export const useFetchFindActivityByIdQuery = (id: number | null) => {
   return useQuery({
     queryKey: [QueryKeys.Activity.FindById, id],
     queryFn: () => FindActivityByIdService(id),
     placeholderData: keepPreviousData,
+    enabled: !!id,
   });
 };

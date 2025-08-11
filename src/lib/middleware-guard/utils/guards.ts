@@ -27,7 +27,11 @@ export const middlewareGuards = (
       !pathname.startsWith(DEFAULT_REDIRECT_TO_CHANGE_PASSWORD_URL),
 
     shouldRedirectToUnauthorized: () => {
-      if (!token || !token.user?.roles?.length) {
+      if (!token || !pathname.startsWith(RoutesName.indexAdmin)) {
+        return false;
+      }
+
+      if (!token.user?.userVerified || !token.user?.roles?.length) {
         return true;
       }
 

@@ -99,6 +99,10 @@ const PictogramActions = ({
           Object.keys(res.validationErrors).length > 0
         ) {
           applyErrors(res.validationErrors as FormPictogramErrors);
+        } else if (res.message) {
+          openNotification.error({
+            description: res.message,
+          });
         }
         setLoading(false);
         return;
