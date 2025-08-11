@@ -176,7 +176,8 @@ export default function CreateUserForm() {
                 </span>
               </Text>
               <Title className={styles.steps_current_title}>
-                {current?.titleForm}
+                {current?.titleForm}{' '}
+                {currentRoleSelected.name.toLocaleLowerCase()}
               </Title>
             </Flex>
             {current && stepsForm.forms[current?.step]}

@@ -17,6 +17,9 @@ interface RootLayoutProps {
 export const metadata: Metadata = {
   title: 'HOPE-Admin',
   description: 'Web module for hope app',
+  icons: {
+    icon: '/favicon.svg',
+  },
 };
 
 export default async function RootLayout({

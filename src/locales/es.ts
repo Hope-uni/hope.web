@@ -109,7 +109,7 @@ const es = {
           },
           step_2: {
             title: 'Datos especificos',
-            titleForm: 'Información especifica del {{roleName}}',
+            titleForm: 'Información especifica del',
             description: 'Datos del usuario',
           },
           step_3: {
