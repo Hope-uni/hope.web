@@ -17,6 +17,9 @@ interface RootLayoutProps {
 export const metadata: Metadata = {
   title: 'HOPE-Admin',
   description: 'Web module for hope app',
+  icons: {
+    icon: '/favicon.svg',
+  },
 };
 
 export default async function RootLayout({
@@ -26,7 +29,7 @@ export default async function RootLayout({
   const session = await getServerSession();
 
   return (
-    <html lang={locale}>
+    <html lang={locale} className={session ? 'html-admin' : ''}>
       <body>
         <SessionProviderClient session={session}>
           <AppProviderClient>

@@ -42,9 +42,16 @@ const AvatarUserList = ({
         )}
         {description && (
           <Flex gap={5} align="center" justify="center">
-            <span className={styles.avatar_user_list_description}>
-              {description}
-            </span>
+            <Flex>
+              <span
+                className="text-ellipse"
+                style={{
+                  width: '250px',
+                }}
+              >
+                {description}
+              </span>
+            </Flex>
             {!isVerified && showTooltipVerified && <TooltipUserNotVerified />}
           </Flex>
         )}
