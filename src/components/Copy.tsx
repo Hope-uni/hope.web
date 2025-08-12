@@ -5,8 +5,8 @@ export default function Copy() {
   const { t } = useTranslation();
 
   return (
-    <footer>
-      <small className="text_primary-black text_sz-8">
+    <footer className="row-center">
+      <small className="text_primary-black text_sz-8 center">
         {t('Copy', {
           year: new Date().getFullYear(),
         })}

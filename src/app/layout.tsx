@@ -29,7 +29,7 @@ export default async function RootLayout({
   const session = await getServerSession();
 
   return (
-    <html lang={locale}>
+    <html lang={locale} className={session ? 'html-admin' : ''}>
       <body>
         <SessionProviderClient session={session}>
           <AppProviderClient>
