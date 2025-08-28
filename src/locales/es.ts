@@ -1079,6 +1079,7 @@ const es = {
     },
     message_error: {
       title: '¡Lo sentimos, algo ha salido mal!',
+      processingRequestTitle: '¡Error al procesar la solicitud!',
       subtitle: 'Ha ocurrido un error inesperado',
     },
     notification: {

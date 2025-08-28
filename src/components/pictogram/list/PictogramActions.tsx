@@ -6,6 +6,7 @@ import { PopupActions } from '@/components/table/PopupActions';
 import { QueryKeys } from '@/constants';
 import { useOpenNotification } from '@/context/Notification/NotificationProvider';
 import useInvalidateQueries from '@/hooks/useInvalidateQueries';
+import { useValidateServiceError } from '@/hooks/useValidateServiceError';
 import { FormPictogramErrors, SinglePictogram } from '@/models/schema';
 import { ActionType } from '@/models/types';
 import {
@@ -37,6 +38,7 @@ const PictogramActions = ({
   const { t } = useTranslation();
   const { invalidateQueries } = useInvalidateQueries();
   const { openNotification } = useOpenNotification();
+  const { handleErrorService } = useValidateServiceError();
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const [openForm, setOpenForm] = useState(false);
@@ -93,17 +95,11 @@ const PictogramActions = ({
         return;
       }
 
-      if (res.error && res.statusCode !== 201) {
-        if (
-          res.validationErrors &&
-          Object.keys(res.validationErrors).length > 0
-        ) {
+      if (res.error) {
+        handleErrorService(res, () => {
           applyErrors(res.validationErrors as FormPictogramErrors);
-        } else if (res.message) {
-          openNotification.error({
-            description: res.message,
-          });
-        }
+        });
+
         setLoading(false);
         return;
       }
@@ -126,6 +122,7 @@ const PictogramActions = ({
     pictogram,
     invalidateQueries,
     openNotification,
+    handleErrorService,
     applyErrors,
   ]);
 
