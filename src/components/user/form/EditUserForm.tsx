@@ -140,7 +140,7 @@ export default function EditUserForm() {
 
     fieldsFiltered = {
       ...fieldsFiltered,
-      imageFile: values.imageFile,
+      imageFile: fields.imageUrl,
     };
 
     if (deepEqual(values, fieldsFiltered)) {
