@@ -447,7 +447,7 @@ export const AssignPatientToTherapistService = async (
 ) => {
   try {
     const response = await API_HOPE_PROTECTED.post<API_SINGLE_RESPONSE>(
-      `${API.Therapist.Assign}`,
+      `${API.Patient.AssignTherapist}`,
       {
         ...payload,
       },
