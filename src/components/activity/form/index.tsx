@@ -1,3 +1,4 @@
+import { FilterPictograms } from '@/components/activity/form/PictogramSentenceField/FilterPictograms';
 import PictogramSentenceField from '@/components/activity/form/PictogramSentenceField/PictogramSentenceField';
 import { ActivityRules } from '@/constants/rules';
 import { useOpenNotification } from '@/context/Notification/NotificationProvider';
@@ -6,11 +7,20 @@ import { useFormActivityStore } from '@/lib/store/forms/formActivity';
 import { FormActivityErrors } from '@/models/schema';
 import { CreateActivityService } from '@/services/activity/activity.service';
 import { ParseToErrorAntd } from '@/services/user/helpers';
-import { Button, Flex, Form, Grid, Input, InputNumber, Select } from 'antd';
+import {
+  Button,
+  Col,
+  Flex,
+  Form,
+  Grid,
+  Input,
+  InputNumber,
+  Row,
+  Select,
+} from 'antd';
 import TextArea from 'antd/es/input/TextArea';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useShallow } from 'zustand/react/shallow';
 
 const { useBreakpoint } = Grid;
 
@@ -21,26 +31,8 @@ export default function ActivityForm() {
   const [form] = Form.useForm();
   const [loadingForm, setLoadingForm] = useState(false);
   const { phaseList, setSolutionSentenceList } = useFormActivityStore();
-  const solutionSentenceList = useFormActivityStore(
-    useShallow((state) => state.solutionSentenceList),
-  );
 
   const { invalidateListActivity } = useActivityForm();
-
-  const pictogramSentence = Form.useWatch('pictogramSentence', form);
-
-  useEffect(() => {
-    const current = form.getFieldValue('pictogramSentence');
-    const next = solutionSentenceList.map((item) => item.id);
-
-    if (JSON.stringify(current) !== JSON.stringify(next)) {
-      form.setFieldValue('pictogramSentence', next);
-    }
-  }, [form, solutionSentenceList]);
-
-  useEffect(() => {
-    form.validateFields(['pictogramSentence']);
-  }, [form, pictogramSentence]);
 
   const applyErrors = useCallback(
     (validationErrors: FormActivityErrors) => {
@@ -122,7 +114,7 @@ export default function ActivityForm() {
           width: `${screens.xs ? '100%' : '90%'}`,
         }}
       >
-        <Flex vertical style={{ width: `${screens.xs ? '100%' : '60%'}` }}>
+        <Flex vertical>
           <Form.Item
             name="name"
             label={t('Activity.fields.name.label')}
@@ -142,58 +134,70 @@ export default function ActivityForm() {
             />
           </Form.Item>
 
+          <Row gutter={[20, 0]}>
+            <Col sm={{ span: 12 }}>
+              <Form.Item
+                name="phaseId"
+                label={t('Activity.fields.phase.label')}
+                rules={ActivityRules.phase}
+              >
+                <Select placeholder={t('Activity.fields.phase.placeholder')}>
+                  {phaseList.map((item, index) => (
+                    <Select.Option key={item.id} value={item.id}>
+                      {`Fase ${index + 1} - ${item.name}`}
+                    </Select.Option>
+                  ))}
+                </Select>
+              </Form.Item>
+            </Col>
+            <Col sm={{ span: 12 }}>
+              <Form.Item
+                name="satisfactoryPoints"
+                label={t('Activity.fields.satisfactoryPoints.label')}
+                rules={ActivityRules.satisfactoryPoints}
+              >
+                <InputNumber
+                  min={0}
+                  type="number"
+                  keyboard={false}
+                  placeholder={t(
+                    'Activity.fields.satisfactoryPoints.placeholder',
+                  )}
+                />
+              </Form.Item>
+            </Col>
+          </Row>
+
           <Form.Item
-            name="satisfactoryPoints"
-            label={t('Activity.fields.satisfactoryPoints.label')}
-            rules={ActivityRules.satisfactoryPoints}
+            label={t('Activity.fields.pictogramSentence.label')}
+            required
+            style={{
+              marginBottom: 0,
+            }}
           >
-            <InputNumber
-              min={0}
-              type="number"
-              keyboard={false}
-              placeholder={t('Activity.fields.satisfactoryPoints.placeholder')}
-            />
+            <FilterPictograms />
           </Form.Item>
 
           <Form.Item
-            name="phaseId"
-            label={t('Activity.fields.phase.label')}
-            rules={ActivityRules.phase}
+            name="pictogramSentence"
+            rules={ActivityRules.pictogramSentence}
           >
-            <Select placeholder={t('Activity.fields.phase.placeholder')}>
-              {phaseList.map((item, index) => (
-                <Select.Option key={item.id} value={item.id}>
-                  {`Fase ${index + 1} - ${item.name}`}
-                </Select.Option>
-              ))}
-            </Select>
+            <PictogramSentenceField />
           </Form.Item>
         </Flex>
 
-        <Form.Item
-          label={t('Activity.fields.pictogramSentence.label')}
+        <Flex
+          justify="flex-end"
+          gap={10}
           style={{
-            marginBottom: '0',
+            marginTop: '2rem',
           }}
-          required
         >
-          <PictogramSentenceField />
-        </Form.Item>
-
-        <Form.Item
-          name="pictogramSentence"
-          className="input-hidden"
-          rules={ActivityRules.pictogramSentence}
-          validateFirst={false}
-        >
-          <Input readOnly type="hidden" />
-        </Form.Item>
+          <Button type="primary" onClick={handleSubmit} loading={loadingForm}>
+            {t('Activity.actions.form.modal.ok_text_create')}
+          </Button>
+        </Flex>
       </Form>
-      <Flex justify="flex-end" gap={10}>
-        <Button type="primary" onClick={handleSubmit} loading={loadingForm}>
-          {t('Activity.actions.form.modal.ok_text_create')}
-        </Button>
-      </Flex>
     </Flex>
   );
 }

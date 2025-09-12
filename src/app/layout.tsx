@@ -6,7 +6,6 @@ import { AntdRegistry } from '@ant-design/nextjs-registry';
 import { App, ConfigProvider } from 'antd';
 import type { Metadata } from 'next';
 import { getServerSession } from 'next-auth';
-
 import '@splidejs/splide/css/core';
 
 interface RootLayoutProps {

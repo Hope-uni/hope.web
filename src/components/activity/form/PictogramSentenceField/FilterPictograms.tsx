@@ -58,9 +58,7 @@ export const FilterPictograms = () => {
     (e: ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value;
       setSearchValue(value);
-      if (value.length >= 3 || value.length === 0) {
-        debouncedSearch(value);
-      }
+      debouncedSearch(value);
     },
     [debouncedSearch],
   );
@@ -89,6 +87,7 @@ export const FilterPictograms = () => {
               : t('Activity.fields.pictogramSentence.placeholderSearchMobile')
           }
           onChange={handleSearch}
+          status={undefined}
         />
         <Select
           value={filterCategory}

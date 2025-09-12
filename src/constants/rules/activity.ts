@@ -58,7 +58,9 @@ export const ActivityRules = {
     {
       validator: async (_, value) => {
         if (!value) {
-          return Promise.resolve();
+          return Promise.reject(
+            i18next.t('Activity.fields.pictogramSentence.rules.required'),
+          );
         }
 
         if (value.length === 0) {

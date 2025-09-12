@@ -707,9 +707,9 @@ const es = {
         captionPreviewSentence:
           'Reorganiza los pictogramas a tu gusto, moviéndolos en el orden que prefieras.',
         captionOverlayPictogramDesktop:
-          '*Si el nombre del pictograma no se ve completo, pasa el cursor sobre el icono para ver el nombre completo.',
+          '*Si el nombre del pictograma no se ve completo, pasa el cursor sobre la imagen para ver el nombre completo.',
         captionOverlayPictogramMobile:
-          '*Si el nombre del pictograma no se ve completo, mantén presionado el icono para ver el nombre completo.',
+          '*Si el nombre del pictograma no se ve completo, mantén presionado la imagen para ver el nombre completo.',
         rules: {
           required: 'Solución es requerido',
           min: 'Debe seleccionar al menos un pictograma',

@@ -2,6 +2,7 @@ import { Show } from '@/components/Show';
 import CreateUserForm from '@/components/user/form/CreateUserForm';
 import EditUserForm from '@/components/user/form/EditUserForm';
 import SkeletonFormCreateUser from '@/components/user/form/skeletons/SkeletonFormCreateUser';
+import SkeletonFormEditUser from '@/components/user/form/skeletons/SkeletonFormEditUser';
 import { useGetUserForEdit } from '@/hooks/useGetUserForEdit';
 import { useFetchCatalogInitCreateUserQuery } from '@/lib/queries/user';
 import { useFormCreateUserStore } from '@/lib/store/forms/formCreateUser';
@@ -134,6 +135,8 @@ export default function UserForm({ isEdit = false, id }: Props) {
             />
           </Show.Else>
         </Show>
+      ) : isEdit ? (
+        <SkeletonFormEditUser />
       ) : (
         <SkeletonFormCreateUser />
       )}

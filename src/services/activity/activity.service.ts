@@ -2,6 +2,7 @@ import { API_HOPE_PROTECTED, defaultPayload } from '@/config';
 import { API } from '@/constants/ApiUrls';
 import {
   DetailActivity,
+  PayloadActivity,
   PayloadAssignActivity,
   SingleActivity,
 } from '@/models/schema';
@@ -36,7 +37,7 @@ export const FindActivityByIdService = async (id: number) => {
   }
 };
 
-export const CreateActivityService = async (payload: DetailActivity) => {
+export const CreateActivityService = async (payload: PayloadActivity) => {
   try {
     const response = await API_HOPE_PROTECTED.post<
       API_RESPONSE<SingleActivity>

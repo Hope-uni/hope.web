@@ -1112,22 +1112,26 @@ body .ant-flex {
     .ant-notification-notice-wrapper{
         .ant-notification-notice{
             &.primary-notification{
-                @extend .row-between;
+                @extend .row-between-start;
                 padding: 10px 15px 10px 8px;
 
-                &.ant-notification-notice-success{
+                &.ant-notification-notice-success, 
+                .ant-notification-notice-icon-custom[aria-label="success"]{
                     color: $success;
                 }
 
-                &.ant-notification-notice-info{
+                &.ant-notification-notice-info,
+                .ant-notification-notice-icon-custom[aria-label="info"]{
                     color: $info;
                 }
 
-                &.ant-notification-notice-warning{
+                &.ant-notification-notice-warning,
+                .ant-notification-notice-icon-custom[aria-label="warning"]{
                     color: $warning;
                 }
 
-                &.ant-notification-notice-error{
+                &.ant-notification-notice-error,
+                .ant-notification-notice-icon-custom[aria-label="error"]{
                     color: $error;
                 }
 
@@ -1136,24 +1140,31 @@ body .ant-flex {
                     padding-left: 5px;
 
                     .ant-notification-notice-with-icon{
-                        padding: 8px  10px 8px 10px;
+                        padding: 0  10px 0 10px;
 
                         .ant-notification-notice-icon{
-                            color: currentColor;
-                            font-size: 30px;
-                            top: calc((100% - 30px) / 2);
+                            display: none;
+                        }
+
+                        .ant-notification-notice-icon-custom{
+                            font-size: 22px;
                         }
 
                         .ant-notification-notice-message{
                             margin-bottom: 0;
-                            margin-inline-start: 42px;
-                            color: $primary-color-text;
-                            font-weight: 600;
-                            font-size: 17px;
+                            margin-inline-start: 0;
+                            
+                            .ant-notification-notice-message-inner{
+                                @extend .row-start;
+                                gap: 10px;
+                                color: $primary-color-text;
+                                font-weight: 600;
+                                font-size: 17px;
+                            }
                         }
                         .ant-notification-notice-description{
                             margin-bottom: 0;
-                            margin-inline-start: 42px;
+                            margin-inline-start: 0;
                             color: $grey-dark;
                             font-size: 16px;
                         }

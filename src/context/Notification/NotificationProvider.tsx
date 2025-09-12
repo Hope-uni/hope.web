@@ -14,11 +14,18 @@ interface Props {
   children: ReactNode;
 }
 
+interface LabelNotificationProps {
+  message: string;
+  icon: ReactNode;
+  status: string;
+}
+
 const ConfigNotification = {
   className: 'primary-notification',
   placement: 'topRight' as const,
-  duration: 5,
+  duration: -1,
   closeIcon: <BsXLg />,
+  icon: null,
 };
 
 interface NotificationContextType {
@@ -39,6 +46,25 @@ export const NotificationContext = createContext<NotificationContextType>({
   },
 });
 
+const LabelNotification = ({
+  message,
+  icon,
+  status,
+}: LabelNotificationProps) => {
+  return (
+    <div className="ant-notification-notice-message-inner">
+      <span
+        role="img"
+        aria-label={status}
+        className="ant-notification-notice-icon-custom"
+      >
+        {icon}
+      </span>
+      {message}
+    </div>
+  );
+};
+
 export const NotificationProvider = ({ children }: Props) => {
   const { t } = useTranslation();
   const [api, contextHolder] = notification.useNotification();
@@ -47,33 +73,61 @@ export const NotificationProvider = ({ children }: Props) => {
     () => ({
       info: ({ message, description }: NotificationContent) => {
         api.info({
-          message: message || t('feedback.notification.info.messageDefault'),
+          message: (
+            <LabelNotification
+              message={
+                message || t('feedback.notification.info.messageDefault')
+              }
+              icon={<FaCircleInfo />}
+              status="info"
+            />
+          ),
           description,
-          icon: <FaCircleInfo />,
           ...ConfigNotification,
         } as NotificationArgsProps);
       },
       success: ({ message, description }: NotificationContent) => {
         api.success({
-          message: message || t('feedback.notification.success.messageDefault'),
+          message: (
+            <LabelNotification
+              message={
+                message || t('feedback.notification.success.messageDefault')
+              }
+              icon={<FaCircleCheck />}
+              status="success"
+            />
+          ),
           description,
-          icon: <FaCircleCheck />,
           ...ConfigNotification,
         } as NotificationArgsProps);
       },
       warning: ({ message, description }: NotificationContent) => {
         api.warning({
-          message: message || t('feedback.notification.warning.messageDefault'),
+          message: (
+            <LabelNotification
+              message={
+                message || t('feedback.notification.warning.messageDefault')
+              }
+              icon={<FaCircleExclamation />}
+              status="warning"
+            />
+          ),
           description,
-          icon: <FaCircleExclamation />,
           ...ConfigNotification,
         } as NotificationArgsProps);
       },
       error: ({ message, description }: NotificationContent) => {
         api.error({
-          message: message || t('feedback.notification.error.messageDefault'),
+          message: (
+            <LabelNotification
+              message={
+                message || t('feedback.notification.error.messageDefault')
+              }
+              icon={<FaCircleXmark />}
+              status="error"
+            />
+          ),
           description,
-          icon: <FaCircleXmark />,
           ...ConfigNotification,
         } as NotificationArgsProps);
       },
