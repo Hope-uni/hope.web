@@ -103,7 +103,7 @@ export const AuthConfig = {
             refreshToken,
           };
         } catch (error) {
-          if (error instanceof AxiosError) {
+          if (error instanceof AxiosError && error.response?.data?.message) {
             throw new Error(error.response?.data?.message);
           }
           throw new Error(

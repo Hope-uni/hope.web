@@ -23,7 +23,7 @@ interface LabelNotificationProps {
 const ConfigNotification = {
   className: 'primary-notification',
   placement: 'topRight' as const,
-  duration: -1,
+  duration: 3000,
   closeIcon: <BsXLg />,
   icon: null,
 };

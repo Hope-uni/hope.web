@@ -1076,6 +1076,10 @@ const es = {
       id_not_provided: 'Id no proporcionado',
       unknow_error: 'Error desconocido',
       not_changed_detect: 'No se detectaron cambios',
+      network_error:
+        'Hubo un error de red. Por favor, revisa tu conexión a Internet e inténtalo de nuevo',
+      timeout_request:
+        'Estamos teniendo demoras para procesar tu solicitud. Vuelve a intentarlo en unos segundos.',
     },
     message_error: {
       title: '¡Lo sentimos, algo ha salido mal!',

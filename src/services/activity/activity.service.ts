@@ -7,7 +7,7 @@ import {
   SingleActivity,
 } from '@/models/schema';
 import { API_PAYLOAD, API_RESPONSE, API_SINGLE_RESPONSE } from '@/models/types';
-import { axiosErrorHandler } from '@/utils/axios';
+import { axiosErrorHandler } from '@/utils/axiosUtils';
 
 export const ListActivitiesService = async (
   payload: API_PAYLOAD = defaultPayload,

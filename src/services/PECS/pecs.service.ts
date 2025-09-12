@@ -2,7 +2,7 @@ import { API_HOPE_PROTECTED, defaultPayload } from '@/config';
 import { API } from '@/constants/ApiUrls';
 import { PayloadPhase, SingleTEAPhase, TEAGrade } from '@/models/schema';
 import { API_PAYLOAD, API_RESPONSE, API_SINGLE_RESPONSE } from '@/models/types';
-import { axiosErrorHandler } from '@/utils/axios';
+import { axiosErrorHandler } from '@/utils/axiosUtils';
 import { valuesWithData } from '@/utils/objects';
 
 export const ListPhaseService = async (
