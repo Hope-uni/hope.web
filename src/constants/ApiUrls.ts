@@ -18,6 +18,7 @@ export const API = {
     AvailableForActivity: '/patient/availableForActivity',
     AddObservation: '/observation/id-patient',
     ChangeTherapist: '/patient/change-therapist/',
+    AssignTherapist: '/patient/assignTherapist/',
   },
   HealthRecord: {
     ChangeMonochrome: '/healthRecord/change-monochrome',
