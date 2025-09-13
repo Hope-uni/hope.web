@@ -6,6 +6,7 @@ interface Props<T> {
   list: T[];
   keyValue: keyof T;
   keyLabel: keyof T;
+  placeholder?: string;
   onChange: (itemSelected: T) => void;
 }
 
@@ -13,6 +14,7 @@ export default function SearchableList<T>({
   list,
   keyValue,
   keyLabel,
+  placeholder = '',
   onChange,
 }: Props<T>) {
   const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
@@ -52,6 +54,7 @@ export default function SearchableList<T>({
         style={{
           width: '100%',
         }}
+        placeholder={placeholder}
       >
         {list.map((item) => (
           <Select.Option key={String(item[keyValue])} value={item[keyValue]}>

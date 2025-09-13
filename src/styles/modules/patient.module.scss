@@ -166,12 +166,41 @@
 /*
 * PATIENT LIST VIEW
 */
+.panelContainerAssignPatientToActivity{
+    @extend .row-start;
+    gap: 5px;
+    background-color: $grey-1;
+    padding: 8px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+
+    .panelContainerAssignPatientToActivityIcon{
+        font-size: 14px;
+
+        svg {
+            color: $primary-color;
+        }
+    }
+
+    .panelContainerAssignPatientToActivityText{
+        color: $black;
+        font-size: 13px;
+        margin: 0;
+        line-height: 1.4;
+    }
+}
+.captionSelectPatient{
+    color: $grey-dark;
+    font-size: 13px;
+    margin: 5px 0 0 0;
+    line-height: 1.4;
+}
 .patientSelectedWrapper{
     .patientSelected_title{
-        color: $grey-dark;
+        color: $black;
         font-size: 16px;
         font-weight: 400;
-        margin: 0 0 10px 0;
+        margin: 20px 0 10px 0;
     }
 
     .patientSelected_scroll{
