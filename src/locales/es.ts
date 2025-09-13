@@ -1068,6 +1068,13 @@ const es = {
         btn_cancel: 'Cancelar',
         btn_ok: 'Eliminar',
       },
+      unsavedChanges: {
+        title: 'Cambios no guardados',
+        description:
+          'No has terminado de completar la creación del usuario. Si sales ahora, perderás el progreso. ¿Estás seguro de que quieres salir?',
+        btn_cancel: 'Quedarme',
+        btn_ok: 'Salir',
+      },
     },
     note: 'Nota:',
   },

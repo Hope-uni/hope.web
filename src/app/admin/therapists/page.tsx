@@ -2,6 +2,7 @@
 
 import { HeaderContent } from '@/components/layouts/partials/HeaderContent';
 import TherapistIndex from '@/components/therapist/list';
+import { ROLES } from '@/constants/guards';
 import { RoutesName } from '@/constants/index';
 import { Space } from 'antd';
 import { useTranslation } from 'react-i18next';
@@ -15,7 +16,7 @@ export default function TherapistsPage() {
           title={t('Therapist.index.title')}
           caption={t('Therapist.index.caption')}
           label={t('Therapist.index.createButton')}
-          routeLink={RoutesName.user.create}
+          routeLink={`${RoutesName.user.create}?role=${ROLES.THERAPIST}`}
         />
         <TherapistIndex />
       </Space>

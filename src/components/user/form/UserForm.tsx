@@ -5,8 +5,11 @@ import SkeletonFormCreateUser from '@/components/user/form/skeletons/SkeletonFor
 import SkeletonFormEditUser from '@/components/user/form/skeletons/SkeletonFormEditUser';
 import { useGetUserForEdit } from '@/hooks/useGetUserForEdit';
 import { useFetchCatalogInitCreateUserQuery } from '@/lib/queries/user';
-import { useFormCreateUserStore } from '@/lib/store/forms/formCreateUser';
-import { Button, Result } from 'antd';
+import {
+  initStateFormCreateUser,
+  useFormCreateUserStore,
+} from '@/lib/store/forms/formCreateUser';
+import { Result } from 'antd';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -84,6 +87,8 @@ export default function UserForm({ isEdit = false, id }: Props) {
 
         if (currenRoleData) {
           setInitCurrentRole(currenRoleData.id);
+        } else {
+          setInitCurrentRole(initStateFormCreateUser.initCurrentRole);
         }
       }
 
