@@ -15,6 +15,7 @@ export const CharacterLimit = {
   min: {
     default: 3,
     descriptions: 6,
+    pictogram: 1,
   },
 };
 
