@@ -18,6 +18,7 @@ interface ErrorsForm {
 interface FormCreateUserState {
   isEdit: boolean;
   loadingForm: boolean;
+  hasUnsavedChanges: boolean;
   initCurrentRole: number;
   currentRoleSelected: ListRoleResponse | Role;
   isAdminRoleSelected: boolean;
@@ -31,6 +32,7 @@ interface FormCreateUserState {
   messageErrorDetail?: string;
   setIsEdit: (value: boolean) => void;
   setLoadingForm: (loading: boolean) => void;
+  setHasUnsavedChanges: (value: boolean) => void;
   setRoleList: (roles: ListRoleResponse[]) => void;
   setPhaseList: (roles: TEAPhase[]) => void;
   setDegreeList: (roles: TEAGrade[]) => void;
@@ -44,8 +46,9 @@ interface FormCreateUserState {
   setMessageErrorDetail: (message?: string) => void;
 }
 
-export const useFormCreateUserStore = create<FormCreateUserState>()((set) => ({
+export const initStateFormCreateUser = {
   isEdit: false,
+  hasUnsavedChanges: false,
   initCurrentRole: 4,
   currentRoleSelected: {} as ListRoleResponse,
   isAdminRoleSelected: false,
@@ -58,8 +61,13 @@ export const useFormCreateUserStore = create<FormCreateUserState>()((set) => ({
   errors: {} as ErrorsForm,
   messageErrorForm: '',
   messageErrorDetail: '',
+};
+
+export const useFormCreateUserStore = create<FormCreateUserState>()((set) => ({
+  ...initStateFormCreateUser,
   setIsEdit: (value: boolean) => set({ isEdit: value }),
   setLoadingForm: (loading: boolean) => set({ loadingForm: loading }),
+  setHasUnsavedChanges: (value: boolean) => set({ hasUnsavedChanges: value }),
   setRoleList: (roles) => set({ roleList: roles }),
   setPhaseList: (phases: TEAPhase[]) => set({ phaseList: phases }),
   setDegreeList: (degrees: TEAGrade[]) => set({ degreeList: degrees }),

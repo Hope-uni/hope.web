@@ -17,8 +17,11 @@ export const PreviewSolution = ({
   onClickItemList,
 }: Props) => {
   const { t } = useTranslation();
-  const { solutionSentenceList, setSolutionSentenceList } =
-    useFormActivityStore();
+  const {
+    solutionSentenceList,
+    solutionSentenceText,
+    setSolutionSentenceList,
+  } = useFormActivityStore();
 
   const handleChangeOrder = useCallback(
     (newItemsOrdered: SinglePictogram[]) => {
@@ -65,6 +68,11 @@ export const PreviewSolution = ({
             </p>
           )}
         </div>
+        {solutionSentenceList.length > 0 && (
+          <div className={style.solution_preview_text}>
+            {solutionSentenceText}
+          </div>
+        )}
       </div>
     </div>
   );

@@ -82,6 +82,7 @@ export default function CreateUserForm() {
         cleanForm();
 
         await invalidateQueries([QueryKeys.User.ListUser]);
+        await invalidateQueries([QueryKeys.User.CatalogTutor]);
 
         if (validateRole(currentRoleSelected.name, ROLES.PATIENT)) {
           await invalidateQueries([QueryKeys.User.ListPatient]);

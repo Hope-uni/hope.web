@@ -10,6 +10,7 @@ import { Empty, Flex, Form, FormInstance, Input } from 'antd';
 import { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { BsTrash2Fill } from 'react-icons/bs';
+import { FaCircleInfo } from 'react-icons/fa6';
 
 interface Props {
   form: FormInstance;
@@ -35,13 +36,17 @@ export default function AssignActivityForm({ form, initialPatients }: Props) {
   );
 
   return (
-    <div
-      style={{
-        height: '400px',
-      }}
-    >
+    <div>
       {initialPatients.length > 0 ? (
         <div>
+          <div className={style.panelContainerAssignPatientToActivity}>
+            <span className={style.panelContainerAssignPatientToActivityIcon}>
+              <FaCircleInfo />
+            </span>
+            <p className={style.panelContainerAssignPatientToActivityText}>
+              {t('Activity.fields.patientsToAssign.info')}
+            </p>
+          </div>
           <Form
             form={form}
             name="assign_patient"
@@ -50,7 +55,7 @@ export default function AssignActivityForm({ form, initialPatients }: Props) {
           >
             <Form.Item
               name="patientSelected"
-              label={t('Activity.fields.patientsToAssign.placeholder')}
+              label={t('Activity.fields.patientsToAssign.label')}
               style={{
                 marginBottom: 0,
               }}
@@ -60,6 +65,7 @@ export default function AssignActivityForm({ form, initialPatients }: Props) {
                 keyValue="id"
                 keyLabel="fullName"
                 onChange={handleChangeSearchableList}
+                placeholder={t('Activity.fields.patientsToAssign.placeholder')}
               />
             </Form.Item>
 
@@ -67,17 +73,17 @@ export default function AssignActivityForm({ form, initialPatients }: Props) {
               name="patients"
               rules={ActivityRules.patientsToAssign}
               className="input-hidden"
+              extra={
+                availableItems.length > 0
+                  ? t('Activity.fields.patientsToAssign.caption')
+                  : t('Activity.fields.patientsToAssign.all_patient_selected')
+              }
             >
               <Input readOnly type="hidden" />
             </Form.Item>
           </Form>
           <div className={style.patientSelectedWrapper}>
-            <h3
-              className={style.patientSelected_title}
-              style={{
-                marginTop: '40px',
-              }}
-            >
+            <h3 className={style.patientSelected_title}>
               {t(
                 'Activity.actions.assign_activity.modal.title_patient_selected',
               )}

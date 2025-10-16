@@ -32,7 +32,7 @@ import {
   FindTherapistByIdService,
   FindTutorByIdService,
 } from '@/services/user/user.service';
-import { CustomError } from '@/utils/axios';
+import { CustomError } from '@/utils/axiosUtils';
 import { valuesWithData } from '@/utils/objects';
 import i18next from '@/i18n';
 

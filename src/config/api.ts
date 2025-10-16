@@ -8,6 +8,7 @@ export const defaultPayload: API_PAYLOAD = {
 };
 
 import { getSession, signOut } from 'next-auth/react';
+import es from '@/locales/es';
 
 const URl = process.env.NEXT_PUBLIC_API_URL;
 
@@ -16,14 +17,19 @@ const headers = {
   'Content-Type': 'application/json',
 };
 
-export const API_HOPE_PUBLIC = axios.create({
+const baseOptionsAxios = {
   baseURL: URl,
   headers,
+  timeout: 10000,
+  timeoutErrorMessage: es.feedback.common.timeout_request,
+};
+
+export const API_HOPE_PUBLIC = axios.create({
+  ...baseOptionsAxios,
 });
 
 export const API_HOPE_PROTECTED = axios.create({
-  baseURL: URl,
-  headers,
+  ...baseOptionsAxios,
 });
 
 API_HOPE_PROTECTED.interceptors.request.use(
@@ -43,19 +49,6 @@ API_HOPE_PROTECTED.interceptors.request.use(
 );
 
 API_HOPE_PROTECTED.interceptors.response.use(
-  async (response) => {
-    return response;
-  },
-  async (error) => {
-    if (axios.isAxiosError(error) && error.response?.data.statusCode === 401) {
-      setOverlayBlockingEdge(true);
-      await signOut();
-    }
-    return Promise.reject(error);
-  },
-);
-
-API_HOPE_PUBLIC.interceptors.response.use(
   async (response) => {
     return response;
   },

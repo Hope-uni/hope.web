@@ -1,2 +1,2 @@
 export * from './parseToFormData';
-export * from './axios';
+export * from './axiosUtils';

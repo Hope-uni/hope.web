@@ -3,7 +3,7 @@ import { Rule } from 'antd/lib/form';
 import { CharacterLimit, TextWhiteSpaceAndLenRule } from '@/constants/rules';
 
 const Pictogram_Satisfactory_Points_Max = 20;
-const Pictogram_Sentence_Max = 15;
+const Pictogram_Sentence_Max = 30;
 
 export const ActivityRules = {
   name: [
@@ -58,7 +58,9 @@ export const ActivityRules = {
     {
       validator: async (_, value) => {
         if (!value) {
-          return Promise.resolve();
+          return Promise.reject(
+            i18next.t('Activity.fields.pictogramSentence.rules.required'),
+          );
         }
 
         if (value.length === 0) {

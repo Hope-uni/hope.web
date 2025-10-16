@@ -1,4 +1,5 @@
 import { QueryKeys } from '@/constants';
+import { ROLES } from '@/constants/guards';
 import {
   useFetchListPatientAvailableForActivityQuery,
   useFetchListPatientQuery,
@@ -168,6 +169,19 @@ const useActivityForm = (id?: number | undefined) => {
     [id, paginationTable, queryClient],
   );
 
+  const removeQueriesDetailPatients = useCallback(
+    async (patientIds: number[]) => {
+      await Promise.all(
+        patientIds.map((id) => {
+          return queryClient.removeQueries({
+            queryKey: [QueryKeys.User.FindByRole, [String(id), ROLES.PATIENT]],
+          });
+        }),
+      );
+    },
+    [queryClient],
+  );
+
   const updateQueriesAfterAssign = useCallback(
     async (patientIds: number[]) => {
       if (id) {
@@ -190,6 +204,7 @@ const useActivityForm = (id?: number | undefined) => {
         );
 
         await updateActivityListAssignments(patientIds, true);
+        await removeQueriesDetailPatients(patientIds);
       }
     },
     [
@@ -198,6 +213,7 @@ const useActivityForm = (id?: number | undefined) => {
       id,
       queryClient,
       updateActivityListAssignments,
+      removeQueriesDetailPatients,
     ],
   );
 
@@ -227,6 +243,7 @@ const useActivityForm = (id?: number | undefined) => {
         await getAssignedToActivity();
 
         await updateActivityListAssignments(patientIds, false);
+        await removeQueriesDetailPatients(patientIds);
       }
     },
     [
@@ -236,6 +253,7 @@ const useActivityForm = (id?: number | undefined) => {
       id,
       queryClient,
       updateActivityListAssignments,
+      removeQueriesDetailPatients,
     ],
   );
 
