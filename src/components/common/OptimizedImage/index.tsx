@@ -26,6 +26,7 @@ interface Props extends ImageProps {
   mobileResponsive?: ResponsiveItem;
   objectFit?: CSSProperties['objectFit'];
   className?: string;
+  customStyle?: CSSProperties;
 }
 
 const OptimizedImage = ({
@@ -39,6 +40,7 @@ const OptimizedImage = ({
   mobileResponsive,
   objectFit = 'contain',
   className,
+  customStyle,
   alt,
   ...rest
 }: Props) => {
@@ -83,6 +85,7 @@ const OptimizedImage = ({
         ...StylesShape[shape],
         objectFit,
         objectPosition: 'center',
+        ...customStyle,
       }}
       placeholder={
         <Skeleton.Node

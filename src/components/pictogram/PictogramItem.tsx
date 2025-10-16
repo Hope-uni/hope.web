@@ -2,6 +2,7 @@
 
 import OptimizedImage from '@/components/common/OptimizedImage';
 import HoldablePress from '@/components/HoldablePress';
+import { IMAGE_PLACEHOLDER } from '@/constants/OptimizedImage';
 import { validateDeviceUserIsMobile } from '@/constants/rules';
 import { SinglePictogramWithOutCategory } from '@/models/schema/Pictogram';
 import styles from '@/styles/modules/pictogram.module.scss';
@@ -17,6 +18,8 @@ interface Props {
   fontSize?: string;
   showLabel?: boolean;
   style?: CSSProperties;
+  styleImg?: CSSProperties;
+  styleOverlayText?: CSSProperties;
   onClick?: (pictogram: SinglePictogramWithOutCategory) => void;
 }
 
@@ -27,16 +30,18 @@ export default function PictogramItem({
   fontSize = '16px',
   showLabel = true,
   style,
+  styleImg,
+  styleOverlayText,
   onClick,
 }: Props) {
-  const [showOverlay, setShowOverlay] = useState(false);
+  const [isOverlaid, setIsOverlaid] = useState(false);
 
   const handleThresholdReached = () => {
-    setShowOverlay(true);
+    setIsOverlaid(true);
   };
 
   const handleStopPress = () => {
-    setShowOverlay(false);
+    setIsOverlaid(false);
   };
 
   const handleMouseEnter = () => {
@@ -70,6 +75,14 @@ export default function PictogramItem({
       onMouseLeave={handleMouseLeave}
       onThresholdReached={handleThresholdReached}
       onStopPress={handleStopPress}
+      style={
+        isOverlaid
+          ? {
+              overflow: 'hidden',
+              borderRadius: `${Number(sizeContainer) / 5}px`,
+            }
+          : {}
+      }
     >
       <Flex
         vertical
@@ -78,18 +91,22 @@ export default function PictogramItem({
         className={styles.pictogram_list_item}
         gap={5}
         style={{
+          overflow: 'hidden',
           width: sizeContainer,
           height: sizeContainer,
           padding: '5px',
           borderRadius: `${Number(sizeContainer) / 5}px`,
+          borderWidth: 1,
           ...style,
         }}
       >
         <OptimizedImage
           className={styles.pictogram_list_item_image}
           srcImage={pictogram.imageUrl}
+          placeholderImage={IMAGE_PLACEHOLDER.PICTOGRAM}
           size={sizeImg}
           alt={pictogram.name}
+          customStyle={{ ...styleImg }}
         />
 
         {showLabel && (
@@ -103,14 +120,19 @@ export default function PictogramItem({
             >
               {pictogram.name}
             </Text>
-            {showOverlay && (
-              <div className={styles.pictogram_overlay_item}>
-                <Text className={styles.pictogram_overlay_item_text}>
-                  {pictogram.name}
-                </Text>
-              </div>
-            )}
           </>
+        )}
+        {isOverlaid && (
+          <div className={styles.pictogram_overlay_item}>
+            <Text
+              className={styles.pictogram_overlay_item_text}
+              style={{
+                ...styleOverlayText,
+              }}
+            >
+              {pictogram.name}
+            </Text>
+          </div>
         )}
       </Flex>
     </HoldablePress>

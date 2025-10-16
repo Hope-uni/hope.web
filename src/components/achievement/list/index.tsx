@@ -1,6 +1,7 @@
 'use client';
 
 import { useAchievementColumns } from '@/components/achievement/list/AchievementColumn';
+import AchievementGridCard from '@/components/achievement/list/AchievementGridCard';
 import WrapperTable from '@/components/table/Wrappertable';
 import { useOpenNotification } from '@/context/Notification/NotificationProvider';
 import { useFetchListAchievementsQuery } from '@/lib/queries/achievement';
@@ -44,6 +45,17 @@ export default function PatientIndex() {
             onSearch: handleSearch,
             searching: searching,
             placeholder: t('Achievement.index.searchPlaceholder'),
+          }}
+          viewDisplayProps={{
+            defaultView: 'grid',
+            showViewToggle: true,
+            grid: {
+              xs: 2,
+              xxl: 6,
+            },
+            renderItemViewGrid: (achievement) => (
+              <AchievementGridCard achievement={achievement} />
+            ),
           }}
           loading={isLoading}
           fetching={isRefetching}

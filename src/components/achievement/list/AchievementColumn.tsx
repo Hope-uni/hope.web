@@ -26,7 +26,7 @@ export const useAchievementColumns = (options?: OptionsArgs) => {
       align: 'left',
       width: '150px',
       render: (_, { name, imageUrl }) => (
-        <OptimizedImage srcImage={imageUrl} size={60} alt={name} />
+        <OptimizedImage srcImage={imageUrl} alt={name} size={60} />
       ),
     },
     {

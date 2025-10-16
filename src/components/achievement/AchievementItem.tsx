@@ -27,7 +27,7 @@ export default function AchievementItem({
       >
         <OptimizedImage
           srcImage={achievement.imageUrl}
-          size={35}
+          size={60}
           alt={achievement.name}
         />
 

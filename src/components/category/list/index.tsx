@@ -1,6 +1,7 @@
 'use client';
 
 import { useCategoryColumns } from '@/components/category/list/CategoryColumn';
+import CategoryGridCard from '@/components/category/list/CategoryGridCard';
 import WrapperTable from '@/components/table/Wrappertable';
 import { useOpenNotification } from '@/context/Notification/NotificationProvider';
 import { useFetchListCategoryPictogramsQuery } from '@/lib/queries/pictogram';
@@ -42,6 +43,16 @@ export default function CategoryIndex() {
             onSearch: handleSearch,
             searching: searching,
             placeholder: t('Category.index.searchPlaceholder'),
+          }}
+          viewDisplayProps={{
+            defaultView: 'grid',
+            grid: {
+              xxl: 6,
+            },
+            showViewToggle: true,
+            renderItemViewGrid: (category) => (
+              <CategoryGridCard category={category} />
+            ),
           }}
           loading={isLoading}
           fetching={isRefetching}
