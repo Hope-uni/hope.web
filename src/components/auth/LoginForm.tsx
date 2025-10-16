@@ -55,9 +55,9 @@ export const LoginForm = () => {
       const callbackUrl = searchParams.get('callbackUrl');
 
       if (callbackUrl && callbackUrl.trim() !== '') {
-        router.push(callbackUrl);
+        router.replace(callbackUrl);
       } else {
-        router.push(DEFAULT_REDIRECT_HOME_URL);
+        router.replace(DEFAULT_REDIRECT_HOME_URL);
       }
     } catch (error) {
       setMessage('Something wrong');

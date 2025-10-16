@@ -34,12 +34,7 @@ export default function PhaseForm({ form }: Props) {
         label={t('Phase.fields.scoreActivities.label')}
         rules={PhaseRules.scoreActivities}
       >
-        <InputNumber
-          min={0}
-          type="number"
-          keyboard={false}
-          placeholder={t('Phase.fields.scoreActivities.placeholder')}
-        />
+        <Input placeholder={t('Phase.fields.scoreActivities.placeholder')} />
       </Form.Item>
     </Form>
   );
