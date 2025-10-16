@@ -5,8 +5,9 @@ import { useFormCreateUserStore } from '@/lib/store/forms/formCreateUser';
 import styles from '@/styles/modules/user.module.scss';
 import { Col, Form, FormInstance, Input, Row, Select } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import type { FormProps } from 'antd';
 
 interface Props {
   form?: FormInstance;
@@ -26,6 +27,7 @@ export default function PersonDataGeneralForm({
     isEdit,
     fields,
     errors,
+    setHasUnsavedChanges,
     setErrors,
     setMessageErrorForm,
     setMessageErrorDetail,
@@ -53,6 +55,25 @@ export default function PersonDataGeneralForm({
     setMessageErrorDetail('');
   };
 
+  const handleOnFieldsChange = useCallback<
+    NonNullable<FormProps['onFieldsChange']>
+  >(
+    (_, allFields) => {
+      const fieldsToCheck = allFields.filter((field) => {
+        const fieldName = field.name.join('.');
+        return fieldName !== 'roles';
+      });
+
+      const hasValueForm = fieldsToCheck.some((field) => {
+        const value = field.value;
+        return value !== undefined && value !== null && value !== '';
+      });
+
+      setHasUnsavedChanges(hasValueForm);
+    },
+    [setHasUnsavedChanges],
+  );
+
   return (
     <Form
       name="create_login_general"
@@ -60,6 +81,7 @@ export default function PersonDataGeneralForm({
       layout="vertical"
       className={styles.wrapper_form_create_user}
       form={form}
+      onFieldsChange={handleOnFieldsChange}
     >
       <Show>
         <Show.When isTrue={!isEdit}>
@@ -67,7 +89,6 @@ export default function PersonDataGeneralForm({
             name="roles"
             label={t('User.fields.user_role.label')}
             rules={UserRules.user.user_role}
-            validateStatus="success"
           >
             <Select
               placeholder={t('User.fields.user_role.placeholder')}

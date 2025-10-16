@@ -19,6 +19,7 @@ const useStepFormUser = () => {
     isAdminRoleSelected,
     currentRoleSelected,
     roleList,
+    setHasUnsavedChanges,
     setCurrentRoleSelected,
     setIsAdminRoleSelected,
     setFields,
@@ -79,7 +80,8 @@ const useStepFormUser = () => {
     formUser.resetFields();
     setFields({} as FormCreateUser);
     setCurrentIndex(initialStep);
-  }, [formGeneral, formSpecific, formUser, setFields]);
+    setHasUnsavedChanges(false);
+  }, [formGeneral, formSpecific, formUser, setFields, setHasUnsavedChanges]);
 
   const getCurrentInstanceForm = useCallback(() => {
     const instancesForm = isAdminRoleSelected

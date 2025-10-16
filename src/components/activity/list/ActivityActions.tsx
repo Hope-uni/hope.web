@@ -16,6 +16,7 @@ import {
 } from '@/services/activity/activity.service';
 import styles from '@/styles/modules/partials.module.scss';
 import { Form } from 'antd';
+import { useWatch } from 'antd/es/form/Form';
 import { useRouter } from 'next/navigation';
 import { memo, useCallback, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
@@ -53,6 +54,8 @@ const ActivityActions = ({
     updateQueriesAfterAssign,
     updateQueriesAfterUnassign,
   } = useActivityForm(activity?.id);
+
+  const patientsToAssign = useWatch('patients', assignForm);
 
   const handleDelete = useCallback(async () => {
     return await DeleteActivityService(String(activity?.id));
@@ -168,7 +171,9 @@ const ActivityActions = ({
             onClick: handleAssign,
             loading: loadingForm,
             className: styles.footer_btn_confirm,
-            disabled: availableForActivityList.length === 0,
+            disabled:
+              patientsToAssign?.length === 0 ||
+              availableForActivityList.length === 0,
           }}
           title={t('Activity.actions.assign_activity.modal.title')}
         >

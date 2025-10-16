@@ -20,6 +20,7 @@ import {
 } from '@/services/user/helpers';
 import styles from '@/styles/modules/partials.module.scss';
 import { Button, Form } from 'antd';
+import { useWatch } from 'antd/es/form/Form';
 import { useRouter } from 'next/navigation';
 import { memo, useCallback, useMemo, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
@@ -55,6 +56,8 @@ const TherapistActions = ({
     getAvailableForTherapist,
     updateQueriesAfterAssign,
   } = useTherapistForm();
+
+  const patientsToAssign = useWatch('patients', assignForm);
 
   const handleEdit = useCallback(() => {
     router.push(`/admin/users/edit/${therapist.userId}`);
@@ -161,6 +164,9 @@ const TherapistActions = ({
           onClick: handleAssign,
           loading: loadingForm,
           className: styles.footer_btn_confirm,
+          disabled:
+            patientsToAssign?.length === 0 ||
+            availableForTherapistList.length === 0,
         }}
         title={t('Therapist.actions.assign_patients.modal.title')}
       >

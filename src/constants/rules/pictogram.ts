@@ -1,4 +1,4 @@
-import { TextWhiteSpaceAndLenRule } from '@/constants/rules';
+import { CharacterLimit, TextWhiteSpaceAndLenRule } from '@/constants/rules';
 import i18next from '@/i18n';
 import { Rule } from 'antd/lib/form';
 
@@ -12,6 +12,7 @@ export const PictogramRules = {
     },
     ...TextWhiteSpaceAndLenRule({
       maxLen: Pictogram_Name_Max_Len,
+      minLen: CharacterLimit.min.pictogram,
       field: i18next.t('Pictogram.fields.name.label'),
     }),
   ] as Rule[],

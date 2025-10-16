@@ -64,6 +64,24 @@
     }
 }
 
+.modal_unsaved_changes_content {
+
+    .modal_unsaved_changes_body {
+        margin-top: 10px;
+        .modal_unsaved_changes_body_description {
+            color: $primary-color-text;
+            font-size: 16px;
+            margin: 0 0 10px 0;
+        }
+
+        .modal_unsaved_changes_body_caption {
+            color: $grey-dark;
+            font-size: 16px;
+            margin: 0;
+        }
+    }
+}
+
 .modal_next_phase_content {
 
     .footer_btn_confirm{

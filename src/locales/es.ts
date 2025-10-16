@@ -533,10 +533,14 @@ const es = {
     },
     fields: {
       assign_patients: {
-        label: 'Pacientes',
-        placeholder: 'Lista de pacientes disponibles',
+        label: 'Pacientes disponibles para asignar',
+        placeholder: 'Buscar pacientes...',
+        all_patient_selected: 'Ya has seleccionado a todos los pacientes',
+        info: 'Solo verás a los pacientes que estén verificados y no tengan terapeuta asignado.',
+        caption:
+          'Los pacientes que selecciones aparecerán en el listado de abajo',
         rules: {
-          required: 'Pacientes es requerido',
+          min: 'No has seleccionado ningún paciente',
         },
       },
     },
@@ -723,10 +727,14 @@ const es = {
         },
       },
       patientsToAssign: {
-        label: 'Pacientes',
-        placeholder: 'Lista de pacientes disponibles',
+        label: 'Pacientes disponibles para asignar',
+        placeholder: 'Buscar pacientes...',
+        all_patient_selected: 'Ya has seleccionado a todos los pacientes',
+        info: 'Solo verás a los pacientes que cumplan con estas condiciones: estar verificados, tener un terapeuta asignado y no tener otra actividad ya asignada.',
+        caption:
+          'Los pacientes que selecciones aparecerán en el listado de abajo',
         rules: {
-          min: 'Seleccione al menos a un paciente para asignar esta actividad',
+          min: 'No has seleccionado ningún paciente',
         },
       },
     },
@@ -738,7 +746,7 @@ const es = {
       },
       assign_activity: {
         modal: {
-          title: 'Asignar actividad a pacientes',
+          title: 'Asignar actividad',
           title_patient_selected: 'Pacientes seleccionados',
           ok_text: 'Asignar',
         },
@@ -1068,6 +1076,13 @@ const es = {
         btn_cancel: 'Cancelar',
         btn_ok: 'Eliminar',
       },
+      unsavedChanges: {
+        title: 'Cambios no guardados',
+        description:
+          'No has terminado de completar la creación del usuario. Si sales ahora, perderás el progreso. ¿Estás seguro de que quieres salir?',
+        btn_cancel: 'Quedarme',
+        btn_ok: 'Salir',
+      },
     },
     note: 'Nota:',
   },
@@ -1076,6 +1091,10 @@ const es = {
       id_not_provided: 'Id no proporcionado',
       unknow_error: 'Error desconocido',
       not_changed_detect: 'No se detectaron cambios',
+      network_error:
+        'Hubo un error de red. Por favor, revisa tu conexión a Internet e inténtalo de nuevo',
+      timeout_request:
+        'Estamos teniendo demoras para procesar tu solicitud. Vuelve a intentarlo en unos segundos.',
     },
     message_error: {
       title: '¡Lo sentimos, algo ha salido mal!',
