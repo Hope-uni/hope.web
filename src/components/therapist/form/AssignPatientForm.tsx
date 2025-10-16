@@ -9,6 +9,7 @@ import { Empty, Flex, Form, FormInstance, Input } from 'antd';
 import { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { BsTrash2Fill } from 'react-icons/bs';
+import { FaCircleInfo } from 'react-icons/fa6';
 
 interface Props {
   form: FormInstance;
@@ -34,13 +35,17 @@ export default function AssignPatientForm({ form, initialPatients }: Props) {
   );
 
   return (
-    <div
-      style={{
-        height: '400px',
-      }}
-    >
+    <div>
       {initialPatients.length > 0 ? (
         <div>
+          <div className={style.panelContainerAssignPatientToActivity}>
+            <span className={style.panelContainerAssignPatientToActivityIcon}>
+              <FaCircleInfo />
+            </span>
+            <p className={style.panelContainerAssignPatientToActivityText}>
+              {t('Therapist.fields.assign_patients.info')}
+            </p>
+          </div>
           <Form
             form={form}
             name="assign_patient"
@@ -49,17 +54,29 @@ export default function AssignPatientForm({ form, initialPatients }: Props) {
           >
             <Form.Item
               name="patientSelected"
-              label={t('Therapist.fields.assign_patients.placeholder')}
+              label={t('Therapist.fields.assign_patients.label')}
+              style={{
+                marginBottom: 0,
+              }}
             >
               <SearchableList<SinglePatient>
                 list={availableItems}
                 keyValue="id"
                 keyLabel="fullName"
                 onChange={handleChangeSearchableList}
+                placeholder={t('Therapist.fields.assign_patients.placeholder')}
               />
             </Form.Item>
 
-            <Form.Item name="patients" className="input-hidden">
+            <Form.Item
+              name="patients"
+              className="input-hidden"
+              extra={
+                availableItems.length > 0
+                  ? t('Therapist.fields.assign_patients.caption')
+                  : t('Therapist.fields.assign_patients.all_patient_selected')
+              }
+            >
               <Input readOnly type="hidden" />
             </Form.Item>
           </Form>
@@ -69,7 +86,12 @@ export default function AssignPatientForm({ form, initialPatients }: Props) {
                 'Therapist.actions.assign_patients.modal.title_patient_selected',
               )}
             </h3>
-            <div className={style.patientSelected_scroll}>
+            <div
+              className={style.patientSelected_scroll}
+              style={{
+                height: '250px',
+              }}
+            >
               <PatientListView
                 listPatient={selectedItems}
                 actions={[
