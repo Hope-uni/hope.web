@@ -56,6 +56,11 @@ export const PreviewSolution = ({
                     onClick={() =>
                       onClickItemList && onClickItemList(pictogram)
                     }
+                    styleOverlayText={{
+                      fontSize: '12px',
+                      lineHeight: 1.2,
+                      fontWeight: 'normal',
+                    }}
                   />
                 </div>
               )}

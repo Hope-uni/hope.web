@@ -1,23 +1,24 @@
-import { Flex, Skeleton, Space, Table } from 'antd';
+import SkeletonGrid from '@/components/table/skeleton/SkeletonGrid';
+import SkeletonTable from '@/components/table/skeleton/SkeletonTable';
+import { useTableStore } from '@/lib/store/table';
+import { Flex, Skeleton, Space } from 'antd';
 import { TableProps } from 'antd/lib';
-import { useMemo } from 'react';
+import { MODE_VIEW_DISPLAY } from '@/components/table/helpers';
 
 const { Input, Button } = Skeleton;
 
 interface Props {
-  size?: number;
-  colSpan: number;
   fetching?: boolean;
   columns?: TableProps<unknown>['columns'];
+  selection?: any;
 }
 
-export default function SkeletonTable({
-  size = 10,
-  colSpan,
+export default function WrapperSkeleton({
   fetching = false,
   columns,
+  selection,
 }: Props) {
-  const rows = useMemo(() => (size <= 10 ? size : 10), [size]);
+  const { paginationTable, viewDisplay } = useTableStore();
 
   return (
     <Space
@@ -49,35 +50,16 @@ export default function SkeletonTable({
           />
         </Flex>
       )}
-      <Table
-        components={{
-          body: {
-            wrapper: () => {
-              return (
-                <tbody>
-                  {Array.from(Array(rows).keys()).map((item) => (
-                    <tr key={item}>
-                      <td colSpan={colSpan}>
-                        <Input
-                          style={{
-                            marginTop: '8px',
-                            height: '53px',
-                            borderRadius: '5px',
-                          }}
-                          active
-                          size="default"
-                          block
-                        />
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              );
-            },
-          },
-        }}
-        columns={columns}
-      />
+      {viewDisplay === MODE_VIEW_DISPLAY.TABLE && (
+        <SkeletonTable
+          size={paginationTable.size}
+          colSpan={
+            columns ? (selection ? columns.length + 1 : columns.length) : 1
+          }
+          columns={columns} //TODO This implementation needs improvement
+        />
+      )}
+      {viewDisplay === MODE_VIEW_DISPLAY.GRID && <SkeletonGrid />}
       {fetching && (
         <Flex justify="flex-end">
           <Button

@@ -532,17 +532,17 @@ label.ant-form-item-required {
 .main-wrapper-table{
     width: 100%;
 }
-.customTable .wrapper-header-table{
-    padding: 16px 0;
-    margin-bottom: 20px;
+.view-display-wrapper, .customTable {
+    .wrapper-header-table{
+        padding: 16px 0;
 
-    .select-size-changer{
-        min-width: 120px;
+        .select-size-changer{
+            min-width: 120px;
 
-        .ant-select-selector{
-            border: 1px solid $grey-dark;
+            .ant-select-selector{
+                border: 1px solid $grey-dark;
+            }
         }
-
     }
 }
 .ant-table-wrapper{
@@ -616,6 +616,31 @@ label.ant-form-item-required {
         }
     }
 
+    &.table-stripped{
+        tr td.ant-table-cell {
+            background-color: $white;
+        }
+
+        tr:nth-child(2n) td.ant-table-cell {
+            background-color: #f3f3f3;
+        }
+    }
+
+    &.table-row-clickable{
+        .ant-table-tbody{
+            .ant-table-row{
+                cursor: pointer;
+
+                .ant-table-cell-row-hover{
+                    color: $primary-color;
+                }
+            }
+        }
+    }
+}
+
+.view-display-wrapper{
+
     .ant-table-pagination.ant-pagination{
         margin-top: 32px !important;
 
@@ -650,28 +675,6 @@ label.ant-form-item-required {
             border-color: $grey-3;
             svg{
                 color: $grey-3;
-            }
-        }
-    }
-
-    &.table-stripped{
-        tr td.ant-table-cell {
-            background-color: $white;
-        }
-
-        tr:nth-child(2n) td.ant-table-cell {
-            background-color: #f3f3f3;
-        }
-    }
-
-    &.table-row-clickable{
-        .ant-table-tbody{
-            .ant-table-row{
-                cursor: pointer;
-
-                .ant-table-cell-row-hover{
-                    color: $primary-color;
-                }
             }
         }
     }
@@ -748,7 +751,7 @@ label.ant-form-item-required {
 }
 
 .popup-actions-list-container{
-    @extend .row-center;
+    @extend .row-between;
     list-style: none;
 }
 
@@ -1259,6 +1262,20 @@ body .ant-flex {
     }
 }
 
+/*
+** Segmented */
+.ant-segmented.segmented-primary {
+    margin: 0;
+    padding: 2px;
+    color: $primary-color;
+    font-size: 14px;
+    line-height: 1.5714285714285714;
+    list-style: none;
+    display: inline-block;
+    background: #f5f5f5;
+    border-radius: 10px;
+}
+
 @media only screen and (max-width: $lg){
     /*
     ** SIDER */
@@ -1361,7 +1378,9 @@ body .ant-flex {
                 }
             }
         }
-
+    }
+    
+    .view-display-wrapper{
         .ant-table-pagination.ant-pagination {
     
             .ant-pagination-item{
