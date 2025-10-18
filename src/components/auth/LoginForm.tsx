@@ -5,7 +5,7 @@ import { DEFAULT_REDIRECT_HOME_URL } from '@/constants';
 import { AuthRules } from '@/constants/rules';
 import { AlertType } from '@/models/types/antd';
 import styles from '@/styles/modules/auth.module.scss';
-import { Alert, Button, Form, Input } from 'antd';
+import { Alert, Button, Form, Input, Switch } from 'antd';
 import FormItem from 'antd/lib/form/FormItem';
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';
@@ -13,6 +13,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import InputPassword from '../common/Inputs/InputPassword';
+import { useGlobalSettings } from '@/lib/store/globalSettings';
 
 interface LoginFormValues {
   email_username: string;
@@ -27,6 +28,8 @@ export const LoginForm = () => {
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const usernameOrEmail = searchParams.get('usernameOrEmail');
+
+  const { isDemo, setIsDemo } = useGlobalSettings((state) => state);
 
   const handleOnFinish = async (values: LoginFormValues) => {
     try {
@@ -96,6 +99,15 @@ export const LoginForm = () => {
         <Link href="/forgot-password" className={styles.auth_form_link_forgot}>
           {t('Auth.form.forgot_password_link')}
         </Link>
+      </div>
+      <div className="w-100">
+        <FormItem className={styles.auth_form_input} label={'Modo demo'}>
+          <Switch
+            value={isDemo}
+            defaultChecked
+            onChange={(value) => setIsDemo(value)}
+          />
+        </FormItem>
       </div>
       <Button
         type="primary"
