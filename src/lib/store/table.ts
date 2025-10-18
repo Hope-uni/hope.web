@@ -3,7 +3,8 @@ import { I_TableState } from '@/models/types';
 import { create } from 'zustand';
 import { redux } from 'zustand/middleware';
 
-export interface I_TableReduxState extends I_TableState {
+//TODO pendiente aplicar tipado dinamico
+export interface I_TableReduxState extends I_TableState<any> {
   dispatch: any;
 }
 

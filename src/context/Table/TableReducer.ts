@@ -1,6 +1,7 @@
+import { MODE_VIEW_DISPLAY } from '@/components/table/helpers';
 import { I_ActionTable, E_ActionKeyTable, I_TableState } from '@/types/index';
 
-export const initialState: I_TableState = {
+export const initialState: I_TableState<any> = {
   rowSelected: {},
   hasSelected: false,
   handleModal: false,
@@ -11,6 +12,7 @@ export const initialState: I_TableState = {
   searchResult: [],
   totalResults: '',
   lastIdMounted: null,
+  viewDisplay: MODE_VIEW_DISPLAY.TABLE,
   paginationTable: {
     totalPages: 0,
     currentPage: undefined,
@@ -115,6 +117,13 @@ export const TableReducer = (state = initialState, action: I_ActionTable) => {
       return {
         ...state,
         lastIdMounted: action.payload,
+      };
+    }
+
+    case E_ActionKeyTable.SET_VIEW_DISPLAY: {
+      return {
+        ...state,
+        viewDisplay: action.payload,
       };
     }
 

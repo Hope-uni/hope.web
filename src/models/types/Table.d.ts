@@ -1,5 +1,7 @@
 import { ReactNode } from 'react';
 import { API_RESPONSE } from './api';
+import { ModeViewDisplayTypes } from '@/components/table/helpers';
+import { ListGridType } from 'antd/es/list';
 
 export enum E_ActionKeyTable {
   SET_SELECTED_ROW = 'SET_SELECTED_ROW',
@@ -17,6 +19,7 @@ export enum E_ActionKeyTable {
   RESET_SEARCH = 'RESET_SEARCH',
   SET_PAGINATION = 'SET_PAGINATION',
   SET_LAST_ID_MOUNTED = 'SET_LAST_ID_MOUNTED',
+  SET_VIEW_DISPLAY = 'SET_VIEW_DISPLAY',
   RESET_PAGINATION = 'RESET_PAGINATION',
 }
 
@@ -29,7 +32,7 @@ export interface I_TablePagination {
   size: number;
 }
 
-export interface I_TableState<> {
+export interface I_TableState<T> {
   rowSelected: any;
   hasSelected: boolean;
   handleModal: boolean;
@@ -40,6 +43,7 @@ export interface I_TableState<> {
   searchResult: any;
   totalResults: string;
   lastIdMounted: string | null;
+  viewDisplay: ModeViewDisplayTypes;
   paginationTable: I_TablePagination;
 }
 
@@ -80,6 +84,14 @@ export type SearchPropsType = {
   onClear?: () => void;
 };
 
+export type viewDisplayPropsType = {
+  defaultView?: ModeViewDisplayTypes;
+  allowViews?: ModeViewDisplayTypes[];
+  showViewToggle?: boolean;
+  grid?: ListGridType | undefined;
+  renderItemViewGrid?: (item: any) => ReactNode;
+};
+
 export type TablePropsType = {
   btnExtra?: boolean;
   pagination?: boolean;
@@ -100,6 +112,7 @@ export type TablePropsType = {
   scrollHeight?: string | number;
   searchProps?: SearchPropsType;
   stripped?: boolean;
+  viewDisplayProps?: viewDisplayPropsType;
   onRowClick?: (record: any, rowIndex: number | undefined) => void;
 };
 
