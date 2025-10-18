@@ -9,6 +9,7 @@ export const defaultPayload: API_PAYLOAD = {
 
 import { getSession, signOut } from 'next-auth/react';
 import es from '@/locales/es';
+import { useGlobalSettings } from '@/lib/store/globalSettings';
 
 const URl = process.env.NEXT_PUBLIC_API_URL;
 
@@ -54,6 +55,7 @@ API_HOPE_PROTECTED.interceptors.response.use(
   },
   async (error) => {
     if (axios.isAxiosError(error) && error.response?.data.statusCode === 401) {
+      useGlobalSettings.getState().reset();
       setOverlayBlockingEdge(true);
       await signOut();
     }

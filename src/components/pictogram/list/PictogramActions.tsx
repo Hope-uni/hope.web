@@ -6,6 +6,7 @@ import { PopupActions } from '@/components/table/PopupActions';
 import { QueryKeys } from '@/constants';
 import { useOpenNotification } from '@/context/Notification/NotificationProvider';
 import useInvalidateQueries from '@/hooks/useInvalidateQueries';
+import { useGlobalSettings } from '@/lib/store/globalSettings';
 import { FormPictogramErrors, SinglePictogram } from '@/models/schema';
 import { ActionType } from '@/models/types';
 import {
@@ -16,6 +17,7 @@ import {
 import { ParseToErrorAntd } from '@/services/user/helpers';
 import styles from '@/styles/modules/partials.module.scss';
 import { deepEqual, removeKeysFromObject } from '@/utils/objects';
+import { formCreatePictogramDemo } from '__mocks__/demo/form/picotgram';
 import { Button, Form } from 'antd';
 import { useCallback, useEffect, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
@@ -37,10 +39,17 @@ const PictogramActions = ({
   const { t } = useTranslation();
   const { invalidateQueries } = useInvalidateQueries();
   const { openNotification } = useOpenNotification();
+  const { isDemo } = useGlobalSettings((state) => state);
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const [openForm, setOpenForm] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
+
+  useEffect(() => {
+    if (isDemo) {
+      form.setFields(formCreatePictogramDemo);
+    }
+  }, [form, isDemo]);
 
   useEffect(() => {
     if (openForm && isEdit) {

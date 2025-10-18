@@ -5,9 +5,11 @@ import { getErrorsAntdByStep } from '@/components/user/helpers';
 import { StepFormInterface } from '@/constants/Forms';
 import { ROLES } from '@/constants/guards';
 import { useFormCreateUserStore } from '@/lib/store/forms/formCreateUser';
+import { useGlobalSettings } from '@/lib/store/globalSettings';
 import { FormCreateUser, FormCreateUserError } from '@/models/schema';
 import { getStepsForm } from '@/utils/createUserForm';
 import { validateRole } from '@/utils/session';
+import { formCreatePatientDemo } from '__mocks__/demo/form/user';
 import { Form } from 'antd';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
@@ -29,6 +31,16 @@ const useStepFormUser = () => {
   const [formGeneral] = Form.useForm();
   const [formSpecific] = Form.useForm();
   const [formUser] = Form.useForm();
+
+  const { isDemo } = useGlobalSettings((state) => state);
+
+  useEffect(() => {
+    if (isDemo) {
+      formGeneral.setFields(formCreatePatientDemo.general);
+      formSpecific.setFields(formCreatePatientDemo.specific);
+      formUser.setFields(formCreatePatientDemo.user);
+    }
+  }, [formGeneral, formSpecific, formUser, isDemo]);
 
   const roleSelected = Form.useWatch('roles', formGeneral);
 
