@@ -15,6 +15,6 @@ export const StylesShape: Record<
     borderRadius: '5px',
   },
   round: {
-    borderRadius: '10px',
+    borderRadius: '20px',
   },
 };

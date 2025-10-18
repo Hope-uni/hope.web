@@ -1,5 +1,6 @@
 import { UnassignedTag } from '@/components/common';
 import OptimizedImage from '@/components/common/OptimizedImage';
+import { IMAGE_PLACEHOLDER } from '@/constants/OptimizedImage';
 import { SinglePictogram } from '@/models/schema';
 import {
   addResponsiveProperty,
@@ -27,7 +28,13 @@ export const usePictogramColumns = (options?: OptionsArgs) => {
       align: 'left',
       width: 170,
       render: (_, { name, imageUrl }) => (
-        <OptimizedImage srcImage={imageUrl} size={60} alt={name} preview />
+        <OptimizedImage
+          placeholderImage={IMAGE_PLACEHOLDER.PICTOGRAM}
+          srcImage={imageUrl}
+          size={60}
+          alt={name}
+          preview
+        />
       ),
     },
     {

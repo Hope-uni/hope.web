@@ -13,5 +13,14 @@ export const RENDER_MODE_ACTION = {
   CHANGE_MONOCHROME: 'change_monochrome',
 } as const;
 
+export const MODE_VIEW_DISPLAY = {
+  TABLE: 'table',
+  GRID: 'grid',
+  LIST: 'list',
+} as const;
+
 export type RenderModeActionTypes =
   (typeof RENDER_MODE_ACTION)[keyof typeof RENDER_MODE_ACTION];
+
+export type ModeViewDisplayTypes =
+  (typeof MODE_VIEW_DISPLAY)[keyof typeof MODE_VIEW_DISPLAY];

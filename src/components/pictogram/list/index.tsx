@@ -1,6 +1,7 @@
 'use client';
 
 import { usePictogramColumns } from '@/components/pictogram/list/PictogramColumns';
+import PictogramGridCard from '@/components/pictogram/list/PictogramGridCard';
 import WrapperTable from '@/components/table/Wrappertable';
 import { useOpenNotification } from '@/context/Notification/NotificationProvider';
 import {
@@ -61,6 +62,13 @@ export default function PictogramsIndex() {
             onSearch: handleSearch,
             searching: searching,
             placeholder: t('Pictogram.index.searchPlaceholder'),
+          }}
+          viewDisplayProps={{
+            defaultView: 'grid',
+            showViewToggle: true,
+            renderItemViewGrid: (pictogram) => (
+              <PictogramGridCard pictogram={pictogram} />
+            ),
           }}
           loading={isLoading}
           fetching={isRefetching}
