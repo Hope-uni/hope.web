@@ -34,19 +34,37 @@ const AvatarUserList = ({
   return (
     <Flex gap={10} align="center" className={styles.avatar_user_list_wrapper}>
       <OptimizedImage srcImage={image} shape="circle" size={sizeImage} />
-      <Flex vertical align="flex-start" justify="center">
+      <Flex
+        vertical
+        align="flex-start"
+        justify="center"
+        style={{
+          minWidth: 0,
+        }}
+      >
         {title && (
           <Flex gap={5} align="center" justify="center">
             <span className={styles.avatar_user_list_title}>{title}</span>
           </Flex>
         )}
         {description && (
-          <Flex gap={5} align="center" justify="center">
-            <Flex>
+          <Flex
+            gap={5}
+            align="center"
+            justify="center"
+            style={{
+              width: '100%',
+            }}
+          >
+            <Flex
+              style={{
+                width: '100%',
+              }}
+            >
               <span
                 className="text-ellipse"
                 style={{
-                  width: '250px',
+                  width: '100%',
                 }}
               >
                 {description}
